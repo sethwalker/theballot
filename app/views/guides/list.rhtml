@@ -1,0 +1,25 @@
+<h1>Listing guides</h1>
+
+<table>
+<% for guide in @guides %>
+  <tr>
+    <td><%= link_to guide.name, :action => 'show', :id => guide %></td>
+  </tr>
+  <tr>
+    <td><%= guide.city %>, <%= guide.state %></td>
+  </tr>
+  <tr>
+    <td><%= guide.date %></td>
+  </tr>
+  <tr>
+    <td><%= guide.description %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @guide_pages.current.previous } if @guide_pages.current.previous %>
+<%= link_to 'Next page', { :page => @guide_pages.current.next } if @guide_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New guide', :action => 'new' %>

@@ -1,0 +1,12 @@
+<% for column in Endorsement.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @endorsement.send(column.name) %>
+</p>
+<% end %>
+
+<p>
+<b>Position:</b> <%= @endorsement.position.text %>
+</p>
+
+<%= link_to 'Edit', :action => 'edit', :id => @endorsement %> |
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,195 @@
+/* League of Young Voters CSS Document */
+
+/*styles for the whole voter guide */
+
+
+div.voterguide_container {
+	background-color: #e9ede1;
+	background-image: url(League_Header_02.gif);
+	background-repeat:no-repeat;
+	padding: 320px 73px 100px 73px;
+	margin: 0;
+}
+div.voterguide_container a{
+	color:#09b8d2;
+	text-decoration: none;
+}
+div.voterguide_container a:hover{
+	border-bottom: 1px solid #09b8d2;
+}
+div.voterguide_container a:active{
+	color: #dd0e36;
+}
+
+
+/* League Disclaimer */
+.voterguide_intro {
+	text-align: right;
+}
+
+div.voterguide_intro, .module_title, div.voterguide_intro p.expenditure_notice, .new_guide_link, .tell_link {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: small;
+	color: #323216;
+	line-height: 1.4em;
+	padding:0;
+	margin:0;
+}
+
+
+
+/*  into  */
+div.voterguide_endorsement_logos {
+	background-image:url(League_icon.gif);
+	background-repeat: no-repeat;
+	background-position:left;
+	height: 73px;	
+}
+h1.title {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+	color:#de0d35;
+	font-size:xx-large;
+	margin:0;
+	padding:0;
+}
+h4.subtitle {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: 100;
+	color:#7F725F;
+	padding-right: 19px;
+	margin-top: 0;
+	border-right: 2px solid;
+	float:left;
+}
+h4.date {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#7F725F;
+	font-size: medium;
+	font-weight:100;
+	margin-top: 0;
+	padding-left: 165px;
+	margin-left: 8px;
+}
+h4.subtitle, h4.date {
+/*	margin-bottom: 8px;  */
+	margin-bottom: 4px; 
+}
+.introductory-text, .introduction, .doclink, .doclink_label, .filelink, p.vg_endorse_link{
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: small;
+	text-align: justify;
+	color: #323216;
+	line-height:1.6em;
+	padding: 0;
+	margin:0;
+}
+#header {
+	padding-top: 10px;
+	font-size: x-small;
+}
+.doclink_label {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+	font-size: large;
+	font-weight:bold;
+	color:#de0d35;
+}
+.introductory-text {
+	padding-bottom: 10px;
+}
+div.vg_image {
+	padding: 0;
+	margin: 0;
+}
+div.vg_image img {
+	border: 1px solid #fff;
+	padding: 8px;
+	margin:0 12px 0 0;
+	float: left;
+}
+.public-url {
+	font-size: x-small;
+	margin-bottom: 8px;  
+}
+
+/*thingies*/
+
+div.list_entry {
+	padding:21px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	border:3px dotted #FFF;
+}
+h2.voter_item_title {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:x-large;
+	border-bottom: 1px solid #323216;
+	color:#323216;
+	margin:0;
+}
+h4.listname, h4.position {
+	padding: 0;
+	margin: 0;
+	text-align: right;
+}
+span.name_label, span.position_label {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: lighter;
+	color:#7F725F;
+}
+span.name_text, span.position_text {
+font-family:Georgia, "Times New Roman", Times, serif;
+font-style: italic;
+font-size: large;
+color:#de0d35;
+}
+
+p.text, div.vg_footer p, #expenditure-bottom, div.notify_link, div.designer-credit, div.designer-contribute{
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: small;
+	text-align:justify;
+	color: #323216;
+	line-height:1.6em;
+}
+
+/*footer*/
+
+div.spacer {
+	background-image:url(VoterGuideCSS_break.gif);
+	background-repeat: no-repeat;
+	background-position:center;
+	height: 40px;
+	
+}
+
+div.vg_footer {
+	padding-left: 21px;
+	padding-right:21px;
+}
+#main_content p.vg_endorse_link {
+	display:block;
+}
+
+div.designer-credit {
+	padding-top:12px;
+}
+
+div.designer-credit, div.designer-contribute {
+	text-align: right;
+	font-style: italic;
+	font-size: x-small;
+}
+
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+
+

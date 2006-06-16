@@ -1,0 +1,8 @@
+@contest = params[:endorsement][:contest]
+@candidate = params[:endorsement][:candidate]
+@description = params[:endorsement][:description]
+page.insert_html :bottom, 'endorsements', :partial => 'endorsement'
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][contest]", @contest)
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][candidate]", @candidate)
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][description]", @description)
+page.replace_html 'endorsement_number_container', hidden_field_tag(:endorsement_number, params[:endorsement_number].to_i + 1)
