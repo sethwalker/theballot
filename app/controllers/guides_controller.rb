@@ -27,7 +27,7 @@ class GuidesController < ApplicationController
   end
 
   def show
-    @guide = Guide.find(params[:id])
+    @guide = Guide.find(params[:id], :include => :endorsements)
   end
 
   def new
