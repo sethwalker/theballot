@@ -28,6 +28,10 @@ class GuidesController < ApplicationController
 
   def show
     @guide = Guide.find(params[:id], :include => :endorsements)
+    if !@guide.theme.nil?
+      template = Liquid::Template.parse(Theme.find(@guide.theme.id).markup)
+      render :text => template.render('guide' => @guide, 'endorsements' => @guide.endorsements)
+    end
   end
 
   def new
@@ -56,7 +60,12 @@ class GuidesController < ApplicationController
     @guide = Guide.find(params[:id])
     if @guide.update_attributes(params[:guide])
       params[:endorsements].each do |num, e|
+        if e.include?(:id)
+          endorsement = Endorsement.find(e[:id])
+          endorsement.update_attributes(e)
+        else
         endorsement = Endorsement.new(e)
+        end
         @guide.endorsements << endorsement
       end
       flash[:notice] = 'Guide was successfully updated.'

@@ -12,5 +12,8 @@
 
 <p><label for="guide_state">State</label><br/>
 <%= us_state_select 'guide', 'state'  %></p>
+
+<p><label for="guide_theme">Theme</label><br/>
+<%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id' %>
 <!--[eoform:guide]-->
 

@@ -2,7 +2,7 @@ New Endorsement:
 <%= form_remote_tag( :url => { :action => 'add_endorsement' }, :html => { :id => 'add_form' } ) %>
 <%= render :partial => 'endorsements/form' %>
 <div id="endorsement_number_container">
-<%= hidden_field_tag(:endorsement_number, 1) %>
+<%= hidden_field_tag(:endorsement_number, num_endorsements.nil? ? 0 : num_endorsements) %>
 </div>
 <%= submit_tag 'add endorsement' %>
 <%= end_form_tag %>

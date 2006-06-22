@@ -1,10 +1,7 @@
-@contest = params[:endorsement][:contest]
-@candidate = params[:endorsement][:candidate]
-@description = params[:endorsement][:description]
-@position_id = params[:endorsement][:position_id]
-page.insert_html :bottom, 'endorsements', :partial => 'endorsement'
-page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][contest]", @contest)
-page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][candidate]", @candidate)
-page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][description]", @description)
-page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][position_id]", @position_id)
+endorsement = Endorsement.new(params[:endorsement])
+page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => {:endorsement => endorsement}
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][contest]", endorsement.contest)
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][candidate]", endorsement.candidate)
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][description]", endorsement.description)
+page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][position_id]", endorsement.position_id)
 page.replace_html 'endorsement_number_container', hidden_field_tag(:endorsement_number, params[:endorsement_number].to_i + 1)

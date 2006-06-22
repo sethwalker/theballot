@@ -1,0 +1,27 @@
+<h1>Listing themes</h1>
+
+<table>
+  <tr>
+  <% for column in Theme.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for theme in @themes %>
+  <tr>
+  <% for column in Theme.content_columns %>
+    <td><%=h theme.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => theme %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => theme %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => theme }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @theme_pages.current.previous } if @theme_pages.current.previous %>
+<%= link_to 'Next page', { :page => @theme_pages.current.next } if @theme_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New theme', :action => 'new' %>

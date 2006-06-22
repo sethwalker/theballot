@@ -3,16 +3,26 @@
 <table>
   <tr>
     <td>
-      <%= start_form_tag ( { :action => 'update', :id => @guide }, :id => 'guide_form' ) %>
+      <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form' ) %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
+  <% position = 0 %>
+  <% @guide.endorsements.each do |e| %>
+    <%= hidden_field_tag("endorsements[#{position}][id]", e.id) %>
+    <%= hidden_field_tag("endorsements[#{position}][contest]", e.contest) %>
+    <%= hidden_field_tag("endorsements[#{position}][candidate]", e.candidate) %>
+    <%= hidden_field_tag("endorsements[#{position}][description]", e.description) %>
+    <%= hidden_field_tag("endorsements[#{position}][position_id]", e.position_id) %>
+    <% position = position + 1 %>
+  <% end %>
 <%= end_form_tag %>
 </td>
 <td>
-  <%= render :partial => 'new_endorsement' %>
+  <%= render :partial => 'new_endorsement', :locals => {:num_endorsements => @guide.endorsements.length} %>
 </td>
 <td valign="top">
 <div id="endorsements">
+  <%= render :partial => 'endorsement', :collection => @guide.endorsements %>
 </div>
 </td>
 </tr>

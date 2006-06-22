@@ -1,0 +1,27 @@
+<h1>Listing styles</h1>
+
+<table>
+  <tr>
+  <% for column in Style.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for style in @styles %>
+  <tr>
+  <% for column in Style.content_columns %>
+    <td><%=h style.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => style %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => style %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => style }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @style_pages.current.previous } if @style_pages.current.previous %>
+<%= link_to 'Next page', { :page => @style_pages.current.next } if @style_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New style', :action => 'new' %>
