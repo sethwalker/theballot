@@ -6,6 +6,22 @@ class UserTest < Test::Unit::TestCase
   include AuthenticatedTestHelper
   fixtures :users
 
+  def test_should_not_activate_nil
+    get :activate, :activation_code => nil
+    assert_activate_error
+  end
+
+  def test_should_not_activate_bad
+    get :activate, :activation_code => 'foobar'
+    assert flash.has_key?(:error), "Flash should contain error message." 
+    assert_activate_error
+  end
+
+  def assert_activate_error
+    assert_response :success
+    assert_template "account/activate" 
+  end
+
   def test_should_create_user
     assert_difference User, :count do
       assert create_user.valid?

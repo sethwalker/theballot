@@ -17,6 +17,12 @@ class AccountControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
+  def test_should_activate_user
+    assert_nil User.authenticate('arthur', 'arthur')
+    get :activate, :id => users(:arthur).activation_code
+    assert_equal users(:arthur), User.authenticate('arthur', 'arthur')
+  end
+
   def test_should_login_and_redirect
     post :login, :login => 'quentin', :password => 'test'
     assert session[:user]

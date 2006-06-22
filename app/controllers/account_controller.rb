@@ -1,4 +1,20 @@
 class AccountController < ApplicationController
+
+  def activate
+    if params[:activation_code]
+      @user = User.find_by_activation_code(params[:activation_code]) unless params[:activation_code].nil?
+      if @user and @user.activate
+        self.current_user = @user
+        redirect_back_or_default(:controller => '/account', :action => 'index')
+        flash[:notice] = "Your account has been activated." 
+      else
+        flash[:error] = "Unable to activate the account.  Did you provide the correct information?" 
+      end
+    else
+      flash.clear
+    end
+  end  
+
   # say something nice, you goof!  something sweet.
   def index
     redirect_to(:action => 'signup') unless logged_in? || User.count > 0

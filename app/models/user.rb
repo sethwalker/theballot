@@ -13,10 +13,25 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password
 
+  before_create :make_activation_code
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
+    # hide records with a nil activated_at
+    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login]
+    #u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) ? u : nil
+  end
+
+  # Activates the user in the database.
+  def activate
+    @activated = true
+    update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
+  end
+
+  # Returns true if the user has just been activated.
+  def recently_activated?
+    @activated
   end
 
   # Encrypts some data with the salt.
@@ -34,6 +49,11 @@ class User < ActiveRecord::Base
   end
 
   protected
+    # If you're going to use activation, uncomment this too
+    def make_activation_code
+      self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split('//').sort_by {rand}.join )
+    end
+
     # before filter 
     def encrypt_password
       return if password.blank?
