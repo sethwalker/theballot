@@ -1,6 +1,10 @@
 class GuidesController < ApplicationController
   before_filter :login_required, :only => [ :new, :create, :edit, :update ]
 
+  def env
+    raise @request.env.inspect
+  end
+
   def authorize?(user)
     if ['new', 'create'].include?(action_name)
       return false unless logged_in?
@@ -51,7 +55,7 @@ class GuidesController < ApplicationController
     @guide = Guide.new(params[:guide])
     if params.include?('endorsements')
       params[:endorsements].each do |num, e|
-        @guide.build_endorsement(e)
+        @guide.endorsements.build(e)
       end
     end
     if params.include?('image')
