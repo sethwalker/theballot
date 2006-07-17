@@ -1,17 +1,14 @@
 class AccountController < ApplicationController
+  observer :user_observer
 
   def activate
-    if params[:activation_code]
-      @user = User.find_by_activation_code(params[:activation_code]) unless params[:activation_code].nil?
-      if @user and @user.activate
-        self.current_user = @user
-        redirect_back_or_default(:controller => '/account', :action => 'index')
-        flash[:notice] = "Your account has been activated." 
-      else
-        flash[:error] = "Unable to activate the account.  Did you provide the correct information?" 
-      end
+    @user = User.find_by_activation_code(params[:id]) unless params[:id].nil?
+    if @user and @user.activate
+      self.current_user = @user
+      redirect_back_or_default(:controller => '/account', :action => 'index')
+      flash[:notice] = "Your account has been activated." 
     else
-      flash.clear
+      flash[:error] = "Unable to activate the account.  Did you provide the correct information?" 
     end
   end  
 

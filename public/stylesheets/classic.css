@@ -1,0 +1,10 @@
+.body-content {
+  float: left;
+  width: 100%;
+  background: #FFFFFF;
+}
+
+#nav {
+  margin-right: 5px;
+  float: right;
+}

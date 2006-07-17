@@ -1,0 +1,19 @@
+<h1>Listing images</h1>
+
+<table>
+<% for image in @images %>
+  <tr>
+    <td><%= image_tag image.url("thumb") %></td>
+    <td><%= link_to 'Show', :action => 'show', :id => image %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => image %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => image }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @image_pages.current.previous } if @image_pages.current.previous %>
+<%= link_to 'Next page', { :page => @image_pages.current.next } if @image_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New image', :action => 'new' %>

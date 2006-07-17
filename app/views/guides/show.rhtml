@@ -1,3 +1,13 @@
+<% 
+  if !@guide.theme.nil? && !@guide.theme.style.nil?
+    content_for :stylesheets do %>
+  <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
+<%  end
+  end
+%>
+<% if @rendered %>
+  <%= @rendered %>
+<% else %>
 <div class="voterguide_container">
   <%= link_to 'Edit', {:action => :edit, :id => @guide} %>
   <div class="voterguide_intro">
@@ -55,6 +65,28 @@
         </p>
       </div>
     </div>
+
+    <% if @guide.pdf %>
+    <div class="doclink">
+      <p class="doclink_label">Download PDF of guide:</p>
+      <p class="filelink"><a                
+        href="<%= guide.pdf.public_filename %>">
+      <IMG SRC="/images/pdf.gif" border="0"  
+        align="absmiddle"><%= guide.pdf.filename %></a>
+      </p>
+    </div>
+    <% end %>
+
+    <% if @guide.image %>
+    <div class="doclink">
+      <p class="doclink_label">Download Image of guide:</p>
+      <p class="filelink"><a                
+        href="<%= @guide.image.public_filename %>">
+      <IMG SRC="<%= @guide.image.public_filename("thumb") %>" border="0"  
+        align="absmiddle"><%= @guide.image.filename %></a>
+      </p>
+    </div>
+    <% end %>
 
     <p class="vg_endorse_link" id="header">
     <%= link_to 'Agree with this guide? Join the voter bloc', {:action => 'join', :id => @guide} %>
@@ -116,3 +148,4 @@
     "/designers">click here.</a>
   </div>
 </div>
+<% end %>

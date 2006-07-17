@@ -1,5 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+janet:
   id: 1
-another:
+  guide_id: 1
+  contest: assembly
+  candidate: janet reilly
+  position_id: 1
+  description: some text
+fiona:
   id: 2
+  guide_id: 1
+  contest: assembly
+  candidate: fiona ma
+  position_id: 2
+  description: some text

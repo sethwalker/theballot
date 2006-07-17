@@ -5,22 +5,38 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead
-  # Then, you can remove it from this and the units test.
-  include AuthenticatedTestHelper
-
   fixtures :users
 
   def setup
     @controller = AccountController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+
+    # for testing action mailer
+    @emails = ActionMailer::Base.deliveries 
+    @emails.clear
+  end
+
+  def test_should_not_activate_nil
+    get :activate, :id => nil
+    assert_activate_error
+  end
+
+  def test_should_not_activate_bad
+    get :activate, :id => 'foobar'
+    assert flash.has_key?(:error), "Flash should contain error message." 
+    assert_activate_error
+  end
+
+  def assert_activate_error
+    assert_response :success
+    assert_template "account/activate" 
   end
 
   def test_should_activate_user
     assert_nil User.authenticate('arthur', 'arthur')
     get :activate, :id => users(:arthur).activation_code
-    assert_equal users(:arthur), User.authenticate('arthur', 'arthur')
+    assert_equal users(:arthur), User.authenticate('arthur', 'test')
   end
 
   def test_should_login_and_redirect
@@ -79,6 +95,22 @@ class AccountControllerTest < Test::Unit::TestCase
     get :logout
     assert_nil session[:user]
     assert_response :redirect
+  end
+
+  def test_should_activate_user_and_send_activation_email
+    get :activate, :id => users(:arthur).activation_code
+    assert_equal 1, @emails.length
+    assert(@emails.first.subject =~ /Your account has been activated/)
+    assert(@emails.first.body    =~ /#{assigns(:user).login}, your account has been activated/)
+  end
+
+  def test_should_send_activation_email_after_signup
+    create_user
+    assert_equal 1, @emails.length
+    assert(@emails.first.subject =~ /Please activate your new account/)
+    assert(@emails.first.body    =~ /Username: quire/)
+    assert(@emails.first.body    =~ /Password: quire/)
+    assert(@emails.first.body    =~ /account\/activate\/#{assigns(:user).activation_code}/)
   end
 
   protected

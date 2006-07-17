@@ -13,7 +13,16 @@
 <p><label for="guide_state">State</label><br/>
 <%= us_state_select 'guide', 'state'  %></p>
 
+<p><label for="guide_date">Date</label><br/>
+<%= date_select 'guide', 'date', :order => [:month, :day, :year]  %></p>
+
 <p><label for="guide_theme">Theme</label><br/>
 <%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id' %>
+
+<p><label for="guide_image">Upload an image of your guide</label><br/>
+<%= file_field 'image', 'uploaded_data'  %></p>
+
+<p><label for="guide_pdf">Upload a PDF of your guide</label><br/>
+<%= file_field 'pdf', 'uploaded_data'  %></p>
 <!--[eoform:guide]-->
 

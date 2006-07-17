@@ -1,4 +1,5 @@
 class StylesController < ApplicationController
+  layout nil
   def index
     list
     render :action => 'list'
@@ -13,7 +14,10 @@ class StylesController < ApplicationController
   end
 
   def show
+    @headers["Content-Type"] = "text/css; charset=utf-8"
     @style = Style.find(params[:id])
+    template = Liquid::Template.parse(@style.stylesheet)
+    render :text => template.render
   end
 
   def new

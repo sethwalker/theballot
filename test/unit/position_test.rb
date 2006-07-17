@@ -4,7 +4,7 @@ class PositionTest < Test::Unit::TestCase
   fixtures :positions
 
   # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_count
+    assert_equal Position.count, 2
   end
 end

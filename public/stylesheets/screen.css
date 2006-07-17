@@ -1,0 +1,41 @@
+@import url("scaffold.css");
+
+body {
+  background: #000000;
+  margin: 0;
+  padding: 0;
+  min-width: 750px;
+}
+
+#wrap {
+  margin: 0 auto;
+  width: 750px;
+}
+
+#header {
+  float: left;
+  color: #FFFFFF;
+}
+
+#footer {
+  color: #FFFFFF;
+  clear: both;
+}
+
+#nav {
+  width: 150px;
+  float: right;
+  text-align: center;
+  background:#FF0000;
+  border-left: 1px solid #cecea5;
+}
+
+.div {
+  clear: both;
+}
+
+#main {
+  background: #FFFFFF;
+  float: left;
+  width: 100%;
+}

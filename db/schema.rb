@@ -2,7 +2,31 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 7) do
+ActiveRecord::Schema.define(:version => 11) do
+
+  create_table "assets", :force => true do |t|
+    t.column "type", :string
+    t.column "content_type", :string
+    t.column "filename", :string
+    t.column "path", :string
+  end
+
+  create_table "assets_themes", :id => false, :force => true do |t|
+    t.column "asset_id", :integer
+    t.column "theme_id", :integer
+  end
+
+  create_table "attachments", :force => true do |t|
+    t.column "content_type", :string
+    t.column "filename", :string
+    t.column "size", :integer
+    t.column "parent_id", :integer
+    t.column "thumbnail", :string
+    t.column "width", :integer
+    t.column "height", :integer
+    t.column "type", :string
+    t.column "guide_id", :integer
+  end
 
   create_table "endorsements", :force => true do |t|
     t.column "guide_id", :integer
@@ -10,6 +34,19 @@ ActiveRecord::Schema.define(:version => 7) do
     t.column "candidate", :string
     t.column "position_id", :integer
     t.column "description", :text
+  end
+
+  create_table "guide_drafts", :force => true do |t|
+    t.column "guide_id", :integer
+    t.column "updated_at", :datetime
+    t.column "name", :string
+    t.column "city", :string
+    t.column "state", :string
+    t.column "date", :date
+    t.column "description", :text
+    t.column "owner_id", :integer
+    t.column "theme_id", :integer
+    t.column "endorsements", :text
   end
 
   create_table "guides", :force => true do |t|
@@ -24,6 +61,15 @@ ActiveRecord::Schema.define(:version => 7) do
 
   create_table "positions", :force => true do |t|
     t.column "text", :string
+  end
+
+  create_table "roles", :force => true do |t|
+    t.column "title", :string
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.column "role_id", :integer
+    t.column "user_id", :integer
   end
 
   create_table "styles", :force => true do |t|

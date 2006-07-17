@@ -1,0 +1,60 @@
+Acts as Draftable
+=====================
+
+Allows a model to save certain attributes into a smaller drafts table.  These are meant to be
+temporary modifications until the actual model is saved.  This is very similar to Acts as Versioned.
+
+This example class will create drafts on the title and body fields of Article:
+
+  class Article < ActiveRecord::Base
+    acts_as_draftable :fields => [:title, :body]
+  end
+
+Here's a sample workflow:
+
+1. Create your model.
+
+  article = Article.new(:title => 'foo', :body => 'bar')
+
+2. Save draft.
+
+  article.save_draft
+
+3. Retrieve latest draft.
+
+  draft = Article::Draft.find_new(:first, :order => 'updated_at desc')
+
+4. Decide you like the draft, and save it.
+
+  article = draft.to_article
+  article.save
+  
+  # notice your draft is now gone
+  Article::Draft.find_new(:first, :order => 'updated_at desc')
+  # => nil
+
+5. Create a new draft from the saved article
+
+  article = Article.find(1)
+  article.title
+  # => 'foo'
+  article.title = 'bar'
+  article.save_draft
+
+6. Load the draft's attributes over the current attributes without saving
+
+  article = Article.find(1)
+  article.title
+  # => 'foo'
+  article.load_from_draft
+  article.title
+  # => 'bar'
+
+7. Save the draft's attributes over the current attributes
+
+  article = Article.find(1)
+  article.title
+  # => 'foo'
+  article.save_from_draft
+  article.title
+  # => 'bar'

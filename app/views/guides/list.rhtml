@@ -3,7 +3,7 @@
 <table>
 <% for guide in @guides %>
   <tr>
-    <td><%= link_to guide.name, :action => 'show', :id => guide %></td>
+    <td><% if guide.image %><%= image_tag guide.image.public_filename("thumb") %><% end %><%= link_to guide.name, :action => 'show', :id => guide %></td>
   </tr>
   <tr>
     <td><%= guide.city %>, <%= guide.state %></td>

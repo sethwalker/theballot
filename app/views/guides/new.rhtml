@@ -3,13 +3,13 @@
 <table>
   <tr>
     <td valign="top">
-      <%= start_form_tag( { :action => 'create' }, :id => 'guide_form' ) %>
+      <%= start_form_tag( { :action => 'create' }, :id => 'guide_form', :multipart => true ) %>
         <%= render :partial => 'form' %>
-        <%= submit_tag "Create" %>
+        <%= submit_tag "Create" %> : <%= submit_tag 'Save As Draft', :name => 'save_draft' %>
       <%= end_form_tag %>
     </td>
     <td valign="top">
-      <%= render :partial => 'new_endorsement' %>
+      <%= render :partial => 'new_endorsement', :locals => {:num_endorsements => nil} %>
     </td>
     <td valign="top">
       <div id="endorsements">

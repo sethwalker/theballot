@@ -5,7 +5,7 @@ require 'endorsements_controller'
 class EndorsementsController; def rescue_action(e) raise e end; end
 
 class EndorsementsControllerTest < Test::Unit::TestCase
-  fixtures :endorsements
+  fixtures :endorsements, :positions
 
   def setup
     @controller = EndorsementsController.new

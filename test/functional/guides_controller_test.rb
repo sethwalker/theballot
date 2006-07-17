@@ -5,7 +5,7 @@ require 'guides_controller'
 class GuidesController; def rescue_action(e) raise e end; end
 
 class GuidesControllerTest < Test::Unit::TestCase
-  fixtures :guides
+  fixtures :guides, :users
 
   def setup
     @controller = GuidesController.new
@@ -39,6 +39,7 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_new
+    login_as :quentin
     get :new
 
     assert_response :success
@@ -48,9 +49,10 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_create
+    login_as :quentin
     num_guides = Guide.count
 
-    post :create, :guide => {}
+    post :create, :guide => {:name => 'guide name', :description => 'guide description', :city => 'guide city', :state => 'guide state', :owner_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -59,6 +61,8 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
+    login_as :quentin
+
     get :edit, :id => 1
 
     assert_response :success
@@ -69,6 +73,7 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_update
+    login_as :quentin
     post :update, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1

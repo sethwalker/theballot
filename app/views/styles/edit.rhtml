@@ -1,9 +1,15 @@
 <h1>Editing style</h1>
 
+<div style="float: left;">
 <%= start_form_tag :action => 'update', :id => @style %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
+</div>
+<div>
+  <%= render :partial => 'images/selection', :collection => Image.find(:all) %>
+</div>
+<div style="clear: both;"></div>
 
 <%= link_to 'Show', :action => 'show', :id => @style %> |
 <%= link_to 'Back', :action => 'list' %>

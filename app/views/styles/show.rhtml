@@ -1,8 +1,1 @@
-<% for column in Style.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @style.send(column.name) %>
-</p>
-<% end %>
-
-<%= link_to 'Edit', :action => 'edit', :id => @style %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= url_for_asset(4) %>

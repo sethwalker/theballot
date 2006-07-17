@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
 
   before_create :make_activation_code
 
+  # adding acl_system2 support http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2/
+  has_and_belongs_to_many :roles
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     # hide records with a nil activated_at

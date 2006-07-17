@@ -3,7 +3,7 @@
 <table>
   <tr>
     <td>
-      <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form' ) %>
+      <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
   <% position = 0 %>
