@@ -119,3 +119,31 @@ task :long_deploy do
   restart
   enable_web
 end
+
+desc <<-DESC
+Spinner is run by the default cold_deploy task. Instead of using script/spinner, we're just gonna rely on Mongrel to keep itself up.
+DESC
+task :spinner, :roles => :app do
+  application_port = 3080 #get this from your friendly sysadmin
+  run "mongrel_rails start -e production -p #{application_port} -d -c #{current_path}"
+end
+
+desc "Restart the web server"
+task :restart, :roles => :app do
+  begin
+    run "cd #{current_path} && mongrel_rails restart"
+  rescue RuntimeError => e
+    puts e
+    puts "Probably not a big deal, so I'll just keep trucking..."
+  end
+end
+
+desc "Get the correct database.yml on the server."
+task :database_yml, :roles => [:app, :db] do
+  put(File.read('deploy/database.yml'), "#{release_path}/config/database.yml", :mode => 0444)
+end
+
+desc "Get the system ready for database access."
+task :after_update_code do
+  database_yml
+end
