@@ -14,7 +14,7 @@ class ImagesController < ApplicationController
   end
 
   def list
-    @image_pages, @images = paginate :images, :per_page => 10
+    @image_pages, @images = paginate :images, :per_page => 10, :conditions => 'ISNULL(parent_id)'
   end
 
   def show

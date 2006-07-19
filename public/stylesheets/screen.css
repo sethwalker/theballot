@@ -30,7 +30,7 @@ body {
   border-left: 1px solid #cecea5;
 }
 
-.div {
+.clear {
   clear: both;
 }
 
@@ -38,4 +38,24 @@ body {
   background: #FFFFFF;
   float: left;
   width: 100%;
+}
+
+.required {
+  font-weight: bold;
+}
+
+.column {
+  position: relative;
+  float: left;
+}
+
+.right {
+  position: relative;
+  padding-left: 30em;
+}
+
+#guide-nav {
+  position: relative;
+  float: left;
+  background: red;
 }

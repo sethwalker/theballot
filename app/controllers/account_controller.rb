@@ -15,6 +15,33 @@ class AccountController < ApplicationController
   # say something nice, you goof!  something sweet.
   def index
     redirect_to(:action => 'signup') unless logged_in? || User.count > 0
+    @user = current_user
+  end
+
+  def profile
+    if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
+    render :action => 'index'
+  end
+
+  def update
+  end
+
+  def remove_admin
+    return unless current_user.is_admin?
+    @user = User.find(params[:id])
+    @user.roles.delete(Role.find_by_title('admin'))
+    render :text => 'No', :layout => false
+  end
+
+  def add_admin
+    @user = User.find(params[:id])
+    @user.roles << Role.find_by_title('admin')
+    @user.save
+    render :text => 'Yes', :layout => false
   end
 
   def login

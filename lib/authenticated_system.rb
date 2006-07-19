@@ -54,7 +54,7 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
           session[:return_to] = request.request_uri
-          redirect_to :controller => 'account', :action => 'login'
+          access_denied
         end
         accepts.xml do
           headers["Status"]           = "Unauthorized"

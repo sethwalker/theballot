@@ -55,7 +55,7 @@
     <h4 class="date"><%= @guide.date %></h4>
 
     <div class="public-url">
-      <%= link_to url_for( {:action => 'show', :id => @guide} ), {:action => 'show', :id => @guide} %>
+      <%= link_to guide_url, guide_url %>
     </div>
 
     <div class="intro-with-image">

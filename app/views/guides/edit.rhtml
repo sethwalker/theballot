@@ -1,32 +1,34 @@
-<h1>Editing guide</h1>
-
-<table>
-  <tr>
-    <td>
-      <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
+<%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
+  <div class="right">
+    <%= submit_tag 'Edit' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
+  </div>
   <% position = 0 %>
   <% @guide.endorsements.each do |e| %>
-    <%= hidden_field_tag("endorsements[#{position}][id]", e.id) %>
-    <%= hidden_field_tag("endorsements[#{position}][contest]", e.contest) %>
-    <%= hidden_field_tag("endorsements[#{position}][candidate]", e.candidate) %>
-    <%= hidden_field_tag("endorsements[#{position}][description]", e.description) %>
-    <%= hidden_field_tag("endorsements[#{position}][position_id]", e.position_id) %>
+    <%= hidden_field_tag("endorsements[#{e.sort}][id]", e.id) %>
+    <%= hidden_field_tag("endorsements[#{e.sort}][contest]", e.contest) %>
+    <%= hidden_field_tag("endorsements[#{e.sort}][candidate]", e.candidate) %>
+    <%= hidden_field_tag("endorsements[#{e.sort}][description]", e.description) %>
+    <%= hidden_field_tag("endorsements[#{e.sort}][position_id]", e.position_id) %>
     <% position = position + 1 %>
   <% end %>
 <%= end_form_tag %>
-</td>
-<td>
-  <%= render :partial => 'new_endorsement', :locals => {:num_endorsements => @guide.endorsements.length} %>
-</td>
-<td valign="top">
-<div id="endorsements">
-  <%= render :partial => 'endorsement', :collection => @guide.endorsements %>
-</div>
-</td>
-</tr>
-</table>
 
+<div id="endorsement_form" class="column">
+  <%= form_remote_tag :url => { :action => 'add_endorsement' } %>
+    <%= render :partial => 'new_endorsement', :locals => {:num_endorsements => @guide.endorsements.length} %>
+    <div id="endorsement_number_container">
+      <%= hidden_field_tag(:endorsement_number, @guide.endorsements.count) %>
+    </div>
+  <%= end_form_tag %>
+</div>
+
+<div id="endorsement_container" class="column">
+  <ul id="endorsements">
+    <%= render :partial => 'endorsement', :collection => @guide.endorsements %>
+  </ul>
+</div>
+
+<div class="clear"></div>
 <%= link_to 'Show', :action => 'show', :id => @guide %> |
 <%= link_to 'Back', :action => 'list' %>

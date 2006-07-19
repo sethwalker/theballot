@@ -1,5 +1,7 @@
 endorsement = Endorsement.new(params[:endorsement])
 page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => {:endorsement => endorsement}
+page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order', :id => @guide.id }
+
 
 page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][contest]", endorsement.contest)
 page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{params[:endorsement_number]}][candidate]", endorsement.candidate)

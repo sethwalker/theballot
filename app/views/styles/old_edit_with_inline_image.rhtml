@@ -1,0 +1,28 @@
+<h1>Editing style</h1>
+
+<table>
+	<tr>
+		<td>
+<%= start_form_tag :action => 'update', :id => @style %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<%= end_form_tag %>
+</td>
+<td>
+	<%= error_messages_for 'image' %>
+	<%= form_remote_tag :url => { :controller => 'images', :action => 'create' }, :update => 'selections', :html => { :multipart => true } %>
+	<%= render :partial => 'images/upload' %>
+	<%= end_form_tag %>
+	<br/>
+	<% images = Image.find(:all) %>
+	<% if !images.empty? %>
+	<ul id="selections">
+		<%= render :partial => 'images/selection', :collection => images %>
+	</ul>
+	<% end %>
+</td>
+</tr>
+</table>
+
+<%= link_to 'Show', :action => 'show', :id => @style %> |
+<%= link_to 'Back', :action => 'list' %>

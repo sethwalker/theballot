@@ -10,6 +10,6 @@ class GuideTest < Test::Unit::TestCase
     sf.city = 'san mateo'
     assert sf.save
     sanmateo = Guide.find(1)
-    assert_equal sanmateo.name, 'san mateo'
+    assert_equal sanmateo.city, 'san mateo'
   end
 end

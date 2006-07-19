@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   # adding acl_system2 support http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2/
   has_and_belongs_to_many :roles
 
+  def is_admin?
+    roles.detect {|r| 'admin' == r.title.downcase }
+  end
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     # hide records with a nil activated_at

@@ -1,18 +1,25 @@
 class Guide < ActiveRecord::Base
-  has_many :endorsements
-  has_one :image
-  has_one :pdf, :class_name => 'PDF'
+  has_many :endorsements, :dependent => :destroy, :order => 'sort'
+  has_one :image, :dependent => :destroy
+  has_one :pdf, :class_name => 'PDF', :dependent => :destroy
 
   belongs_to :owner
   belongs_to :theme
 
-  validates_presence_of :name, :city, :state
+  validates_presence_of :name
 
-  acts_as_draftable :fields => [:name, :city, :state, :date, :description, :owner_id, :theme_id] do
+  before_validation_on_create :create_permalink
+  validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
+
+=begin
+  acts_as_draftable :fields => [:name, :city, :state, :date, :description, :owner_id, :theme_id, :endorsements] do
     def self.included(base)
-      base.serialize :endorsements, Array
+      base.endorsements.each do |e|
+        e.save_draft
+      end
     end
   end
+=end
 
   def to_liquid
     liquid = { 'id' => id, 'name' => name, 'city' => city, 'state' => state, 'date' => date, 'description' => description, 'endorsements' => endorsements }
@@ -25,4 +32,13 @@ class Guide < ActiveRecord::Base
     liquid
   end
 
+  def permalink_url
+    date.strftime("%Y/%m/%d/") + permalink
+  end
+
+  protected
+  # from acts_as_urlnameable
+  def create_permalink
+    self.permalink = name.to_s.downcase.strip.gsub(/[^-_\s[:alnum:]]/, '').squeeze(' ').tr(' ', '_')
+  end
 end

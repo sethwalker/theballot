@@ -1,0 +1,21 @@
+<h3>Add Endorsement:</h3>
+<%= error_messages_for 'endorsement' %>
+
+<!--[form:endorsement]-->
+<p><label for="endorsement_contest">Contest or Ballot Measure</label><br/>
+<%= text_field 'endorsement', 'contest'  %></p>
+
+<p><label for="endorsement_candidate">Candidate</label><br/>
+<%= text_field 'endorsement', 'candidate'  %></p>
+
+<p><label for="endorsement_description">Description</label><br/>
+<%= text_area 'endorsement', 'description', :rows => 10  %></p>
+
+<table><tr><td>
+<p><label for="endorsement_position">Position</label><br/>
+<%= select 'endorsement', 'position_id', Position.find(:all).collect { |p| [p.text, p.id] } %></p>
+</td><td>
+<%= submit_tag "Add" %>
+</td></tr></table>
+<!--[eoform:endorsement]-->
+

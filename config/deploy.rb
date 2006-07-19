@@ -24,7 +24,7 @@ set :repository, "https://svn.radicaldesigns.org/electoral/#{application}"
 
 role :web, "gertie.radicaldesigns.org"
 role :app, "gertie.radicaldesigns.org"
-role :db,  "gertie.radicaldesigns.org"
+role :db,  "gertie.radicaldesigns.org", :primary => true
 
 # =============================================================================
 # OPTIONAL VARIABLES

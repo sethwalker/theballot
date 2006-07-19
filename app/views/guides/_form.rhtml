@@ -1,28 +1,43 @@
 <%= error_messages_for 'guide' %>
 
 <!--[form:guide]-->
-<p><label for="guide_name">Name</label><br/>
+<div id="guide_form">
+  <table>
+    <tr>
+      <td>
+<p><label for="guide_date" class="required">Election Date (required)</label><br/>
+<%= date_select 'guide', 'date', :order => [:month, :day, :year]  %></p>
+
+<p><label for="guide_name" class="required">Name (required)</label><br/>
 <%= text_field 'guide', 'name'  %></p>
 
-<p><label for="guide_description">Description</label><br/>
-<%= text_area 'guide', 'description'  %></p>
-
+<table><tr><td>
 <p><label for="guide_city">City</label><br/>
-<%= text_field 'guide', 'city'  %></p>
-
+<%= text_field 'guide', 'city', :size => 22  %></p>
+</td><td>
 <p><label for="guide_state">State</label><br/>
-<%= us_state_select 'guide', 'state'  %></p>
+<%= us_state_select 'guide', 'state', :show => :abbreviations, :include_blank => true %></p>
+</td></tr></table>
 
-<p><label for="guide_date">Date</label><br/>
-<%= date_select 'guide', 'date', :order => [:month, :day, :year]  %></p>
+</td>
+<td>
 
 <p><label for="guide_theme">Theme</label><br/>
 <%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id' %>
 
-<p><label for="guide_image">Upload an image of your guide</label><br/>
+<p><label for="guide_image">Upload an image for your guide</label><br/>
 <%= file_field 'image', 'uploaded_data'  %></p>
 
 <p><label for="guide_pdf">Upload a PDF of your guide</label><br/>
 <%= file_field 'pdf', 'uploaded_data'  %></p>
+
+</td>
+</tr>
+</table>
+
+<p><label for="guide_description">Description</label><br/>
+<%= text_area 'guide', 'description', :rows => 10, :cols => 70  %></p>
+
+</div>
 <!--[eoform:guide]-->
 

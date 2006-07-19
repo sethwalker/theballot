@@ -1,21 +1,23 @@
-<h1>New guide</h1>
+<%= start_form_tag( { :action => 'create' }, :id => 'guide_form', :multipart => true ) %>
+  <%= render :partial => 'form' %>
+  <div class="right">
+    <%= submit_tag "Publish", :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
+  </div>
+<%= end_form_tag %>
 
-<table>
-  <tr>
-    <td valign="top">
-      <%= start_form_tag( { :action => 'create' }, :id => 'guide_form', :multipart => true ) %>
-        <%= render :partial => 'form' %>
-        <%= submit_tag "Create" %> : <%= submit_tag 'Save As Draft', :name => 'save_draft' %>
-      <%= end_form_tag %>
-    </td>
-    <td valign="top">
-      <%= render :partial => 'new_endorsement', :locals => {:num_endorsements => nil} %>
-    </td>
-    <td valign="top">
-      <div id="endorsements">
-      </div>
-    </td>
-  </tr>
-</table>
+<div id="endorsement_form" class="column">
+  <%= form_remote_tag :url => { :action => 'add_endorsement' } %>
+    <%= render :partial => 'add_endorsement' %>
+    <div id="endorsement_number_container">
+    <%= hidden_field_tag(:endorsement_number, 0) %>
+    </div>
+  <%= end_form_tag %>
+</div>
+<div id="endorsement_container" class="column">
+  <ul id="endorsements">
+  </ul>
+</div>
+
+<div class="clear"></div>
 
 <%= link_to 'Back', :action => 'list' %>
