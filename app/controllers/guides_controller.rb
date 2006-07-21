@@ -1,23 +1,40 @@
 class GuidesController < ApplicationController
   before_filter :login_required, :only => [ :new, :create, :edit, :update ]
+  before_filter :check_date, :only => [ :edit, :update ]
 
-  in_place_edit_for :name, :city
+#  in_place_edit_for :name, :city
+
+  def check_date
+    @guide = Guide.find(params[:id])
+    if @guide.date.to_date < Time.now.to_date
+      flash[:error] = 'Guides cannot be edited after the election has passed' 
+      redirect_to :action => 'show', :id => @guide
+    end
+  end
 
   def authorized?
     if ['edit', 'update'].include?(action_name)
       @guide = Guide.find(params[:id])
-      return false unless @guide.owner.id == current_user.id
+      unless @guide.owner?(current_user)
+        flash[:error] = 'Permission Denied'
+        return false 
+      end
     end
     true
   end
 
   def access_denied
-    flash[:error] = 'cannot edit guides you did not create'
+    return super unless logged_in?
     redirect_to :action => 'show', :id => params[:id]
   end
 
   # end new stuff
 
+  def xml
+    @guide = Guide.find(params[:id])
+    render :xml => @guide.to_xml(:include => :endorsements)
+  end
+  
   def index
     list
     render :action => 'list'
@@ -28,7 +45,7 @@ class GuidesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    conditions = "status = 'Publish'"
+    conditions = "status = '#{Guide::PUBLISHED}'"
     conditions << " AND date >= '#{Time.now.to_s(:db)}'"
     conditions << " AND state = '#{params[:state]}'" if params[:state]
     conditions << " AND owner_id = '#{params[:author]}'" if params[:author]
@@ -36,7 +53,7 @@ class GuidesController < ApplicationController
   end
 
   def archive
-    conditions = "status = 'Publish'"
+    conditions = "status = '#{Guide::PUBLISHED}'"
     conditions << " AND date > '#{Time.now.to_s(:db)}'"
     conditions << " AND state = '#{params[:state]}'" if params[:state]
     conditions << " AND owner_id = '#{params[:author]}'" if params[:author]
@@ -52,14 +69,22 @@ class GuidesController < ApplicationController
     else
       @guide = Guide.find(params[:id], :include => :endorsements)
     end
-    if 'Draft' == @guide.status
-      redirect_to :action => :list unless @guide.owner_id == current_user.id
-      flash[:notice] = 'you are viewing this in preview mode'
+    if !@guide.is_published?
+      if logged_in? && @guide.owner?(current_user)
+        flash[:notice] = 'you are viewing this guide in preview mode'
+      else
+        not_found
+      end
     end
     if !@guide.theme.nil?
       template = Liquid::Template.parse(Theme.find(@guide.theme.id).markup)
       @rendered = template.render('guide' => @guide, 'endorsements' => @guide.endorsements)
     end
+  end
+
+  def not_found
+    flash[:error] = 'Guide not found'
+    redirect_to :action => :list
   end
 
   def new
@@ -80,11 +105,10 @@ class GuidesController < ApplicationController
       @guide.build_pdf(params[:pdf])
     end
     @guide.owner_id = current_user.id
-    case params[:status]
-    when 'Publish'
-      @guide.status = 'Publish'
-    when 'Save As Draft'
-      @guide.status = 'Draft'
+    if 'Publish' == params[:status]
+      @guide.publish
+    else
+      @guide.unpublish
     end
     if @guide.save
       flash[:notice] = 'Guide was successfully created.'
@@ -141,17 +165,23 @@ class GuidesController < ApplicationController
     e.save_draft
     @endorsement = e.draft
 =end
-    @endorsement = Endorsement.new(params[:endorement])
+    @endorsement = Endorsement.new(params[:endorsement])
+    if(params[:id])
+      @guide = Guide.find(params[:id])
+      @guide.endorsements << @endorsement
+      @guide.save
+    end
   end
 
   def update_endorsements
   end
 
   def order
+    @guide = Guide.find(params[:id])
     return unless params[:endorsements] && params[:endorsements].size > 1
-    params[:endorsements].each do |e|
-      string = string + Endorsement::Draft.find(e).inspect
+    @guide.endorsements.each do |e|
+      e.position = params[:endorsements].index(e.id.to_s) + 1
+      e.save
     end
-    render :text => 'hi'
   end
 end

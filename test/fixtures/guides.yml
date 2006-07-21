@@ -4,17 +4,31 @@ sanfrancisco:
   name: sf
   description: sf description
   city: san francisco
-  state: ca
+  state: CA
+  date: 2006-06-06
   owner_id: 1
-  theme_id: 1
   permalink: sf
+  status: <%= Guide::PUBLISHED %>
 
 newyork:
   id: 2
   name: nyc
   description: nyc description
   city: new york
-  state: ny
+  state: NY
+  date: 2006-11-07
   owner_id: 2
-  theme_id: 1
   permalink: nyc
+  status: <%= Guide::DRAFT %>
+
+future:
+  id: 3
+  name: future guide
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  owner_id: 1
+
+past:
+  id: 4
+  name: past guide
+  date: <%= (Time.now - 1.day).to_date.to_s %>
+  owner_id: 1

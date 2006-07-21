@@ -11,6 +11,12 @@
 <p><label for="guide_name" class="required">Name (required)</label><br/>
 <%= text_field 'guide', 'name'  %></p>
 
+<p><label for="guide_permalink">Permalink</label><br/>
+<span class="explain">your guide will have a permanent link based on the date and this value, like:<br/>
+  http://indyvoter.org/guides/2006/11/07/my_rad_guide<br/>
+  it will be created for you from the name if left blank.  it cannot be changed.</span><br/>
+<%= text_field 'guide', 'permalink'  %></p>
+
 <table><tr><td>
 <p><label for="guide_city">City</label><br/>
 <%= text_field 'guide', 'city', :size => 22  %></p>

@@ -3,14 +3,11 @@
   <div class="right">
     <%= submit_tag 'Edit' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
   </div>
-  <% position = 0 %>
   <% @guide.endorsements.each do |e| %>
-    <%= hidden_field_tag("endorsements[#{e.sort}][id]", e.id) %>
-    <%= hidden_field_tag("endorsements[#{e.sort}][contest]", e.contest) %>
-    <%= hidden_field_tag("endorsements[#{e.sort}][candidate]", e.candidate) %>
-    <%= hidden_field_tag("endorsements[#{e.sort}][description]", e.description) %>
-    <%= hidden_field_tag("endorsements[#{e.sort}][position_id]", e.position_id) %>
-    <% position = position + 1 %>
+    <%= hidden_field_tag("endorsements[#{e.position}][id]", e.id) %>
+    <%= hidden_field_tag("endorsements[#{e.position}][contest]", e.contest) %>
+    <%= hidden_field_tag("endorsements[#{e.position}][candidate]", e.candidate) %>
+    <%= hidden_field_tag("endorsements[#{e.position}][description]", e.description) %>
   <% end %>
 <%= end_form_tag %>
 
@@ -28,6 +25,8 @@
     <%= render :partial => 'endorsement', :collection => @guide.endorsements %>
   </ul>
 </div>
+
+<%= sortable_element 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order', :id => @guide.id } %>
 
 <div class="clear"></div>
 <%= link_to 'Show', :action => 'show', :id => @guide %> |

@@ -4,12 +4,26 @@ janet:
   guide_id: 1
   contest: assembly
   candidate: janet reilly
-  position_id: 1
-  description: some text
+  selection: 'Yes'
+  description: janet desc
 fiona:
   id: 2
   guide_id: 1
   contest: assembly
   candidate: fiona ma
-  position_id: 2
-  description: some text
+  selection: 'No'
+  description: fiona desc
+arnold:
+  id: 3
+  guide_id: 1
+  contest: governor
+  candidate: arnold
+  selection: 'No'
+  description: arnold desc
+<% 1.upto(3) do |i| %>order_<%= i %>:
+  id: <%= 3 + i %>
+  contest: order test contest <%= i %>
+<% end %>
+  
+  
+

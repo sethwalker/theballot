@@ -55,7 +55,7 @@
     <h4 class="date"><%= @guide.date %></h4>
 
     <div class="public-url">
-      <%= link_to guide_url, guide_url %>
+      <%= link_to @guide.permalink_url, @guide.permalink_url %>
     </div>
 
     <div class="intro-with-image">
@@ -105,7 +105,7 @@
         <h4 class="position"><span class=
         "position_label">Endorsed Vote:</span>
         <span class="position_text">
-        <%= e.position.text %></span></h4>
+        <%= e.selection_text %></span></h4>
 
         <p class="text"><%= e.description %></p>
       </div>

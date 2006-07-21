@@ -5,7 +5,7 @@ require 'guides_controller'
 class GuidesController; def rescue_action(e) raise e end; end
 
 class GuidesControllerTest < Test::Unit::TestCase
-  fixtures :guides, :users
+  fixtures :guides, :endorsements, :users
 
   def setup
     @controller = GuidesController.new
@@ -38,6 +38,25 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert assigns(:guide).valid?
   end
 
+  def test_preview
+    get :show, :id => 2
+    assert_response :redirect
+    assert_redirected_to :action => :list
+    assert flash[:error]
+
+    login_as :arthur
+    authorize_as :arthur
+    assert @controller.send(:logged_in?)
+
+    @guide = Guide.find(2)
+    assert !@guide.is_published?
+    assert @guide.owner?(users(:arthur))
+    get :show, :id => 2
+    raise flash.inspect
+    assert_response :success
+    assert flash[:notice]
+  end
+
   def test_new
     get :new
     assert_response :redirect
@@ -60,7 +79,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     authorize_as :quentin
     num_guides = Guide.count
 
-    post :create, :guide => {:name => 'guide name', :description => 'guide description', :city => 'guide city', :state => 'guide state', :owner_id => 1}
+    post :create, :guide => {:name => 'guide name', :date => Time.now, :description => 'guide description', :city => 'guide city', :state => 'guide state', :owner_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -69,11 +88,11 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => 1
+    get :edit, :id => 3
     assert_redirected_to :controller => 'account', :action => 'login'
     authorize_as :quentin
 
-    get :edit, :id => 1
+    get :edit, :id => 3
 
     assert_response :success
     assert_template 'edit'
@@ -82,14 +101,28 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert assigns(:guide).valid?
   end
 
+  def test_edit_past
+    authorize_as :quentin
+    get :edit, :id => 4
+    assert_response :redirect
+    assert_redirected_to :action => 'show', :id => 4
+  end
+
   def test_update
-    post :update, :id => 1
+    post :update, :id => 3
     assert_redirected_to :controller => 'account', :action => 'login'
 
     authorize_as :quentin
-    post :update, :id => 1
+    post :update, :id => 3
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'show', :id => 3
+  end
+
+  def test_update_past
+    authorize_as :quentin
+    get :update, :id => 4
+    assert_response :redirect
+    assert_redirected_to :action => 'show', :id => 4
   end
 
   def test_destroy

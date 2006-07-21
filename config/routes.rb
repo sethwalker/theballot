@@ -13,7 +13,9 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   map.connect '', :controller => "guides"
 
-  map.guide_permalink 'guides/:year/:month/:day/:permalink', :controller => 'guides', :action => 'show'
+  map.guide_permalink 'guides/permalink/:year/:month/:day/:permalink', :controller => 'guides', :action => 'show'
+
+  map.author 'guides/author/:author', :controller => 'guides', :action => 'list'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

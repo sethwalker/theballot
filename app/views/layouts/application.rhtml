@@ -21,9 +21,9 @@
     <div id="guide-nav">
       <%= link_to "Make a new guide", :controller => 'guides', :action => 'new' %> | 
       <label for="state_select">View guides by state</label><%= us_state_select 'guide', 'state', {:show => :abbreviations}, {}, :onchange => "window.location.href='/guides/list?state=' + this.value" %>
-      <% if logged_in? && !@guide.nil? && @guide.owner.id == current_user.id %>
-      | <%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %>
-      <% end %>
+      <%# if logged_in? && !@guide.nil? && @guide.owner.id == current_user.id %>
+      | <%#= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %>
+      <%# end %>
       <% if logged_in? && Guide.find_by_owner_id(current_user.id) -%>
       | <%= link_to "Your guides", :controller => 'guides', :action => 'list', :author => current_user.id %>
       <% end %>
