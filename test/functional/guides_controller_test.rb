@@ -13,6 +13,14 @@ class GuidesControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
+  def test_authenticated_helpers
+    assert !logged_in?
+    assert !@controller.send(:logged_in?)
+
+    login_as :quentin
+    assert @controller.send(:logged_in?)
+  end
+
   def test_index
     get :index
     assert_response :success
@@ -46,13 +54,11 @@ class GuidesControllerTest < Test::Unit::TestCase
 
     login_as :arthur
     authorize_as :arthur
-    assert @controller.send(:logged_in?)
 
     @guide = Guide.find(2)
     assert !@guide.is_published?
     assert @guide.owner?(users(:arthur))
     get :show, :id => 2
-    raise flash.inspect
     assert_response :success
     assert flash[:notice]
   end
@@ -135,5 +141,33 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert_raise(ActiveRecord::RecordNotFound) {
       Guide.find(1)
     }
+  end
+
+  def test_add_endorsement_to_new
+    post :add_endorsement, :endorsement => { :candidate => 'new candidate' }
+    assert_equal assigns(:endorsement).candidate, 'new candidate'
+  end
+
+  def test_add_endorsement_in_edit
+    @guide = Guide.find(1)
+    count = @guide.endorsements.count
+    post :add_endorsement, :endorsement => { :candidate => 'new candidate' }, :id => 1
+    @guide = Guide.find(1)
+    assert_equal @guide.endorsements.count, count + 1
+    assert @guide.endorsements.find_by_candidate('new candidate')
+  end
+
+  def test_order
+    @guide = Guide.new(:name => 'reorder test', :date => Time.now)
+    @guide.endorsements << Endorsement.find(7,8,9)
+    assert @guide.save
+    assert_equal Endorsement.find(7).position, 1
+    assert_equal Endorsement.find(8).position, 2
+    assert_equal Endorsement.find(9).position, 3
+
+    post :order, :endorsements => [3,1,2], :id => @guide.id
+    assert_equal Endorsement.find(7).position, 3
+    assert_equal Endorsement.find(8).position, 1
+    assert_equal Endorsement.find(9).position, 2
   end
 end
