@@ -1,3 +1,4 @@
+<h3>Add Endorsement:</h3>
 <%= error_messages_for 'endorsement' %>
 
 <!--[form:endorsement]-->
@@ -11,6 +12,6 @@
 <%= text_area 'endorsement', 'description'  %></p>
 
 <p><label for="endorsement_selection">Position</label><br/>
-<%= select 'endorsement', 'selection', Endorsement::SELECTION_OPTIONS %></p>
+<%= select 'endorsement', 'selection', Endorsement::SELECTION_OPTIONS.invert %></p>
 <!--[eoform:endorsement]-->
 

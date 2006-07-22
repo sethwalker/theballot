@@ -58,7 +58,9 @@ class Guide < ActiveRecord::Base
   protected
   # from acts_as_urlnameable
   def create_permalink
-    self.permalink ||= name.to_s.downcase.strip.gsub(/[^-_\s[:alnum:]]/, '').squeeze(' ').tr(' ', '_')
+    if permalink.nil? || permalink.empty?
+      self.permalink = name.to_s.downcase.strip.gsub(/[^-_\s[:alnum:]]/, '').squeeze(' ').tr(' ', '_')
+    end
   end
 
   def validate_on_create

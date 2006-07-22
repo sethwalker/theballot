@@ -94,7 +94,7 @@ class GuidesController < ApplicationController
   def create
     @guide = Guide.new(params[:guide])
     if params.include?('endorsements')
-      params[:endorsements].each do |num, e|
+      params[:endorsements].each do |e|
         @guide.endorsements.build(e)
       end
     end
@@ -125,20 +125,16 @@ class GuidesController < ApplicationController
   def update
     @guide = Guide.find(params[:id])
     return render :action => 'edit' unless @guide.update_attributes(params[:guide])
-    if params.include?(:endorsements)
-      params[:endorsements].each do |num, e|
-        endorsement = @guide.endorsements.find_or_create_by_id(e[:id])
-        #maybe: @guide.endorsements.find_or_create(e)
-        #endorsement = Endorsement.find(e[:id])
-        endorsement.update_attributes(e)
-        #@guide.endorsements << endorsement
-      end
-    end
     if params.include?(:image)
       @guide.image = Image.new(params[:image])
     end
     if params.include?(:pdf)
       @guide.pdf = PDF.new(params[:pdf])
+    end
+    if 'Save As Draft' == params[:status]
+      @guide.unpublish
+    else
+      @guide.publish
     end
     flash[:notice] = 'Guide was successfully updated.'
     redirect_to :action => 'show', :id => @guide
@@ -150,38 +146,23 @@ class GuidesController < ApplicationController
   end
 
   def add_endorsement
-=begin
-    Guide::Draft.with_scope(:find => { :conditions => ['owner_id = ?', current_user.id] }) do
-      @guide = Guide::Draft.find_new(:first, :conditions => ['owner_id = ?', current_user.id] )
-    end
-    unless @guide
-      g = Guide.new
-      g.owner_id = current_user.id
-      @guide = guide.save_draft
-    end
-    @guide.endorsements.build(params[:endorsement])
-    e = Endorsement.new(params[:endorsement])
-    e.guide_id = @guide.id
-    e.save_draft
-    @endorsement = e.draft
-=end
     @endorsement = Endorsement.new(params[:endorsement])
     if(params[:id])
       @guide = Guide.find(params[:id])
       @guide.endorsements << @endorsement
       @guide.save
+    else
+      @number = params[:endorsement_number].to_i || 0
+      @number += 1
     end
-  end
-
-  def update_endorsements
   end
 
   def order
     @guide = Guide.find(params[:id])
-    return unless params[:endorsements] && params[:endorsements].size > 1
     @guide.endorsements.each do |e|
-      e.position = params[:endorsements].index(e.id.to_s) + 1
+      e.position = params[:endorsements].index(e.id) + 1
       e.save
     end
+    render :nothing => true
   end
 end

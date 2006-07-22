@@ -1,22 +1,20 @@
 <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
   <div class="right">
-    <%= submit_tag 'Edit' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
+    <%= submit_tag 'Edit', :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
   </div>
   <% @guide.endorsements.each do |e| %>
-    <%= hidden_field_tag("endorsements[#{e.position}][id]", e.id) %>
-    <%= hidden_field_tag("endorsements[#{e.position}][contest]", e.contest) %>
-    <%= hidden_field_tag("endorsements[#{e.position}][candidate]", e.candidate) %>
-    <%= hidden_field_tag("endorsements[#{e.position}][description]", e.description) %>
+    <%= hidden_field_tag("endorsements[#{e.id}][contest]", e.contest) %>
+    <%= hidden_field_tag("endorsements[#{e.id}][candidate]", e.candidate) %>
+    <%= hidden_field_tag("endorsements[#{e.id}][description]", e.description) %>
+    <%= hidden_field_tag("endorsements[#{e.id}][selection]", e.selection) %>
   <% end %>
 <%= end_form_tag %>
 
 <div id="endorsement_form" class="column">
-  <%= form_remote_tag :url => { :action => 'add_endorsement' } %>
-    <%= render :partial => 'new_endorsement', :locals => {:num_endorsements => @guide.endorsements.length} %>
-    <div id="endorsement_number_container">
-      <%= hidden_field_tag(:endorsement_number, @guide.endorsements.count) %>
-    </div>
+  <%= form_remote_tag :url => { :action => 'add_endorsement', :id => @guide.id } %>
+    <%= render :partial => 'endorsements/form' %>
+    <%= submit_tag 'add endorsement' %>
   <%= end_form_tag %>
 </div>
 

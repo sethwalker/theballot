@@ -1,20 +1,28 @@
 <%= start_form_tag( { :action => 'create' }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
+  <% if !@guide.endorsements.empty? -%>
+    <% @guide.endorsements.each_with_index do |e,i| %>
+      <%= hidden_field_tag("endorsements[#{i}][contest]", e.contest) %>
+      <%= hidden_field_tag("endorsements[#{i}][candidate]", e.candidate) %>
+      <%= hidden_field_tag("endorsements[#{i}][description]", e.description) %>
+      <%= hidden_field_tag("endorsements[#{i}][selection]", e.selection) %>
+    <% end %>
+  <% end -%>
+  <%= hidden_field_tag(:endorsement_number, @guide.endorsements.size) %>
   <div class="right">
     <%= submit_tag "Publish", :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
   </div>
 <%= end_form_tag %>
 
 <div id="endorsement_form" class="column">
-  <%= form_remote_tag :url => { :action => 'add_endorsement' } %>
-    <%= render :partial => 'add_endorsement' %>
-    <div id="endorsement_number_container">
-    <%= hidden_field_tag(:endorsement_number, 0) %>
-    </div>
+  <%= form_remote_tag :url => { :action => 'add_endorsement' }, :html => { :id => 'add_endorsement_form' } %>
+    <%= render :partial => 'endorsements/form' %>
+    <%= submit_tag 'add endorsement' %>
   <%= end_form_tag %>
 </div>
 <div id="endorsement_container" class="column">
   <ul id="endorsements">
+    <%= render :partial => 'endorsement', :collection => @guide.endorsements if !@guide.endorsements.empty? %>
   </ul>
 </div>
 
