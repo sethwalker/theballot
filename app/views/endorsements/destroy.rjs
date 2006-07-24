@@ -1,0 +1,2 @@
+page.remove "endorsement_#{@endorsement.id}"
+page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order', :id => @endorsement.guide.nil? ? nil : @endorsement.guide.id }

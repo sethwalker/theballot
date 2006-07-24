@@ -1,7 +1,7 @@
 <% 
   if !@guide.theme.nil? && !@guide.theme.style.nil?
     content_for :stylesheets do %>
-  <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
+      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
 <%  end
   end
 %>

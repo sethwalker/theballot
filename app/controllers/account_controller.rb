@@ -1,6 +1,8 @@
 class AccountController < ApplicationController
   observer :user_observer
 
+  in_place_edit_for :user, :login
+
   def activate
     @user = User.find_by_activation_code(params[:id]) unless params[:id].nil?
     if @user and @user.activate
@@ -19,12 +21,12 @@ class AccountController < ApplicationController
   end
 
   def profile
+    return unless logged_in?
     if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
       @user = User.find(params[:id])
     else
       @user = current_user
     end
-    render :action => 'index'
   end
 
   def update
@@ -34,14 +36,15 @@ class AccountController < ApplicationController
     return unless current_user.is_admin?
     @user = User.find(params[:id])
     @user.roles.delete(Role.find_by_title('admin'))
-    render :text => 'No', :layout => false
+    render :partial => 'admin_control', :locals => { :user => @user }, :layout => false
   end
 
   def add_admin
+    return unless current_user.is_admin?
     @user = User.find(params[:id])
     @user.roles << Role.find_by_title('admin')
     @user.save
-    render :text => 'Yes', :layout => false
+    render :partial => 'admin_control', :locals => { :user => @user }, :layout => false
   end
 
   def login

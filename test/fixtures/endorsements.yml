@@ -24,6 +24,9 @@ arnold:
 <% 1.upto(3) do |i| %>order_<%= i %>:
   id: <%= 3 + i %>
   contest: order test contest <%= i %>
+  candidate: order test candidate <%= i %>
+  description: order test candidate <%= i %>
+  guide_id: 1
 <% end %>
 # 7, 8, 9
 <% 1.upto(3) do |i| %>reorder_<%= i %>:

@@ -12,7 +12,7 @@
     <div id="header">Super! New! Voter! Guides!</div>
     <div id="nav">
       <% if logged_in? %>
-        <%= link_to "Log Out", :controller => 'account', :action => 'logout' %>
+      <%= link_to "My Stuff", :controller => 'account', :action => 'profile', :id => current_user.id %> | <%= link_to "Log Out", :controller => 'account', :action => 'logout' %>
       <% else %>
         <%= link_to "Log In", :controller => 'account', :action => 'login' %> | <%= link_to "Sign Up", :controller => 'account', :action => 'signup' %>
       <% end %>

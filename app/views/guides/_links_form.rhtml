@@ -1,0 +1,12 @@
+<% if !guide.links.empty? -%>
+  <% guide.links.each do |l| -%>
+  <div>
+    <p>
+      <b>URL:</b><%= in_place_editor_field l, 'url' %>
+    </p>
+    <p>
+      <b>Description:</b><%= in_place_editor_field l, 'description' %>
+    </p>
+  </div>
+  <% end -%>
+<% end -%>

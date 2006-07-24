@@ -1,4 +1,26 @@
-<li id="endorsement_<%= endorsement.id %>">
+<% id = !endorsement.id.nil? ? endorsement.id : index -%>
+<li id="endorsement_<%= id %>">
   <span><b><%= endorsement.contest %>:</b> <%= endorsement.candidate %></span><br/>
   <span><%= endorsement.description %></span>
+  <% delete_url = !endorsement.id.nil? ? 
+    { :controller => 'endorsements', :action => 'destroy', :id => endorsement.id } :
+    { :action => 'remove', :index => index } -%>
+  <% update_url = !endorsement.id.nil? ?
+    { :controller => 'endorsements', :action => 'update', :id => endorsement.id } :
+    { :controller => 'guides', :action => 'replace_endorsement', :index => index } -%>
+
+  <span><%= link_to_function "edit", "Element.toggle('endorsement_#{id}_form')" %></span> | <span><%= link_to_remote "delete", :url => delete_url %></span>
+  <div id="endorsement_<%= id %>_form" style="display:none">
+    <% remote_form_for :endorsement, endorsement, :url => update_url do |f| %>
+      <p><label for="endorsement_contest">Contest</label><br/>
+      <%= f.text_field :contest %></p>
+      <p><label for="endorsement_candidate">Candidate</label><br/>
+      <%= f.text_field :candidate %></p>
+      <p><label for="endorsement_description">Description</label><br/>
+      <%= f.text_area :description, :rows => 5 %></p>
+      <p><label for="endorsement_selection">Position</label><br/>
+      <%= f.select :selection, Endorsement::SELECTION_OPTIONS.values %>
+      <%= submit_tag "Update" %></p>
+    <% end %>
+  </div>
 </li>

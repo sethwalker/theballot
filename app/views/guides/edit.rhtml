@@ -1,15 +1,22 @@
 <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
   <div class="right">
-    <%= submit_tag 'Edit', :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
+    <%= submit_tag 'Save', :name => 'status' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish', :name => 'status' %><% else %><%= submit_tag 'Publish' %><% end %>
   </div>
-  <% @guide.endorsements.each do |e| %>
-    <%= hidden_field_tag("endorsements[#{e.id}][contest]", e.contest) %>
-    <%= hidden_field_tag("endorsements[#{e.id}][candidate]", e.candidate) %>
-    <%= hidden_field_tag("endorsements[#{e.id}][description]", e.description) %>
-    <%= hidden_field_tag("endorsements[#{e.id}][selection]", e.selection) %>
-  <% end %>
 <%= end_form_tag %>
+<%= link_to_function 'edit links', "Element.toggle('links')" %>
+<div id="links" style="display:none">
+  <div id="links_form" style="float: left; width: 45%">
+    <%= form_remote_tag :url => { :controller => 'links', :action => 'create' }, :update => 'links_list', :position => :bottom %>
+    <%= render :partial => 'links/form' %>
+    <%= submit_tag 'add' %>
+  <%= end_form_tag %>
+  <%= render :partial => 'links_form', :locals => { :guide => @guide } %>
+  </div>
+  <div id="links_list" style="float: left; width: 50%;">
+  </div>
+  <div class="clear"></div>
+</div>
 
 <div id="endorsement_form" class="column">
   <%= form_remote_tag :url => { :action => 'add_endorsement', :id => @guide.id } %>

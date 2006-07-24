@@ -5,7 +5,7 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :guides
 
   def setup
     @controller = AccountController.new
@@ -15,6 +15,12 @@ class AccountControllerTest < Test::Unit::TestCase
     # for testing action mailer
     @emails = ActionMailer::Base.deliveries 
     @emails.clear
+  end
+
+  def test_profile
+    authorize_as :quentin
+    get :profile, :id => 1
+    assert :success
   end
 
   def test_should_not_activate_nil

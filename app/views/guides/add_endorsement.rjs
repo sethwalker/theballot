@@ -1,9 +1,0 @@
-page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => {:endorsement => @endorsement}
-
-if @number
-  page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{@number}][contest]", @endorsement.contest)
-  page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{@number}][candidate]", @endorsement.candidate)
-  page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{@number}][description]", @endorsement.description)
-  page.insert_html :bottom, 'guide_form', hidden_field_tag("endorsements[#{@number}][selection]", @endorsement.selection)
-  page.replace_html 'endorsement_number', hidden_field_tag(:endorsement_number, @number)
-end

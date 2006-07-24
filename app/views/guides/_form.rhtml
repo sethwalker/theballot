@@ -29,7 +29,7 @@
 <td>
 
 <p><label for="guide_theme">Theme</label><br/>
-<%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id' %>
+<%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id', :prompt => 'none', :include_blank => true %>
 
 <p><label for="guide_image">Upload an image for your guide</label><br/>
 <%= file_field 'image', 'uploaded_data'  %></p>

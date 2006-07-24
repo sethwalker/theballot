@@ -2,8 +2,6 @@ class GuidesController < ApplicationController
   before_filter :login_required, :only => [ :new, :create, :edit, :update ]
   before_filter :check_date, :only => [ :edit, :update ]
 
-#  in_place_edit_for :name, :city
-
   def check_date
     @guide = Guide.find(params[:id])
     if @guide.date.to_date < Time.now.to_date
@@ -13,7 +11,7 @@ class GuidesController < ApplicationController
   end
 
   def authorized?
-    if ['edit', 'update'].include?(action_name)
+    if ['edit', 'update', 'destroy'].include?(action_name)
       @guide = Guide.find(params[:id])
       unless @guide.owner?(current_user)
         flash[:error] = 'Permission Denied'
@@ -92,10 +90,12 @@ class GuidesController < ApplicationController
   end
 
   def create
+    order = params[:order].split(',') if params[:order]
     @guide = Guide.new(params[:guide])
     if params.include?('endorsements')
-      params[:endorsements].each do |e|
-        @guide.endorsements.build(e)
+      params[:endorsements].each do |i,e|
+        endorsement = @guide.endorsements.build(e)
+        endorsement.position = order.index(i) + 1 if !order.nil?
       end
     end
     if params.include?('image')
@@ -131,11 +131,12 @@ class GuidesController < ApplicationController
     if params.include?(:pdf)
       @guide.pdf = PDF.new(params[:pdf])
     end
-    if 'Save As Draft' == params[:status]
+    if 'Unpublish' == params[:status]
       @guide.unpublish
     else
       @guide.publish
     end
+    @guide.save
     flash[:notice] = 'Guide was successfully updated.'
     redirect_to :action => 'show', :id => @guide
   end
@@ -145,24 +146,25 @@ class GuidesController < ApplicationController
     redirect_to :action => 'list'
   end
 
-  def add_endorsement
-    @endorsement = Endorsement.new(params[:endorsement])
-    if(params[:id])
+  def order
+    @order = params[:endorsements]
+    return render(:partial => 'order', :locals => { :order => @order }) unless params[:id]
+    if params[:id]
       @guide = Guide.find(params[:id])
-      @guide.endorsements << @endorsement
-      @guide.save
-    else
-      @number = params[:endorsement_number].to_i || 0
-      @number += 1
+      @guide.endorsements.each do |e|
+        e.position = @order.index(e.id) + 1
+        e.save
+      end
+      return render :nothing => true
     end
   end
 
-  def order
-    @guide = Guide.find(params[:id])
-    @guide.endorsements.each do |e|
-      e.position = params[:endorsements].index(e.id) + 1
-      e.save
+  def replace_endorsement
+    @endorsement = Endorsement.new(params[:endorsement])
+    render :update do |page|
+      page.replace "endorsement_#{params[:index]}", :partial => 'endorsement', :locals => { :endorsement => @endorsement, :index => params[:index] }
+      page.replace "endorsement_#{params[:index]}_hiddens", :partial => 'endorsements/hiddens', :locals => { :endorsement => @endorsement, :index => params[:index] }
+      page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :controller => 'guides', :action => 'order' }, :update => 'endorsement_order'
     end
-    render :nothing => true
   end
 end

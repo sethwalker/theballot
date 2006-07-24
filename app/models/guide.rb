@@ -2,7 +2,8 @@ class Guide < ActiveRecord::Base
   PUBLISHED = 'Published'
   DRAFT = 'Draft'
 
-  has_many :endorsements, :dependent => :destroy
+  has_many :endorsements, :dependent => :destroy, :order => 'position'
+  has_many :links, :dependent => :destroy
   has_one :image, :dependent => :destroy
   has_one :pdf, :class_name => 'PDF', :dependent => :destroy
 

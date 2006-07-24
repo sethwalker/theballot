@@ -1,4 +1,16 @@
 class EndorsementsController < ApplicationController
+
+  def authorized?
+    if ['edit', 'update', 'destroy'].include?(action_name)
+      @endorsement = Endorsement.find(params[:id])
+      unless @endorsement.guide.owner?(current_user)
+        flash[:error] = 'Permission Denied'
+        return false
+      end
+    end
+    true
+  end
+
   def index
     list
     render :action => 'list'
@@ -20,14 +32,16 @@ class EndorsementsController < ApplicationController
     @endorsement = Endorsement.new
   end
 
+  def add
+    @endorsement = Endorsement.new(params[:endorsement])
+    @index = params[:index].to_i || 0
+    @order = params[:current_order] || "#{@index}"
+    @order << ",#{@index}" if @index > 0
+  end
+
   def create
     @endorsement = Endorsement.new(params[:endorsement])
-    if @endorsement.save
-      flash[:notice] = 'Endorsement was successfully created.'
-      redirect_to :action => 'list'
-    else
-      render :action => 'new'
-    end
+    @endorsement.save if @endorsement.guide
   end
 
   def edit
@@ -36,16 +50,17 @@ class EndorsementsController < ApplicationController
 
   def update
     @endorsement = Endorsement.find(params[:id])
-    if @endorsement.update_attributes(params[:endorsement])
-      flash[:notice] = 'Endorsement was successfully updated.'
-      redirect_to :action => 'show', :id => @endorsement
-    else
-      render :action => 'edit'
-    end
+    render :nothing => true unless @endorsement.update_attributes(params[:endorsement])
   end
 
   def destroy
-    Endorsement.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    @endorsement = Endorsement.find(params[:id])
+    @endorsement.destroy if @endorsement
+    @number = params[:id]
+  end
+
+  def remove
+    @index = params[:index]
+#    @order = params[:current_order].split(',').delete_if {|i| i == @index}.join(',')
   end
 end

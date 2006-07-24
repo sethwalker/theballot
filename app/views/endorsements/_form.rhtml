@@ -9,9 +9,10 @@
 <%= text_field 'endorsement', 'candidate'  %></p>
 
 <p><label for="endorsement_description">Description</label><br/>
-<%= text_area 'endorsement', 'description'  %></p>
+<%= text_area 'endorsement', 'description', :rows => 5  %></p>
 
 <p><label for="endorsement_selection">Position</label><br/>
-<%= select 'endorsement', 'selection', Endorsement::SELECTION_OPTIONS.invert %></p>
-<!--[eoform:endorsement]-->
+<%= select 'endorsement', 'selection', Endorsement::SELECTION_OPTIONS.values %></p>
 
+<%= hidden_field 'endorsement', 'guide_id' %>
+<!--[eoform:endorsement]-->

@@ -107,11 +107,22 @@ class GuidesControllerTest < Test::Unit::TestCase
 
   def test_invalid_create_with_endorsments
     name = 'test invalid create with endorsements'
+    authorize_as :quentin
     post :create, :guide => { :name => name, :endorsements => [ Endorsement.new(:contest => 'first'), Endorsement.new(:contest => 'second'), Endorsement.new(:contest => 'third') ] }
 
-    assert_response :redirect
+    assert !Guide.find_by_name(name)
     assert assigns('guide')
     assert_equal assigns('guide').endorsements.size, 3
+    assert_equal assigns('guide').endorsements.first.contest, 'first'
+  end
+
+  def test_invalid_create_after_reorder
+    authorize_as :quentin
+    post :create, :guide => { :name => 'invalid with reorder', :endorsements => [ Endorsement.new(:contest => 'first'), Endorsement.new(:contest => 'second'), Endorsement.new(:contest => 'third') ] }, :order => '2,1,3'
+
+    assert assigns('guide')
+    assert !assigns('guide').valid?
+    assert_equal assigns('guide').endorsements.first.contest, 'second'
   end
 
   def test_edit
@@ -164,28 +175,15 @@ class GuidesControllerTest < Test::Unit::TestCase
     }
   end
 
-  def test_add_endorsement_to_new
-    post :add_endorsement, :endorsement => { :candidate => 'new candidate' }
-    assert assigns(:number)
-    assert_equal assigns(:number), 1
-    assert_equal assigns(:endorsement).candidate, 'new candidate'
-
-    post :add_endorsement, :endorsement => { :candidate => 'second new candidate' }, :endorsement_number => 1
-    assert assigns(:number)
-    assert_equal assigns(:number), 2
-    assert_equal assigns(:endorsement).candidate, 'second new candidate'
+  def test_order_on_new
+    authorize_as :quentin
+    
+    post :order, :endorsements => [8,9,7]
+    assert_tag :tag => 'input',
+      :attributes => { :type => 'hidden', :name => 'order' }
   end
 
-  def test_add_endorsement_in_edit
-    @guide = Guide.find(1)
-    count = @guide.endorsements.count
-    post :add_endorsement, :endorsement => { :candidate => 'new candidate' }, :id => 1
-    @guide = Guide.find(1)
-    assert_equal @guide.endorsements.count, count + 1
-    assert @guide.endorsements.find_by_candidate('new candidate')
-  end
-
-  def test_order
+  def test_reorder
     @guide = Guide.new(:name => 'reorder test', :date => Time.now)
     @guide.endorsements << Endorsement.find(7,8,9)
     assert @guide.save
@@ -201,12 +199,18 @@ class GuidesControllerTest < Test::Unit::TestCase
 
   def test_save_as_draft
     g = Guide.new(:name => 'draftable', :date => Time.now, :status => Guide::PUBLISHED, :owner_id => users(:quentin).id)
-    g.save
+    assert g.save
     assert g.is_published?
 
     authorize_as :quentin
-    post :update, :id => g.id, :status => 'Save As Draft'
+    post :update, :id => g.id, :status => 'Unpublish'
+    assert_response :redirect
+    assert_redirected_to :action => 'show'
     updated = Guide.find(g.id)
     assert !updated.is_published?
+
+    post :update, :id => g.id, :status => 'Edit'
+    updated_again = Guide.find(g.id)
+    assert updated_again.is_published?
   end
 end

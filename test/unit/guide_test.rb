@@ -57,4 +57,15 @@ class GuideTest < Test::Unit::TestCase
     assert first.first?
     assert third.last?
   end
+
+  def test_publish
+    g = Guide.new(:name => 'publish test', :date => Time.now)
+    assert g.save
+
+    assert !g.is_published?
+    g.publish
+    assert g.is_published?
+    g.unpublish
+    assert !g.is_published?
+  end
 end

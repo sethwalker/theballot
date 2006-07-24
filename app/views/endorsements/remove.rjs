@@ -1,0 +1,3 @@
+page.remove "endorsement_#{@index}"
+page.remove "endorsement_#{@index}_hiddens"
+#page.replace_html 'order', hidden_field_tag(:order, @order)

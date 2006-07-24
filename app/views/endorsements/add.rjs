@@ -1,0 +1,12 @@
+page.insert_html :bottom, 'endorsements', :partial => 'guides/endorsement', :locals => { :endorsement => @endorsement, :index => @index }
+
+page.insert_html :bottom, 'guide_form', :partial => 'hiddens', :locals => { :endorsement => @endorsement, :index => @index }
+
+page.replace_html 'current_index', hidden_field_tag('index', "#{@index + 1}")
+
+page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :controller => 'guides', :action => 'order' }, :update => 'endorsement_order'
+
+page['endorsement_contest'].value=''
+page['endorsement_candidate'].value=''
+page['endorsement_description'].value=''
+page['endorsement_selection'].value=Endorsement::NO_ENDORSEMENT
