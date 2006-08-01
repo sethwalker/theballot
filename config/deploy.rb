@@ -11,7 +11,7 @@
 # form the root of the application path.
 
 set :application, "voterguides"
-set :repository, "https://svn.radicaldesigns.org/electoral/#{application}"
+set :repository, "https://svn.radicaldesigns.org/#{application}/trunk"
 
 # =============================================================================
 # ROLES
