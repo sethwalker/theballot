@@ -90,7 +90,7 @@ class GuidesController < ApplicationController
   end
 
   def create
-    order = params[:order].split(',') if params[:order]
+    order = params[:order].split(/,\s*/) if params[:order]
     @guide = Guide.new(params[:guide])
     if params.include?('endorsements')
       params[:endorsements].each do |i,e|
