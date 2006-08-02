@@ -10,15 +10,58 @@
 
 <h1>Your Guides</h1>
 
-<% @owner = Owner.find(@user.id) %>
-<h2>Published</h2>
-<% @owner.guides.find(:all, :conditions => "status = '#{Guide::PUBLISHED}'", :order => 'date DESC').each do |g| %>
-<%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g.id ) %> - <%= g.name %><br/>
+<% Guide.with_scope(:find => { :conditions => [ "date > ?", Time.now ] }) do
+  @published =  @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :order => 'date DESC')
+  @draft = @user.guides.find_all_by_status("#{Guide::DRAFT}", :order => 'date DESC')
+  end
+%>
+
+<% if ! (@published.empty? && @draft.empty?) %><h2><%= 'Upcoming' %></h2><% end %>
+
+<% if !@published.empty? %>
+  <h3>Published</h3>
+  <ul>
+  <% @published.each do |g| %>
+    <li><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to g.name, url_for( :controller => 'guides', :action => 'show', :id => g ) %></li>
+  <% end %>
+  </ul>
+
+  <br/>
 <% end %>
 
-<br/>
+<% if !@draft.empty? %>
+  <h3>Draft</h3>
+  <ul>
+  <% @draft.each do |g| %>
+    <li><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to g.name, url_for( :controller => 'guides', :action => 'show', :id => g ) %></li>
+  <% end %>
+</ul>
+<% end %>
 
-<h2>Draft</h2>
-<% @owner.guides.find(:all, :conditions => "status = '#{Guide::DRAFT}'", :order => 'date DESC').each do |g| %>
-<%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g.id ) %> - <%= g.name %><br/>
+<% Guide.with_scope(:find => { :conditions => [ "date < ?", Time.now ] }) do
+  @published =  @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :order => 'date DESC')
+  @draft = @user.guides.find_all_by_status("#{Guide::DRAFT}", :order => 'date DESC')
+  end
+%>
+
+<% if ! (@published.empty? && @draft.empty?) %><h2><%= 'Past' %></h2><% end %>
+
+<% if !@published.empty? %>
+  <h3>Published</h3>
+  <ul>
+  <% @published.each do |g| %>
+    <li><%= link_to g.name, url_for( :controller => 'guides', :action => 'show', :id => g ) %></li>
+  <% end %>
+  </ul>
+
+  <br/>
+<% end %>
+
+<% if !@draft.empty? %>
+  <h3>Draft</h3>
+  <ul>
+  <% @draft.each do |g| %>
+    <li><%= link_to g.name, url_for( :controller => 'guides', :action => 'show', :id => g ) %></li>
+  <% end %>
+  </ul>
 <% end %>

@@ -85,7 +85,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     authorize_as :quentin
     num_guides = Guide.count
 
-    post :create, :guide => {:name => 'test create name', :date => Time.now, :description => 'guide description', :city => 'guide city', :state => 'guide state', :owner_id => 1, :permalink => ''}
+    post :create, :guide => {:name => 'test create name', :date => Time.now, :description => 'guide description', :city => 'guide city', :state => 'guide state', :user_id => 1, :permalink => ''}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -198,7 +198,7 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_save_as_draft
-    g = Guide.new(:name => 'draftable', :date => Time.now, :status => Guide::PUBLISHED, :owner_id => users(:quentin).id)
+    g = Guide.new(:name => 'draftable', :date => Time.now, :status => Guide::PUBLISHED, :user_id => users(:quentin).id)
     assert g.save
     assert g.is_published?
 

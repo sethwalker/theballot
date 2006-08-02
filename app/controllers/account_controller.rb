@@ -14,13 +14,13 @@ class AccountController < ApplicationController
     end
   end  
 
-  # say something nice, you goof!  something sweet.
   def index
-    redirect_to(:action => 'signup') unless logged_in? || User.count > 0
-    @user = current_user
+    redirect_to(:action => 'signup') unless logged_in? || User.count == 0
+    redirect_to(:action => 'profile')
   end
 
   def profile
+    redirect_to(:action => 'signup') unless logged_in?
     return unless logged_in?
     if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
       @user = User.find(params[:id])

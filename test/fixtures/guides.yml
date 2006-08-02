@@ -6,7 +6,7 @@ sanfrancisco:
   city: san francisco
   state: CA
   date: 2006-06-06
-  owner_id: 1
+  user_id: 1
   permalink: sf
   status: <%= Guide::PUBLISHED %>
 
@@ -17,7 +17,7 @@ newyork:
   city: new york
   state: NY
   date: 2006-11-07
-  owner_id: 2
+  user_id: 2
   permalink: nyc
   status: <%= Guide::DRAFT %>
 
@@ -25,10 +25,10 @@ future:
   id: 3
   name: future guide
   date: <%= (Time.now + 1.day).to_date.to_s %>
-  owner_id: 1
+  user_id: 1
 
 past:
   id: 4
   name: past guide
   date: <%= (Time.now - 1.day).to_date.to_s %>
-  owner_id: 1
+  user_id: 1

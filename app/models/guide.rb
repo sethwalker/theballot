@@ -7,7 +7,7 @@ class Guide < ActiveRecord::Base
   has_one :image, :dependent => :destroy
   has_one :pdf, :class_name => 'PDF', :dependent => :destroy
 
-  belongs_to :owner
+  belongs_to :user
   belongs_to :theme
 
   validates_presence_of :name, :date
@@ -52,8 +52,8 @@ class Guide < ActiveRecord::Base
     PUBLISHED == status
   end
 
-  def owner?(user)
-    owner_id == user.id
+  def owner?(u)
+    u == user
   end
 
   protected

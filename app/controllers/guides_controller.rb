@@ -46,7 +46,7 @@ class GuidesController < ApplicationController
     conditions = "status = '#{Guide::PUBLISHED}'"
     conditions << " AND date >= '#{Time.now.to_s(:db)}'"
     conditions << " AND state = '#{params[:state]}'" if params[:state]
-    conditions << " AND owner_id = '#{params[:author]}'" if params[:author]
+    conditions << " AND user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
   end
 
@@ -54,7 +54,7 @@ class GuidesController < ApplicationController
     conditions = "status = '#{Guide::PUBLISHED}'"
     conditions << " AND date > '#{Time.now.to_s(:db)}'"
     conditions << " AND state = '#{params[:state]}'" if params[:state]
-    conditions << " AND owner_id = '#{params[:author]}'" if params[:author]
+    conditions << " AND user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
     render :action => 'list'
   end
@@ -104,7 +104,7 @@ class GuidesController < ApplicationController
     if params.include?('pdf')
       @guide.build_pdf(params[:pdf])
     end
-    @guide.owner_id = current_user.id
+    @guide.user = current_user
     if 'Publish' == params[:status]
       @guide.publish
     else
