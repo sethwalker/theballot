@@ -1,25 +1,28 @@
-<%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
-  <%= render :partial => 'form' %>
-  <div class="right">
-    <%= submit_tag 'Save', :name => 'status' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish', :name => 'status' %><% else %><%= submit_tag 'Publish' %><% end %>
-  </div>
-<%= end_form_tag %>
-<%= link_to_function 'edit links', "Element.toggle('links')" %>
-<div id="links" style="display:none">
-  <div id="links_form" style="float: left; width: 45%">
-    <%= form_remote_tag :url => { :controller => 'links', :action => 'create' }, :update => 'links_list', :position => :bottom %>
-    <%= render :partial => 'links/form' %>
-    <%= submit_tag 'add' %>
+<%= link_to_function 'edit guide information', "Element.toggle('guide_form_container')" %>
+<div id="guide_form_container" style="display:none;">
+  <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
+    <%= render :partial => 'form' %>
+    <div class="right">
+      <%= submit_tag 'Save' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><%= submit_tag 'Publish' %><% end %>
+    </div>
   <%= end_form_tag %>
-  <%= render :partial => 'links_form', :locals => { :guide => @guide } %>
+  <%= link_to_function 'edit links', "Element.toggle('links')" %>
+  <div id="links" style="display:none">
+    <div id="links_form" style="float: left; width: 45%">
+      <%= form_remote_tag :url => { :controller => 'links', :action => 'create' }, :update => 'links_list', :position => :bottom %>
+      <%= render :partial => 'links/form' %>
+      <%= submit_tag 'add' %>
+    <%= end_form_tag %>
+    <%= render :partial => 'links_form', :locals => { :guide => @guide } %>
+    </div>
+    <div id="links_list" style="float: left; width: 50%;">
+    </div>
+    <div class="clear"></div>
   </div>
-  <div id="links_list" style="float: left; width: 50%;">
-  </div>
-  <div class="clear"></div>
 </div>
 
 <div id="endorsement_form" class="column">
-  <%= form_remote_tag :url => { :action => 'add_endorsement', :id => @guide.id } %>
+  <%= form_remote_tag :url => { :action => 'add_endorsement', :id => @guide } %>
     <%= render :partial => 'endorsements/form' %>
     <%= submit_tag 'add endorsement' %>
   <%= end_form_tag %>

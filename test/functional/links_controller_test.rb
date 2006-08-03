@@ -50,10 +50,10 @@ class LinksControllerTest < Test::Unit::TestCase
   def test_create
     num_links = Link.count
 
-    post :create, :link => {}
+    post :create, :link => { :url => 'updated' }
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'show'
 
     assert_equal num_links + 1, Link.count
   end

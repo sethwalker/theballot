@@ -24,11 +24,19 @@ newyork:
 future:
   id: 3
   name: future guide
+  permalink: future_guide
   date: <%= (Time.now + 1.day).to_date.to_s %>
   user_id: 1
 
 past:
   id: 4
   name: past guide
+  permalink: past_guide
   date: <%= (Time.now - 1.day).to_date.to_s %>
+  user_id: 1
+
+no_endorsements:
+  id: 5
+  name: no endorsements
+  date: <%= (Time.now + 1.day).to_date.to_s %>
   user_id: 1

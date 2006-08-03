@@ -52,7 +52,7 @@ class GuidesController < ApplicationController
 
   def archive
     conditions = "status = '#{Guide::PUBLISHED}'"
-    conditions << " AND date > '#{Time.now.to_s(:db)}'"
+    conditions << " AND date < '#{Time.now.to_s(:db)}'"
     conditions << " AND state = '#{params[:state]}'" if params[:state]
     conditions << " AND user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
@@ -94,8 +94,8 @@ class GuidesController < ApplicationController
     @guide = Guide.new(params[:guide])
     if params.include?('endorsements')
       params[:endorsements].each do |i,e|
-        endorsement = @guide.endorsements.build(e)
-        endorsement.position = order.index(i) + 1 if !order.nil?
+        position = !order.nil? ? order.index(i.to_s) + 1 : i.to_i + 1
+        @guide.endorsements.build(e.merge(:position => position))
       end
     end
     if params.include?('image')
@@ -125,15 +125,21 @@ class GuidesController < ApplicationController
   def update
     @guide = Guide.find(params[:id])
     return render :action => 'edit' unless @guide.update_attributes(params[:guide])
+    if params.include?('endorsements')
+      params[:endorsements].each do |i,e|
+        endorsement = @guide.endorsements.build(e)
+        endorsement.position = order.index(i) + 1 if !order.nil?
+      end
+    end
     if params.include?(:image)
       @guide.image = Image.new(params[:image])
     end
     if params.include?(:pdf)
       @guide.pdf = PDF.new(params[:pdf])
     end
-    if 'Unpublish' == params[:status]
+    if 'Unpublish' == params[:commit]
       @guide.unpublish
-    else
+    elsif 'Publish' == params[:commit]
       @guide.publish
     end
     @guide.save
@@ -152,7 +158,7 @@ class GuidesController < ApplicationController
     if params[:id]
       @guide = Guide.find(params[:id])
       @guide.endorsements.each do |e|
-        e.position = @order.index(e.id) + 1
+        e.position = @order.index(e.id.to_s) + 1
         e.save
       end
       return render :nothing => true
@@ -165,6 +171,26 @@ class GuidesController < ApplicationController
       page.replace "endorsement_#{params[:index]}", :partial => 'endorsement', :locals => { :endorsement => @endorsement, :index => params[:index] }
       page.replace "endorsement_#{params[:index]}_hiddens", :partial => 'endorsements/hiddens', :locals => { :endorsement => @endorsement, :index => params[:index] }
       page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :controller => 'guides', :action => 'order' }, :update => 'endorsement_order'
+    end
+  end
+
+  def remove_endorsement
+    @index = params[:index]
+  end
+
+  def add_endorsement
+    return unless params[:id]
+    @endorsement = Endorsement.new(params[:endorsement])
+    @endorsement.guide_id = params[:id]
+    return unless @endorsement.save
+    render :update do |page|
+      page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement, @endorsement }
+      page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order' }
+      page['endorsement_contest'].value = ''
+      page['endorsement_candidate'].value = ''
+      page['endorsement_description'].value = ''
+      page['endorsement_selection'].value = Endorsement::NO_ENDORSEMENT
+      page['endorsement_contest'].focus()
     end
   end
 end

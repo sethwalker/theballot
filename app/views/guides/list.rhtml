@@ -6,13 +6,19 @@
     <td><% if guide.image %><%= image_tag guide.image.public_filename("thumb") %><% end %><%= link_to guide.name, guide.permalink_url %></td>
   </tr>
   <tr>
-    <td><%= guide.city %>, <%= guide.state %></td>
-  </tr>
-  <tr>
+    <td>
+      <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
+        <%= guide.city %>, <%= guide.state %>
+      <% elsif guide.state && !guide.state.empty? %>
+        <%= guide.state %>
+      <% else %>
+        <%= guide.city %>
+      <% end %>
+    </td>
     <td><%= guide.date %></td>
   </tr>
   <tr>
-    <td><%= guide.description %></td>
+    <td colspan="2" align="center"><%= guide.description.to(50) if guide.description %><%= '...' if guide.description && guide.description.size > 50 %></td>
   </tr>
 <% end %>
 </table>

@@ -108,21 +108,22 @@ class GuidesControllerTest < Test::Unit::TestCase
   def test_invalid_create_with_endorsments
     name = 'test invalid create with endorsements'
     authorize_as :quentin
-    post :create, :guide => { :name => name, :endorsements => [ Endorsement.new(:contest => 'first'), Endorsement.new(:contest => 'second'), Endorsement.new(:contest => 'third') ] }
+    post :create, :guide => { :name => name }, :endorsements => { "0" => { :contest => 'first' }, "1" => { :contest => 'second' }, "2" => { :contest => 'third'} }
 
     assert !Guide.find_by_name(name)
     assert assigns('guide')
     assert_equal assigns('guide').endorsements.size, 3
-    assert_equal assigns('guide').endorsements.first.contest, 'first'
+    assert_equal assigns('guide').endorsements.sort_by {|e| e.position}.first.contest, 'first'
   end
 
   def test_invalid_create_after_reorder
     authorize_as :quentin
-    post :create, :guide => { :name => 'invalid with reorder', :endorsements => [ Endorsement.new(:contest => 'first'), Endorsement.new(:contest => 'second'), Endorsement.new(:contest => 'third') ] }, :order => '2,1,3'
+    post :create, :guide => { :name => 'invalid with reorder' }, :endorsements => { "0" => { :contest => 'first' }, "1" => { :contest => 'second' }, "2" => { :contest => 'third'} }, :order => '1,0,2'
 
     assert assigns('guide')
     assert !assigns('guide').valid?
-    assert_equal assigns('guide').endorsements.first.contest, 'second'
+    assert_equal assigns('guide').endorsements.size, 3
+    assert_equal assigns('guide').endorsements.sort_by {|e| e.position}.first.contest, 'second'
   end
 
   def test_edit
@@ -151,7 +152,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert_redirected_to :controller => 'account', :action => 'login'
 
     authorize_as :quentin
-    post :update, :id => 3
+    post :update, :id => 3, :guide => { :name => 'updated' }
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 3
   end
@@ -191,7 +192,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert_equal Endorsement.find(8).position, 2
     assert_equal Endorsement.find(9).position, 3
 
-    post :order, :id => @guide.id, :endorsements => [8,9,7]
+    post :order, :id => @guide.id, :endorsements => ["8","9","7"]
     assert_equal Endorsement.find(8).position, 1
     assert_equal Endorsement.find(9).position, 2
     assert_equal Endorsement.find(7).position, 3
@@ -203,7 +204,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert g.is_published?
 
     authorize_as :quentin
-    post :update, :id => g.id, :status => 'Unpublish'
+    post :update, :id => g.id, :commit => 'Unpublish'
     assert_response :redirect
     assert_redirected_to :action => 'show'
     updated = Guide.find(g.id)
@@ -211,6 +212,21 @@ class GuidesControllerTest < Test::Unit::TestCase
 
     post :update, :id => g.id, :status => 'Edit'
     updated_again = Guide.find(g.id)
-    assert updated_again.is_published?
+    assert !updated_again.is_published?
   end
+
+  def test_add_endorsement
+    g = guides(:no_endorsements)
+    assert g.endorsements.empty?
+    count = Endorsement.count
+    post :add_endorsement, :id => g.id, :endorsement => { :contest => 'assembly', :candidate => 'janet' }
+    assert_response :success
+    assert_template '_endorsement'
+    assert_equal Endorsement.count, count + 1
+    assert Endorsement.find_by_guide_id(g.id)
+    @guide = Guide.find(g.id)
+    assert_equal @guide.endorsements.first.contest, 'assembly'
+    assert_equal @guide.endorsements.count, 1
+  end
+
 end
