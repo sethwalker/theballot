@@ -7,7 +7,7 @@ class AccountController < ApplicationController
     @user = User.find_by_activation_code(params[:id]) unless params[:id].nil?
     if @user and @user.activate
       self.current_user = @user
-      redirect_back_or_default(:controller => '/account', :action => 'index')
+      redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Your account has been activated." 
     else
       flash[:error] = "Unable to activate the account.  Did you provide the correct information?" 
@@ -15,12 +15,12 @@ class AccountController < ApplicationController
   end  
 
   def index
-    redirect_to(:action => 'signup') unless logged_in? || User.count == 0
+    redirect_to(:action => 'signup') and return unless logged_in? || User.count == 0
     redirect_to(:action => 'profile')
   end
 
   def profile
-    redirect_to(:action => 'signup') unless logged_in?
+    redirect_to(:action => 'login') unless logged_in?
     return unless logged_in?
     if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
       @user = User.find(params[:id])
@@ -51,7 +51,7 @@ class AccountController < ApplicationController
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     if current_user
-      redirect_back_or_default(:controller => '/account', :action => 'index')
+      redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Logged in successfully"
     end
   end
@@ -60,7 +60,7 @@ class AccountController < ApplicationController
     @user = User.new(params[:user])
     return unless request.post?
     if @user.save
-      redirect_back_or_default(:controller => '/account', :action => 'index')
+      redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Thanks for signing up!"
     end
   end
@@ -68,6 +68,6 @@ class AccountController < ApplicationController
   def logout
     self.current_user = nil
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/account', :action => 'index')
+    redirect_back_or_default(:controller => '/')
   end
 end
