@@ -13,7 +13,7 @@ class GuidesController < ApplicationController
   def authorized?
     if ['edit', 'update', 'destroy'].include?(action_name)
       @guide = Guide.find(params[:id])
-      unless @guide.owner?(current_user)
+      unless @guide.owner?(current_user) || current_user.is_admin?
         flash[:error] = 'Permission Denied'
         return false 
       end
