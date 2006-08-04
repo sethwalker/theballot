@@ -147,3 +147,7 @@ desc "Get the system ready for database access."
 task :after_update_code do
   database_yml
 end
+
+task :after_symlink do
+  run "ln -nfs #{shared_dir}/public/attachments #{release_dir}/public/attachments"
+end
