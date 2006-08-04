@@ -34,24 +34,23 @@ body {
   clear: both;
 }
 
+#content .column {
+  position: relative;
+  float: left;
+}
+
 #main {
   background: #FFFFFF;
-  float: left;
   width: 100%;
+}
+
+#sidebar {
+  width: 100px;
+  padding-left: 30em;
 }
 
 .required {
   font-weight: bold;
-}
-
-.column {
-  position: relative;
-  float: left;
-}
-
-.right {
-  position: relative;
-  padding-left: 30em;
 }
 
 #guide-nav {

@@ -26,10 +26,15 @@
       | <%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide.id %>
       <% end %>
     </div>
-    <div id="main">
-      <p style="color: red"><%= flash[:error] %></p>
-      <p style="color: green"><%= flash[:notice] %></p>
-      <%= @content_for_layout %>
+    <div id="content">
+      <div id="main" class="column">
+        <p style="color: red"><%= flash[:error] %></p>
+        <p style="color: green"><%= flash[:notice] %></p>
+        <%= @content_for_layout %>
+      </div>
+      <div id="sidebar" class="column">
+        <%= @content_for_sidebar %>
+      </div>
     </div>
     <div id="footer"></div>
   </div>
