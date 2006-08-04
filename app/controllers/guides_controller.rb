@@ -98,12 +98,24 @@ class GuidesController < ApplicationController
         @guide.endorsements.build(e.merge(:position => position))
       end
     end
-    if params.include?('image')
-      @guide.build_image(params[:image])
+    @image = Image.create(params[:image])
+    if !@image.valid? && params[:image][:id]
+      @image = Image.find(params[:image][:id])
     end
-    if params.include?('pdf')
-      @guide.build_pdf(params[:pdf])
+    if @image.valid?
+      @guide.image = @image
+      current_user.images << @image
     end
+
+    @pdf = AttachedPdf.create(params[:pdf])
+    if !@pdf.valid? && params[:pdf][:id]
+      @pdf = AttachedPdf.find(params[:pdf][:id])
+    end
+    if @pdf.valid?
+      @guide.attached_pdf = @pdf
+      current_user.attached_pdfs << @pdf
+    end
+
     @guide.user = current_user
     if 'Publish' == params[:status]
       @guide.publish
@@ -120,6 +132,8 @@ class GuidesController < ApplicationController
 
   def edit
     @guide = Guide.find(params[:id])
+    @image = @guide.image
+    @pdf = @guide.attached_pdf
   end
 
   def update
@@ -131,12 +145,25 @@ class GuidesController < ApplicationController
         endorsement.position = order.index(i) + 1 if !order.nil?
       end
     end
-    if params.include?(:image)
-      @guide.image = Image.new(params[:image])
+
+    @image = Image.create(params[:image])
+    if !@image.valid? && params[:image][:id]
+      @image = Image.find(params[:image][:id])
     end
-    if params.include?(:pdf)
-      @guide.pdf = PDF.new(params[:pdf])
+    if @image.valid?
+      @guide.image = @image
+      current_user.images << @image
     end
+
+    @pdf = AttachedPdf.create(params[:pdf])
+    if !@pdf.valid? && params[:pdf][:id]
+      @pdf = AttachedPdf.find(params[:pdf][:id])
+    end
+    if @pdf.valid?
+      @guide.attached_pdf = @pdf
+      current_user.attached_pdfs << @pdf
+    end
+
     if 'Unpublish' == params[:commit]
       @guide.unpublish
     elsif 'Publish' == params[:commit]

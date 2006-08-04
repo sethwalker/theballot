@@ -66,13 +66,13 @@
       </div>
     </div>
 
-    <% if @guide.pdf %>
+    <% if @guide.attached_pdf %>
     <div class="doclink">
       <p class="doclink_label">Download PDF of guide:</p>
       <p class="filelink"><a                
-        href="<%= guide.pdf.public_filename %>">
+        href="<%= @guide.attached_pdf.public_filename %>">
       <IMG SRC="/images/pdf.gif" border="0"  
-        align="absmiddle"><%= guide.pdf.filename %></a>
+        align="absmiddle"><%= @guide.attached_pdf.filename %></a>
       </p>
     </div>
     <% end %>

@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
 
   has_many :guides
+  has_many :images
+  has_many :attached_pdfs
   # adding acl_system2 support http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2/
   has_and_belongs_to_many :roles
 

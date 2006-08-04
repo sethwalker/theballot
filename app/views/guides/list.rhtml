@@ -18,7 +18,7 @@
     <td><%= guide.date %></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><%= guide.description.to(50) if guide.description %><%= '...' if guide.description && guide.description.size > 50 %></td>
+    <td colspan="2" align="center"><%= guide.description.to(100) if guide.description %><%= '...' if guide.description && guide.description.size > 100 %></td>
   </tr>
 <% end %>
 </table>

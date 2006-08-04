@@ -31,11 +31,23 @@
 <p><label for="guide_theme">Theme</label><br/>
 <%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id', :prompt => 'none', :include_blank => true %>
 
-<p><label for="guide_image">Upload an image for your guide</label><br/>
-<%= file_field 'image', 'uploaded_data'  %></p>
-
 <p><label for="guide_pdf">Upload a PDF of your guide</label><br/>
-<%= file_field 'pdf', 'uploaded_data'  %></p>
+<%= file_field 'pdf', 'uploaded_data'  %>
+<% if @guide.attached_pdf -%>
+<br/>
+currently: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
+<%= hidden_field 'pdf', 'id' %>
+<% end -%></p>
+
+<p><label for="guide_image">Upload an image for your guide</label><br/>
+<%= file_field 'image', 'uploaded_data'  %>
+<% if @guide.image -%>
+<br/>
+currently: <%= image_tag @guide.image.public_filename("thumb") %>
+<%= hidden_field 'image', 'id' %>
+<% end -%>
+</p>
+
 
 </td>
 </tr>

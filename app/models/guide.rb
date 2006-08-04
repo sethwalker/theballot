@@ -5,7 +5,7 @@ class Guide < ActiveRecord::Base
   has_many :endorsements, :dependent => :destroy, :order => 'position'
   has_many :links, :dependent => :destroy
   has_one :image, :dependent => :destroy
-  has_one :pdf, :class_name => 'PDF', :dependent => :destroy
+  has_one :attached_pdf, :dependent => :destroy
 
   belongs_to :user
   belongs_to :theme
@@ -30,14 +30,14 @@ class Guide < ActiveRecord::Base
     if image
       liquid.merge!(  { 'image_link' => image.public_filename, 'image_name' => image.filename, 'image_thumb' => image.public_filename('thumb') } )
     end
-    if pdf
-      liquid.merge!( { 'pdf_name' => pdf.filename, 'pdf_link' => pdf.public_filename } )
+    if attached_pdf
+      liquid.merge!( { 'pdf_name' => attached_pdf.filename, 'pdf_link' => attached_pdf.public_filename } )
     end
     liquid
   end
 
   def permalink_url
-    date.strftime("%Y/%m/%d/") + permalink
+    '/guides/' + date.strftime("%Y/%m/%d/") + permalink
   end
 
   def publish
