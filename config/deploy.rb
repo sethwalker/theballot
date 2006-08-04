@@ -148,6 +148,7 @@ task :after_update_code do
   database_yml
 end
 
+desc "Symlink attachments folder."
 task :after_symlink do
-  run "ln -nfs #{shared_dir}/public/attachments #{release_dir}/public/attachments"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/public/attachments #{deploy_to}/#{current_dir}/public/attachments"
 end
