@@ -1,3 +1,4 @@
+<%= error_messages_for 'user' %>
 <% form_for :user, @user do |f| -%>
 <p><label for="login">Login</label><br/>
 <%= f.text_field :login %></p>
@@ -10,6 +11,9 @@
 
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= f.password_field :password_confirmation %></p>
+
+<p><%= check_box :user, :tos %><label for="tos">The information contained in any guide posted by myself on this site is accurate to the best of my knowledge and is not inappropriate or offensive.<br/>
+  I realize that if people sign on to my voter bloc, they are trusting me with their contact information. I pledge not to betray this trust by misusing their information in any way, including by spamming them or distributing their contact info.</p>
 
 <p><%= submit_tag 'Sign up' %></p>
 <% end -%>

@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
 
   before_create :make_activation_code
 
+  validates_acceptance_of :tos, :message => "You must agree to these terms of service"
+
   has_many :guides
   has_many :images
   has_many :attached_pdfs
