@@ -260,4 +260,17 @@ class GuidesController < ApplicationController
     render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
   end
 
+  def tell
+    @guide = Guide.find(params[:id])
+  end
+
+  def send_message
+    @guide = Guide.find(params[:id])
+    @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :user => current_user }
+    if GuidePromoter.deliver_tell_a_friend(@tell)
+      flash[:notice] = "Message sent"
+      render :action => :show and return
+    end
+    render :action => :tell
+  end
 end

@@ -1,0 +1,13 @@
+<h1>Tell a Friend:</h1>
+
+<%= form_tag :action => 'send_message', :id => @guide %>
+
+<p><label for="recipients_email">Friends Email (comma separated)</label><br/>
+<%= text_field 'recipients', 'email'  %></p>
+
+<p><label for="recipients_message">Message (optional)</label><br/>
+<%= text_area 'recipients', 'message'  %></p>
+
+<%= submit_tag 'Send' %>
+
+<%= end_form_tag %>

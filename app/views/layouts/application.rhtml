@@ -23,7 +23,9 @@
       <label for="state_select">View guides by state</label><%= us_state_select 'guide', 'state', {:show => :abbreviations, :include_blank => true}, {}, :onchange => "window.location.href='/guides/list?state=' + this.value" %> |
       <%= link_to "Search Guides", :controller => 'guides', :action => 'search' %> |
       <%= link_to "See Past Guides", :controller => 'guides', :action => 'archive' %>
-      <% if logged_in? && @guide -%>
+      <% if @guide -%>
+      | <%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %>
+      <% if logged_in? -%>
         <span id="pledged_status">
           <%= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
         </span>
@@ -35,6 +37,7 @@
             <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
           </span>
         <% end -%>
+      <% end -%>
       <% end -%>
     </div>
     <div id="content">
