@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   validates_acceptance_of :tos, :message => "You must agree to these terms of service"
 
   has_many :guides
+  has_many :pledges
+  has_many :blocs, :through => :pledges, :source => :guide
   has_many :images
   has_many :attached_pdfs
   # adding acl_system2 support http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2/

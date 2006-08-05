@@ -1,3 +1,8 @@
+<% if @guide.endorsed -%>
+<div id="endorsed">This Guide is Endorsed by the League</div>
+<% else -%>
+<div id="unendorsed">This Guide May Not Reflect the Attitude of the League</div>
+<% end -%>
 <% 
   if !@guide.theme.nil? && !@guide.theme.style.nil?
     content_for :stylesheets do %>

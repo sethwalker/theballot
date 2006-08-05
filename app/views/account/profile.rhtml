@@ -65,3 +65,14 @@
   <% end %>
   </ul>
 <% end %>
+
+<% if @user.blocs -%>
+  <h3>Your Blocs</h3>
+  <ul>
+  <% @user.blocs.each do |b| -%>
+    <li><%= link_to b.name, b.permalink_url %></li>
+  <% end -%>
+  </ul>
+<% end -%>
+    
+

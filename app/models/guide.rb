@@ -10,6 +10,9 @@ class Guide < ActiveRecord::Base
   belongs_to :user
   belongs_to :theme
 
+  has_many :pledges
+  has_many :members, :through => :pledges, :source => :user
+
   validates_presence_of :name, :date
 
   before_validation_on_create :create_permalink

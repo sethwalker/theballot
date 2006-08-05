@@ -3,6 +3,7 @@ class GuidesController < ApplicationController
   before_filter :check_date, :only => [ :edit, :update ]
 
   def check_date
+    return if current_user.is_admin?
     @guide = Guide.find(params[:id])
     if @guide.date.to_date < Time.now.to_date
       flash[:error] = 'Guides cannot be edited after the election has passed' 
@@ -219,5 +220,26 @@ class GuidesController < ApplicationController
       page['endorsement_selection'].value = Endorsement::NO_ENDORSEMENT
       page['endorsement_contest'].focus()
     end
+  end
+
+  def endorsed_status
+    @guide = Guide.find(params[:id])
+    @guide.update_attributes(:endorsed => params[:endorsed])
+    render :partial => 'endorse', :locals => { :guide => @guide }, :layout => false
+  end
+
+  def join
+    @guide = Guide.find(params[:id])
+    pledge = Pledge.new
+    @guide.pledges << pledge
+    current_user.pledges << pledge
+    pledge.save
+    render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
+  end
+
+  def unjoin
+    pledge = Pledge.find_by_guide_id_and_user_id(params[:id], current_user.id)
+    pledge.destroy
+    render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
   end
 end

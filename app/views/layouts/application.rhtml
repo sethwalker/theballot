@@ -22,9 +22,19 @@
       <%= link_to "Make a new guide", :controller => 'guides', :action => 'new' %> | 
       <label for="state_select">View guides by state</label><%= us_state_select 'guide', 'state', {:show => :abbreviations, :include_blank => true}, {}, :onchange => "window.location.href='/guides/list?state=' + this.value" %> |
       <%= link_to "See Past Guides", :controller => 'guides', :action => 'archive' %>
-      <% if logged_in? && !@guide.nil? && ( @guide.owner?(current_user) || current_user.is_admin?) %>
-      | <%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide.id %>
-      <% end %>
+      <% if logged_in? && @guide -%>
+        <span id="pledged_status">
+          <%= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
+        </span>
+        <% if @guide.owner?(current_user) || current_user.is_admin? %>
+        | <%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %>
+        <% end %>
+        <% if current_user.is_admin? -%>
+          <span id="endorsed_status">
+            <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
+          </span>
+        <% end -%>
+      <% end -%>
     </div>
     <div id="content">
       <div id="main" class="column">
