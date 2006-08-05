@@ -18,6 +18,8 @@ class Guide < ActiveRecord::Base
   before_validation_on_create :create_permalink
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
+  acts_as_ferret :fields => [ :name, :city, :description ]
+
 =begin
   acts_as_draftable :fields => [:name, :city, :state, :date, :description, :owner_id, :theme_id, :endorsements] do
     def self.included(base)

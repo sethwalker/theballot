@@ -60,6 +60,23 @@ class GuidesController < ApplicationController
     render :action => 'list'
   end
 
+  def search
+    if params[:guide]
+      @query = Array.new
+      @query << "name:\"#{params[:guide][:name]}\"" if !params[:guide][:name].empty?
+      @query << "description:\"#{params[:guide][:description]}\"" if !params[:guide][:description].empty?
+      @query << "city:\"#{params[:guide][:city]}\"" if !params[:guide][:city].empty?
+      @query = ['*'] if @query.empty?
+      @conditions = "state = '#{params[:guide][:state]}'" if !params[:guide][:state].empty?
+      @conditions ||= "1 = 1"
+      @guide_pages = Paginator.new self, Guide.count, 10, params['page']
+      Guide.with_scope(:find => { :conditions => @conditions }) do
+        @guides = Guide.find_by_contents(@query.join(' AND '), :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
+      end
+      render :action => 'list' and return
+    end
+  end
+
   def show
     if(params[:year] && params[:month] && params[:day] && params[:permalink])
       Guide.with_scope(:find => { :conditions => ['date = ?', Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_s] } ) do
@@ -242,4 +259,5 @@ class GuidesController < ApplicationController
     pledge.destroy
     render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
   end
+
 end
