@@ -51,3 +51,7 @@ end
 # end
 
 # Include your application configuration below
+require 'yaml'
+
+# then...
+APPLICATION_SVN_REVISION = YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value
