@@ -32,7 +32,7 @@
         <% if @guide.owner?(current_user) || current_user.is_admin? %>
         | <%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %>
         <% end %>
-        <% if current_user.is_admin? -%>
+        <% if logged_in? && current_user.is_admin? -%>
           <span id="endorsed_status">
             <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
           </span>
