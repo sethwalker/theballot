@@ -54,4 +54,4 @@ end
 require 'yaml'
 
 # then...
-APPLICATION_SVN_REVISION = YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value
+APPLICATION_SVN_REVISION = File.exist?('config/revision.yml') ? File.open('config/revision.yml').read : YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value

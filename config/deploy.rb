@@ -143,6 +143,14 @@ task :database_yml, :roles => [:app, :db] do
   put(File.read('deploy/database.yml'), "#{release_path}/config/database.yml", :mode => 0444)
 end
 
+desc "Set version number and date."
+task :revision_number, :roles => :app do
+  run "svn log #{repository} -r HEAD" do |ch, stream, out|
+    revision = out.to_a[1].chomp.split(' | ')[0]
+    put(revision, "#{current_path}/config/revision.yml")
+  end
+end
+
 desc "Get the system ready for database access."
 task :after_update_code do
   database_yml
@@ -150,5 +158,6 @@ end
 
 desc "Symlink attachments folder."
 task :after_symlink do
+  revision_number
   run "ln -nfs #{deploy_to}/#{shared_dir}/public/attachments #{deploy_to}/#{current_dir}/public/attachments"
 end
