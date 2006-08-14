@@ -145,10 +145,7 @@ end
 
 desc "Set version number and date."
 task :revision_number, :roles => :app do
-  run "svn log #{repository} -r HEAD" do |ch, stream, out|
-    revision = out.to_a[1].chomp.split(' | ')[0]
-    put(revision, "#{current_path}/config/revision.yml")
-  end
+  put(source.current_revision(self), "#{release_path}/config/revision.yml", :mode => 0444)
 end
 
 desc "Get the system ready for database access."
