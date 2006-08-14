@@ -18,10 +18,10 @@
 <%= text_field 'guide', 'permalink'  %></p>
 
 <table><tr><td>
-<p><label for="guide_city">City</label><br/>
+<p><label for="guide_city" class="required">City (required)</label><br/>
 <%= text_field 'guide', 'city', :size => 22  %></p>
 </td><td>
-<p><label for="guide_state">State</label><br/>
+<p><label for="guide_state" class="required">State (required)</label><br/>
 <%= us_state_select 'guide', 'state', :show => :abbreviations, :include_blank => true %></p>
 </td></tr></table>
 
