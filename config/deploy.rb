@@ -145,7 +145,7 @@ end
 
 desc "Set version number and date."
 task :revision_number, :roles => :app do
-  put(source.current_revision(self), "#{release_path}/config/revision.yml", :mode => 0444)
+  put(source.current_revision(self).to_s, "#{current_path}/config/revision.yml", :mode => 0444)
 end
 
 desc "Get the system ready for database access."
@@ -156,5 +156,5 @@ end
 desc "Symlink attachments folder."
 task :after_symlink do
   revision_number
-  run "ln -nfs #{deploy_to}/#{shared_dir}/public/attachments #{deploy_to}/#{current_dir}/public/attachments"
+  run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
 end
