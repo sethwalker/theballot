@@ -46,7 +46,11 @@ class GuidesController < ApplicationController
   def list
     conditions = "status = '#{Guide::PUBLISHED}'"
     conditions << " AND date >= '#{Time.now.to_s(:db)}'"
-    conditions << " AND state = '#{params[:state]}'" if params[:state]
+    if params[:state]
+      conditions << " AND state = '#{params[:state]}'"
+      flash[:notice] = "Showing All Guides from #{params[:state]}"
+      @state = params[:state]
+    end
     conditions << " AND user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
   end
@@ -54,7 +58,11 @@ class GuidesController < ApplicationController
   def archive
     conditions = "status = '#{Guide::PUBLISHED}'"
     conditions << " AND date < '#{Time.now.to_s(:db)}'"
-    conditions << " AND state = '#{params[:state]}'" if params[:state]
+    if params[:state]
+      conditions << " AND state = '#{params[:state]}'"
+      flash[:notice] = "Showing All Guides from #{params[:state]}"
+      @state = params[:state]
+    end
     conditions << " AND user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
     render :action => 'list'

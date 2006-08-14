@@ -20,7 +20,7 @@
     <br class="clear" />
     <div id="guide-nav">
       <%= link_to "Make a new guide", :controller => 'guides', :action => 'new' %> | 
-      <label for="state_select">View guides by state</label><%= us_state_select 'guide', 'state', {:show => :abbreviations, :include_blank => true}, {}, :onchange => "window.location.href='/guides/list?state=' + this.value" %> |
+      <label for="state_select">View guides by state</label><%= select_tag 'state', us_state_options_for_select( @state, {:show => :abbreviations, :include_blank => true}), :onchange => "window.location.href='/guides/list?state=' + this.value" %> |
       <%= link_to "Search Guides", :controller => 'guides', :action => 'search' %> |
       <%= link_to "See Past Guides", :controller => 'guides', :action => 'archive' %>
       <% if @guide -%>

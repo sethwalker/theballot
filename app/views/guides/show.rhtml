@@ -83,14 +83,7 @@
     <% end %>
 
     <% if @guide.image %>
-    <div class="doclink">
-      <p class="doclink_label">Download Image of guide:</p>
-      <p class="filelink"><a                
-        href="<%= @guide.image.public_filename %>">
-      <IMG SRC="<%= @guide.image.public_filename("thumb") %>" border="0"  
-        align="absmiddle"><%= @guide.image.filename %></a>
-      </p>
-    </div>
+      <img src="<%= @guide.image.public_filename("thumb") %>" />
     <% end %>
 
     <p class="vg_endorse_link" id="header">
