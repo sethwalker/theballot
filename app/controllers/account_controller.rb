@@ -14,6 +14,33 @@ class AccountController < ApplicationController
     end
   end  
 
+  def forgot_password
+    return unless request.post?
+    if @user = User.find_by_email(params[:email])
+      @user.forgot_password
+      @user.save
+      redirect_back_or_default(:controller => '/account', :action => 'index')
+      flash[:notice] = "A password reset link has been sent to your email address" 
+    else
+      flash[:notice] = "Could not find a user with that email address" 
+    end
+  end
+
+  def reset_password
+    @user = User.find_by_password_reset_code(params[:id])
+    return if @user unless params[:password]
+    if (params[:password] == params[:password_confirmation])
+      self.current_user = @user #for the next two lines to work
+      current_user.password_confirmation = params[:password_confirmation]
+      current_user.password = params[:password]
+      @user.reset_password
+      flash[:notice] = current_user.save ? "Password reset" : "Password not reset" 
+    else
+      flash[:notice] = "Password mismatch" 
+    end  
+    redirect_back_or_default(:controller => '/account', :action => 'index') 
+  end
+
   def index
     redirect_to(:action => 'signup') and return unless logged_in? || User.count == 0
     redirect_to(:action => 'profile')

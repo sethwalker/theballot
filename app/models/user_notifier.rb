@@ -10,7 +10,18 @@ class UserNotifier < ActionMailer::Base
     @subject    += 'Your account has been activated!'
     @body[:url]  = "http://#{APPLICATION_HOST_NAME}/"
   end
-  
+
+  def forgot_password(user)
+    setup_email(user)
+    @subject    += 'Request to change your password'
+    @body[:url]  = "http://#{APPLICATION_HOST_NAME}/account/reset_password/#{user.password_reset_code}" 
+  end
+
+  def reset_password(user)
+    setup_email(user)
+    @subject    += 'Your password has been reset'
+  end  
+
   protected
   def setup_email(user)
     @recipients  = "#{user.email}"
