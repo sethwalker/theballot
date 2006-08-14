@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
 
   def is_admin?
-    roles.detect {|r| 'admin' == r.title.downcase }
+    roles.any? {|r| 'admin' == r.title.downcase }
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
