@@ -52,7 +52,7 @@ class GuidesController < ApplicationController
       @state = params[:state]
     end
     conditions << " AND user_id = '#{params[:author]}'" if params[:author]
-    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
+    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions, :order => 'state, city, date'
   end
 
   def archive
@@ -64,7 +64,7 @@ class GuidesController < ApplicationController
       @state = params[:state]
     end
     conditions << " AND user_id = '#{params[:author]}'" if params[:author]
-    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions
+    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions, :order => 'state, city, date'
     render :action => 'list'
   end
 
