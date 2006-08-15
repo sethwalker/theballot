@@ -46,7 +46,7 @@ class ThemesController < ApplicationController
     @theme = Theme.find(params[:id])
     @screenshot = Screenshot.create(params[:screenshot])
     if !@screenshot.valid? && params[:screenshot][:id]
-      @screenshot = Screenshot.find(params[:image][:id])
+      @screenshot = Screenshot.find(params[:screenshot][:id])
     end
     if @screenshot.valid?
       @theme.screenshot = @screenshot

@@ -26,6 +26,7 @@
       <%= link_to "Search Guides", :controller => 'guides', :action => 'search' %> |
       <%= link_to "See Past Guides", :controller => 'guides', :action => 'archive' %>
       <% if @guide -%>
+      | <%= link_to_function "Print This Guide", 'window.print(); return false;' %>
       | <%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %>
       <% if logged_in? -%>
         <span id="pledged_status">
