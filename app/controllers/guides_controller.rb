@@ -71,9 +71,9 @@ class GuidesController < ApplicationController
   def search
     if params[:guide]
       @query = Array.new
-      @query << "name:\"#{params[:guide][:name]}\"" if !params[:guide][:name].empty?
-      @query << "description:\"#{params[:guide][:description]}\"" if !params[:guide][:description].empty?
-      @query << "city:\"#{params[:guide][:city]}\"" if !params[:guide][:city].empty?
+      @query << "name:#{params[:guide][:name]}" if !params[:guide][:name].empty?
+      @query << "description:#{params[:guide][:description]}" if !params[:guide][:description].empty?
+      @query << "city:#{params[:guide][:city]}" if !params[:guide][:city].empty?
       @query = ['*'] if @query.empty?
       @conditions = "state = '#{params[:guide][:state]}'" if !params[:guide][:state].empty?
       @conditions ||= "1 = 1"
