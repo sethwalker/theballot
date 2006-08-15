@@ -40,6 +40,7 @@ class ThemesController < ApplicationController
 
   def edit
     @theme = Theme.find(params[:id])
+    @screenshot = @theme.screenshot
   end
 
   def update
