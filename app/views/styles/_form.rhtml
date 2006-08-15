@@ -1,6 +1,9 @@
 <%= error_messages_for 'style' %>
 
 <!--[form:style]-->
+<p><label for="style_name">Name</label><br/>
+<%= text_field 'style', 'name' %></p>
+
 <p><label for="style_stylesheet">Stylesheet</label><br/>
 <%= text_area 'style', 'stylesheet' %></p>
 <!--[eoform:style]-->

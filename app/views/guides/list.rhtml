@@ -1,27 +1,34 @@
 <h1>Listing guides</h1>
 
-<table>
+<div id="guide-list-container">
 <% for guide in @guides %>
-  <tr>
-    <td><% if guide.image %><%= image_tag guide.image.public_filename("thumb") %><% end %><%= link_to guide.name, guide.permalink_url %></td>
-  </tr>
-  <tr>
-    <td>
-      <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
-        <%= guide.city %>, <%= guide.state %>
-      <% elsif guide.state && !guide.state.empty? %>
-        <%= guide.state %>
-      <% else %>
-        <%= guide.city %>
-      <% end %>
-    </td>
-    <td><%= guide.date %></td>
-  </tr>
-  <tr>
-    <td colspan="2" align="center"><%= guide.description.to(100) if guide.description %><%= '...' if guide.description && guide.description.size > 100 %></td>
-  </tr>
+  <div class="guide-list-element">
+  <% if guide.image %>
+    <div class="guide-list-image">
+      <%= image_tag guide.image.public_filename("thumb") %>
+    </div>
+  <% end %>
+  <div class="guide-list-name">
+    <%= link_to guide.name, guide.permalink_url %>
+  </div>
+  <div class="guide-list-location">
+    <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
+      <%= guide.city %>, <%= guide.state %>
+    <% elsif guide.state && !guide.state.empty? %>
+      <%= guide.state %>
+    <% else %>
+      <%= guide.city %>
+    <% end %>
+  </div>
+  <div class="guide-list-date">
+    <%= guide.date %>
+  </div>
+  <div class="guide-list-description">
+    <%= guide.description.to(100) if guide.description %><%= '...' if guide.description && guide.description.size > 100 %>
+  </div>
+  </div>
 <% end %>
-</table>
+</div>
 
 <%= link_to 'Previous page', { :page => @guide_pages.current.previous } if @guide_pages.current.previous %>
 <%= link_to 'Next page', { :page => @guide_pages.current.next } if @guide_pages.current.next %> 

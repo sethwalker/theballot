@@ -9,6 +9,11 @@
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
 <%  end
   end
+  if !@guide.theme.nil? && !@guide.theme.print_style.nil?
+    content_for :stylesheets do %>
+      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.print_style.id ) }) %>
+<%  end
+  end
 %>
 <% if @rendered %>
   <%= @rendered %>
@@ -103,7 +108,7 @@
         <h4 class="position"><span class=
         "position_label">Endorsed Vote:</span>
         <span class="position_text">
-        <%= e.selection_text %></span></h4>
+        <%= e.selection %></span></h4>
 
         <p class="text"><%= e.description %></p>
       </div>

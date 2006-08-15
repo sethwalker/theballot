@@ -1,10 +1,24 @@
 <%= error_messages_for 'theme' %>
 
 <!--[form:theme]-->
-<p><label for="theme_markup">Markup</label><br/>
-<%= text_area 'theme', 'markup', :cols => 50, :rows=> 100  %></p>
+<p><label for="theme_name">Name</label><br/>
+<%= text_field 'theme', 'name' %></p>
 
 <p><label for="theme_markup">Markup</label><br/>
-<%= collection_select 'theme', 'style_id', Style.find(:all), 'id', 'id' %>
+<%= text_area 'theme', 'markup', :cols => 80, :rows=> 100  %></p>
+
+<p><label for="theme_style">Style</label><br/>
+<%= collection_select 'theme', 'style_id', Style.find(:all), 'id', 'name' %>
+
+<p><label for="theme_print_style">Print Style</label><br/>
+<%= collection_select 'theme', 'print_style_id', Style.find(:all), 'id', 'name' %>
+
+<p><label for="theme_screenshot">Screenshot</label><br/>
+<%= file_field 'screenshot', 'uploaded_data' %>
+<% if @theme.screenshot -%>
+<br/>
+currently: <%= image_tag @theme.screenshot.public_filename("thumb") %>
+<%= hidden_field 'screenshot', 'id' %>
+<% end -%></p>
 <!--[eoform:theme]-->
 

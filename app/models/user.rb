@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   has_many :blocs, :through => :pledges, :source => :guide
   has_many :images
   has_many :attached_pdfs
+  has_many :screenshots
   # adding acl_system2 support http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2/
   has_and_belongs_to_many :roles
 

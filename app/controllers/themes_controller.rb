@@ -22,6 +22,14 @@ class ThemesController < ApplicationController
 
   def create
     @theme = Theme.new(params[:theme])
+    @screenshot = Screenshot.create(params[:screenshot])
+    if !@screenshot.valid? && params[:screenshot][:id]
+      @screenshot = Screenshot.find(params[:image][:id])
+    end
+    if @screenshot.valid?
+      @theme.screenshot = @screenshot
+      current_user.screenshots << @screenshot
+    end
     if @theme.save
       flash[:notice] = 'Theme was successfully created.'
       redirect_to :action => 'list'
@@ -36,6 +44,14 @@ class ThemesController < ApplicationController
 
   def update
     @theme = Theme.find(params[:id])
+    @screenshot = Screenshot.create(params[:screenshot])
+    if !@screenshot.valid? && params[:screenshot][:id]
+      @screenshot = Screenshot.find(params[:image][:id])
+    end
+    if @screenshot.valid?
+      @theme.screenshot = @screenshot
+      current_user.screenshots << @screenshot
+    end
     if @theme.update_attributes(params[:theme])
       flash[:notice] = 'Theme was successfully updated.'
       redirect_to :action => 'show', :id => @theme

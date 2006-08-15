@@ -91,7 +91,7 @@ class GuidesController < ApplicationController
         @guide = Guide.find_by_permalink(params[:permalink])
       end
     else
-      @guide = Guide.find(params[:id], :include => :endorsements)
+      @guide = Guide.find(params[:id])
     end
     if !@guide.is_published?
       if logged_in? && @guide.owner?(current_user)
@@ -102,7 +102,7 @@ class GuidesController < ApplicationController
     end
     if !@guide.theme.nil?
       template = Liquid::Template.parse(Theme.find(@guide.theme.id).markup)
-      @rendered = template.render('guide' => @guide, 'endorsements' => @guide.endorsements)
+      @rendered = template.render('guide' => @guide)
     end
   end
 

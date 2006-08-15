@@ -1,0 +1,23 @@
+body {
+  background: #FFFFFF;
+}
+
+#header {
+  display: none;
+}
+
+#footer {
+  display: none;
+}
+
+#nav {
+  display: none;
+}
+
+#sidebar {
+  display: none;
+}
+
+#guide-nav {
+  display: none;
+}

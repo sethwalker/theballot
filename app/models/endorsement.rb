@@ -19,6 +19,6 @@ class Endorsement < ActiveRecord::Base
 #  acts_as_draftable :fields => [:guide_id, :contest, :candidate, :position_id, :description]
 
   def to_liquid
-    { 'contest' => contest, 'candidate' => candidate, 'description' => description, 'position' => selection_text }
+    { 'contest' => contest, 'candidate' => candidate, 'description' => description, 'selection' => selection, 'position' => position }
   end
 end

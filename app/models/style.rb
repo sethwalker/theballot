@@ -1,4 +1,4 @@
 class Style < ActiveRecord::Base
-  has_one :theme
+  has_many :themes
   belongs_to :author, :class_name => 'User'
 end

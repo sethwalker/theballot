@@ -62,3 +62,19 @@ body {
 .explain {
   font-size: 80%;
 }
+
+.guide-list-element {
+  padding: 10px;
+}
+
+.guide-list-location {
+  float: left;
+}
+
+.guide-list-date {
+  float: right;
+}
+
+.guide-list-description {
+  clear: both;
+}

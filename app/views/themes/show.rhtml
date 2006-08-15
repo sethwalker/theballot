@@ -1,8 +1,26 @@
-<% for column in Theme.content_columns %>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @theme.send(column.name) %>
+<b>Name:</b> <%= @theme.name %>
 </p>
-<% end %>
+
+<p>
+<b>Screenshot:</b> <%= image_tag @theme.screenshot.public_filename("thumb") if @theme.screenshot %>
+</p>
+
+<p>
+<b>Style:</b> <%= @theme.style.name if @theme.style %>
+</p>
+
+<p>
+<b>Print style:</b> <%= @theme.print_style.name if @theme.print_style %>
+</p>
+
+<p>
+<b>Guides using this theme:</b>
+<ul>
+  <% @theme.guides.each do |g| -%>
+  <li><a href="<%= g.permalink_url %>"><%= g.name %></a></li>
+  <% end -%>
+</ul>
 
 <%= link_to 'Edit', :action => 'edit', :id => @theme %> |
 <%= link_to 'Back', :action => 'list' %>
