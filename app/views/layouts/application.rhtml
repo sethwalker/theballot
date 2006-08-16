@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="wrap">
-    <div id="header">Super! New! Voter! Guides!</div>
+    <div id="header"><a href="/">Super! New! Voter! Guides!</a></div>
     <div id="nav">
       <% if logged_in? %>
       <%= link_to "My Stuff", :controller => 'account', :action => 'profile', :id => current_user.id %> | <%= link_to "Log Out", :controller => 'account', :action => 'logout' %>
