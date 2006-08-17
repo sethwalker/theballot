@@ -104,6 +104,7 @@ class GuidesController < ApplicationController
       template = Liquid::Template.parse(Theme.find(@guide.theme.id).markup)
       @rendered = template.render('guide' => @guide)
     end
+    render :action => 'show', :layout => 'sidebar'
   end
 
   def not_found

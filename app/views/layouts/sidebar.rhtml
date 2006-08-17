@@ -6,6 +6,7 @@
   <%= @content_for_stylesheets %>
   <%= stylesheet_link_tag 'screen', :media => 'all' %>
   <%= stylesheet_link_tag 'print', :media => 'print' %>
+  <%= stylesheet_link_tag 'sidebar', :media => 'all' %>
 
   <%= javascript_include_tag :defaults %>
 </head>
@@ -32,6 +33,9 @@
       <p style="color: red"><%= flash[:error] %></p>
       <p style="color: green"><%= flash[:notice] %></p>
       <%= @content_for_layout %>
+    </div>
+    <div id="sidebar" class="column">
+      <%= @content_for_sidebar %>
     </div>
     </div>
     <div id="footer"><% if logged_in? && current_user.is_admin? -%><span style="color: white;">release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>

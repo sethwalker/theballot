@@ -1,0 +1,28 @@
+#container {
+  overflow: hidden;
+  padding-right: 200px;
+}
+
+#container .column {
+  padding-bottom: 20010px;  /* X + padding-bottom */
+  margin-bottom: -20000px;  /* X */
+}
+
+#sidebar {
+  padding-top: 20px;
+  background: #FFFFFF;
+  width: 200px;
+  margin-right: -200px;
+}
+
+#sidebar ul {
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar li {
+  list-style: none;
+  display: hidden;
+  margin: 5px;
+}
+

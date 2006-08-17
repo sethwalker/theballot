@@ -1,5 +1,5 @@
 <% if guide.endorsed -%>
-| <%= link_to_remote "UnEndorse", :url => { :controller => 'guides', :action => 'endorsed_status', :id => guide, :endorsed => false }, :update => 'endorsed_status' %>
+<%= link_to_remote "UnEndorse", :url => { :controller => 'guides', :action => 'endorsed_status', :id => guide, :endorsed => false }, :update => 'endorsed_status' %>
 <% else -%>
-| <%= link_to_remote "Endorse", :url => { :controller => 'guides', :action => 'endorsed_status', :id => guide, :endorsed => true }, :update => 'endorsed_status' %>
+<%= link_to_remote "Endorse", :url => { :controller => 'guides', :action => 'endorsed_status', :id => guide, :endorsed => true }, :update => 'endorsed_status' %>
 <% end -%>

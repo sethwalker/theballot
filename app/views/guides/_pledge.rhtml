@@ -1,5 +1,5 @@
 <% if guide.members.to_a.include? current_user -%>
-| <%= link_to_remote "UnJoin the Bloc", :url => { :controller => 'guides', :action => 'unjoin', :id => guide }, :update => 'pledged_status' %>
+<%= link_to_remote "UnJoin the Bloc", :url => { :controller => 'guides', :action => 'unjoin', :id => guide }, :update => 'pledged_status' %>
 <% else -%>
-| <%= link_to_remote "Join the Bloc", :url => { :controller => 'guides', :action => 'join', :id => guide }, :update => 'pledged_status' %>
+<%= link_to_remote "Join the Bloc", :url => { :controller => 'guides', :action => 'join', :id => guide }, :update => 'pledged_status' %>
 <% end -%>

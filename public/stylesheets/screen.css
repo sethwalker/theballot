@@ -4,56 +4,51 @@ body {
   background: #000000;
   margin: 0;
   padding: 0;
-  min-width: 750px;
+  min-width: 800px;
 }
 
 #wrap {
   margin: 0 auto;
-  width: 750px;
+  width: 800px;
 }
 
 #header {
   float: left;
   color: #FFFFFF;
+  width: 650px;
 }
 
 #footer {
   color: #FFFFFF;
   clear: both;
+  position: relative;
 }
 
-#nav {
-  width: 150px;
-  float: right;
+#account-nav {
+  float: left;
   text-align: center;
   background:#FF0000;
-  border-left: 1px solid #cecea5;
+  width: 150px;
 }
 
 .clear {
   clear: both;
 }
 
-#content .column {
-  position: relative;
+#container .column {
   float: left;
 }
 
-#main {
+#content {
   background: #FFFFFF;
   width: 100%;
-}
-
-#sidebar {
-  width: 100px;
-  padding-left: 30em;
 }
 
 .required {
   font-weight: bold;
 }
 
-#guide-nav {
+#nav {
   position: relative;
   float: left;
   background: red;

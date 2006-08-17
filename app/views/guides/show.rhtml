@@ -1,3 +1,28 @@
+<% content_for :sidebar do -%>
+<ul id="world-actions">
+<li><%= link_to_function "Print This Guide", 'window.print(); return false;' %></li>
+<li><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></li>
+</ul>
+<% if logged_in? -%>
+  <ul id="authenticated-actions">
+    <li id="pledged_status">
+      <%= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
+    </li>
+  </ul>
+  <% if @guide.owner?(current_user) || current_user.is_admin? %>
+  <ul id="owner-actions">
+    <li><%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %></li>
+  </ul>
+  <% end %>
+    <% if logged_in? && current_user.is_admin? -%>
+    <ul id="admin-actions">
+      <li id="endorsed_status">
+        <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
+      </li>
+    </ul>
+    <% end -%>
+  <% end -%>
+<% end -%>
 <% if @guide.endorsed -%>
 <div id="endorsed">This Guide is Endorsed by the League</div>
 <% else -%>
@@ -152,5 +177,3 @@
   </div>
 </div>
 <% end %>
-
-<%= render :partial => 'sidebar' %>
