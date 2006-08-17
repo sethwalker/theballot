@@ -14,6 +14,7 @@ class Guide < ActiveRecord::Base
   has_many :members, :through => :pledges, :source => :user
 
   validates_presence_of :name, :date, :city, :state
+  validates_associated :endorsements
 
   before_validation_on_create :create_permalink
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"

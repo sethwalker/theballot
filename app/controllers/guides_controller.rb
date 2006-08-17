@@ -114,6 +114,7 @@ class GuidesController < ApplicationController
 
   def new
     @guide = Guide.new
+    @status = params[:id]
   end
 
   def create
