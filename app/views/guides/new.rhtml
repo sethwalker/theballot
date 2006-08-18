@@ -15,7 +15,7 @@
 </div>
 <div id="guide-create">
 <div id="guide-form-container">
-<%= start_form_tag( { :action => 'create' }, :id => 'guide_form', :multipart => true ) %>
+<%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
   <div class="right">
     <%= submit_tag "Publish", :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>

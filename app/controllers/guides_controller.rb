@@ -193,12 +193,12 @@ class GuidesController < ApplicationController
       current_user.attached_pdfs << @pdf
     end
 
-    if 'Unpublish' == params[:commit]
+    if 'Unpublish' == params[:commit] || 'Save As Draft' == params[:status]
       @guide.unpublish
-    elsif 'Publish' == params[:commit]
+    elsif 'Publish' == params[:commit] || 'Publish' == params[:status]
       @guide.publish
     end
-    @guide.save
+    @guide.save!
     flash[:notice] = 'Guide was successfully updated.'
     redirect_to :action => 'show', :id => @guide
   end
