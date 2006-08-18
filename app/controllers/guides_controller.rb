@@ -256,6 +256,7 @@ class GuidesController < ApplicationController
       page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement => @endorsement }
       page['endorsement_contest'].value = ''
       page['endorsement_description'].value = ''
+      page['endorsement_selection'].value = Endorsement::NO_ENDORSEMENT
       page['endorsement_contest'].focus
     end
   end
