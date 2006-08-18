@@ -113,7 +113,8 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = Guide.new
+    @guide = current_user.current_guide || Guide.new(:name => 'Unsaved Guide', :user => current_user)
+    @guide.save_with_validation(false) unless @guide.id
     @status = params[:id]
   end
 
@@ -166,7 +167,7 @@ class GuidesController < ApplicationController
 
   def update
     @guide = Guide.find(params[:id])
-    return render :action => 'edit' unless @guide.update_attributes(params[:guide])
+    return render(:action => 'edit') unless @guide.update_attributes(params[:guide])
     if params.include?('endorsements')
       params[:endorsements].each do |i,e|
         endorsement = @guide.endorsements.build(e)
@@ -216,7 +217,7 @@ class GuidesController < ApplicationController
         e.position = @order.index(e.id.to_s) + 1
         e.save
       end
-      return render :nothing => true
+      return render(:nothing => true)
     end
   end
 
@@ -239,13 +240,41 @@ class GuidesController < ApplicationController
     @endorsement.guide_id = params[:id]
     return unless @endorsement.save
     render :update do |page|
-      page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement, @endorsement }
+      page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement=> @endorsement }
       page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order' }
       page['endorsement_contest'].value = ''
       page['endorsement_candidate'].value = ''
       page['endorsement_description'].value = ''
       page['endorsement_selection'].value = Endorsement::NO_ENDORSEMENT
-      page['endorsement_contest'].focus()
+      page['endorsement_contest'].focus
+    end
+  end
+
+  def add_issue
+    @endorsement = Endorsement.create!(params[:endorsement])
+    render :update do |page|
+      page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement => @endorsement }
+    end
+  end
+
+  def add_contest
+    @endorsement = Endorsement.new(params[:endorsement])
+    render :update do |page|
+      page.replace_html 'endorsement_form', :partial => 'contest', :locals => { :endorsement => @endorsement }
+    end
+  end
+
+  def add_candidate
+    @endorsement = Endorsement.create(params[:endorsement])
+    render :update do |page|
+      if @endorsement
+        page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement => @endorsement }
+        page['endorsement_candidate'].value=''
+        page['endorsement_description'].value=''
+        page['endorsement_candidate'].focus
+      else
+        page.alert('failed')
+      end
     end
   end
 

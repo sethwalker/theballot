@@ -1,39 +1,38 @@
+<div id="guide-new-introduction">
 <% if @status == 'c3' -%>
 <div id="c3-instructions">501(c)(3) informational guides - you cannot take a position on candidates, and must profile at least two candidates for each contest</div>
 <% else -%>
 <div id="c3-link">If you are a qualified 501(c)(3), <%= link_to 'click here', :action => 'new', :id => 'c3' %> to make an issue / informational guide</div>
 <% end -%>
+
+<div id="instructions">
+  <ul>
+    <li>first</li>
+    <li>second</li>
+    <li>third</li>
+  </ul>
+</div>
+</div>
+<div id="guide-create">
+<div id="guide-form-container">
 <%= start_form_tag( { :action => 'create' }, :id => 'guide_form', :multipart => true ) %>
   <%= render :partial => 'form' %>
-  <% if !@guide.endorsements.empty? -%>
-    <% order = Array.new -%>
-    <% @guide.endorsements.each_with_index do |e,i| %>
-      <%= hidden_field_tag("endorsements[#{i}][contest]", e.contest) %>
-      <%= hidden_field_tag("endorsements[#{i}][candidate]", e.candidate) %>
-      <%= hidden_field_tag("endorsements[#{i}][description]", e.description) %>
-      <%= hidden_field_tag("endorsements[#{i}][selection]", e.selection) %>
-      <% order << i -%>
-    <% end %>
-  <% end -%>
-  <div id="endorsement_order">
-    <%= hidden_field_tag(:order, order.join(',')) if order %>
-  </div>
   <div class="right">
     <%= submit_tag "Publish", :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
   </div>
 <%= end_form_tag %>
+</div>
 
+<div id="guide-endorsement-container">
 <div id="endorsement-errors"></div>
-<div id="endorsement_form" class="column">
-  <%= form_remote_tag :url => { :controller => 'endorsements', :action => 'add' }, :html => { :id => 'add_endorsement_form' } %>
-    <%= render :partial => 'endorsements/form' %>
-    <div id="current_index">
-      <%= hidden_field_tag 'index', @guide.endorsements ? @guide.endorsements.size : 0 %>
-    </div>
-    <%= submit_tag 'add endorsement' %>
-  <%= end_form_tag %>
+<div id="endorsement_form">
+  <%= render :partial => 'issues_and_candidates', :locals => { :guide => @guide } %>
 </div>
 <div id="endorsement_container" class="column">
+  <% reset_function = update_element_function('endorsement_form') do -%>
+  <%= render :partial => 'issues_and_candidates', :locals => { :guide => @guide } %>
+  <% end -%>
+  <%= link_to_function 'add issue or candidate', reset_function + "; document.getElementById('endorsement_form').style.visibility='visible'" %>
   <ul id="endorsements">
     <% if !@guide.endorsements.empty? -%>
       <% @guide.endorsements.each_with_index do |e,i| -%>
@@ -42,9 +41,11 @@
     <% end -%>
   </ul>
 </div>
+</div>
 
+<br class="clear" />
+
+</div>
 <%= sortable_element 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :controller => 'guides', :action => 'order' }, :update => 'endorsement_order' %>
-
-<div class="clear"></div>
 
 <%= link_to 'Back', :action => 'list' %>

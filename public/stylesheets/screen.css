@@ -73,3 +73,58 @@ body {
 .guide-list-description {
   clear: both;
 }
+
+#guide-create {
+  position: relative;
+}
+
+#guide-form-container {
+  float: left;
+  width: 50%;
+}
+
+#guide-endorsement-container {
+  float: left;
+  width: 50%;
+}
+
+#endorsement_form {
+  position: absolute;
+  left: 10px;
+  top: -300px;
+  background-color: white;
+  border: 1px solid;
+  padding: 10px 10px;
+  width: 700px;
+  visibility: hidden;
+}
+
+#guide-new-introduction {
+  height: 300px;
+}
+
+#endorsement_form #issue, #endorsement_form #contest-instructions {
+  width: 349px;
+  float: left;
+  border-right: 1px solid;
+}
+
+#endorsement_form #contest {
+  float: left;
+  width: 340px;
+  padding-left: 10px;
+}
+
+#or {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#done-button {
+  display: none;
+}
+
+.right {
+  float: right;
+}

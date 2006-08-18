@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     roles.any? {|r| 'admin' == r.title.downcase }
   end
 
+  def current_guide
+    guides.find(:first, :conditions => "status IS NULL")
+  end
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     # hide records with a nil activated_at

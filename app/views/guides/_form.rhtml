@@ -1,10 +1,6 @@
 <%= error_messages_for 'guide' %>
 
 <!--[form:guide]-->
-<div id="guide_form">
-  <table>
-    <tr>
-      <td>
 <p><label for="guide_date" class="required">Election Date (required)</label><br/>
 <%= date_select 'guide', 'date', :order => [:month, :day, :year]  %></p>
 
@@ -17,16 +13,11 @@
   it will be created for you from the name if left blank</span><br/>
 <%= text_field 'guide', 'permalink'  %></p>
 
-<table><tr><td>
 <p><label for="guide_city" class="required">City (required)</label><br/>
 <%= text_field 'guide', 'city', :size => 22  %></p>
-</td><td>
+
 <p><label for="guide_state" class="required">State (required)</label><br/>
 <%= us_state_select 'guide', 'state', :show => :abbreviations, :include_blank => true %></p>
-</td></tr></table>
-
-</td>
-<td>
 
 <p><label for="guide_theme">Theme</label><br/>
 <%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id', :prompt => 'none', :include_blank => true %>
@@ -48,14 +39,7 @@ currently: <%= image_tag @guide.image.public_filename("thumb") %>
 <% end -%>
 </p>
 
-
-</td>
-</tr>
-</table>
-
 <p><label for="guide_description">Description</label><br/>
-<%= text_area 'guide', 'description', :rows => 10, :cols => 70  %></p>
-
-</div>
+<%= text_area 'guide', 'description', :rows => 10 %></p>
 <!--[eoform:guide]-->
 

@@ -1,0 +1,30 @@
+<%= error_messages_for 'endorsement' %>
+<div id="or">OR</div>
+<div id="issue">
+  <%= form_remote_tag :url => { :action => 'add_issue' } %>
+  <%= hidden_field 'endorsement', 'guide_id', { :value => guide.id } %>
+
+  <p><label for="endorsement_contest">Issue before the voters<br/>(ballot measure, proposition, etc)</label><br/>
+  <%= text_field 'endorsement', 'contest'  %></p>
+
+  <p><label for="endorsement_description">Description</label><br/>
+  <%= text_area 'endorsement', 'description', :rows => 5  %></p>
+
+  <p><label for="endorsement_selection">Position</label><br/>
+  <%= select 'endorsement', 'selection', Endorsement::SELECTION_OPTIONS.values, { :selected => Endorsement::NO_ENDORSEMENT } %></p>
+
+  <%= submit_tag 'add issue' %>
+  <%= end_form_tag %>
+</div>
+<div id="contest">
+  <%= form_remote_tag :url => { :action => 'add_contest' } %>
+  <%= hidden_field 'endorsement', 'guide_id', :value => guide.id %>
+
+  <p><label for="endorsement_contest">Contested Office<br/>(Mayor, Governor, etc)</label><br/>
+  <%= text_field 'endorsement', 'contest'  %></p>
+
+  <%= submit_tag 'add contest' %>
+  <%= end_form_tag %>
+</div>
+<br class="clear" />
+<div class="right"><%= link_to_function 'done', "document.getElementById('endorsement_form').style.visibility='hidden'" %></div>

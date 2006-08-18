@@ -5,7 +5,7 @@ class Endorsement < ActiveRecord::Base
   SELECTION_OPTIONS = {:yes => YES, :no => NO, :no_endorsement => NO_ENDORSEMENT }
 
   def validate
-    if candidate && selection != NO_ENDORSEMENT
+    if candidate && selection && selection != NO_ENDORSEMENT
 #      guide.errors.add_to_base "Cannot take a position on candidates"
       errors.add('selection', 'Cannot take a position on candidates')
     end
