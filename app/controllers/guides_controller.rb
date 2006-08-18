@@ -254,6 +254,9 @@ class GuidesController < ApplicationController
     @endorsement = Endorsement.create!(params[:endorsement])
     render :update do |page|
       page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement => @endorsement }
+      page['endorsement_contest'].value = ''
+      page['endorsement_description'].value = ''
+      page['endorsement_contest'].focus
     end
   end
 
