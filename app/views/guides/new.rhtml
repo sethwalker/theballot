@@ -7,9 +7,9 @@
 
 <div id="instructions">
   <ul>
-    <li>first</li>
-    <li>second</li>
-    <li>third</li>
+    <li>first instruction</li>
+    <li>second instruction</li>
+    <li>third instruction</li>
   </ul>
 </div>
 </div>
@@ -23,29 +23,9 @@
 <%= end_form_tag %>
 </div>
 
-<div id="guide-endorsement-container">
-<div id="endorsement-errors"></div>
-<div id="endorsement_form">
-  <%= render :partial => 'issues_and_candidates', :locals => { :guide => @guide } %>
-</div>
-<div id="endorsement_container" class="column">
-  <% reset_function = update_element_function('endorsement_form') do -%>
-  <%= render :partial => 'issues_and_candidates', :locals => { :guide => @guide } %>
-  <% end -%>
-  <%= link_to_function 'add issue or candidate', reset_function + "; document.getElementById('endorsement_form').style.visibility='visible'" %>
-  <ul id="endorsements">
-    <% if !@guide.endorsements.empty? -%>
-      <% @guide.endorsements.each_with_index do |e,i| -%>
-        <%= render :partial => 'endorsement', :locals => { :endorsement => e, :index => i } %>
-      <% end -%>
-    <% end -%>
-  </ul>
-</div>
+<%= render :partial => 'contests', :locals => { :guide => @guide, :contest => @contest, :choice => @choice } %>
 </div>
 
 <br class="clear" />
-
-</div>
-<%= sortable_element 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :controller => 'guides', :action => 'order' }, :update => 'endorsement_order' %>
 
 <%= link_to 'Back', :action => 'list' %>

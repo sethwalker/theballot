@@ -6,7 +6,23 @@
 </div>
 <% end %>
 
-<p><label>Login:</label><%= in_place_editor_field :user, 'login' %></p>
+<p><label>Login:</label><%= @user.login %></p>
+
+<%= start_form_tag( { :action => 'update', :id => @user }, :multipart => true ) %>
+  <p><label for="user_avatar">Upload an image:</label><br/>
+  <%= file_field 'avatar', 'uploaded_data'  %>
+  <% if @user.avatar-%>
+  <br/>
+  currently: <%= image_tag @user.avatar.public_filename("thumb") %>
+  <%= hidden_field 'avatar', 'id' %>
+  <% end -%>
+  </p>
+  <%= submit_tag 'Upload' %>
+<%= end_form_tag %>
+
+<% if @user.guide_in_progress -%>
+<%= link_to 'your current guide', url_for( :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress ) %>
+<% end -%>
 
 <h1>Your Guides</h1>
 

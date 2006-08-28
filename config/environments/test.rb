@@ -17,3 +17,7 @@ config.action_controller.perform_caching             = false
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
+
+APPLICATION_HOST_NAME = 'voterguides.devel.radicaldesigns.org:3080'
+APPLICATION_C3_DOMAIN = 'c3voterguides.devel.radicaldesigns.org'
+APPLICATION_STANDARD_DOMAIN = 'voterguides.devel.radicaldesigns.org'

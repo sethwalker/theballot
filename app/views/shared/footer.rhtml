@@ -1,0 +1,1 @@
+<div id="footer"><% if logged_in? && current_user.is_admin? -%><span style="color: white;">release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>

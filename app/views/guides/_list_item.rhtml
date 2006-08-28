@@ -1,0 +1,26 @@
+<% guide ||= list_item %>
+<div class="guide-list-element">
+<% if guide.image %>
+  <div class="guide-list-image">
+    <%= image_tag guide.image.public_filename("thumb") %>
+  </div>
+<% end %>
+<div class="guide-list-name">
+  <%= link_to guide.name, guide.permalink_url %>
+</div>
+<div class="guide-list-location">
+  <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
+    <%= guide.city %>, <%= guide.state %>
+  <% elsif guide.state && !guide.state.empty? %>
+    <%= guide.state %>
+  <% else %>
+    <%= guide.city %>
+  <% end %>
+</div>
+<div class="guide-list-date">
+  <%= guide.date %>
+</div>
+<div class="guide-list-description">
+  <%= truncate guide.description, 100 %>
+</div>
+</div>

@@ -9,4 +9,13 @@ class GuidePromoter < ActionMailer::Base
     @body[:message] = setup[:message]
     @body[:url] = "http://#{APPLICATION_HOST_NAME}#{setup[:guide].permalink_url}"
   end
+
+  def approval_request(setup)
+    @recipients = "seth@indyvoter.org"
+    @from = "voterguides@indyvoter.org"
+    @subject = 'c3 guide approval request'
+    @send_on = Time.now
+    @body[:guide] = setup[:guide]
+    @body[:url] = "http://#{APPLICATION_HOST_NAME}#{setup[:guide].permalink_url}"
+  end
 end

@@ -1,0 +1,5 @@
+<span><b>Referendum: <%= contest.name %></b></span> <%= link_to_remote 'edit', :url => { :controller => '/contests/referendum', :action => 'edit', :id => contest.id, :choice => contest.choice } %> <%= link_to_remote 'delete', :url => { :controller => 'contests', :action => 'destroy', :id => contest.id } %><br/>
+<% if contest.choice -%>
+<%= truncate contest.choice.description %><br/>
+<span id="choice_<%= contest.choice.id %>_selection"><%= contest.choice.selection %></span>
+<% end -%>

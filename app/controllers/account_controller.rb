@@ -1,8 +1,6 @@
 class AccountController < ApplicationController
   observer :user_observer
 
-  in_place_edit_for :user, :login
-
   def activate
     @user = User.find_by_activation_code(params[:id]) unless params[:id].nil?
     if @user and @user.activate
@@ -57,6 +55,13 @@ class AccountController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
+    return unless @user == current_user || current_user.admin?
+    @avatar = Avatar.create(params[:avatar])
+    render :action => 'profile' and return unless @avatar.valid?
+    @user.avatar = @avatar
+    flash[:notice] = 'Successfully uploaded image'
+    redirect_to :action => 'profile'
   end
 
   def remove_admin
@@ -76,7 +81,7 @@ class AccountController < ApplicationController
 
   def login
     return unless request.post?
-    self.current_user = User.authenticate(params[:login], params[:password])
+    self.current_user = User.authenticate(params[:email], params[:password])
     if current_user
       redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Logged in successfully"

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Super! New! Voter! Guides!</title>
+  <title>Super! New! <%= 'c3! ' if @c3 %>Voter! Guides!</title>
   <%= @content_for_stylesheets %>
   <%= stylesheet_link_tag 'screen', :media => 'all' %>
   <%= stylesheet_link_tag 'print', :media => 'print' %>
@@ -11,14 +11,8 @@
 </head>
 <body>
   <div id="wrap">
-    <div id="header"><a href="/">Super! New! Voter! Guides!</a></div>
-    <div id="account-nav">
-      <% if logged_in? %>
-      <%= link_to "My Stuff", :controller => 'account', :action => 'profile', :id => current_user.id %> | <%= link_to "Log Out", :controller => 'account', :action => 'logout' %>
-      <% else %>
-        <%= link_to "Log In", :controller => 'account', :action => 'login' %> | <%= link_to "Sign Up", :controller => 'account', :action => 'signup' %>
-      <% end %>
-    </div>
+    <div id="header"><a href="/">Super! New! <%= 'c3! ' if @c3 %>Voter! Guides!</a></div>
+    <%= render "shared/nav/account" %>
     <br class="clear" />
     <div id="nav">
       <%= link_to "Make a new guide", :controller => 'guides', :action => 'new' %> | 
@@ -34,7 +28,7 @@
       <%= @content_for_layout %>
     </div>
     </div>
-    <div id="footer"><% if logged_in? && current_user.is_admin? -%><span style="color: white;">release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>
+    <%= render "shared/footer" %>
   </div>
 </body>
 </html>

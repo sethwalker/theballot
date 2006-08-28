@@ -1,33 +1,7 @@
 <h1>Listing guides</h1>
 
 <div id="guide-list-container">
-<% for guide in @guides %>
-  <div class="guide-list-element">
-  <% if guide.image %>
-    <div class="guide-list-image">
-      <%= image_tag guide.image.public_filename("thumb") %>
-    </div>
-  <% end %>
-  <div class="guide-list-name">
-    <%= link_to guide.name, guide.permalink_url %>
-  </div>
-  <div class="guide-list-location">
-    <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
-      <%= guide.city %>, <%= guide.state %>
-    <% elsif guide.state && !guide.state.empty? %>
-      <%= guide.state %>
-    <% else %>
-      <%= guide.city %>
-    <% end %>
-  </div>
-  <div class="guide-list-date">
-    <%= guide.date %>
-  </div>
-  <div class="guide-list-description">
-    <%= guide.description.to(100) if guide.description %><%= '...' if guide.description && guide.description.size > 100 %>
-  </div>
-  </div>
-<% end %>
+<%= render :partial => 'list_item', :collection => @guides %>
 </div>
 
 <%= link_to 'Previous page', { :page => @guide_pages.current.previous } if @guide_pages.current.previous %>

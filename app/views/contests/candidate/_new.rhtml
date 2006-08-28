@@ -1,0 +1,13 @@
+<%= form_remote_tag :url => { :controller => 'contests/candidate', :action => 'create' } %>
+  <%= hidden_field 'contest', 'guide_id' %>
+
+  <p><label for="contest_name">Office</label><br/>
+  <%= text_field 'contest', 'name' %></p>
+
+  <% if contest.guide.candidate_contests %>
+  or select existing: <%= collection_select 'contest', 'id', contest.guide.candidate_contests, 'id', 'name', :include_blank => true %>
+  <% end %>
+
+  <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
+  <%= submit_tag 'add candidate' %>
+<%= end_form_tag %>

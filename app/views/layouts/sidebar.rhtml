@@ -13,13 +13,7 @@
 <body>
   <div id="wrap">
     <div id="header"><a href="/">Super! New! Voter! Guides!</a></div>
-    <div id="account-nav">
-      <% if logged_in? %>
-      <%= link_to "My Stuff", :controller => 'account', :action => 'profile', :id => current_user.id %> | <%= link_to "Log Out", :controller => 'account', :action => 'logout' %>
-      <% else %>
-        <%= link_to "Log In", :controller => 'account', :action => 'login' %> | <%= link_to "Sign Up", :controller => 'account', :action => 'signup' %>
-      <% end %>
-    </div>
+    <%= render "shared/nav/account" %>
     <br class="clear" />
     <div id="nav">
       <%= link_to "Make a new guide", :controller => 'guides', :action => 'new' %> | 
@@ -38,7 +32,7 @@
       <%= @content_for_sidebar %>
     </div>
     </div>
-    <div id="footer"><% if logged_in? && current_user.is_admin? -%><span style="color: white;">release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>
+    <%= render "shared/footer" %>
   </div>
 </body>
 </html>

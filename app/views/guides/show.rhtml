@@ -1,4 +1,7 @@
 <% content_for :sidebar do -%>
+<div id="author-info">
+  This guide by <% if @guide.user.avatar %><div id="author-avatar"><%= image_tag @guide.user.avatar.public_filename("thumb") %><br/><% end %><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %><% if @guide.user.avatar %></div><% end %>
+</div>
 <ul id="world-actions">
 <li><%= link_to_function "Print This Guide", 'window.print(); return false;' %></li>
 <li><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></li>
@@ -19,6 +22,11 @@
       <li id="endorsed_status">
         <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
       </li>
+      <% if @guide.c3? %>
+        <li id="approved_status">
+          <%= render :partial => 'guides/approve', :locals => { :guide => @guide } %>
+        </li>
+      <% end %>
     </ul>
     <% end -%>
   <% end -%>
@@ -122,20 +130,20 @@
   </div>
 
   <div id="main_content">
-    <% @guide.endorsements.each do |e| %>
+    <% @guide.contests.each do |e| %>
       <div class="list_entry">
-        <h2 class="voter_item_title"><%= e.contest %></h2>
+        <h2 class="voter_item_title"><%= e.name %></h2>
         <h4 class="listname"><span class=
         "name_label">Candidate/Issue:</span>
         <span class="name_text">
-        <%= e.candidate %></span></h4>
+        <%= %></span></h4>
 
         <h4 class="position"><span class=
         "position_label">Endorsed Vote:</span>
         <span class="position_text">
-        <%= e.selection %></span></h4>
+        <%= %></span></h4>
 
-        <p class="text"><%= e.description %></p>
+        <p class="text"><%= %></p>
       </div>
     <% end %>
   </div>

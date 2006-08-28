@@ -1,8 +1,9 @@
 class Guide < ActiveRecord::Base
   PUBLISHED = 'Published'
   DRAFT = 'Draft'
+  C3 = 'c3'
 
-  has_many :endorsements, :dependent => :destroy, :order => 'position'
+  has_many :contests, :dependent => :destroy, :include => :choices, :order => 'contests.position'
   has_many :links, :dependent => :destroy
   has_one :image, :dependent => :destroy
   has_one :attached_pdf, :dependent => :destroy
@@ -14,11 +15,12 @@ class Guide < ActiveRecord::Base
   has_many :members, :through => :pledges, :source => :user
 
   validates_presence_of :name, :date, :city, :state
-  validates_associated :endorsements
+  validates_associated :contests
 
   before_validation_on_create :create_permalink
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
+  after_save { GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published }
   acts_as_ferret :fields => [ :name, :city, :description ]
 
 =begin
@@ -32,7 +34,7 @@ class Guide < ActiveRecord::Base
 =end
 
   def to_liquid
-    liquid = { 'id' => id, 'name' => name, 'city' => city, 'state' => state, 'date' => date, 'description' => description, 'endorsements' => endorsements }
+    liquid = { 'id' => id, 'name' => name, 'city' => city, 'state' => state, 'date' => date, 'description' => description, 'endorsements' => contests }
     if image
       liquid.merge!(  { 'image_link' => image.public_filename, 'image_name' => image.filename, 'image_thumb' => image.public_filename('thumb') } )
     end
@@ -47,6 +49,7 @@ class Guide < ActiveRecord::Base
   end
 
   def publish
+    @recently_published = true
     self.status = PUBLISHED
   end
 
@@ -55,11 +58,27 @@ class Guide < ActiveRecord::Base
   end
 
   def is_published?
-    PUBLISHED == status
+    PUBLISHED == status && ( c3? ? approved? : true )
+  end
+
+  def approve(user)
+    update_attributes(:approved_at => Time.now, :approved_by => user)
+  end
+
+  def approved?
+    !approved_at.nil?
   end
 
   def owner?(u)
     u == user
+  end
+
+  def c3?
+    C3 == legal
+  end
+
+  def candidate_contests
+    contests.find_all_by_type 'Candidate'
   end
 
   protected

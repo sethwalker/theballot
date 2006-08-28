@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.author 'guides/author/:author', :controller => 'guides', :action => 'list'
 
+  map.connect 'guides/by_state/:state', :controller => 'guides', :action => 'list'
+
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

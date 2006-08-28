@@ -1,0 +1,24 @@
+<div id="guide-contests-container">
+  <div id="contest-edit-window">
+    <div id="contest-messages"></div>
+    <%= render :partial => 'contests/edit_window', :locals => { :contest => contest, :choice => choice } %>
+    <div class="right"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
+  </div>
+  <div id="contest-container" class="column">
+    <% reset_function = update_element_function('contest-edit-window') do -%>
+      <div id="contest-messages"></div>
+      <%= render :partial => 'contests/edit_window', :locals => { :contest => contest, :choice => choice } %>
+      <div class="right"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
+    <% end -%>
+  </div>
+  <%= link_to_function 'add issue or candidate', reset_function + "; document.getElementById('contest-edit-window').style.visibility='visible'" %>
+  <ul id="contests">
+    <% if !guide.contests.empty? -%>
+      <% guide.contests.each_with_index do |c,i| -%>
+        <%= render :partial => '/contests/show', :locals => { :contest => c, :index => i } %>
+      <% end -%>
+    <% end -%>
+  </ul>
+</div>
+
+<%= render :partial => 'sortable_contests', :locals => { :guide => guide } %>

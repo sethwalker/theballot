@@ -1,0 +1,2 @@
+<li id='choice_<%= choice %>'><%= choice.selection != Choice::NO_ENDORSEMENT ? choice.selection.ljust(3) + ' : ' : '&nbsp;' * 7 %><%= choice.name %> <%= link_to_remote 'edit', :url => { :action => 'edit_candidate', :id => choice } %><br/>
+<%= truncate choice.description %></li>

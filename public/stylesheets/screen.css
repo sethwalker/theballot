@@ -74,7 +74,7 @@ body {
   clear: both;
 }
 
-#guide-create {
+#guide-create, #guide-edit {
   position: relative;
 }
 
@@ -83,12 +83,12 @@ body {
   width: 50%;
 }
 
-#guide-endorsement-container {
+#guide-contests-container {
   float: left;
   width: 50%;
 }
 
-#endorsement_form {
+#contest-edit-window {
   position: absolute;
   left: 10px;
   top: -300px;
@@ -103,13 +103,13 @@ body {
   height: 300px;
 }
 
-#endorsement_form #issue, #endorsement_form #contest-instructions {
+#contest-edit-window-left {
   width: 349px;
   float: left;
   border-right: 1px solid;
 }
 
-#endorsement_form #contest {
+#contest-edit-window-right {
   float: left;
   width: 340px;
   padding-left: 10px;
@@ -127,4 +127,13 @@ body {
 
 .right {
   float: right;
+}
+
+.front-page-left {
+  float: left;
+}
+
+.front-page-right {
+  float: left;
+  width: 300px;
 }

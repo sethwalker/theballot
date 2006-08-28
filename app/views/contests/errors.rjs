@@ -1,0 +1,1 @@
+page.replace_html 'contest-messages', content_tag('div', error_message_for('contest'))

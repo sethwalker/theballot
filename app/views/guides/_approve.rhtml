@@ -1,0 +1,5 @@
+<% if guide.approved? -%>
+<%= link_to_remote "UnApprove", :url => { :controller => 'guides', :action => 'approved_status', :id => guide, :approved => false }, :update => 'approved_status' %>
+<% else -%>
+<%= link_to_remote "Approve", :url => { :controller => 'guides', :action => 'approved_status', :id => guide, :approved => true }, :update => 'approved_status' %>
+<% end -%>

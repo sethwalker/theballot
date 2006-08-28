@@ -1,5 +1,20 @@
-<%= link_to_function 'edit guide information', "Element.toggle('guide_form_container')" %>
-<div id="guide_form_container" style="display:none;">
+<div id="guide-new-introduction">
+<% if @status == 'c3' -%>
+<div id="c3-instructions">501(c)(3) informational guides - you cannot take a position on candidates, and must profile at least two candidates for each contest</div>
+<% else -%>
+<div id="c3-link">If you are a qualified 501(c)(3), <%= link_to 'click here', :action => 'new', :id => 'c3' %> to make an issue / informational guide</div>
+<% end -%>
+
+<div id="instructions">
+  <ul>
+    <li>first instruction</li>
+    <li>second instruction</li>
+    <li>third instruction</li>
+  </ul>
+</div>
+</div>
+<div id="guide-edit">
+<div id="guide-form-container">
   <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
     <%= render :partial => 'form' %>
     <div class="right">
@@ -8,21 +23,10 @@
   <%= end_form_tag %>
 </div>
 
-<div id="endorsement_form" class="column">
-  <%= form_remote_tag :url => { :action => 'add_endorsement', :id => @guide } %>
-    <%= render :partial => 'endorsements/form' %>
-    <%= submit_tag 'add endorsement' %>
-  <%= end_form_tag %>
+<%= render :partial => 'contests', :locals => { :guide => @guide, :contest => @contest, :choice => @choice } %>
 </div>
 
-<div id="endorsement_container" class="column">
-  <ul id="endorsements">
-    <%= render :partial => 'endorsement', :collection => @guide.endorsements %>
-  </ul>
-</div>
+<br class="clear" />
 
-<%= sortable_element 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order', :id => @guide.id } %>
-
-<div class="clear"></div>
 <%= link_to 'Show', :action => 'show', :id => @guide %> |
 <%= link_to 'Back', :action => 'list' %>

@@ -24,9 +24,12 @@ newyork:
 future:
   id: 3
   name: future guide
+  city: san francisco
+  state: CA
   permalink: future_guide
   date: <%= (Time.now + 1.day).to_date.to_s %>
   user_id: 1
+  status: <%= Guide::PUBLISHED %>
 
 past:
   id: 4
@@ -39,4 +42,19 @@ no_endorsements:
   id: 5
   name: no endorsements
   date: <%= (Time.now + 1.day).to_date.to_s %>
+  user_id: 1
+
+candidate_endorsements:
+  id: 6
+  name: candidate endorsements allowed
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+no_candidate_endorsements:
+  id: 7
+  name: no candidate endorsements allowed
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
   user_id: 1

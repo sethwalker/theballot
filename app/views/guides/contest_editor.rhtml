@@ -1,0 +1,6 @@
+<% # <%= link_to_remote 'new issue', :url => { :action => 'new_issue', :id => @guide } %> | <%= link_to_remote 'new office', :url => { :action => 'new_office', :id => @guide } %> 
+<%= render :partial => 'contests/edit_window', :locals => { :contest => @contest, :choice => @choice } %>
+<ul id="contests">
+  <%= render :partial => 'contests/show', :collection => @guide.contests %>
+</ul>
+<%= sortable_element 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @guide } %>

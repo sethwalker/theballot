@@ -1,0 +1,3 @@
+<span><b><%= contest.name %>:</b></span><%= link_to_remote 'delete', :url => { :controller => 'contests', :action => 'destroy', :id => contest.id } %><br/>
+<%= truncate contest.choices.first.description %><br/>
+<span id="choice_<%= contest.choices.first.id %>_selection"><%= contest.choices.first.selection %></span>

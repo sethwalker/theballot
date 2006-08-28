@@ -23,21 +23,30 @@ class User < ActiveRecord::Base
   has_many :images
   has_many :attached_pdfs
   has_many :screenshots
+  has_one :avatar
   # adding acl_system2 support http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2/
   has_and_belongs_to_many :roles
 
-  def is_admin?
+  def admin?
     roles.any? {|r| 'admin' == r.title.downcase }
   end
 
-  def current_guide
+  def is_admin?
+    admin?
+  end
+
+  def developer?
+    roles.any? {|r| 'developer' == r.title.downcase }
+  end
+
+  def guide_in_progress
     guides.find(:first, :conditions => "status IS NULL")
   end
 
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
+  # Authenticates a user by their email and unencrypted password.  Returns the user or nil.
+  def self.authenticate(email, password)
     # hide records with a nil activated_at
-    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login]
+    u = find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email]
     #u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end

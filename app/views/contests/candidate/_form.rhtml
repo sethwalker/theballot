@@ -1,0 +1,12 @@
+<p><label for="choice_name">Candidate Name</label><br/>
+<%= text_field 'choice', 'name' %></p>
+
+<p><label for="choice_description">Description</label><br/>
+<%= text_area 'choice', 'description', :rows => 5 %></p>
+
+<% unless @c3 -%>
+
+<p><label for="choice_selection">Position</label><br/>
+<%= select 'choice', 'selection', Choice::SELECTION_OPTIONS.values %>
+
+<% end -%>

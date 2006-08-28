@@ -1,0 +1,3 @@
+<% contest ||= show -%>
+<li id="contest_<%= contest.id %>">
+<%= render :partial => "contests/#{contest.class.to_s.downcase}/show", :locals => { :contest => contest } %>
