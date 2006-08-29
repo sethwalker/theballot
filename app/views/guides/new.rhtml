@@ -1,5 +1,5 @@
 <div id="guide-new-introduction">
-<% if @status == 'c3' -%>
+<% if @c3 or @status == 'c3' -%>
 <div id="c3-instructions">501(c)(3) informational guides - you cannot take a position on candidates, and must profile at least two candidates for each contest</div>
 <% else -%>
 <div id="c3-link">If you are a qualified 501(c)(3), <%= link_to 'click here', :action => 'new', :id => 'c3' %> to make an issue / informational guide</div>
