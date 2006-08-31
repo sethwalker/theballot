@@ -2,7 +2,10 @@
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
+  include ExceptionNotifiable
+
   before_filter :set_legal
+  filter_parameter_logging "password"
 
   def set_legal
     c3?

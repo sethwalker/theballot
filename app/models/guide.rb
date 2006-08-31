@@ -49,7 +49,7 @@ class Guide < ActiveRecord::Base
   end
 
   def publish
-    @recently_published = true
+    @recently_published = true if !status
     self.status = PUBLISHED
   end
 

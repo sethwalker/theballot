@@ -1,10 +1,10 @@
-<%= form_remote_tag :url => { :action => 'update', :id => contest.id } %>
-<% if choice -%>
+<%= form_remote_tag :url => { :action => controller.action_name, :id => contest.id } %>
+<% if contest.id -%>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
-  <%= submit_tag 'update candidate' %>
+  <%= submit_tag "#{controller.action_name} candidate" %>
   <% else -%>
   <%= render :partial => '/contests/form', :locals => { :contest => contest } %>
-  <%= submit_tag 'update contest' %>
+  <%= submit_tag "#{controller.action_name} contest" %>
   <% end -%>
 <%= end_form_tag %>

@@ -1,5 +1,7 @@
+<% if contest.id -%>
 Editing contest: <%= contest.name %> <%= link_to_remote 'add candidate', :url => { :controller => '/contests/candidate', :action => 'add', :id => contest.id } %>
 
 <ul id="contest_choices_preview">
   <%= render :partial => 'guides/choice', :collection => contest.choices %>
 </ul>
+<% end -%>

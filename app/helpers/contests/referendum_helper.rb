@@ -1,0 +1,2 @@
+module Contests::ReferendumHelper
+end

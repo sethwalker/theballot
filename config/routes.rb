@@ -19,6 +19,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'guides/by_state/:state', :controller => 'guides', :action => 'list'
 
+  map.connect 'contests/candidate/:action/:id', :controller => 'contests/candidate'
+  map.connect 'contests/referendum/:action/:id', :controller => 'contests/referendum'
+  map.connect 'contests/:action/:id', :controller => 'contests/base'
+
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

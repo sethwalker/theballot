@@ -11,55 +11,41 @@ class Contests::BaseController < ApplicationController
   end
 
   def new
-    @contest = Contest.new
-  end
-
-  def errors
-  end
-
-  def create
-    @contest ||= Contest.create(params[:contest])
-    render :action => 'errors' and return unless @contest.valid?
-    @choice ||= @contest.choices.build(params[:choice])
-    @choice.save
-
-    render :update do |page|
-      page.insert_html :bottom, 'contests', :partial => 'contests/show', :locals => { :contest => @contest }
-      page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
-      page['contest_name'].value=''
-      page['choice_description'].value=''
-      page['choice_selection'].value=Choice::NO_ENDORSEMENT
-      page.replace_html 'contest-messages', 'created contest: ' + @contest.inspect if current_user.developer?
+    if request.xhr?
+      if request.post?
+        @contest ||= Contest.create(params[:contest])
+        render :action => 'errors' and return unless @contest.valid?
+        if params[:choice]
+          @choice ||= @contest.choices.build(params[:choice])
+          @choice.save
+        end
+        update_page_after_create
+      else
+        @contest ||= Contest.new
+        @contest.guide_id = params[:guide_id]
+        @choice ||= Choice.new(:contest => @contest)
+        render :update do |page|
+          page.update_page_new_form(@contest, @choice)
+        end
+      end
     end
   end
 
   def edit
-    @contest = Contest.find(params[:id])
-    @choice ||= Choice.find(params[:choice]) if params[:choice]
-    render :update do |page|
-      page.replace_html 'contest-edit-window-left', :partial => "contests/#{@contest.class.to_s.downcase}/preview", :locals => { :contest => @contest }
-      page.replace_html 'contest-edit-window-right', :partial => "contests/#{@contest.class.to_s.downcase}/edit", :locals => { :contest => @contest, :choice => @choice }
-      page << "document.getElementById('contest-edit-window').style.visibility='visible'"
-    end
-  end
-
-  def update
-    return unless params[:id]
     @contest ||= Contest.find(params[:id])
-    @contest.update_attributes(params[:contest]) if params[:contest]
     @guide = @contest.guide
     @choice ||= Choice.find(params[:choice][:id]) if params[:choice] && params[:choice][:id]
-    @choice.update_attributes(params[:choice]) if @choice
-    render :update do |page|
-      page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
-      page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
-      page.replace_html 'contest-edit-window-left', :partial => "contests/referendum/new", :locals => { :contest => Referendum.new(:guide => @guide), :choice => Choice.new }
-      page.replace_html 'contest-edit-window-right', :partial => "contests/candidate/new", :locals => { :contest => Candidate.new(:guide => @guide), :choice => Choice.new }
-      page['contest_name'].value=''
-      page['choice_name'].value=''
-      page['choice_description'].value=''
-      page['choice_selection'].value=Choice::NO_ENDORSEMENT
-      page.replace_html 'contest-messages', 'updated contest: ' + @contest.inspect if current_user.developer?
+    if request.post?
+      @contest.update_attributes(params[:contest]) if params[:contest]
+      @choice.update_attributes(params[:choice]) if @choice
+      render :update do |page|
+        page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
+        page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
+      end
+    else
+      render :update do |page|
+        page.update_page_new_form(@contest, @choice)
+      end
     end
   end
 
@@ -80,5 +66,8 @@ class Contests::BaseController < ApplicationController
       choice.save
     end
     render(:nothing => true)
+  end
+  
+  def errors
   end
 end

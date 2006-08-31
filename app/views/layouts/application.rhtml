@@ -33,5 +33,8 @@
     </div>
     <%= render "shared/footer" %>
   </div>
+  <% if current_user.developer? -%>
+  <div id="debug-messages"></div>
+  <% end -%>
 </body>
 </html>

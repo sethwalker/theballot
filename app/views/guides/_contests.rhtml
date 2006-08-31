@@ -1,17 +1,13 @@
 <div id="guide-contests-container">
   <div id="contest-edit-window">
     <div id="contest-messages"></div>
-    <%= render :partial => 'contests/edit_window', :locals => { :contest => contest, :choice => choice } %>
-    <div class="right"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
+    <div id="contest-edit-window-left"></div>
+    <div id="contest-edit-window-right"> </div>
+    <br class="clear" />
+    <div class="right" id="contest-done-button"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
   </div>
   <div id="contest-container" class="column">
-    <% reset_function = update_element_function('contest-edit-window') do -%>
-      <div id="contest-messages"></div>
-      <%= render :partial => 'contests/edit_window', :locals => { :contest => contest, :choice => choice } %>
-      <div class="right"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
-    <% end -%>
-  </div>
-  <%= link_to_function 'add issue or candidate', reset_function + "; document.getElementById('contest-edit-window').style.visibility='visible'" %>
+    <%= link_to_remote 'add issue', :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => guide.id }, :method => :get %> | <%= link_to_remote 'add office', :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => guide.id }, :method => :get %>
   <ul id="contests">
     <% if !guide.contests.empty? -%>
       <% guide.contests.each_with_index do |c,i| -%>
@@ -19,6 +15,7 @@
       <% end -%>
     <% end -%>
   </ul>
+  </div>
 </div>
 
 <%= render :partial => 'sortable_contests', :locals => { :guide => guide } %>

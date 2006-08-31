@@ -1,4 +1,4 @@
-<span><b>Contest: <%= contest.name %></b></span> <%= link_to_remote 'edit', :url => { :controller => '/contests/candidate', :action => 'edit', :id => contest.id } %> <%= link_to_remote 'delete', :url => { :controller => 'contests', :action => 'destroy', :id => contest.id } %><br/>
+<span><b>Contest: <%= contest.name %></b></span> <%= link_to_remote 'edit', :url => { :controller => '/contests/candidate', :action => 'edit', :id => contest.id }, :method => :get %> <%= link_to_remote 'delete', :url => { :controller => '/contests', :action => 'destroy', :id => contest.id } %><br/>
 
   <ul id="contest_<%= contest.id %>_choices">
     <%= render :partial => 'guides/choice', :collection => contest.choices %>

@@ -158,3 +158,12 @@ task :after_symlink do
   revision_number
   run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
 end
+
+desc "tail production log files" 
+task :tail_logs, :roles => :app do
+  run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
+    puts "#{data}" 
+    break if stream == :err    
+  end
+end
+
