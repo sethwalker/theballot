@@ -21,5 +21,5 @@ APPLICATION_HOST_NAME = 'voterguides.devel.radicaldesigns.org:3080'
 APPLICATION_C3_DOMAIN = 'c3voterguides.devel.radicaldesigns.org'
 APPLICATION_STANDARD_DOMAIN = 'voterguides.devel.radicaldesigns.org'
 
-ExceptionNotifier.exception_recipients = %w(seth@indyvoter.org)
-ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
+#ExceptionNotifier.exception_recipients = %w(seth@indyvoter.org)
+#ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
