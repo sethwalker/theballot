@@ -4,7 +4,9 @@ class Contests::BaseController < ApplicationController
   def authorized?
     return true if current_user.is_admin?
     @contest ||= Contest.find(params[:id])
-    unless @contest.guide.owner?(current_user)
+    @guide = @contest.guide if @contest
+    @guide ||= Guide.find(params[:guide_id])
+    unless @guide && @guide.owner?(current_user)
       flash[:error] = 'Permission Denied'
       return false
     end
