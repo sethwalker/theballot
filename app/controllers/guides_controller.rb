@@ -231,6 +231,10 @@ class GuidesController < ApplicationController
     @guide.save!
     flash[:notice] = 'Guide was successfully updated.'
     redirect_to :action => 'show', :id => @guide
+
+  rescue ActiveRecord::MultiparameterAssignmentErrors
+    @guide.errors.add :date
+    render :action => 'edit'
   end
 
   def destroy
