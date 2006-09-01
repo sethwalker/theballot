@@ -254,29 +254,8 @@ class GuidesController < ApplicationController
     render :nothing => true
   end
 
-  # from: endorsement control window
-  # renders: an issue display + edit link in the main guide endorsement list
-  def add_issue
-    @endorsement = Endorsement.create!(params[:endorsement])
-    render :update do |page|
-      page.insert_html :bottom, 'endorsements', :partial => 'endorsement', :locals => { :endorsement => @endorsement }
-      page['endorsement_contest'].value = ''
-      page['endorsement_description'].value = ''
-      page['endorsement_selection'].value = Endorsement::NO_ENDORSEMENT
-      page['endorsement_contest'].focus
-    end
-  end
-
-  def add_candidate
-    @contest = Contest.find_or_create_by_id(params[:id])
-    @choice = Choice.new(:contest => @contest)
-  end
-
-  def new_contest
-    @endorsement = Endorsement.new(params[:endorsement])
-    render :update do |page|
-      page.replace_html 'endorsement_form', :partial => 'contest_window', :locals => { :endorsement => @endorsement }
-    end
+  def preview
+    render :layout => false
   end
 
   # in use
@@ -303,60 +282,6 @@ class GuidesController < ApplicationController
       page['choice_description'].value=''
       page['choice_selection'].value = Choice::NO_ENDORSEMENT
       page['choice_name'].focus
-    end
-  end
-
-  def insert_contest
-    @contest = Contest.find(params[:id])
-    render :update do |page|
-      page.insert_html :bottom, 'endorsements', :partial => 'contest', :locals => { :contest => @contest }
-      page.sortable 'endorsements', :complete => visual_effect(:highlight, 'endorsements'), :url => { :action => 'order' }
-    end
-  end
-
-  def new_issue
-    return unless params[:id]
-    @contest = Contest.create(:guide_id => params[:id], :name => 'Name of referendum (click here to edit)', :description => 'Optional Description of the Referendum')
-    @choice = Choice.create(:contest => @contest, :description => 'Your reasoning')
-    render :update do |page|
-      page.insert_html :bottom, 'endorsements', :partial => 'issue_in_place_editor', :locals => { :contest => @contest, :choice => @choice }
-      page << "contest_name_#{@contest.id}_in_place_editor.enterEditMode('click');"
-    end
-  end
-
-  def old_add_candidate
-    @endorsement = Endorsement.create(params[:endorsement])
-    render :update do |page|
-      if @endorsement
-        page.insert_html :bottom, 'candidate-list', :partial => 'candidate', :locals => { :endorsement => @endorsement }
-        page['endorsement_candidate'].value=''
-        page['endorsement_description'].value=''
-        page['endorsement_candidate'].focus
-      else
-        page.alert('failed')
-      end
-    end
-  end
-
-  def edit_candidate
-    @endorsement = Endorsement.find(params[:id])
-    render :update do |page|
-      page.replace_html 'contest-form', :partial => 'contest_form'
-    end
-  end
-
-  def update_candidate
-    @endorsement = Endorsement.find(params[:id])
-    @endorsement.save
-    render :update do |page|
-      page.replace_html "candidate_#{@endorsement}", :partial => 'candidate', :locals => { :endorsement => @endorsement }
-    end
-  end
-
-  def add_contest
-    @guide = Guide.find(params[:id])
-    render :update do |page|
-      page.insert_html :bottom, 'endorsements', :partial => 'contest', :locals => { :endorsements => @guide.endorsements.group_by(:contest) }
     end
   end
 

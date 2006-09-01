@@ -23,14 +23,17 @@ set :repository, "https://svn.radicaldesigns.org/#{application}/trunk"
 # :primary => true.
 
 role :web, "gertie.radicaldesigns.org"
+role :web, "208.101.22.167"
 role :app, "gertie.radicaldesigns.org"
-role :db,  "gertie.radicaldesigns.org", :primary => true
+role :app, "208.101.22.167"
+role :db,  "gertie.radicaldesigns.org"
+role :db, "208.101.22.167"
 
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/var/www/#{application}" # defaults to "/u/apps/#{application}"
-# set :user, "flippy"            # defaults to the currently logged in user
+set :deploy_to, "/home/theball/#{application}" # defaults to "/u/apps/#{application}"
+set :user, "theball"            # defaults to the currently logged in user
 # set :scm, :darcs               # defaults to :subversion
 # set :svn, "/path/to/svn"       # defaults to searching the PATH
 # set :darcs, "/path/to/darcs"   # defaults to searching the PATH
@@ -140,7 +143,9 @@ end
 
 desc "Get the correct database.yml on the server."
 task :database_yml, :roles => [:app, :db] do
-  put(File.read('deploy/database.yml'), "#{release_path}/config/database.yml", :mode => 0444)
+  run <<-CMD
+   ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml
+  CMD
 end
 
 desc "Set version number and date."

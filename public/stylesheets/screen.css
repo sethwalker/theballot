@@ -137,3 +137,8 @@ body {
   float: left;
   width: 300px;
 }
+
+.guide-preview-column {
+  float: left;
+  width: 25%;
+}
