@@ -13,14 +13,16 @@
   </ul>
 </div>
 </div>
+<div id="guide-preview"></div>
 <div id="guide-edit">
 <div id="guide-form-container">
-  <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide_form', :multipart => true ) %>
+  <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form', :multipart => true ) %>
     <%= render :partial => 'form' %>
     <div class="right">
-      <%= submit_tag 'Save' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><%= submit_tag 'Publish' %><% end %>
+      <%= submit_tag 'Save As Draft' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><%= submit_tag 'Publish' %><% end %>
     </div>
   <%= end_form_tag %>
+<%= observe_form 'guide-form', :frequency => 1, :update => 'guide-preview', :complete => "Element.show('guide-preview')", :url => { :action => :preview } %>
 </div>
 
 <%= render :partial => 'contests', :locals => { :guide => @guide, :contest => @contest, :choice => @choice } %>
