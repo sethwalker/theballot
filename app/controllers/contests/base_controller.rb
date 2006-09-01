@@ -6,6 +6,7 @@ class Contests::BaseController < ApplicationController
     @contest ||= Contest.find(params[:id]) if params[:id]
     @guide = @contest.guide if @contest
     @guide ||= Guide.find(params[:guide_id]) if params[:guide_id]
+    @guide ||= Guide.find(params[:contest][:guide_id]) if params[:contest] && params[:contest][:guide_id]
     unless @guide && @guide.owner?(current_user)
       flash[:error] = 'Permission Denied'
       return false
