@@ -35,7 +35,7 @@ class Contests::CandidateController < Contests::BaseController
       render :update do |page|
         page.replace_html 'contest-edit-window-left', :partial => "contests/candidate/preview", :locals => { :contest => @contest }
         page.replace_html 'contest-edit-window-right', :partial => "contests/candidate/edit", :locals => { :contest => @contest, :choice => Choice.new(:contest => @contest) }
-        page.replace_html "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
+        page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
         page['choice_name'].value=''
         page['choice_description'].value=''
         page['choice_selection'].value=Choice::NO_ENDORSEMENT unless @c3
