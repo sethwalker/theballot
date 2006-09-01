@@ -1,3 +1,4 @@
+<div id="contest-messages"></div>
 <%= form_remote_tag :url => { :action => 'update', :id => contest.id } %>
 <%= render :partial => 'contests/form', :locals => { :contest => contest } %>
   <%= submit_tag 'update contest' %>
