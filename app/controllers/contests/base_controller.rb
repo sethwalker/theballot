@@ -10,6 +10,7 @@ class Contests::BaseController < ApplicationController
       flash[:error] = 'Permission Denied'
       return false
     end
+    true
   end
 
   def new
