@@ -1,3 +1,4 @@
 <% contest ||= show -%>
-<li id="contest_<%= contest.id %>"<% if !hidden.nil? && hidden %>style="display:none"<% end %>>
+<% hidden ||= false -%>
+<li id="contest_<%= contest.id %>"<% if hidden %>style="display:none"<% end %>>
 <%= render :partial => "contests/#{contest.class.to_s.downcase}/show", :locals => { :contest => contest } %>
