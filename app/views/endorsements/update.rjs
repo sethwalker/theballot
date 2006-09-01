@@ -1,2 +1,0 @@
-page.replace "endorsement_#{@endorsement.id || index}", :partial => 'guides/endorsement', :locals => {:endorsement => @endorsement}
-page.replace "endorsement_#{@endorsement.id || index}", :partial => 'hiddens', :locals => { :endorsement => @endorsement, :index => @index } if @index
