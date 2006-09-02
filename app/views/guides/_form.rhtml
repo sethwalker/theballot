@@ -1,5 +1,6 @@
 <%= error_messages_for 'guide' %>
 
+<div class="guide-form-section" id="guide-form-basics">
 <!--[form:guide]-->
 <p><label for="guide_date" class="required">Election Date (required)</label><br/>
 <%= date_select 'guide', 'date', :order => [:month, :day, :year]  %></p>
@@ -19,9 +20,19 @@
 <p><label for="guide_state" class="required">State (required)</label><br/>
 <%= us_state_select 'guide', 'state', :show => :abbreviations, :include_blank => true %></p>
 
-<p><label for="guide_theme">Theme</label><br/>
-<%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'id', :prompt => 'none', :include_blank => true %>
+<p><label for="guide_description">Description</label><br/>
+<%= text_area 'guide', 'description', :rows => 10 %></p>
 
+<%= link_to_function 'done', "invi('guide-form-basics', true)" %>
+</div><!-- end guide basics -->
+
+<div class="guide-form-section" id="guide-form-theme">
+<p><label for="guide_theme">Theme</label><br/>
+<%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'name' %>
+<%= link_to_function 'done', "invi('guide-form-theme', true)" %>
+</div>
+
+<div class="guide-form-section" id="guide-form-assets">
 <p><label for="guide_pdf">Upload a PDF of your guide</label><br/>
 <%= file_field 'pdf', 'uploaded_data'  %>
 <% if @guide.attached_pdf -%>
@@ -38,8 +49,7 @@ currently: <%= image_tag @guide.image.public_filename("thumb") %>
 <%= hidden_field 'image', 'id' %>
 <% end -%>
 </p>
-
-<p><label for="guide_description">Description</label><br/>
-<%= text_area 'guide', 'description', :rows => 10 %></p>
+<%= link_to_function 'done', "invi('guide-form-assets', true)" %>
+</div>
 <!--[eoform:guide]-->
 

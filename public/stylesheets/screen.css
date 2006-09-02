@@ -74,33 +74,41 @@ body {
   clear: both;
 }
 
-#guide-create, #guide-edit {
+#guide-edit {
   position: relative;
 }
 
-#guide-form-container {
+.guide-edit-left {
   float: left;
-  width: 50%;
+  width: 40%;
 }
 
-#guide-contests-container {
+.guide-edit-right {
   float: left;
-  width: 50%;
+  width: 60%;
+  min-height: 550px;
+}
+
+#guide-edit-instructions {
+  min-height: 400px;
+}
+
+.guide-form-section {
+  position: absolute;
+  top: 80px;
+  background-color: white;
+  visibility: hidden;
 }
 
 #contest-edit-window {
   position: absolute;
   left: 10px;
-  top: -300px;
+  top: 300px;
   background-color: white;
   border: 1px solid;
   padding: 10px 10px;
   width: 700px;
   visibility: hidden;
-}
-
-#guide-new-introduction {
-  height: 300px;
 }
 
 #contest-edit-window-left {
@@ -113,12 +121,6 @@ body {
   float: left;
   width: 340px;
   padding-left: 10px;
-}
-
-#or {
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px;
 }
 
 #done-button {
@@ -141,4 +143,13 @@ body {
 .guide-preview-column {
   float: left;
   width: 25%;
+}
+
+#guide-preview {
+  height: 80px;
+  border: 1px solid;
+}
+
+.guide-preview-column p {
+  margin: 0;
 }

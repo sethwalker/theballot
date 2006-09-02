@@ -8,5 +8,6 @@ class Contest < ActiveRecord::Base
 
   def to_liquid
     { 'contest' => name }
+#    { 'contest' => contest, 'candidate' => candidate, 'description' => description, 'selection' => selection, 'position' => position }
   end
 end

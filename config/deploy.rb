@@ -28,6 +28,7 @@ role :app, "gertie.radicaldesigns.org"
 role :app, "208.101.22.167"
 role :db,  "gertie.radicaldesigns.org"
 role :db, "208.101.22.167"
+role :dev, "gertie.radicaldesigns.org"
 
 # =============================================================================
 # OPTIONAL VARIABLES
@@ -43,7 +44,7 @@ set :user, "theball"            # defaults to the currently logged in user
 # =============================================================================
 # SSH OPTIONS
 # =============================================================================
-# ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
+# ssh_options[:keys] = %w(/Users/seth/.ssh/id_rsa /Users/seth/.ssh/id_dsa)
 # ssh_options[:port] = 25
 
 # =============================================================================
@@ -169,6 +170,16 @@ task :tail_logs, :roles => :app do
   run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
     puts "#{data}" 
     break if stream == :err    
+  end
+end
+
+desc "remotely console" 
+task :dev_console, :roles => :dev do
+  input = ''
+  run "cd #{current_path} && ./script/console #{ENV['RAILS_ENV']}" do |channel, stream, data|
+    next if data.chomp == input.chomp || data.chomp == ''
+    print data
+    channel.send_data(input = $stdin.gets) if data =~ /^(>|\?)>/
   end
 end
 

@@ -136,14 +136,6 @@ class GuidesController < ApplicationController
     redirect_to :action => :list
   end
 
-  def new
-    @guide = current_user.guide_in_progress || Guide.new(:name => 'Unsaved Guide', :user => current_user)
-    @guide.legal ||= Guide::C3 if c3?
-    @guide.save_with_validation(false) unless @guide.id
-    @contest = Contest.new(:guide_id => @guide.id)
-    @choice = Choice.new(:contest => @contest)
-  end
-
   def create
     if params[:id]
       @guide = Guide.find(params[:id])
@@ -185,6 +177,15 @@ class GuidesController < ApplicationController
     else
       render :action => 'new'
     end
+  end
+
+  def new
+    @guide = current_user.guide_in_progress || Guide.new(:user => current_user)
+    @guide.legal ||= Guide::C3 if c3?
+    @guide.save_with_validation(false) unless @guide.id
+    @contest = Contest.new(:guide_id => @guide.id)
+    @choice = Choice.new(:contest => @contest)
+    render :action => 'edit'
   end
 
   def edit
