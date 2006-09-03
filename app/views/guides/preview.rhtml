@@ -1,7 +1,7 @@
 <div class="guide-preview-column" id="guide-preview-basics">
   <p id="guide-preview-title"><%= params[:guide][:name] || 'Your Guide Title' %></p>
   <p id="guide-preview-location"><span id="guide-preview-city"><%= params[:guide][:city] || 'Your City' %></span>, <span id="guide-preview-state"><%= params[:guide][:state] || 'USA' %></span></p>
-  <p id="guide-preview-date"><%= params[:guide][:date] && params[:guide][:date].is_a?('Date') ? params[:guide][:date].strftime('%b %e, %Y') : params[:guide]['date(1i'] ? Date.new(params[:guide]['date(1i)'].to_i, params[:guide]['date(2i)'].to_i, params[:guide]['date(3i)'].to_i).strftime('%b %e, %Y') : Time.now.strftime('%b %e, %Y') %></p>
+  <p id="guide-preview-date"><%= params[:guide][:date] && params[:guide][:date].is_a?(Date) ? params[:guide][:date].strftime('%b %e, %Y') : params[:guide]['date(1i'] ? Date.new(params[:guide]['date(1i)'].to_i, params[:guide]['date(2i)'].to_i, params[:guide]['date(3i)'].to_i).strftime('%b %e, %Y') : Time.now.strftime('%b %e, %Y') %></p>
   <%= link_to_function 'edit basics', "invi('guide-form-basics', false)" %>
 </div>
 <div class="guide-preview-column" id="guide-preview-description">
