@@ -23,11 +23,11 @@ set :repository, "https://svn.radicaldesigns.org/#{application}/trunk"
 # :primary => true.
 
 role :web, "gertie.radicaldesigns.org"
-role :web, "208.101.22.167"
+#role :web, "208.101.22.167"
 role :app, "gertie.radicaldesigns.org"
-role :app, "208.101.22.167"
+#role :app, "208.101.22.167"
 role :db,  "gertie.radicaldesigns.org"
-role :db, "208.101.22.167"
+#role :db, "208.101.22.167"
 role :dev, "gertie.radicaldesigns.org"
 
 # =============================================================================

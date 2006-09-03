@@ -153,3 +153,9 @@ body {
 .guide-preview-column p {
   margin: 0;
 }
+
+.guide-member {
+  float: left;
+  padding: 1.5%;
+  width: 30%;
+}
