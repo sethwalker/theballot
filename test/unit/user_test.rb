@@ -39,16 +39,16 @@ class UserTest < Test::Unit::TestCase
 
   def test_should_reset_password
     users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal users(:quentin), User.authenticate('quentin', 'new password')
+    assert_equal users(:quentin), User.authenticate('quentin@example.com', 'new password')
   end
 
   def test_should_not_rehash_password
-    users(:quentin).update_attributes(:login => 'quentin2')
-    assert_equal users(:quentin), User.authenticate('quentin2', 'test')
+    users(:quentin).update_attributes(:email => 'quentin2@example.com')
+    assert_equal users(:quentin), User.authenticate('quentin2@example.com', 'test')
   end
 
   def test_should_authenticate_user
-    assert_equal users(:quentin), User.authenticate('quentin', 'test')
+    assert_equal users(:quentin), User.authenticate('quentin@example.com', 'test')
   end
 
   protected

@@ -16,6 +16,10 @@ class GuidePromoterTest < Test::Unit::TestCase
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
   end
 
+  def test_truth
+    assert true
+  end
+
   private
     def read_fixture(action)
       IO.readlines("#{FIXTURES_PATH}/guide_promoter/#{action}")

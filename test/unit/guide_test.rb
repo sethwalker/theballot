@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GuideTest < Test::Unit::TestCase
-  fixtures :guides, :endorsements
+  fixtures :guides, :contests
 
   def test_create
     count = Guide.count
-    g = Guide.new(:name => 'can create', :date => Time.now.to_date)
+    g = Guide.new(:name => 'can create', :date => Time.now.to_date, :city => 'sf', :state => 'CA')
     assert g.save
     assert Guide.count == count+1
   end
@@ -16,6 +16,8 @@ class GuideTest < Test::Unit::TestCase
     assert !g.save
     assert_not_nil g.errors[:name]
     assert_not_nil g.errors[:date]
+    assert_not_nil g.errors[:city]
+    assert_not_nil g.errors[:state]
 
     g.name = 'has name'
     assert !g.save
@@ -26,14 +28,19 @@ class GuideTest < Test::Unit::TestCase
     assert !g.save
     assert_not_nil g.errors[:date]
     g.date = Time.now
+    assert !g.save
+    assert_nil g.errors[:date]
+
+    g.city = 'sf'
+    g.state = 'CA'
     assert g.save
   end
 
   def test_validates_permalink
-    first = Guide.new(:name => 'original', :date => Time.now)
+    first = Guide.new(:name => 'original', :date => Time.now, :city => 'sf', :state => 'CA')
     assert first.save
 
-    dup = Guide.new(:name => 'original', :date => Time.now)
+    dup = Guide.new(:name => 'original', :date => Time.now, :city => 'sf', :state => 'CA')
     assert !dup.save
     assert_not_nil dup.errors[:permalink]
 
@@ -41,25 +48,25 @@ class GuideTest < Test::Unit::TestCase
     assert dup.save
   end
 
-  def test_add_endrosements
-    g = Guide.new(:name => 'namey', :date => Time.now)
-    g.endorsements.build(:contest => endorsements(:order_1).contest)
-    g.endorsements.build(:contest => endorsements(:order_2).contest)
-    g.endorsements.build(:contest => endorsements(:order_3).contest)
+  def test_add_contests
+    g = Guide.new(:name => 'namey', :date => Time.now, :city => 'sf', :state => 'CA')
+    g.contests.build(:name => contests(:order_1).name)
+    g.contests.build(:name => contests(:order_2).name)
+    g.contests.build(:name => contests(:order_3).name)
     assert g.save
 
-    first = g.endorsements.find(:first, :conditions => "position = 1")
-    second = g.endorsements.find(:first, :conditions => "position = 2")
-    third = g.endorsements.find(:first, :conditions => "position = 3")
-    assert_equal first.contest, endorsements(:order_1).contest
-    assert_equal second.contest, endorsements(:order_2).contest
-    assert_equal third.contest, endorsements(:order_3).contest
+    first = g.contests.find(:first, :conditions => "contests.position = 1")
+    second = g.contests.find(:first, :conditions => "contests.position = 2")
+    third = g.contests.find(:first, :conditions => "contests.position = 3")
+    assert_equal first.name, contests(:order_1).name
+    assert_equal second.name, contests(:order_2).name
+    assert_equal third.name, contests(:order_3).name
     assert first.first?
     assert third.last?
   end
 
   def test_publish
-    g = Guide.new(:name => 'publish test', :date => Time.now)
+    g = Guide.new(:name => 'publish test', :date => Time.now, :city => 'sf', :state => 'CA')
     assert g.save
 
     assert !g.is_published?

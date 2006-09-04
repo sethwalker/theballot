@@ -22,7 +22,7 @@ class GuidesController < ApplicationController
   end 
 
   def check_date
-    return if current_user.is_admin?
+    return true if current_user.is_admin?
     @guide ||= Guide.find(params[:id])
     if @guide.status && @guide.date.to_date < Time.now.to_date
       flash[:error] = 'Guides cannot be edited after the election has passed' 

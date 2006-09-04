@@ -154,6 +154,11 @@ body {
   margin: 0;
 }
 
+#guide-members {
+  background-color: red;
+  border: 1px solid;
+}
+
 .guide-member {
   float: left;
   padding: 1.5%;

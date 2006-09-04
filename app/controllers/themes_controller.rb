@@ -23,7 +23,7 @@ class ThemesController < ApplicationController
   def create
     @theme = Theme.new(params[:theme])
     @screenshot = Screenshot.create(params[:screenshot])
-    if !@screenshot.valid? && params[:screenshot][:id]
+    if !@screenshot.valid? && params[:screenshot] && params[:screenshot][:id]
       @screenshot = Screenshot.find(params[:image][:id])
     end
     if @screenshot.valid?
@@ -46,7 +46,7 @@ class ThemesController < ApplicationController
   def update
     @theme = Theme.find(params[:id])
     @screenshot = Screenshot.create(params[:screenshot])
-    if !@screenshot.valid? && params[:screenshot][:id]
+    if !@screenshot.valid? && params[:screenshot] && params[:screenshot][:id]
       @screenshot = Screenshot.find(params[:screenshot][:id])
     end
     if @screenshot.valid?

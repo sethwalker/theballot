@@ -40,19 +40,19 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_activate_user
-    assert_nil User.authenticate('arthur', 'arthur')
+    assert_nil User.authenticate('arthur@example.com', 'arthur')
     get :activate, :id => users(:arthur).activation_code
-    assert_equal users(:arthur), User.authenticate('arthur', 'test')
+    assert_equal users(:arthur), User.authenticate('arthur@example.com', 'test')
   end
 
   def test_should_login_and_redirect
-    post :login, :login => 'quentin', :password => 'test'
+    post :login, :email => 'quentin@example.com', :password => 'test'
     assert session[:user]
     assert_response :redirect
   end
 
   def test_should_fail_login_and_not_redirect
-    post :login, :login => 'quentin', :password => 'bad password'
+    post :login, :email => 'quentin@example.com', :password => 'bad password'
     assert_nil session[:user]
     assert_response :success
   end

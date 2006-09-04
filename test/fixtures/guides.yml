@@ -36,11 +36,12 @@ past:
   name: past guide
   permalink: past_guide
   date: <%= (Time.now - 1.day).to_date.to_s %>
+  status: <%= Guide::PUBLISHED %>
   user_id: 1
 
-no_endorsements:
+no_contests:
   id: 5
-  name: no endorsements
+  name: no contests
   date: <%= (Time.now + 1.day).to_date.to_s %>
   user_id: 1
 

@@ -5,7 +5,7 @@ require 'guides_controller'
 class GuidesController; def rescue_action(e) raise e end; end
 
 class GuidesControllerTest < Test::Unit::TestCase
-  fixtures :guides, :endorsements, :users
+  fixtures :guides, :contests, :users
 
   def setup
     @controller = GuidesController.new
@@ -16,7 +16,7 @@ class GuidesControllerTest < Test::Unit::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
+    assert_template 'index'
   end
 
   def test_list
@@ -69,14 +69,13 @@ class GuidesControllerTest < Test::Unit::TestCase
     get :new
 
     assert_response :success
-    assert_template 'new'
+    assert_template 'edit'
 
     assert_not_nil assigns(:guide)
     assert_equal num_guides + 1, Guide.count
     current_guide = @controller.send(:current_user).guide_in_progress
     assert_not_nil current_guide
     assert current_guide.is_a?(Guide)
-    assert_equal current_guide.name, 'Unsaved Guide'
   end
 
   def test_create
@@ -93,14 +92,6 @@ class GuidesControllerTest < Test::Unit::TestCase
     @guide = Guide.find(:first, :conditions => "name = 'test create name'")
     assert @guide.permalink
     assert_equal @guide.permalink, 'test_create_name'
-  end
-
-  def test_create_with_endorsements
-    login_as :quentin
-    post :create, :guide => { :name => 'test create with endorsements', :date => Time.now, :city => 'san francisco', :state => 'CA' }, :endorsements => [ { :contest => 'first' }, { :contest => 'second'} , { :contest => 'third' } ]
-    g = Guide.find_by_name('test create with endorsements')
-    assert g
-    assert_equal g.endorsements.size, 3
   end
 
   def test_edit
@@ -136,7 +127,7 @@ class GuidesControllerTest < Test::Unit::TestCase
 
   def test_update_past
     login_as :quentin
-    get :update, :id => 4
+    get :edit, :id => 4
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 4
   end
@@ -157,27 +148,19 @@ class GuidesControllerTest < Test::Unit::TestCase
     }
   end
 
-  def test_order_on_new
-    login_as :quentin
-    
-    post :order, :endorsements => [8,9,7]
-    assert_tag :tag => 'input',
-      :attributes => { :type => 'hidden', :name => 'order' }
-  end
-
   def test_reorder
     @guide = Guide.new(:name => 'reorder test', :date => Time.now, :city => 'san francisco', :state => 'CA', :user_id => users(:quentin).id)
-    @guide.endorsements << Endorsement.find(7,8,9)
+    @guide.contests << Contest.find(7,8,9)
     assert @guide.save
-    assert_equal Endorsement.find(7).position, 1
-    assert_equal Endorsement.find(8).position, 2
-    assert_equal Endorsement.find(9).position, 3
+    assert_equal Contest.find(7).position, 1
+    assert_equal Contest.find(8).position, 2
+    assert_equal Contest.find(9).position, 3
 
     login_as :quentin
-    post :order, :id => @guide.id, :endorsements => ["8","9","7"]
-    assert_equal Endorsement.find(8).position, 1
-    assert_equal Endorsement.find(9).position, 2
-    assert_equal Endorsement.find(7).position, 3
+    post :order, :id => @guide.id, :contests => ["8","9","7"]
+    assert_equal Contest.find(8).position, 1
+    assert_equal Contest.find(9).position, 2
+    assert_equal Contest.find(7).position, 3
   end
 
   def test_save_as_draft
@@ -197,18 +180,4 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert !updated_again.is_published?
   end
 
-  def test_add_endorsement
-    g = guides(:no_endorsements)
-    login_as :quentin
-    assert g.endorsements.empty?
-    count = Endorsement.count
-    post :add_endorsement, :id => g.id, :endorsement => { :contest => 'assembly', :candidate => 'janet' }
-    assert_response :success
-    assert_template '_endorsement'
-    assert_equal Endorsement.count, count + 1
-    assert Endorsement.find_by_guide_id(g.id)
-    @guide = Guide.find(g.id)
-    assert_equal @guide.endorsements.first.contest, 'assembly'
-    assert_equal @guide.endorsements.count, 1
-  end
 end
