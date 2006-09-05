@@ -167,7 +167,7 @@ end
 
 desc "Run pre-symlink tasks" 
 task :before_symlink do
-  run_tests
+#  run_tests
 end
 
 desc "Symlink attachments folder."
