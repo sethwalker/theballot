@@ -21,4 +21,5 @@ APPLICATION_HOST_NAME = 'voterguides.devel.radicaldesigns.org:3080'
 APPLICATION_C3_DOMAIN = 'c3voterguides.devel.radicaldesigns.org'
 APPLICATION_STANDARD_DOMAIN = 'voterguides.devel.radicaldesigns.org'
 
-ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS.update( :session_domain => '.devel.radicaldesigns.org')
+ActionController::Base.session_options[:session_key] = 'voterguides_session_id'
+ActionController::Base.session_options[:session_domain] = '.devel.radicaldesigns.org'
