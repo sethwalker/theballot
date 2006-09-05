@@ -91,7 +91,12 @@ class GuidesController < ApplicationController
   end
 
   def search
-    if params[:guide]
+    if params[:q]
+      @query = params[:q]
+      @guide_pages = Paginator.new self, Guide.count, 10, params['page']
+      @guides = Guide.find_by_contents(@query, :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
+      render :action => 'list' and return
+    elsif params[:guide]
       @query = Array.new
       @query << "name:#{params[:guide][:name]}" if !params[:guide][:name].empty?
       @query << "description:#{params[:guide][:description]}" if !params[:guide][:description].empty?

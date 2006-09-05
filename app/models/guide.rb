@@ -21,7 +21,29 @@ class Guide < ActiveRecord::Base
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
   after_save { GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published }
-  acts_as_ferret :fields => [ :name, :city, :description ]
+  acts_as_ferret :fields => { :name => {:boost => 3}, 
+                              :city => {},
+                              :description => {:boost => 2.5},
+                              :index_contest_choice_titles => {:boost => 2},
+                              :index_contest_choice_descriptions => {:boost => 1.5} }
+
+  def index_contest_choice_titles
+    index_contest_choices(:title)
+  end
+
+  def index_contest_choice_descriptions
+    index_contest_choices(:description)
+  end
+
+  def index_contest_choices(attr)
+    @index = Array.new
+    self.contests.each do |contest|
+      contest.choices.each do |choice|
+        @index << choice.send(attr).to_s
+      end
+    end
+    @index.join(" ")
+  end
 
 =begin
   acts_as_draftable :fields => [:name, :city, :state, :date, :description, :owner_id, :theme_id, :endorsements] do
