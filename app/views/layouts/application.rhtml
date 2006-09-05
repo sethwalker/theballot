@@ -1,28 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Super! New! <%= 'c3! ' if @c3 %>Voter! Guides!</title>
-  <%= @content_for_stylesheets %>
+<% content_for :stylesheets do %>
   <%= stylesheet_link_tag 'screen', :media => 'all' %>
   <%= stylesheet_link_tag 'print', :media => 'print' %>
-
-  <%= javascript_include_tag :defaults %>
-
-    <%= stylesheet_link_tag 'http://ixley.com/league/voterguides.css', :media => 'all' %>
-
-</head>
+<% end %>
+<%= render "shared/header" %>
 <body>
   <div id="wrap">
-    <div id="header"><a href="/">Super! New! <%= 'c3! ' if @c3 %>Voter! Guides!</a></div>
-    <%= render "shared/nav/account" %>
-    <br class="clear" />
-    <div id="nav">
-      <%= link_to "Make a new guide", :controller => 'guides', :action => 'new' %> | 
-      <label for="state_select">View guides by state</label><%= select_tag 'state', us_state_options_for_select( @state, {:show => :abbreviations, :include_blank => true}), :onchange => "window.location.href='/guides/list?state=' + this.value" %> |
-      <%= link_to "Search Guides", :controller => 'guides', :action => 'search' %> |
-      <%= link_to "See Past Guides", :controller => 'guides', :action => 'archive' %>
-    </div>
+    <%= render "shared/banner" %>
+    <%= render "shared/nav/main" %>
     <br class="clear" />
     <div id="container">
     <div id="content" class="column">
