@@ -4,7 +4,7 @@ class AddPermalinks < ActiveRecord::Migration
   end
   
   def self.down
-    drop_column :guides, :permalink
+    remove_column :guides, :permalink
   end
   
 end

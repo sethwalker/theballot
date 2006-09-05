@@ -14,12 +14,15 @@ class CreateContests < ActiveRecord::Migration
       t.column :contest_id, :integer
       t.column :position, :integer
     end
-    Endorsement.find(:all).each do |e|
-      begin
-        contest = Contest.create!(:name => e.contest, :guide => e.guide, :position => e.position, :type => e.candidate ? 'Candidate' : 'Referendum')
-        choice = Choice.create!(:name => e.candidate, :description => e.description, :selection => e.selection, :contest => contest)
-      rescue
+    begin
+      Endorsement.find(:all).each do |e|
+        begin
+          contest = Contest.create!(:name => e.contest, :guide => e.guide, :position => e.position, :type => e.candidate ? 'Candidate' : 'Referendum')
+          choice = Choice.create!(:name => e.candidate, :description => e.description, :selection => e.selection, :contest => contest)
+        rescue
+        end
       end
+    rescue
     end
 
   end

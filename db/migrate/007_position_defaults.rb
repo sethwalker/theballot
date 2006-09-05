@@ -1,8 +1,11 @@
 class PositionDefaults < ActiveRecord::Migration
   def self.up
-    if !Position.count
-      Position.create(:text => 'yes')
-      Position.create(:text => 'no')
+    begin
+      if !Position.count
+        Position.create(:text => 'yes')
+        Position.create(:text => 'no')
+      end
+    rescue
     end
   end
 
