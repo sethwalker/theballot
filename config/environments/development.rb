@@ -21,5 +21,7 @@ config.action_view.debug_rjs                         = true
 config.action_mailer.raise_delivery_errors = false
 
 APPLICATION_HOST_NAME = 'localhost:3000'
-APPLICATION_C3_DOMAIN = 'local_c3guides.org'
+APPLICATION_C3_DOMAIN = 'c3.local_guides.org'
 APPLICATION_STANDARD_DOMAIN = 'local_guides.org'
+
+ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS.update( :session_domain => '.local_guides.org')
