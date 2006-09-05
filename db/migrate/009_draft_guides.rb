@@ -8,6 +8,7 @@ class DraftGuides < ActiveRecord::Migration
   end
 
   def self.down
+    g = Guide.new
     if g.respond_to?('drop_draft_table')
       Guide.drop_draft_table
     end
