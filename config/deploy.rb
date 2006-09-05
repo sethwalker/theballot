@@ -159,6 +159,17 @@ task :after_update_code do
   database_yml
 end
 
+desc "Run the full tests on the deployed app." 
+task :run_tests do
+ run "cd #{release_path} && rake db:test:prepare" 
+ run "cd #{release_path} && rake" 
+end
+
+desc "Run pre-symlink tasks" 
+task :before_symlink do
+  run_tests
+end
+
 desc "Symlink attachments folder."
 task :after_symlink do
   revision_number
