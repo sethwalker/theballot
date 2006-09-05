@@ -26,7 +26,7 @@ role :web, "gertie.radicaldesigns.org"
 #role :web, "208.101.22.167"
 role :app, "gertie.radicaldesigns.org"
 #role :app, "208.101.22.167"
-role :db,  "gertie.radicaldesigns.org"
+role :db,  "gertie.radicaldesigns.org", :primary => true
 #role :db, "208.101.22.167"
 role :dev, "gertie.radicaldesigns.org"
 
