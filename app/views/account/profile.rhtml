@@ -1,4 +1,4 @@
-<h1>Profile</h1>
+<h1>Profile for <%= @user.login %></h1>
 
 <% if current_user.is_admin? %>
 <div id="admin_control">
@@ -6,37 +6,8 @@
 </div>
 <% end %>
 
-<%= start_form_tag( { :action => 'update', :id => @user }, :multipart => true ) %>
-  <p><label>Login:</label><%= @user.login %></p>
-
-  <p><label for="user_street">Street:</label>
-  <%= text_field 'user', 'street' %></p>
-
-  <p><label for="user_city">City:</label>
-  <%= text_field 'user', 'city' %></p>
-
-  <p><label for="user_state">State:</label>
-  <%= text_field 'user', 'state' %></p>
-
-  <p><label for="user_zip">Zip:</label>
-  <%= text_field 'user', 'postal_code' %></p>
-
-  <p><label for="user_password">Password:</label>
-  <%= password_field 'user', 'password' %></p>
-
-  <p><label for="user_password_confirmation">Password Confirmation:</label>
-  <%= password_field 'user', 'password_confirmation' %></p>
-
-  <p><label for="user_avatar">Upload an image:</label><br/>
-  <%= file_field 'avatar', 'uploaded_data'  %>
-  <% if @user.avatar-%>
-  <br/>
-  currently: <%= image_tag @user.avatar.public_filename("thumb") %>
-  <%= hidden_field 'avatar', 'id' %>
-  <% end -%>
-  </p>
-  <%= submit_tag 'Upload' %>
-<%= end_form_tag %>
+<%= image_tag @user.avatar.public_filename('thumb') if @user.avatar %>
+<%= link_to 'edit profile', :action => 'edit', :id => @user %>
 
 <% if @user.guide_in_progress -%>
 <%= link_to 'your current guide', url_for( :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress ) %>

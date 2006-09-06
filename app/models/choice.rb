@@ -14,4 +14,8 @@ class Choice < ActiveRecord::Base
   def self.options
     SELECTION_OPTIONS
   end
+
+  def to_liquid
+    { 'title' => title, 'description' => description, 'selection' => selection }
+  end
 end

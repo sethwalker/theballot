@@ -45,8 +45,7 @@ class AccountController < ApplicationController
   end
 
   def profile
-    redirect_to(:action => 'login') unless logged_in?
-    return unless logged_in?
+    redirect_to(:action => 'login') and return unless logged_in?
     if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
       @user = User.find(params[:id])
     else
@@ -54,14 +53,16 @@ class AccountController < ApplicationController
     end
   end
 
-  def update
+  def edit
     @user = User.find(params[:id])
-    return unless @user == current_user || current_user.admin?
-    @avatar = Avatar.create(params[:avatar])
-    render :action => 'profile' and return unless @avatar.valid?
-    @user.avatar = @avatar
-    flash[:notice] = 'Successfully uploaded image'
-    redirect_to :action => 'profile'
+    @avatar = @user.avatar
+    return false unless @user == current_user || current_user.admin?
+    if request.post?
+      @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar].size != 0
+      render :action => 'edit' and return unless @user.update_attributes(params[:user])
+      flash[:notice] = 'Successfully upated profile'
+      redirect_to :action => 'profile' and return
+    end
   end
 
   def remove_admin
@@ -91,6 +92,7 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+    @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar].size != 0
     if @user.save
       redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Thanks for signing up!"

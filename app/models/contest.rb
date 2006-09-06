@@ -7,7 +7,7 @@ class Contest < ActiveRecord::Base
   validates_associated :choices
 
   def to_liquid
-    { 'contest' => name }
+    { 'name' => name, 'choices' => choices }
 #    { 'contest' => contest, 'candidate' => candidate, 'description' => description, 'selection' => selection, 'position' => position }
   end
 end
