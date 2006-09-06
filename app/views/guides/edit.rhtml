@@ -2,17 +2,17 @@
 <% if @c3 || @guide.c3? -%>
 <p>501(c)(3) informational guides - you cannot take a position on candidates, and must profile at least two candidates for each contest</p>
 <% else -%>
-<p>If you are a qualified 501(c)(3), <%= link_to 'click here', :host => APPLICATION_C3_DOMAIN, :action => 'edit', :id => @guide %> to make an issue / informational guide</p>
+<p>If you are a qualified 501(c)(3), <%= link_to 'click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'edit', :id => @guide } ) %> to make an issue / informational guide</p>
 <% end -%>
 </div>
 
 <div class="guide-edit-left">
   <div id="guide-edit-instructions">
-    <ul>
-      <li>first instruction</li>
-      <li>second instruction</li>
-      <li>third instruction</li>
-    </ul>
+    <% if @c3 -%>
+      <%= render "guides/c3/instructions" %>
+    <% else -%>
+      <%= render "guides/standard/instructions" %>
+    <% end -%>
   </div>
 
   <div id="guide-form-container">

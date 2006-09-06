@@ -1,6 +1,11 @@
 <div class="front-page-left">
+  <div id="intro">
+    <b>Your vote is powerful!</b> But sometimes voting can be confusing, right? Get the info you need at theballot.org. Find a voter guide for your area, or create your own guide that other people can check out. It's easy. So get started now and make your vote count!
+  </div>
   <div id="map">
-    <%= image_tag 'http://ixley.com/ballot/images/us_map.jpg', :usemap => 'state_image_map' %>
+    <h2><span>Select your State</span></h2>
+    <p>Click on the map below <strike>or use the dropdown menu</strike> to view voter guides from the state.</p>
+    <%= image_tag 'http://ixley.com/ballot/images/us_map.jpg', :border => 0, :usemap => 'state_image_map' %>
     <map name="state_image_map" id="state_image_map">
       <area shape="poly" alt="New Hampshire" coords="449,57, 446,82, 458,77" href="guides/by_state/NH" />
       <area shape="poly" alt="Vermont" coords="435,63, 441,84, 445,82, 446,59" href="guides/by_state/VT" />
@@ -57,11 +62,24 @@
       <area shape="poly" alt="Alaska" coords="93,235, 40,226, 14,244, 20,259, 22,335, 79,310, 129,335, 132,328, 95,298" href="guides/by_state/AK" />
     </map>
   </div>
-  <div id="create-new-guide">
+  <div id="search-guides">
+    <h4><span>Search All Guides</span></h4>
     <%= render "shared/search" %>
   </div>
 </div>
 <div class="front-page-right">
-<%= render :partial => 'list_item', :collection => @guides %>
+  <div id="voter-guides">
+    <h3><span>Browse Voter Guides</span></h3>
+    <div id="voter-guide-links">
+      <%= link_to '> view more guides', { :action => 'list' }, :id => 'view-link' %>
+      <%= link_to '+ create new guide', { :action => 'new' }, :id => 'create-link' %>
+    </div>
+    <div id="guide-list-top">
+    </div>
+    <div id="guide-list">
+      <%= render :partial => 'list_item', :collection => @guides %>
+    </div>
+    <div id="guide-list-bottom"></div>
+  </div>
 </div>
 <br class="clear" />
