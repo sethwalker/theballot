@@ -10,8 +10,8 @@
     <br class="clear" />
     <div id="container">
     <div id="content" class="column">
-      <p style="color: red"><%= flash[:error] %></p>
-      <p style="color: green"><%= flash[:notice] %></p>
+      <p id="flash-error">><%= flash[:error] %></p>
+      <p id="flash-notice"><%= flash[:notice] %></p>
       <%= @content_for_layout %>
     </div>
     </div>

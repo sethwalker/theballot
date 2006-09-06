@@ -1,5 +1,13 @@
 @import url("scaffold.css");
 
+#flash-error {
+  color: red;
+}
+
+#flash-notice {
+  color: green;
+}
+
 body {
   background: #000000;
   margin: 0;
