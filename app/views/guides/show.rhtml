@@ -34,9 +34,11 @@
 
 <% content_for :sidebar do -%>
 <div id="guide-members">
+  <h3>Friends of this guide</h3>
   <%= render :partial => 'guides/member', :collection => @guide.members %>
+  <br class="clear" />
 </div>
-<% end -%>
+<% end unless @guide.members.empty? -%>
 
 <% if @guide.endorsed -%>
 <div id="endorsed">This Guide is Endorsed by the League</div>

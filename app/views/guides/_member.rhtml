@@ -1,6 +1,10 @@
 <div class="guide-member">
-  <% if member.avatar %><div id="member-avatar"><%= image_tag member.avatar.public_filename("thumb") %><br/><% end %><%= link_to member.login, url_for( :controller => 'users', :action => 'show', :id => member.id ) %><% if member.avatar %></div><% end %>
+  <% if member.avatar %>
+    <div class="member-avatar">
+      <%= image_tag member.avatar.public_filename("thumb") %>
+    </div>
+  <% end %>
+  <div class="member-login">
+    <%= link_to member.login, url_for( :controller => 'users', :action => 'show', :id => member.id ) %>
+  </div>
 </div>
-<% if 0 == member_counter + 1 % 3 -%>
-<br class="clear" />
-<% end -%>
