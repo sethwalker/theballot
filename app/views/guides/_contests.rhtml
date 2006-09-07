@@ -6,7 +6,9 @@
     <div class="right" id="contest-done-button"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
   </div>
   <div id="contest-container" class="column">
-    <%= link_to_remote 'add issue', :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => guide.id }, :method => :get %> | <%= link_to_remote 'add office', :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => guide.id }, :method => :get %>
+    <%= link_to_remote 'Add Issue (Proposition 100, Measure A)', :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => guide.id }, :method => :get %> | <%= link_to_remote 'Add Office (City Council District 5, Governor)', :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => guide.id }, :method => :get %>
+  <h4>The Ballot</h4>
+  <p id="ballot-instructions">Add your ballot items by clicking the "Add Issue" or "Add Office" buttons.  An "Issue" is a proposition, ballot measure, initiative, etc.  An "Office" is what a candidate runs for, such as "City Council, District 5", "State Representative", "Senator", or "President"</p>
   <ul id="contests">
     <% if !guide.contests.empty? -%>
       <% guide.contests.each_with_index do |c,i| -%>

@@ -1,5 +1,6 @@
 class GuidesController < ApplicationController
-  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :search ]
+  prepend_before_filter :find_guide_by_permalink
+  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search ]
   before_filter :check_date, :only => [ :edit, :update ]
   before_filter :legal
 
@@ -14,11 +15,21 @@ class GuidesController < ApplicationController
   in_place_edit_for :choice, :description
   in_place_edit_for :choice, :selection
 
-  def legal
-    @guide ||= Guide.find_by_id(params[:id])
-    if @guide && c3? && !@guide.c3?
-      return not_found
+  def find_guide_by_permalink
+    if(params[:year] && params[:month] && params[:day] && params[:permalink])
+      Guide.with_scope(:find => { :conditions => ['date = ?', Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_s] } ) do
+        @guide = Guide.find_by_permalink(params[:permalink])
+      end
     end
+    true
+  end
+
+  def legal
+    @guide ||= Guide.find(params[:id]) if params[:id]
+    if @guide && c3? && !@guide.c3?
+      not_found and return false
+    end
+    true
   end 
 
   def check_date
@@ -47,8 +58,6 @@ class GuidesController < ApplicationController
     redirect_to :action => 'show', :id => params[:id]
   end
 
-  # end new stuff
-
   def xml
     @guide = Guide.find(params[:id])
     render :xml => @guide.to_xml(:include => :endorsements)
@@ -64,30 +73,34 @@ class GuidesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    conditions = "status = '#{Guide::PUBLISHED}'"
-    conditions << " AND legal = '#{Guide::C3}'" if c3?
-    conditions << " AND date >= '#{Time.now.to_s(:db)}'"
-    if params[:state]
-      conditions << " AND state = '#{params[:state]}'"
-      flash[:notice] = "Showing All Guides from #{params[:state]}"
-      @state = params[:state]
+    @conditions ||= {} 
+    @messages ||= []
+    @conditions[:status] = "status = '#{Guide::PUBLISHED}'"
+    @conditions[:legal] = "legal = '#{Guide::C3}'" if c3?
+    @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
+    @conditions[:user_id] = "user_id = '#{params[:author]}'" if params[:author]
+    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'state, city, date'
+  end
+
+  def by_state
+    @state = params[:state]
+    @conditions ||= {}
+    @messages ||= []
+    @conditions[:state] = "state = '#{@state}'"
+    @messages << "Showing All Guides from #{@state}"
+    list
+    if @guides.empty?
+      @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- we'll show you how.  <a href=\""+url_for(:action => 'index')+"\">back to map</a>"
+    else
+      @messages << "Don't see a guide for your area?  Or don't agree with the ones there are?  <a href=\""+url_for(:action => 'new')+"\">Create your own!</a> -- we'll show you how."
     end
-    conditions << " AND user_id = '#{params[:author]}'" if params[:author]
-    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions, :order => 'state, city, date'
+    render :action => 'list'
   end
 
   def archive
-    conditions = "status = '#{Guide::PUBLISHED}'"
-    conditions << " AND legal = '#{Guide::C3}'" if c3?
-    conditions << " AND date < '#{Time.now.to_s(:db)}'"
-    if params[:state]
-      conditions << " AND state = '#{params[:state]}'"
-      flash[:notice] = "Showing All Guides from #{params[:state]}"
-      @state = params[:state]
-    end
-    conditions << " AND user_id = '#{params[:author]}'" if params[:author]
-    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => conditions, :order => 'state, city, date'
-    render :action => 'list'
+    @conditions ||= {}
+    @conditions[:date] = "date < '#{Time.now.to_s(:db)}'"
+    list
   end
 
   def search
@@ -114,13 +127,7 @@ class GuidesController < ApplicationController
   end
 
   def show
-    if(params[:year] && params[:month] && params[:day] && params[:permalink])
-      Guide.with_scope(:find => { :conditions => ['date = ?', Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_s] } ) do
-        @guide = Guide.find_by_permalink(params[:permalink])
-      end
-    else
-      @guide = Guide.find(params[:id])
-    end
+    @guide ||= Guide.find(params[:id]) if params[:id]
     return not_found unless @guide
     if !@guide.is_published?
       if logged_in? && @guide.owner?(current_user)
@@ -148,27 +155,10 @@ class GuidesController < ApplicationController
     else
       @guide = Guide.new(params[:guide])
     end
-    if params[:image]
-      @image = Image.create(params[:image])
-      if !@image.valid? && params[:image][:id]
-        @image = Image.find(params[:image][:id])
-      end
-      if @image.valid?
-        @guide.image = @image
-        current_user.images << @image
-      end
-    end
-
-    if params[:pdf]
-      @pdf = AttachedPdf.create(params[:pdf])
-      if @pdf && !@pdf.valid? && params[:pdf][:id]
-        @pdf = AttachedPdf.find(params[:pdf][:id])
-      end
-      if @pdf && @pdf.valid?
-        @guide.attached_pdf = @pdf
-        current_user.attached_pdfs << @pdf
-      end
-    end
+    @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image].size != 0
+    current_user.images << @image if @image && @image.valid?
+    @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf].size != 0
+    current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
 
     @guide.user = current_user
     if 'Publish' == params[:status]
@@ -205,28 +195,11 @@ class GuidesController < ApplicationController
     @guide = Guide.find(params[:id])
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)
+    @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image].size != 0
+    current_user.images << @image if @image && @image.valid?
+    @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf].size != 0
+    current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
     return render(:action => 'edit') unless @guide.update_attributes(params[:guide])
-    if params[:image]
-      @image = Image.create(params[:image])
-      if @image && !@image.valid? && params[:image][:id]
-        @image = Image.find(params[:image][:id])
-      end
-      if @image && @image.valid?
-        @guide.image = @image
-        current_user.images << @image
-      end
-    end
-
-    if params[:pdf]
-      @pdf = AttachedPdf.create(params[:pdf])
-      if @pdf && !@pdf.valid? && params[:pdf][:id]
-        @pdf = AttachedPdf.find(params[:pdf][:id])
-      end
-      if @pdf && @pdf.valid?
-        @guide.attached_pdf = @pdf
-        current_user.attached_pdfs << @pdf
-      end
-    end
 
     # this is about the only diff between create
     if 'Unpublish' == params[:commit] || 'Save As Draft' == params[:status]
@@ -235,7 +208,7 @@ class GuidesController < ApplicationController
       @guide.publish
     end
     @guide.save!
-    flash[:notice] = 'Guide was successfully updated.'
+    flash[:notice] = 'Guide was successfully updated.  To edit [or publish] your guide, click on "My Stuff" in the upper right'
     redirect_to :action => 'show', :id => @guide
 
   rescue ActiveRecord::MultiparameterAssignmentErrors
@@ -269,26 +242,6 @@ class GuidesController < ApplicationController
     @guide = Guide.find(params[:id])
     @contest = Contest.new(:guide_id => params[:id])
     @choice = Choice.new(:contest => @contest)
-  end
-
-  def add_candidate_contest
-    @contest = Contest.create(params[:contest])
-    @choice = Choice.new(:contest => @contest)
-    render :update do |page|
-      page.replace_html 'contest-edit-window-left', :partial => 'candidate_list', :locals => { :contest => @contest }
-      page.replace_html 'contest-edit-window-right', :partial => 'candidate_form', :locals => { :choice => @choice }
-    end
-  end
-
-  def new_candidate
-    @choice = Choice.create(params[:choice])
-    render :update do |page|
-      page.insert_html :bottom, 'candidate-list', :partial => 'candidate', :locals => { :choice => @choice }
-      page['choice_name'].value=''
-      page['choice_description'].value=''
-      page['choice_selection'].value = Choice::NO_ENDORSEMENT
-      page['choice_name'].focus
-    end
   end
 
   def endorsed_status

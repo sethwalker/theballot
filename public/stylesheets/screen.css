@@ -108,6 +108,10 @@ body {
   visibility: hidden;
 }
 
+#guide-form-basics {
+  visibility: visible;
+}
+
 #contest-edit-window {
   position: absolute;
   left: 10px;
@@ -170,4 +174,8 @@ body {
   float: left;
   padding: 1.5%;
   width: 30%;
+}
+
+ul#contests {
+  list-style: none;
 }

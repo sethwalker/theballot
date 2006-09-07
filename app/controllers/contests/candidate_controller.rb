@@ -33,8 +33,8 @@ class Contests::CandidateController < Contests::BaseController
       @contest.update_attributes(params[:contest]) if params[:contest]
       @choice.update_attributes(params[:choice].merge(:contest => @contest)) if params[:choice]
       render :update do |page|
-        page.replace_html 'contest-edit-window-left', :partial => "contests/candidate/preview", :locals => { :contest => @contest }
-        page.replace_html 'contest-edit-window-right', :partial => "contests/candidate/edit", :locals => { :contest => @contest, :choice => Choice.new(:contest => @contest) }
+        page.replace_html 'contest-edit-window-left', :partial => "contests/candidate/edit", :locals => { :contest => @contest, :choice => Choice.new(:contest => @contest) }
+        page.replace_html 'contest-edit-window-right', :partial => "contests/candidate/preview", :locals => { :contest => @contest }
         page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
         page['choice_name'].value=''
         page['choice_description'].value=''

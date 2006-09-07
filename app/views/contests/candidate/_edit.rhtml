@@ -6,6 +6,6 @@
   <%= submit_tag "#{controller.action_name} candidate" %>
   <% else -%>
   <%= render :partial => '/contests/form', :locals => { :contest => contest } %>
-  <%= submit_tag "#{controller.action_name} contest" %>
+  <%= submit_tag "continue" %>
   <% end -%>
 <%= end_form_tag %>

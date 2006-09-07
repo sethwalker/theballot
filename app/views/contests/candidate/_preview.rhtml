@@ -1,5 +1,6 @@
 <% if contest.id -%>
-Editing contest: <%= contest.name %> <%= link_to_remote 'add candidate', :url => { :controller => '/contests/candidate', :action => 'add', :id => contest.id } %>
+<%= contest.name %> <%= link_to_remote 'Add new candidate', :url => { :controller => '/contests/candidate', :action => 'add', :id => contest.id } %>
+<p class="explain">you can drag and drop to reorder</p>
 
 <ul id="contest_choices_preview">
   <%= render :partial => 'guides/choice', :collection => contest.choices %>

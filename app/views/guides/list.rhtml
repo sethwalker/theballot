@@ -1,12 +1,7 @@
-<h1>Listing guides</h1>
-
+<div id="guide-list-messages"><%= @messages.join('<br/>') if @messages %></div>
 <div id="guide-list-container">
 <%= render :partial => 'list_item', :collection => @guides %>
 </div>
 
 <%= link_to 'Previous page', { :page => @guide_pages.current.previous } if @guide_pages.current.previous %>
 <%= link_to 'Next page', { :page => @guide_pages.current.next } if @guide_pages.current.next %> 
-
-<br />
-
-<%= link_to 'New guide', :action => 'new' %>

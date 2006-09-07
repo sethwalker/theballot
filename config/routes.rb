@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.author 'guides/author/:author', :controller => 'guides', :action => 'list'
 
-  map.connect 'guides/by_state/:state', :controller => 'guides', :action => 'list'
+  map.connect 'guides/by_state/:state', :controller => 'guides', :action => 'by_state'
 
   map.connect 'contests/candidate/:action/:id', :controller => 'contests/candidate'
   map.connect 'contests/referendum/:action/:id', :controller => 'contests/referendum'

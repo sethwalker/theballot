@@ -70,6 +70,11 @@ class Guide < ActiveRecord::Base
     '/guides/' + date.strftime("%Y/%m/%d/") + permalink
   end
 
+  def make_permalink(options = {})
+    return '/guides/show/' + id if options.empty?
+    "/guides/#{options[:year]}/#{options[:permalink]}"
+  end
+
   def publish
     @recently_published = true if !status
     self.status = PUBLISHED

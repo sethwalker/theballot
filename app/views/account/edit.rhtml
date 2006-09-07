@@ -4,6 +4,8 @@
 
   <p><label>Email:</label><%= @user.email %></p>
 
+  <%= render :partial => 'set_password', :locals => { :f => f } %>
+
   <%= render :partial => 'form', :locals => { :f => f, :avatar => @avatar } %>
 
   <%= submit_tag 'Update' %>

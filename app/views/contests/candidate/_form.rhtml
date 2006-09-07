@@ -1,3 +1,7 @@
+<p>Now add specific candidates.</p>
+<% if @c3 -%>
+<p>Remember, a non-partisan guide cannot endorse candidates.  You must compare the candidates' stands on issues and let the voter decide.  And you must include at least the candidates from any involved major parties.</p>
+<% end -%>
 <p><label for="choice_name">Candidate Name</label><br/>
 <%= text_field 'choice', 'name' %></p>
 
@@ -6,7 +10,7 @@
 
 <% unless @c3 -%>
 
-<p><label for="choice_selection">Position</label><br/>
+<p><label for="choice_selection">Endorsement</label><br/>
 <%= select 'choice', 'selection', Choice::SELECTION_OPTIONS.values %>
 
 <% end -%>

@@ -5,6 +5,7 @@ class Contest < ActiveRecord::Base
 
   validates_uniqueness_of :name, :scope => :guide_id, :message => 'is already added to the guide!'
   validates_associated :choices
+  validates_presence_of :name
 
   def to_liquid
     { 'name' => name, 'choices' => choices }
