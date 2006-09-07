@@ -101,6 +101,7 @@ class GuidesController < ApplicationController
     @conditions ||= {}
     @conditions[:date] = "date < '#{Time.now.to_s(:db)}'"
     list
+    render :action => 'list'
   end
 
   def search
