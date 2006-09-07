@@ -129,7 +129,7 @@ Spinner is run by the default cold_deploy task. Instead of using script/spinner,
 DESC
 task :spinner, :roles => :app do
   application_port = 3080 #get this from your friendly sysadmin
-  run "mongrel_rails start -e production -p #{application_port} -d -c #{current_path}"
+  run "mongrel_rails start -e development -p #{application_port} -d -c #{current_path}"
 end
 
 desc "Restart the web server"
@@ -176,9 +176,9 @@ task :after_symlink do
   run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
 end
 
-desc "tail production log files" 
+desc "tail development log files" 
 task :tail_logs, :roles => :app do
-  run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
+  run "tail -f #{shared_path}/log/development.log" do |channel, stream, data|
     puts "#{data}" 
     break if stream == :err    
   end
