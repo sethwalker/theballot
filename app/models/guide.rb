@@ -19,7 +19,10 @@ class Guide < ActiveRecord::Base
   before_validation :create_permalink
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
-  after_save { GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published }
+  def after_save
+    GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published
+  end
+
   acts_as_ferret :fields => { :name => {:boost => 3}, 
                               :city => {},
                               :description => {:boost => 2.5},
@@ -44,16 +47,6 @@ class Guide < ActiveRecord::Base
     @index.join(" ")
   end
 
-=begin
-  acts_as_draftable :fields => [:name, :city, :state, :date, :description, :owner_id, :theme_id, :endorsements] do
-    def self.included(base)
-      base.endorsements.each do |e|
-        e.save_draft
-      end
-    end
-  end
-=end
-
   def to_liquid
     liquid = { 'id' => id, 'name' => name, 'city' => city, 'state' => state, 'date' => date, 'description' => description, 'contests' => contests }
     if image
@@ -75,7 +68,7 @@ class Guide < ActiveRecord::Base
   end
 
   def publish
-    @recently_published = true if !status
+    @recently_published = true if !self.status or self.status == DRAFT
     self.status = PUBLISHED
   end
 

@@ -1,0 +1,55 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+RELEASE_NAME = "meantime_filter"
+RELEASE_VERSION = '0.1.0'
+
+desc 'Default: run unit tests.'
+task :default => :test
+
+desc 'Test the meantime_filter plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+desc 'Generate documentation for the meantime_filter plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'MeantimeFilter'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+task :release do
+  # Directories
+  dir = "releases/#{RELEASE_VERSION}"
+  rm_rf dir
+  mkdir_p "#{dir}/plugin"
+  
+  # Temporary plugin directory to compress
+  rm_rf "/tmp/#{RELEASE_NAME}"
+  system "cp -r . /tmp/#{RELEASE_NAME}"
+  mv "/tmp/#{RELEASE_NAME}", "#{dir}/plugin/#{RELEASE_NAME}"
+  
+  # Clean useless files
+  cd "#{dir}/plugin" do
+    system 'rm -rf ' << (Dir['**/.svn'] << "#{RELEASE_NAME}/{releases,rdoc}").join(' ')
+    system "tar zcvf #{RELEASE_NAME}-#{RELEASE_VERSION}.tar.gz #{RELEASE_NAME}"
+  end
+  
+  # Remove the temporary directory
+  rm_rf "#{dir}/plugin/#{RELEASE_NAME}"
+  
+  # Documentation
+  system 'rake rdoc'
+  system 'rm -rf ' << Dir['rdoc/**/.svn'].join(' ')
+  cp_r 'rdoc', "#{dir}"
+  
+  # Finished
+  puts
+  puts "=> #{RELEASE_NAME} v#{RELEASE_VERSION} released"
+end

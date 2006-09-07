@@ -1,0 +1,138 @@
+= meantime_filter for Rails controllers
+
+A plugin for Ruby On Rails extending ActionController features.
+It works with Rails v1.1.4, it has not been tested with other versions.
+
+== Description
+This plugin introduces a new filter type to <em>ActionController::Base</em>:
+meantime filters. They are called at the time of the action call just after
++before+ filters. They allow to do things around the action by yielding when
+the action has to be performed. This enables the action to be executed within
+the block of any method.
+
+== Getting and installing it
+1.  In order to get and install it, download the plugin archive file from:
+    meantime_filter-0.1.0.tar.gz[http://roman2k.free.fr/rails/meantime_filter/0.1.0/plugin/meantime_filter-0.1.0.tar.gz]
+
+2.  Gunzip and untar it in the <tt>plugin/</tt> subdirectory of your Rails
+    application.
+
+
+== Example of reason to use it
+I have written this plugin because I needed to scope an ActiveRecord model
+during the actions I specify with its <tt>with_scope</tt> class method that
+takes a block and it was not possible to reproduce its behaviour with +before+
+and +after+ filters since there is no method to _scope_ without a block and no
+method to _remove_ the last scope.
+
+With meantime filters, it's possible to do such things in a simple and clean
+manner.
+
+I think it is a better way to do things both before and after actions than
+using an +around+ filter because +yield+ is made for that type of task.
+
+
+== Usage
+This plugins adds three public class methods to ActionController::Base:
+* <tt>meantime_filter</tt>
+  (ActionController::Filters::MeantimeFilter::ClassMethods.meantime_filter)
+* <tt>append_meantime_filter</tt>
+  (ActionController::Filters::MeantimeFilter::ClassMethods.append_meantime_filter)
+* <tt>prepend_meantime_filter</tt>
+  (ActionController::Filters::MeantimeFilter::ClassMethods.prepend_meantime_filter)
+They all accept one or more filters as parameter(s) and the same conditions
+hash as +before+ and +after+ filters registering methods as last parameter.
+
+A filter:
+* *Can* be either:
+  * A _Symbol_ that is the name of one of the controller's instance methods,
+  * A _Method_ that takes the controller as only parameter,
+  * Any object that responds to <tt>:filter</tt> and whose +filter+ method
+    takes the controller as only parameter.
+* *Cannot* be a +Proc+ because <tt>Proc</tt>s cannot yield unfortunately.
+
+And of course, it <b>must</b> either:
+* Contain a +yield+ statement,
+* Call the block it received, or
+* Pass the received block to another method.
+
+
+=== Nested filtering
+You can even nest several meantime filters by registering several ones for the
+same action(s). They are executed in the same order as they have been register
+through +meantime_filter+. The first filter yields to the second that yields
+to the third and so on. The last one yields the action.
+
+
+== Usage example
+
+  class PostsController < ApplicationController
+    before_filter :authenticate
+    meantime_filter :scope_posts_to_user
+    
+    # Displays the posts of the logged in user.
+    def show
+      @posts = Post.find(:all)
+    end
+    
+    def create
+      # ...
+      @post = Post.create(params[:post]) # Automatically associated to @user
+      # ...
+    end
+    
+    private
+    
+    # Sets @user to the logged in user or redirects to :index.
+    def authenticate
+      # ...
+    end
+    
+    def scope_posts_to_user(&block)
+      Post.with_scope({
+        :find => { :conditions => [ 'user_id = ?', @user.id ]},
+        :create => { :user => @user }
+      }, &block)
+    end
+    
+    # Or:
+    def scope_posts_to_user
+      Post.with_scope({
+        :find => { :conditions => [ 'user_id = ?', @user.id ]},
+        :create => { :user => @user }
+      }) { yield }
+    end
+  end
+
+
+== Tests of the plugin
+This plugin is packaged with unit tests. They are ready-to-run. Go in the
++tests/+ subdirectory and run +rake+.
+
+
+== Author
+{Roman LE NEGRATE}[mailto:roman2k@free.fr]
+
+
+== Licence
+Copyright (c) 2006 Roman LE NEGRATE
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Happy coding with Ruby and Rails :-).

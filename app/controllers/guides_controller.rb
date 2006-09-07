@@ -2,7 +2,6 @@ class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search ]
   before_filter :check_date, :only => [ :edit, :update ]
-  before_filter :legal
 
   in_place_edit_for :guide, :name
   in_place_edit_for :guide, :description
@@ -23,14 +22,6 @@ class GuidesController < ApplicationController
     end
     true
   end
-
-  def legal
-    @guide ||= Guide.find(params[:id]) if params[:id]
-    if @guide && c3? && !@guide.c3?
-      not_found and return false
-    end
-    true
-  end 
 
   def check_date
     return true if current_user.is_admin?
@@ -76,7 +67,6 @@ class GuidesController < ApplicationController
     @conditions ||= {} 
     @messages ||= []
     @conditions[:status] = "status = '#{Guide::PUBLISHED}'"
-    @conditions[:legal] = "legal = '#{Guide::C3}'" if c3?
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
     @conditions[:user_id] = "user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'state, city, date'
@@ -117,7 +107,6 @@ class GuidesController < ApplicationController
       @query << "city:#{params[:guide][:city]}" if !params[:guide][:city].empty?
       @query = ['*'] if @query.empty?
       @conditions = "1 = 1"
-      @conditions << " AND legal = '#{Guide::C3}'" if c3?
       @conditions << " AND state = '#{params[:guide][:state]}'" if !params[:guide][:state].empty?
       @guide_pages = Paginator.new self, Guide.count, 10, params['page']
       Guide.with_scope(:find => { :conditions => @conditions }) do
@@ -156,9 +145,9 @@ class GuidesController < ApplicationController
     else
       @guide = Guide.new(params[:guide])
     end
-    @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image].size != 0
+    @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image] && params[:uploaded_image].size != 0
     current_user.images << @image if @image && @image.valid?
-    @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf].size != 0
+    @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf] && params[:uploaded_pdf].size != 0
     current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
 
     @guide.user = current_user
@@ -177,7 +166,7 @@ class GuidesController < ApplicationController
 
   def new
     @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7))
-    @guide.legal ||= Guide::C3 if c3?
+    @guide.legal = Guide::C3 if c3?
     @guide.save_with_validation(false) unless @guide.id
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)

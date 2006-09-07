@@ -11,6 +11,9 @@ class GuidesControllerTest < Test::Unit::TestCase
     @controller = GuidesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+
+    @emails = ActionMailer::Base.deliveries 
+    @emails.clear
   end
 
   def test_index
@@ -178,6 +181,13 @@ class GuidesControllerTest < Test::Unit::TestCase
     post :update, :id => g.id, :status => 'Edit'
     updated_again = Guide.find(g.id)
     assert !updated_again.is_published?
+  end
+
+  def test_should_send_request_for_approval
+    g = Guide.new(:name => 'c3ish', :date => Time.now, :city => 'sf', :state => 'CA', :user_id => users(:quentin).id)
+    g.publish
+    assert g.save
+    assert_equal 1, @emails.length
   end
 
 end
