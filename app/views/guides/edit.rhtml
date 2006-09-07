@@ -1,8 +1,9 @@
 <div id="guide-edit-header">
 <% if @c3 || @guide.c3? -%>
-<p>501(c)(3) informational guides - you cannot take a position on candidates, and must profile at least two candidates for each contest</p>
+<p>This is a non-partisan informational voter guide.  You can endorse issues, but not candidates.  For candidates, you must at least add the candidates from the major parties and compare their positions on issues.  This will help the voter make an informed choice.</p>
+<p>Note: Non-partisan guides must be approved before they are posted live on the site.</p>
 <% else -%>
-<p>If you are a qualified 501(c)(3), <%= link_to 'click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'edit', :id => @guide } ) %> to make an issue / informational guide</p>
+<p><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'edit', :id => @guide } ) %> to make a non-partisan informational voter guide (basically that means you can compare candidates but can't endorse them).</p>
 <% end -%>
 </div>
 
@@ -13,13 +14,15 @@
     <% else -%>
       <%= render "guides/standard/instructions" %>
     <% end -%>
+    <p class="ballot-instructions">Add your ballot items by clicking the "Add Issue" or "Add Office" buttons.  An "Issue" is a proposition, ballot measure, initiative, etc.  An "Office" is what a candidate runs for, such as "City Council, District 5", "State Representative", "Senator", or "President"</p>
+    <p class="ballot-instructions">Drag ballot items by the dot to re-order them.</p> 
   </div>
 
   <div id="guide-form-container">
     <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form', :multipart => true ) %>
       <%= render :partial => 'form' %>
       <div class="guide-edit-buttons">
-        <%= submit_tag 'Save As Draft' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><%= submit_tag 'Publish' %><% end %>
+        <%= submit_tag 'Save As Draft' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><%= submit_tag 'Submit Guide' %><% end %>
       </div>
     <%= end_form_tag %>
     <%= observe_form 'guide-form', :frequency => 1, :update => 'guide-preview', :complete => "Element.show('guide-preview')", :url => { :action => :preview } %>

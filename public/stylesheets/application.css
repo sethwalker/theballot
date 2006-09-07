@@ -1,0 +1,26 @@
+#add-issue-link, #add-office-link {
+  text-align: center;
+  padding: 5px;
+}
+
+#add-issue-link {
+  float: left;
+}
+#add-office-link {
+  float: right;
+}
+
+ul#contests {
+  clear: both;
+}
+
+#contest-edit-window {
+  position: absolute;
+  top: 110px;
+  left: 10%;
+  margin-left: 5px;
+  padding: 10px;
+  background-color: #FFFCDB;
+  border: 1px solid #CCCCCC;
+  visibility: hidden;
+}

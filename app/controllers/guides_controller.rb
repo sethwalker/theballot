@@ -176,7 +176,7 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = current_user.guide_in_progress || Guide.new(:user => current_user)
+    @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7))
     @guide.legal ||= Guide::C3 if c3?
     @guide.save_with_validation(false) unless @guide.id
     @contest = Contest.new(:guide_id => @guide.id)
@@ -203,9 +203,9 @@ class GuidesController < ApplicationController
     return render(:action => 'edit') unless @guide.update_attributes(params[:guide])
 
     # this is about the only diff between create
-    if 'Unpublish' == params[:commit] || 'Save As Draft' == params[:status]
+    if 'Unpublish' == params[:commit] || 'Save As Draft' == params[:commit]
       @guide.unpublish
-    elsif 'Publish' == params[:commit] || 'Publish' == params[:status]
+    elsif 'Submit Guide' == params[:commit]
       @guide.publish
     end
     @guide.save!

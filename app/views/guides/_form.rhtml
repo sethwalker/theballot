@@ -2,6 +2,9 @@
 
 <div class="guide-form-section" id="guide-form-basics">
   <h3>The Basics</h3>
+  <% unless @c3 -%>
+  <span><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'new' } ) %> to create a non-partisan guide</span>
+  <% end -%>
   <!--[form:guide]-->
   <p><label for="guide_name" class="required">Guide name:</label><br/>
   <%= text_field 'guide', 'name'  %></p>
@@ -9,28 +12,27 @@
   <p><label for="guide_date" class="required">Election Date:</label><br/>
   <%= date_select 'guide', 'date', :order => [:month, :day, :year]  %></p>
 
-  <p><label for="guide_city" class="required">City (required)</label><br/>
+  <p><label for="guide_city" class="required">City</label><br/>
   <%= text_field 'guide', 'city', :size => 22  %></p>
 
-  <p><label for="guide_state" class="required">State (required)</label><br/>
+  <p><label for="guide_state" class="required">State</label><br/>
   <%= us_state_select 'guide', 'state', :show => :abbreviations, :include_blank => true %></p>
 
   <p><label for="guide_permalink">Shortcut</label><br/>
-  <span class="explain">Your guide will live at this web address:<br/>
-    http://theballot.org/[year]/___________ </span><br/>
-  <%= text_field 'guide', 'permalink'  %></p>
+  <span>Your guide will live at this web address:<br/>
+    http://theballot.org/<%= Date.today.year %>/</span><%= text_field 'guide', 'permalink', :size => 24  %></p>
 
   <% if @c3 -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
-  <p><label for="guide_description">Description</label><br/>
+  <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
   <%= text_area 'guide', 'description', :rows => 10 %></p>
 
-  <%= link_to_function 'done', "invi('guide-form-basics', true)" %>
+  <%= link_to_function 'next', "invi('guide-form-basics', true)" %>
 </div><!-- end guide basics -->
 
 <div class="guide-form-section" id="guide-form-theme">
 <p><label for="guide_theme">Theme</label><br/>
 <%= collection_select 'guide', 'theme_id', Theme.find(:all), 'id', 'name' %>
-<%= link_to_function 'done', "invi('guide-form-theme', true)" %>
+<%= link_to_function 'next', "invi('guide-form-theme', true)" %>
 </div>
 
 <div class="guide-form-section" id="guide-form-assets">
@@ -49,7 +51,7 @@ currently: <%= image_tag @guide.image.public_filename("thumb") %>
 currently: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
 <% end -%></p>
 
-<%= link_to_function 'done', "invi('guide-form-assets', true)" %>
+<%= link_to_function 'next', "invi('guide-form-assets', true)" %>
 </div>
 <!--[eoform:guide]-->
 
