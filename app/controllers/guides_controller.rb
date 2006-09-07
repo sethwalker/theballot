@@ -176,7 +176,7 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7))
+    @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7))
     @guide.legal ||= Guide::C3 if c3?
     @guide.save_with_validation(false) unless @guide.id
     @contest = Contest.new(:guide_id => @guide.id)
@@ -202,7 +202,6 @@ class GuidesController < ApplicationController
   def update_theme
     @guide ||= Guide.find(params[:id])
     @current = 'theme'
-    @next = 'assets'
     update_section
   end
 

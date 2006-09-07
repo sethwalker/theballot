@@ -7,6 +7,7 @@
   <div id="contest-container" class="column">
     <h4>The Ballot</h4>
       <div id="add-issue-link"><%= link_to_remote 'Add Issue<br/><em>(Proposition 100, Measure A)</em>', :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => guide.id }, :method => :get %></div><div id="add-office-link"><%= link_to_remote 'Add Office<br/><em>(City Council District 5, Governor)</em>', :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => guide.id }, :method => :get %></div>
+    <p class="ballot-instructions">Drag ballot items by the dot to re-order them.</p> 
     <ul id="contests">
       <% if !guide.contests.empty? -%>
         <% guide.contests.each_with_index do |c,i| -%>

@@ -39,8 +39,11 @@ class User < ActiveRecord::Base
     roles.any? {|r| 'developer' == r.title.downcase }
   end
 
-  def guide_in_progress
-    guides.find(:first, :conditions => "status IS NULL")
+  def guide_in_progress(is_c3 = false)
+    conditions = []
+    conditions << "status IS NULL"
+    conditions << "legal = '#{Guide::C3}'" if is_c3
+    guides.find(:first, :conditions => conditions.join(' AND '))
   end
 
   # Authenticates a user by their email and unencrypted password.  Returns the user or nil.

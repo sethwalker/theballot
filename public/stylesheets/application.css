@@ -10,7 +10,7 @@
   float: right;
 }
 
-ul#contests {
+#contest-container p.ballot-instructions {
   clear: both;
 }
 
