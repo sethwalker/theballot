@@ -106,8 +106,7 @@ class AccountControllerTest < Test::Unit::TestCase
   def test_should_activate_user_and_send_activation_email
     get :activate, :id => users(:arthur).activation_code
     assert_equal 1, @emails.length
-    assert(@emails.first.subject =~ /Your account has been activated/)
-    assert(@emails.first.body    =~ /#{assigns(:user).login}, your account has been activated/)
+    assert(@emails.first.subject =~ /new account/)
   end
 
   def test_should_send_activation_email_after_signup
@@ -117,6 +116,9 @@ class AccountControllerTest < Test::Unit::TestCase
     assert(@emails.first.body    =~ /Username: quire/)
     assert(@emails.first.body    =~ /Password: quire/)
     assert(@emails.first.body    =~ /account\/activate\/#{assigns(:user).activation_code}/)
+    assert flash[:notice] =~ /Thanks for signing up/
+    follow_redirect
+    assert flash[:notice] =~ /Thanks for signing up/
   end
 
   protected

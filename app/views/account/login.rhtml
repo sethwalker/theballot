@@ -1,4 +1,6 @@
+<% unless flash[:notice] %>
 This page requires you to log in.  If you don't have a login yet for the ballot.org, it takes about 10 seconds to sign up.  So no whining.  You could be done by now!
+<% end %>
 
 <%= error_messages_for 'user' %>
 <%= start_form_tag %>

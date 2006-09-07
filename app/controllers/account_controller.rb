@@ -45,6 +45,7 @@ class AccountController < ApplicationController
   end
 
   def profile
+    flash.keep :notice
     redirect_to(:action => 'login') and return unless logged_in?
     if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
       @user = User.find(params[:id])
@@ -93,10 +94,10 @@ class AccountController < ApplicationController
     @user = User.new(params[:user])
     return unless request.post?
     @user.signup_domain = @request.host
-    @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar].size != 0
+    @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar] && params[:uploaded_avatar].size != 0
     if @user.save
-      redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Thanks for signing up.  We're shootin' you an email right now.  Just click on the link in the email to activate your account and you'll be up and running."
+      redirect_to :action => 'profile'
     end
   end
   
