@@ -92,6 +92,7 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+    @user.signup_domain = @request.host
     @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar].size != 0
     if @user.save
       redirect_back_or_default(:controller => '/account', :action => 'profile')
