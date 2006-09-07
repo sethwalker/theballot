@@ -33,6 +33,7 @@
 <%= link_to_function 'done', "invi('guide-form-theme', true)" %>
 </div>
 
+<div class="guide-form-section" id="guide-form-assets">
 <p><label for="guide_image">You can attach an image to your guide:</label><br/>
 <%= file_field_tag 'uploaded_image'  %>
 <% if @guide.image -%>
@@ -41,7 +42,6 @@ currently: <%= image_tag @guide.image.public_filename("thumb") %>
 <% end -%>
 </p>
 
-<div class="guide-form-section" id="guide-form-assets">
 <p><label for="uploaded_pdf">You can also attach a PDF version of your guide:</label><br/>
 <%= file_field_tag 'uploaded_pdf'  %>
 <% if @guide.attached_pdf -%>
