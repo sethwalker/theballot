@@ -14,10 +14,9 @@ class Guide < ActiveRecord::Base
   has_many :pledges
   has_many :members, :through => :pledges, :source => :user
 
-  validates_presence_of :name, :date, :city, :state
-  validates_associated :contests
+  validates_presence_of :name, :date, :city, :state, :permalink
 
-  before_validation_on_create :create_permalink
+  before_validation :create_permalink
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
   after_save { GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published }
@@ -67,7 +66,7 @@ class Guide < ActiveRecord::Base
   end
 
   def permalink_url
-    '/guides/' + date.strftime("%Y/%m/%d/") + permalink
+    "/guides/#{date.year}/#{permalink}"
   end
 
   def make_permalink(options = {})

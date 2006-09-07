@@ -19,13 +19,13 @@
   </div>
 
   <div id="guide-form-container">
-    <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form', :multipart => true ) %>
-      <%= render :partial => 'form' %>
-      <div class="guide-edit-buttons">
-        <%= submit_tag 'Save As Draft' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><%= submit_tag 'Submit Guide' %><% end %>
-      </div>
+    <%= render :partial => 'form', :locals => { :guide => @guide } %>
+    <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form') %>
+    <div class="guide-edit-buttons">
+      <%= submit_tag 'Save As Draft' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><% if @c3 %><%= submit_tag 'Submit Guide' %><% else %><%= submit_tag 'Publish Guide' %><% end %><% end %>
+    </div>
     <%= end_form_tag %>
-    <%= observe_form 'guide-form', :frequency => 1, :update => 'guide-preview', :complete => "Element.show('guide-preview')", :url => { :action => :preview } %>
+    <%#= observe_form 'guide-form', :frequency => 1, :update => 'guide-preview', :complete => "Element.show('guide-preview')", :url => { :action => :preview } %>
   </div>
 </div>
 

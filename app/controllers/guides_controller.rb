@@ -192,20 +192,52 @@ class GuidesController < ApplicationController
     @choice = Choice.new(:contest => @contest)
   end
 
-  def update
-    @guide = Guide.find(params[:id])
-    @contest = Contest.new(:guide_id => @guide.id)
-    @choice = Choice.new(:contest => @contest)
+  def update_basics
+    @guide ||= Guide.find(params[:id])
+    @current = 'basics'
+    @next = 'theme'
+    update_section
+  end
+
+  def update_theme
+    @guide ||= Guide.find(params[:id])
+    @current = 'theme'
+    @next = 'assets'
+    update_section
+  end
+
+  def update_section
+    if @guide.update_attributes(params[:guide])
+      render :update do |page|
+        page << "invi('guide-form-#{@current}', true)"
+        page << "invi('guide-form-#{@next}', false)" if @next
+        page.replace_html 'guide-preview', :file => 'guides/preview', :layout => false
+      end
+    else
+      render :update do |page|
+        page.replace_html "guide-#{@current}-error-messages", error_messages_for('guide')
+      end
+    end
+  end
+
+  def update_assets
     @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image].size != 0
     current_user.images << @image if @image && @image.valid?
     @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf].size != 0
     current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
+    render :action => 'edit'
+  end
+
+  def update
+    @guide = Guide.find(params[:id])
+    @contest = Contest.new(:guide_id => @guide.id)
+    @choice = Choice.new(:contest => @contest)
     return render(:action => 'edit') unless @guide.update_attributes(params[:guide])
 
     # this is about the only diff between create
     if 'Unpublish' == params[:commit] || 'Save As Draft' == params[:commit]
       @guide.unpublish
-    elsif 'Submit Guide' == params[:commit]
+    elsif 'Publish Guide' == params[:commit] || 'Submit Guide' == params[:commit]
       @guide.publish
     end
     @guide.save!

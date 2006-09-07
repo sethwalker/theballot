@@ -17,5 +17,11 @@
   <% end -%>
 </div>
 <div class="guide-preview-column" id="guide-preview-assets">
+<% if params[:guide][:image] -%>
+<p>image: <%= image_tag params[:guide][:image].public_filename("thumb") %></p>
+<% end -%>
+<% if params[:guide][:attached_pdf] -%>
+<p>pdf: <%= link_to params[:guide][:attached_pdf].filename, params[:guide][:attached_pdf].public_filename %></p>
+<% end -%>
   <%= link_to_function 'upload files', "invi('guide-form-assets', false)" %>
 </div>

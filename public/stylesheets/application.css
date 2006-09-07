@@ -24,3 +24,8 @@ ul#contests {
   border: 1px solid #CCCCCC;
   visibility: hidden;
 }
+
+#contest-edit-window-left, #contest-edit-window-right {
+  float: left;
+  width: 45%;
+}

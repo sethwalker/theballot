@@ -21,7 +21,7 @@ class Contests::BaseController < ApplicationController
         render :action => 'errors' and return unless @contest.valid?
         if params[:choice]
           @choice ||= @contest.choices.build(params[:choice])
-          @choice.save
+          render :action => 'errors' and return unless @choice.save
         end
         update_page_after_create
       else
