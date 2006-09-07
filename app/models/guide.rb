@@ -27,7 +27,7 @@ class Guide < ActiveRecord::Base
                               :index_contest_choice_descriptions => {:boost => 1.5} }
 
   def index_contest_choice_titles
-    index_contest_choices(:title)
+    index_contest_choices(:name)
   end
 
   def index_contest_choice_descriptions

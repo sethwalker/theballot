@@ -16,8 +16,8 @@ class GuidesController < ApplicationController
   in_place_edit_for :choice, :selection
 
   def find_guide_by_permalink
-    if(params[:year] && params[:month] && params[:day] && params[:permalink])
-      Guide.with_scope(:find => { :conditions => ['date = ?', Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_s] } ) do
+    if(params[:year] && params[:permalink])
+      Guide.with_scope(:find => { :conditions => ['YEAR(date) = ?', params[:year]] } ) do
         @guide = Guide.find_by_permalink(params[:permalink])
       end
     end
