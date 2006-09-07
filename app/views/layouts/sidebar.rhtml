@@ -7,8 +7,8 @@
 <body>
   <div id="wrap">
     <%= render "shared/banner" %>
-    <%= render "shared/nav/main" %>
     <div id="container">
+    <%= render "shared/nav/main" %>
     <div id="content" class="column">
       <p id="flash-error"><%= flash[:error] %></p>
       <p id="flash-notice"><%= flash[:notice] %></p>
@@ -17,6 +17,7 @@
     <div id="sidebar" class="column">
       <%= @content_for_sidebar %>
     </div>
+    <div class="clear"></div>
     </div>
     <%= render "shared/footer" %>
   </div>

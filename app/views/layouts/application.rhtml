@@ -6,14 +6,14 @@
 <body>
   <div id="wrap">
     <%= render "shared/banner" %>
-    <%= render "shared/nav/main" %>
-    <br class="clear" />
     <div id="container">
+    <%= render "shared/nav/main" %>
     <div id="content" class="column">
       <p id="flash-error"><%= flash[:error] %></p>
       <p id="flash-notice"><%= flash[:notice] %></p>
       <%= @content_for_layout %>
     </div>
+    <div class="clear"></div>
     </div>
     <%= render "shared/footer" %>
   </div>

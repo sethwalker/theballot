@@ -7,5 +7,11 @@
   <%= stylesheet_link_tag 'http://ixley.com/ballot/master.css', :media => 'all' %>
 
   <%= javascript_include_tag :defaults %>
+
+  <%= javascript_include_tag 'niftycube' %>
+  <%= javascript_tag '
+    window.onload=function(){
+      Nifty("div#nav","small, transparent");
+    }' %>
   
 </head>
