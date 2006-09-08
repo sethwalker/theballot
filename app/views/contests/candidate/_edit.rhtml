@@ -3,7 +3,7 @@
 <% if contest.id -%>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
-  <%= submit_tag "#{controller.action_name} candidate" %>
+  <%= submit_tag "#{controller.action_name} candidate" %> <%= submit_to_remote 'cancel', 'cancel', :url => { :controller => '/contests/candidate', :action => 'add', :id => contest.id } %>
   <% else -%>
   <%= render :partial => '/contests/form', :locals => { :contest => contest } %>
   <%= submit_tag "continue" %>

@@ -45,3 +45,9 @@
 .guide-form-section {
   z-index: 10000;
 }
+
+.errorExplanation {
+  color: red;
+  font-weight: bold;
+  font-size: 12px;
+}

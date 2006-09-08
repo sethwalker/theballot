@@ -3,7 +3,7 @@ class Contest < ActiveRecord::Base
   has_many :choices, :dependent => :destroy, :order => 'choices.position'
   acts_as_list :scope => :guide
 
-  validates_uniqueness_of :name, :scope => :guide_id, :message => 'is already added to the guide!'
+  validates_uniqueness_of :name, :scope => :guide_id, :message => 'already added to this guide.  To edit that office, close this window and click the edit link for that office.'
   validates_associated :choices
   validates_presence_of :name
 
