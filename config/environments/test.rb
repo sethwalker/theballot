@@ -18,6 +18,9 @@ config.action_controller.perform_caching             = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-APPLICATION_HOST_NAME = 'voterguides.devel.radicaldesigns.org:3080'
-APPLICATION_C3_DOMAIN = 'c3voterguides.devel.radicaldesigns.org'
-APPLICATION_STANDARD_DOMAIN = 'voterguides.devel.radicaldesigns.org'
+APPLICATION_HOST_NAME = 'theballot.org'
+APPLICATION_C3_DOMAIN = 'nonpartisan.theballot.org'
+APPLICATION_STANDARD_DOMAIN = 'theballot.org'
+
+ActionController::Base.session_options[:session_key] = 'voterguides_session_id'
+ActionController::Base.session_options[:session_domain] = '.theballot.org'

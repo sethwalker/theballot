@@ -6,7 +6,6 @@
     <h2><span>Select your State</span></h2>
       <p><%= select_tag 'state', us_state_options_for_select( @state, {:show => :abbreviations, :include_blank => true}), :onchange => "window.location.href='/guides/by_state/' + this.value" %>
       Click on the map below or use the dropdown menu to view voter guides from the state.</p>
-    <%= image_tag 'http://ixley.com/ballot/images/us_map.jpg', :border => 0, :usemap => 'state_image_map' %>
     <map name="state_image_map" id="state_image_map">
       <area shape="poly" alt="New Hampshire" coords="449,57, 446,82, 458,77" href="guides/by_state/NH" />
       <area shape="poly" alt="Vermont" coords="435,63, 441,84, 445,82, 446,59" href="guides/by_state/VT" />
@@ -62,6 +61,7 @@
       <area shape="poly" alt="California" coords="35,83, 30,110, 44,167, 73,197, 91,197, 95,172, 60,121, 68,90" href="guides/by_state/CA" />
       <area shape="poly" alt="Alaska" coords="93,235, 40,226, 14,244, 20,259, 22,335, 79,310, 129,335, 132,328, 95,298" href="guides/by_state/AK" />
     </map>
+    <%= image_tag 'http://ixley.com/ballot/images/us_map.jpg', :border => 0, :usemap => 'state_image_map' %>
   </div>
   <div id="search-guides">
     <h4><span>Search All Guides</span></h4>

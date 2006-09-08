@@ -190,4 +190,12 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert_equal 1, @emails.length
   end
 
+  def test_domain_awareness
+    @request.host = APPLICATION_C3_DOMAIN
+    login_as :quentin
+    post :new
+    assert assigns(:guide)
+    assert_equal assigns(:guide).legal, Guide::C3
+    assert assigns(:guide).c3?
+  end
 end

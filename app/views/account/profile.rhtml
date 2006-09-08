@@ -14,6 +14,9 @@
 <% end -%>
 
 <h1>Your Guides</h1>
+<% if @num_partisan_guides %>
+You also have a guide on the partisan voter guide site.  To access it you must go to theballot.org.
+<% end %>
 
 <% Guide.with_scope(:find => { :conditions => [ "date > ?", Time.now ] }) do
   @published =  @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :order => 'date DESC')
