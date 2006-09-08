@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def scope_approved_guides
     if logged_in?
       return yield if current_user.admin?
-      conditions = "(legal IS NULL OR NOT legal = '#{Guide::C3}') OR (legal = '#{Guide::C3}' AND user_id = #{current_user.id}) OR (legal = '#{Guide::C3}' AND approved_at IS NOT NULL)"
+      conditions = "(legal IS NULL OR NOT legal = '#{Guide::C3}') OR (legal = '#{Guide::C3}' AND guides.user_id = #{current_user.id}) OR (legal = '#{Guide::C3}' AND approved_at IS NOT NULL)"
     else
       conditions = "approved_at IS NOT NULL OR (legal IS NULL OR NOT legal = '#{Guide::C3}')"
     end
