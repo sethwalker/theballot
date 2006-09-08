@@ -41,3 +41,7 @@
 .screenshot-preview {
   position: absolute;
 }
+
+.guide-form-section {
+  z-index: 10000;
+}
