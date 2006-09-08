@@ -33,3 +33,11 @@
 .guide-form-section {
   visibility: hidden;
 }
+
+#guide-theme-screenshot {
+  height: 50px;
+}
+
+.screenshot-preview {
+  position: absolute;
+}

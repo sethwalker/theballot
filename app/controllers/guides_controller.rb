@@ -209,11 +209,16 @@ class GuidesController < ApplicationController
   end
 
   def update_assets
-    @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image].size != 0
+    @guide ||= Guide.find(params[:id])
+    @image = @guide.create_image(:uploaded_data => params[:uploaded_image]) if params[:uploaded_image] && params[:uploaded_image].size != 0
     current_user.images << @image if @image && @image.valid?
-    @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf].size != 0
+    @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf] && params[:uploaded_pdf].size != 0
     current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
-    render :action => 'edit'
+    if (@image and !@image.valid?) or (@pdf and !@pdf.valid?)
+      render :action => 'edit'
+    else
+      redirect_to :action => 'edit', :id => @guide
+    end
   end
 
   def update

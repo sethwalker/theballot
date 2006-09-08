@@ -30,20 +30,29 @@
   <%= f.text_area 'description', :rows => 10 %></p>
 
   <%= submit_tag 'next' %>
-  <%#= link_to_function 'next', "invi('guide-form-basics', true)" %>
   <% end -%>
 </div><!-- end guide basics -->
 
 <div class="guide-form-section" id="guide-form-theme">
+  <h3>Next, choose a style</h3>
 <% remote_form_for :guide, guide, :url => { :action => 'update_theme', :id => guide.id } do |f| -%>
-  <p><label for="guide_theme">Theme</label><br/>
-  <%= f.collection_select 'theme_id', Theme.find(:all), 'id', 'name' %>
-  <%#= link_to_function 'next', "invi('guide-form-theme', true)" %>
+  <p>
+  <% @themes = Theme.find(:all) -%>
+  <%= f.collection_select 'theme_id', @themes, 'id', 'name', {}, :onchange => @themes.collect{|t| visual_effect(:toggle_appear, "screenshot_#{t.id}") }.join %>
   <%= submit_tag 'next' %>
 <% end -%>
+<div id="guide-theme-screenshot">
+  <% @themes.each do |t| %>
+  <div class="screenshot-preview" id="screenshot_<%= t.id %>"<% unless t == (@guide.theme ? @guide.theme : @themes.first) %> style="display:none;"<% end %>><%= image_tag t.screenshot.public_filename('thumb') if t.screenshot %></div>
+  <% end %>
+  <div class="clear"></div>
+</div>
+
 </div>
 
 <div class="guide-form-section" id="guide-form-assets">
+  <div id="guide-assets-image-error-messages"><%= error_messages_for 'image' %></div>
+  <div id="guide-assets-pdf-error-messages"><%= error_messages_for 'pdf' %></div>
 <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
 <p><label for="guide_image">You can attach an image to your guide:</label><br/>
 <%= file_field_tag 'uploaded_image'  %>
