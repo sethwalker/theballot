@@ -1,5 +1,5 @@
 
-<div class="guide-form-section" id="guide-form-basics">
+<div class="guide-form-section" id="guide-form-basics"<% if 'new' == @controller.action_name %>style="visibility:visible;"<% end %>>
   <h3>The Basics</h3>
   <% unless @c3 -%>
   <span><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'new' } ) %> to create a non-partisan guide</span>

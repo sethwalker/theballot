@@ -29,3 +29,7 @@
   float: left;
   width: 45%;
 }
+
+.guide-form-section {
+  visibility: hidden;
+}
