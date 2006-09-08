@@ -43,7 +43,7 @@
 <% end -%>
 <div id="guide-theme-screenshot">
   <% @themes.each do |t| %>
-  <div class="screenshot-preview" id="screenshot_<%= t.id %>"<% unless t == (@guide.theme ? @guide.theme : @themes.first) %> style="display:none;"<% end %>><%= image_tag t.screenshot.public_filename('thumb') if t.screenshot %></div>
+  <div class="screenshot-preview" id="screenshot_<%= t.id %>"<% unless t == (@guide.theme ? @guide.theme : @themes.first) %> style="display:none;"<% end %>><%= image_tag(t.screenshot.public_filename('thumb')) if t.screenshot %></div>
   <% end %>
   <div class="clear"></div>
 </div>

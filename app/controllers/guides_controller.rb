@@ -185,17 +185,20 @@ class GuidesController < ApplicationController
     @guide ||= Guide.find(params[:id])
     @current = 'basics'
     @next = 'theme'
+    @saved = @guide.update_attributes(params[:guide])
     update_section
   end
 
   def update_theme
     @guide ||= Guide.find(params[:id])
     @current = 'theme'
+    @guide.update_attribute_with_validation_skipping(:theme_id, params[:guide][:theme_id])
+    @saved = true
     update_section
   end
 
   def update_section
-    if @guide.update_attributes(params[:guide])
+    if @saved
       render :update do |page|
         page << "invi('guide-form-#{@current}', true)"
         page << "invi('guide-form-#{@next}', false)" if @next
