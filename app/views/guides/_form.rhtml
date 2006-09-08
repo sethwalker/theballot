@@ -27,7 +27,7 @@
   <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
   <%= f.text_area 'description', :rows => 10 %></p>
 
-  <%= submit_tag 'next' %> <%= button_to_function 'later', "invi('guide-form-basics', true)" %>
+  <%= submit_tag 'next' %>
   <%#= link_to_function 'next', "invi('guide-form-basics', true)" %>
   <% end -%>
 </div><!-- end guide basics -->
@@ -37,7 +37,7 @@
   <p><label for="guide_theme">Theme</label><br/>
   <%= f.collection_select 'theme_id', Theme.find(:all), 'id', 'name' %>
   <%#= link_to_function 'next', "invi('guide-form-theme', true)" %>
-  <%= submit_tag 'next' %> <%= button_to_function 'later', "invi('guide-form-theme', true)" %>
+  <%= submit_tag 'next' %>
 <% end -%>
 </div>
 
@@ -58,7 +58,7 @@ currently: <%= image_tag @guide.image.public_filename("thumb") %>
 currently: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
 <% end -%></p>
 
-<%= submit_tag 'upload' %> <%= button_to_function 'later', "invi('guide-form-assets', true)" %>
+<%= submit_tag 'upload' %>
 <%= end_form_tag %>
 </div>
 <!--[eoform:guide]-->
