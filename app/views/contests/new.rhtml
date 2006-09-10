@@ -1,4 +1,3 @@
-<div id="contest-messages"></div>
 <%= form_remote_tag :url => { :action => 'create' } %>
 <%= render :partial => 'form', :locals => { :contest => @contest } %>
   <%= submit_tag 'add contest' %>

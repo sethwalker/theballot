@@ -5,17 +5,19 @@ class ChoicesController < ApplicationController
 
   def authorized?
     return true if current_user.is_admin?
-    @contest = Contest.find(params[:id])
-    unless @contest.guide.owner?(current_user)
-      flash[:error] = 'Permission Denied'
+    @choice = Choice.find(params[:id])
+    unless @choice.contest.guide.owner?(current_user)
       return false
     end
+    true
   end
 
-  def edit
-    @choice = Choice.find(params[:id])
-    render :update do |page|
-      page.replace_html 'contest-edit-window-left', :partial => 'guides/referendum_form'
+  def destroy
+    @choice ||= Choice.find(params[:id])
+    if @choice.destroy
+      render :update do |page|
+        page.replace "contest_#{@choice.contest.id}", :partial => 'contests/show', :locals => { :contest => @choice.contest }
+      end
     end
   end
 end

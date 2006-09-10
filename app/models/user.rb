@@ -46,6 +46,11 @@ class User < ActiveRecord::Base
     guides.find(:first, :conditions => conditions.join(' AND '))
   end
 
+  def avatar_thumb
+    has_avatar? ? avatar.public_filename('thumb') : 'avatar.jpg'
+  end
+
+
   # Authenticates a user by their email and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
     # hide records with a nil activated_at

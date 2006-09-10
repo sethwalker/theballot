@@ -20,7 +20,7 @@ class Contests::ReferendumController < Contests::BaseController
     render :update do |page|
       page.insert_html :bottom, 'contests', :partial => 'contests/show', :locals => { :contest => @contest }
       page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
-      page << "document.getElementById('contest-edit-window').style.visibility='hidden'"
+      page.hide 'contest-edit-window'
       page.insert_html :bottom, 'debug-messages', 'created contest: ' + @contest.inspect if current_user.developer?
     end
   end

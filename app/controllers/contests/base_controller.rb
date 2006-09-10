@@ -30,6 +30,7 @@ class Contests::BaseController < ApplicationController
         @choice ||= Choice.new(:contest => @contest)
         render :update do |page|
           page.update_page_new_form(@contest, @choice)
+          page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
         end
       end
     end
@@ -49,6 +50,7 @@ class Contests::BaseController < ApplicationController
     else
       render :update do |page|
         page.update_page_new_form(@contest, @choice)
+        page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
       end
     end
   end
@@ -73,5 +75,17 @@ class Contests::BaseController < ApplicationController
   end
   
   def errors
+  end
+
+  def validate
+    @contest = Contest.find(params[:id])
+    if @contest.valid?
+      render :update do |page|
+        page.hide 'contest-edit-window'
+        page.visual_effect(:appear, "contest_#{@contest.id}", { :duration => '1.0' })
+      end
+    else
+      render :action => 'errors'
+    end
   end
 end

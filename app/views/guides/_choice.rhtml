@@ -1,3 +1,5 @@
-<li id="choice_<%= choice.id %>"><%= link_to_remote 'edit', :url => { :controller => "/contests/#{choice.contest.class.to_s.downcase}", :action => 'edit', :id => choice.contest.id, :choice_id => choice.id }, :method => :get %> <span id="choice_<%= choice.id %>_selection"><%= choice.selection %></span>: <%= choice.name %><br/>
-<%= truncate choice.description %><br/>
-<%#= in_place_collection_editor "choice_#{ choice.id }_selection", :url => { :controller => 'choices', :action => 'set_choice_selection', :id => choice.id }, :collection => Choice::SELECTION_OPTIONS.values %></li>
+<li id="choice_<%= choice.id %>">
+<span class="candidate-name"><%= choice.name %></span> : <span id="choice_<%= choice.id %>_selection"><%= choice.selection %></span>
+<%= link_to_remote 'edit', { :url => { :controller => "/contests/#{choice.contest.class.to_s.downcase}", :action => 'edit', :id => choice.contest.id, :choice_id => choice.id }, :method => :get }, :class => 'candidate-edit-link' %> <%= link_to_remote 'delete', { :url => { :controller => '/choices', :action => 'destroy', :id => choice.id } }, :class => 'candidate-delete-link' %>
+<div id="candidate-description"><%= truncate choice.description %></div>
+</li>

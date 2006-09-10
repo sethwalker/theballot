@@ -1,8 +1,9 @@
 <div id="guide-contests-container">
   <div id="contest-edit-window">
+    <div id="contest-messages"></div>
     <div id="contest-edit-window-left"></div>
     <div id="contest-edit-window-right"> </div>
-    <div class="right" id="contest-done-button"><%= link_to_function 'done', "document.getElementById('contest-edit-window').style.visibility='hidden'" %></div>
+    <div class="right" id="contest-done-button"><%= link_to_function 'done', "Element.hide('contest-edit-window')" %></div>
   </div>
   <div id="contest-container" class="column">
     <h4>The Ballot</h4>

@@ -1,6 +1,6 @@
 <% content_for :sidebar do -%>
 <div id="author-info">
-  This guide by <% if @guide.user.avatar %><div id="author-avatar"><%= image_tag @guide.user.avatar.public_filename("thumb") %><br/><% end %><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %><% if @guide.user.avatar %></div><% end %>
+  This guide by <div id="author-avatar"><%= image_tag @guide.user.avatar_thumb %><br/><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %></div>
 </div>
 <ul id="world-actions">
 <li><%= link_to_function "Print This Guide", 'window.print(); return false;' %></li>

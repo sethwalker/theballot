@@ -7,6 +7,10 @@ class Contest < ActiveRecord::Base
   validates_associated :choices
   validates_presence_of :name
 
+  def validate
+    errors.add :name, 'need at least two candidates' if Guide::C3 == self.guide.legal && 'Candidate' == self.class && self.choices.size < 2
+  end
+
   def to_liquid
     { 'name' => name, 'choices' => choices }
 #    { 'contest' => contest, 'candidate' => candidate, 'description' => description, 'selection' => selection, 'position' => position }

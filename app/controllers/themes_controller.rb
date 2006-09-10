@@ -65,4 +65,10 @@ class ThemesController < ApplicationController
     Theme.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def preview
+    @theme = Theme.find(params[:id])
+    @guide = Guide.new(:theme => @theme, :date => Date.today, :user => @current_user)
+    render "guides/show"
+  end
 end

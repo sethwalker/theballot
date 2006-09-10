@@ -57,7 +57,7 @@ class Contests::CandidateController < Contests::BaseController
         page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest, :hidden => true }
       end
       page.sortable 'contests', :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
-      page.replace_html 'contest-done-button', link_to_function( 'done', "document.getElementById('contest-edit-window').style.visibility='hidden';" + visual_effect(:appear, "contest_#{@contest.id}", { :duration => '1.0' }))
+      page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
     end
   end
 end
