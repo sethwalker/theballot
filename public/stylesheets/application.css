@@ -1,3 +1,7 @@
 .guide-form-section {
   visibility: hidden;
 }
+
+textarea#guide_description {
+  overflow: hidden;
+}

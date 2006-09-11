@@ -18,6 +18,6 @@ class Choice < ActiveRecord::Base
   end
 
   def to_liquid
-    { 'title' => title, 'description' => description, 'selection' => selection }
+    { 'name' => name, 'description' => description, 'selection' => selection }
   end
 end

@@ -202,6 +202,7 @@ class GuidesController < ApplicationController
       render :update do |page|
         page << "invi('guide-form-#{@current}', true)"
         page << "invi('guide-form-#{@next}', false)" if @next
+        page << "Element.setStyle('guide_description', {overflow:'hidden'})"
         page.replace_html 'guide-preview', :file => 'guides/preview', :layout => false
       end
     else

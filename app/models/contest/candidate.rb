@@ -1,2 +1,0 @@
-class Candidate < Contest
-end
