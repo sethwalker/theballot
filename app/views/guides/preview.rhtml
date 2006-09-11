@@ -1,26 +1,26 @@
-<div class="guide-preview-column" id="guide-preview-basics">
+<div class="guide-preview-section" id="guide-preview-basics">
   <h4>The Basics</h4>
   <p id="guide-preview-title"><%= @guide.name || 'Your Guide Title' %></p>
   <p id="guide-preview-location"><span id="guide-preview-city"><%= @guide.city || 'Your City' %></span>, <span id="guide-preview-state"><%= @guide.state || 'USA' %></span></p>
   <p id="guide-preview-permalink">http://theballot.org/<%= @guide.date ? @guide.date.year : 2006 %>/<%= @guide.permalink %></p>
-  <p id="guide-preview-date"><%= @guide.date ? @guide.date.strftime('%b %e, %Y') : Time.now.strftime('%b %e, %Y') %></p>
+  <p id="guide-preview-date"><%= @guide.date ? @guide.date.strftime('%b %e, %Y') : Date.today.strftime('%b %e, %Y') %></p>
   <%= link_to_function 'edit basics', "invi('guide-form-basics', false)" %>
 </div>
-<div class="guide-preview-column" id="guide-preview-description">
+<div class="guide-preview-section" id="guide-preview-description">
   <%= @guide.description ? truncate( simple_format( word_wrap( @guide.description, 20 ) ), 200 ) : 'Your guides description' %>
 </div>
-<div class="guide-preview-column" id="guide-preview-theme">
-  <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
+<div class="guide-preview-section" id="guide-preview-theme">
   <% @theme = Theme.find(@guide.theme_id ? @guide.theme_id : :first) %>
-  Theme: <%= @theme.name %>
-  <%= image_tag @theme.screenshot.public_filename('thumb') %>
+  <div><%= image_tag @theme.screenshot.public_filename('thumb') %></div>
+  <div><span>Theme: </span><span><%= @theme.name %></span></div>
+  <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
 </div>
-<div class="guide-preview-column" id="guide-preview-assets">
-<% if @guide.image -%>
-<p>image: <%= image_tag @guide.image.public_filename("thumb") %></p>
-<% end -%>
-<% if @guide.attached_pdf -%>
-<p>pdf: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %></p>
-<% end -%>
+<div class="guide-preview-section" id="guide-preview-assets">
+  <% if @guide.image -%>
+    <p><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %></p>
+  <% end -%>
+  <% if @guide.attached_pdf -%>
+    <p><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %></p>
+  <% end -%>
   <%= link_to_function 'upload files', "invi('guide-form-assets', false)" %>
 </div>
