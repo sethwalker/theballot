@@ -1,6 +1,6 @@
 class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
-  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search ]
+  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
   before_filter :check_date, :only => [ :edit, :update ]
 
   in_place_edit_for :guide, :name
@@ -312,5 +312,9 @@ class GuidesController < ApplicationController
       render :action => :show and return
     end
     render :action => :tell
+  end
+
+  def help
+    render :layout => false
   end
 end
