@@ -77,7 +77,7 @@ class GuidesController < ApplicationController
     @conditions ||= {}
     @messages ||= []
     @conditions[:state] = "state = '#{@state}'"
-    @messages << "Showing All Guides from #{@state}"
+    @listheader = "Showing All Guides from #{@state}"
     list
     if @guides.empty?
       @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- we'll show you how.  <a href=\""+url_for(:action => 'index')+"\">back to map</a>"
@@ -165,7 +165,7 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7))
+    @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
     @guide.legal = Guide::C3 if c3?
     @guide.save_with_validation(false) unless @guide.id
     @contest = Contest.new(:guide_id => @guide.id)

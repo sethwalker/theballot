@@ -1,3 +1,4 @@
+<p id="guide-list-header"><%= @listheader %></p>
 <div id="guide-list-messages"><%= @messages.join('<br/>') if @messages %></div>
 <div id="guide-list-container">
 <%= render :partial => 'list_item', :collection => @guides %>
