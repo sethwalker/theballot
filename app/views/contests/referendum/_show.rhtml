@@ -4,7 +4,7 @@
   <li>
     <span id="choice_<%= contest.choice.id %>_selection"><%= contest.choice.selection %></span>
     <% if contest.choice.description -%>
-    <br/><%= truncate contest.choice.description %>
+    <br/><%= truncate contest.choice.description, 150 %>
     <% end -%>
   </li>
 </ul>
