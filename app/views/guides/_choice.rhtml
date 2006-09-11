@@ -1,4 +1,4 @@
-<li id="choice_<%= choice.id %>">
+<li class="candidate-<%= choice.selection ? 'choice-' + choice.selection.downcase.gsub(/[_ ]/,'-') : 'comaparison' %>" id="choice_<%= choice.id %>">
 <span class="candidate-name"><%= choice.name %></span> : <span id="choice_<%= choice.id %>_selection"><%= choice.selection %></span>
 <%= link_to_remote 'edit', { :url => { :controller => "/contests/#{choice.contest.class.to_s.downcase}", :action => 'edit', :id => choice.contest.id, :choice_id => choice.id }, :method => :get }, :class => 'candidate-edit-link' %> <%= link_to_remote 'delete', { :url => { :controller => '/choices', :action => 'destroy', :id => choice.id } }, :class => 'candidate-delete-link' %>
 <div id="candidate-description"><%= truncate choice.description %></div>

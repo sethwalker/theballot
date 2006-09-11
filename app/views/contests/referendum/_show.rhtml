@@ -1,5 +1,11 @@
 <span class="referendum-name"><b><%= contest.name %></b></span> <%= link_to_remote 'edit', { :url => { :controller => '/contests/referendum', :action => 'edit', :id => contest.id, :choice_id => contest.choice.id }, :method => :get }, :class => 'referendum-edit-link' %> <%= link_to_remote 'delete', { :url => { :controller => '/contests', :action => 'destroy', :id => contest.id } }, :class => 'referendum-delete-link' %><br/>
 <% if contest.choice -%>
-<%= truncate contest.choice.description %><br/>
-<span id="choice_<%= contest.choice.id %>_selection"><%= contest.choice.selection %></span>
+<ul>
+  <li>
+    <span id="choice_<%= contest.choice.id %>_selection"><%= contest.choice.selection %></span>
+    <% if contest.choice.description -%>
+    <br/><%= truncate contest.choice.description %>
+    <% end -%>
+  </li>
+</ul>
 <% end -%>

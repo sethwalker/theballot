@@ -184,7 +184,7 @@ class GuidesController < ApplicationController
   def update_basics
     @guide ||= Guide.find(params[:id])
     @current = 'basics'
-    @next = 'theme'
+    @next = 'theme' unless @guide.theme
     @saved = @guide.update_attributes(params[:guide])
     update_section
   end
