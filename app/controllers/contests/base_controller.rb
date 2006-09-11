@@ -30,7 +30,6 @@ class Contests::BaseController < ApplicationController
         @choice ||= Choice.new(:contest => @contest)
         render :update do |page|
           page.update_page_new_form(@contest, @choice)
-          page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
         end
       end
     end
@@ -79,13 +78,19 @@ class Contests::BaseController < ApplicationController
 
   def validate
     @contest = Contest.find(params[:id])
-    if @contest.valid?
+    @valid = @contest.valid? && (@contest.guide.c3? ? @contest.choices.size > 1 : true) 
+    if @valid
       render :update do |page|
         page.hide 'contest-edit-window'
         page.visual_effect(:appear, "contest_#{@contest.id}", { :duration => '1.0' })
+        page.replace_html 'contest-done-button'
+        page.replace_html 'contest-done-button', link_to_remote( 'done', page.hide('contest-edit-window') )
       end
     else
-      render :action => 'errors'
+      @contest.errors.add_to_base 'Candidate comparisons require at least the candidates from the major parties' if @contest.guide.c3? && @contest.choices.size < 2
+      render :update do |page|
+        page.replace_html 'contest-messages', :partial => "contests/candidate/errors", :locals => { :contest => @contest }
+      end
     end
   end
 end

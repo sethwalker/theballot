@@ -51,13 +51,13 @@ class Contests::CandidateController < Contests::BaseController
     @choice = Choice.new(:contest => @contest)
     render :update do |page|
       page.update_page_new_form(@contest, @choice)
+      page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
       if @recently_created_contest
         page.insert_html :bottom, 'contests', :partial => 'contests/show', :locals => { :contest => @contest, :hidden => true }
       elsif @contest.id
         page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest, :hidden => true }
       end
       page.sortable 'contests', :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
-      page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
     end
   end
 end

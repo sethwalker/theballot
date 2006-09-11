@@ -1,4 +1,7 @@
 <% if contest.errors.on 'name' -%>
 <div class="errorExplanation">Office <%= contest.errors.on('name') %></div>
 <% end -%>
+<% if contest.errors.on_base -%>
+<div class="errorExplanation"><%= contest.errors.on_base %></div>
+<% end -%>
 <%= error_messages_for('choice') %>
