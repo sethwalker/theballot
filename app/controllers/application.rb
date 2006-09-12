@@ -8,19 +8,6 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging "password"
 
   meantime_filter :scope_guides_by_site
-  meantime_filter :scope_approved_guides
-
-  def scope_approved_guides
-    if logged_in?
-      return yield if current_user.admin?
-      conditions = "(legal IS NULL OR NOT legal = '#{Guide::C3}') OR (legal = '#{Guide::C3}' AND guides.user_id = #{current_user.id}) OR (legal = '#{Guide::C3}' AND approved_at IS NOT NULL)"
-    else
-      conditions = "approved_at IS NOT NULL OR (legal IS NULL OR NOT legal = '#{Guide::C3}')"
-    end
-    Guide.with_scope({
-      :find => { :conditions => conditions }
-    }) { yield }
-  end
 
   def scope_guides_by_site
     if c3?
@@ -32,7 +19,6 @@ class ApplicationController < ActionController::Base
       yield
     end
   end
-
 
   def set_legal
     c3?

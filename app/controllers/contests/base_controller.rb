@@ -45,11 +45,12 @@ class Contests::BaseController < ApplicationController
       render :update do |page|
         page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
         page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
+        page.hide('contest-edit-window') if @contest.is_a?(Referendum)
       end
     else
       render :update do |page|
         page.update_page_new_form(@contest, @choice)
-        page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
+        page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } ) if @contest.is_a?(Candidate)
       end
     end
   end

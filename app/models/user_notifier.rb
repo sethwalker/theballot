@@ -14,7 +14,7 @@ class UserNotifier < ActionMailer::Base
   def forgot_password(user)
     setup_email(user)
     @subject    += 'Request to change your password'
-    @body[:url]  = "http://#{APPLICATION_HOST_NAME}/account/reset_password/#{user.password_reset_code}" 
+    @body[:url]  = "http://#{user.current_domain}/account/reset_password/#{user.password_reset_code}" 
   end
 
   def reset_password(user)

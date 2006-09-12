@@ -1,0 +1,1 @@
+page.replace_html 'contest-messages', :partial => 'errors', :locals => { :contest => @contest }

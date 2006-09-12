@@ -9,10 +9,8 @@ class Contests::ReferendumController < Contests::BaseController
   end
 
   def edit
-    if request.post?
-      @contest = Referendum.find(params[:id])
-      @choice = @contest.choice || Choice.create(:contest => @contest)
-    end
+    @contest = Referendum.find(params[:id])
+    @choice = @contest.choice || Choice.create(:contest => @contest)
     super
   end
 

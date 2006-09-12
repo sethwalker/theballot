@@ -16,9 +16,10 @@ class AccountController < ApplicationController
     return unless request.post?
     if @user = User.find_by_email(params[:email])
       @user.forgot_password
+      @user.current_domain = @request.host
       @user.save
-      redirect_back_or_default(:controller => '/account', :action => 'index')
-      flash[:notice] = "A password reset link has been sent to your email address" 
+      flash[:notice] = "A password reset link has been sent to your email address.  Check your email and then login below."
+      redirect_to(:action => 'login')
     else
       flash[:notice] = "Could not find a user with that email address" 
     end

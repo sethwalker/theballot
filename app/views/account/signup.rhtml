@@ -1,7 +1,14 @@
 Fill in the fields below to sign up for an account at theballot.org
-<em>All fields are required</em>.
 
-<%= error_messages_for 'user' %>
+<% if @user && !@user.errors.empty? -%>
+  <% @user.errors.each do |field, err| -%>
+    <% if field == 'tos' || field == 'base' %>
+      <div class="errorExplanation"><%= err %></div>
+    <% else %>
+      <div class="errorExplanation"><%= User.human_attribute_name(field) + " " + err %></div>
+    <% end %>
+  <% end -%>
+<% end -%>
 <% form_for :user, @user, :html => { :multipart => true } do |f| -%>
 <p><label for="user_email">Email</label><br/>
 <%= f.text_field :email %></p>

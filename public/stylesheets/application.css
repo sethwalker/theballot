@@ -5,3 +5,8 @@
 textarea#guide_description {
   overflow: hidden;
 }
+
+.guide-form-section .explain {
+  font-style: italic;
+  font-size: 90%;
+}

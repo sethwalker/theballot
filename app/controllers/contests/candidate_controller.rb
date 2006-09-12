@@ -39,6 +39,7 @@ class Contests::CandidateController < Contests::BaseController
         page['choice_name'].value=''
         page['choice_description'].value=''
         page['choice_selection'].value=Choice::NO_ENDORSEMENT unless @c3
+        page.sortable 'contests', :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
       end
     else
       render :update do |page|

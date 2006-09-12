@@ -2,6 +2,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
+  attr_accessor :current_domain
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -10,12 +11,14 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40
   validates_length_of       :email,    :within => 3..100
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
+  validates_uniqueness_of   :login, :case_sensitive => false
+  validates_uniqueness_of   :email, :case_sensitive => false, :message => 'has already been registered. <a href="/account/forgot_password">Click here</a> if you forgot your password.'
+
   before_save :encrypt_password
 
   before_create :make_activation_code
 
-  validates_acceptance_of :tos, :message => "You must agree to these terms of service"
+  validates_acceptance_of :tos, :message => "You must agree to the box at the bottom to participate"
 
   has_many :guides
   has_many :pledges

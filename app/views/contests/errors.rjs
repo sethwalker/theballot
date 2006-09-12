@@ -1,1 +1,1 @@
-page.replace_html 'contest-messages', error_message_for('contest')
+page.replace_html 'contest-messages', error_message_for('contest') + error_messages_for('choice')

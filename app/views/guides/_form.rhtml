@@ -7,7 +7,9 @@
   <span><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'new' } ) %> to create a non-partisan guide</span>
   <% end -%>
   <!--[form:guide]-->
-  <div id="guide-basics-error-messages"><%= error_messages_for 'guide' %></div>
+  <div id="guide-basics-error-messages">
+    <%= format_error_messages('guide') %>
+  </div>
   <% remote_form_for :guide, guide, :url => { :action => 'update_basics', :id => guide.id } do |f| -%>
   <p><label for="guide_name" class="required">Guide name:</label><br/>
   <%= f.text_field 'name'  %></p>
@@ -25,8 +27,8 @@
   <span>Your guide will live at this web address:<br/>
     http://theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
 
-  <% if @c3 -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
   <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
+  <% if @c3 -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
   <%= f.text_area 'description', :rows => 10 %></p>
 
   <%= submit_tag 'next' %>

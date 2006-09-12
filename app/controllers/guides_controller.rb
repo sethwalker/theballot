@@ -1,7 +1,22 @@
 class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
-  before_filter :check_date, :only => [ :edit, :update ]
+  before_filter :check_date, :only => [ :edit, :update_basics ]
+  meantime_filter :scope_published, :except => [:edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+  meantime_filter :scope_approved_guides, :except => [:edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+
+  def scope_approved_guides
+    conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::C3}'"
+    Guide.with_scope({
+      :find => { :conditions => conditions }
+    }) { yield }
+  end
+
+  def scope_published
+    Guide.with_scope({
+      :find => { :conditions => "status = '#{Guide::PUBLISHED}'" }
+    }) { yield }
+  end
 
   in_place_edit_for :guide, :name
   in_place_edit_for :guide, :description
@@ -30,6 +45,7 @@ class GuidesController < ApplicationController
       flash[:error] = 'Guides cannot be edited after the election has passed' 
       redirect_to :action => 'show', :id => @guide and return false
     end
+    true
   end
 
   def authorized?
@@ -67,14 +83,13 @@ class GuidesController < ApplicationController
   def list
     @conditions ||= {} 
     @messages ||= []
-    @conditions[:status] = "status = '#{Guide::PUBLISHED}'"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
-    @conditions[:user_id] = "user_id = '#{params[:author]}'" if params[:author]
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'state, city, date'
   end
 
   def by_state
     @state = params[:state]
+    redirect_to :action => 'list' and return if @state == 'all'
     @conditions ||= {}
     @messages ||= []
     @conditions[:state] = "state = '#{@state}'"
@@ -100,6 +115,8 @@ class GuidesController < ApplicationController
       @query = params[:q]
       @guide_pages = Paginator.new self, Guide.count, 10, params['page']
       @guides = Guide.find_by_contents(@query, :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
+      @listheader = "Searching for \"#{@query}\""
+      @messages = ["No results"] if @guides.empty?
       render :action => 'list' and return
     elsif params[:guide]
       @query = Array.new
@@ -113,6 +130,8 @@ class GuidesController < ApplicationController
       Guide.with_scope(:find => { :conditions => @conditions }) do
         @guides = Guide.find_by_contents(@query.join(' AND '), :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
       end
+      @listheader = "Searching for \"#{@query}\""
+      @messages = ["No results"] if @guides.empty?
       render :action => 'list' and return
     end
   end
@@ -208,7 +227,7 @@ class GuidesController < ApplicationController
       end
     else
       render :update do |page|
-        page.replace_html "guide-#{@current}-error-messages", error_messages_for('guide')
+        page.replace_html "guide-#{@current}-error-messages", format_error_messages('guide')
       end
     end
   end

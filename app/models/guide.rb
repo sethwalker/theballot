@@ -25,6 +25,7 @@ class Guide < ActiveRecord::Base
 
   acts_as_ferret :fields => { :name => {:boost => 3}, 
                               :city => {},
+                              :state => {},
                               :description => {:boost => 2.5},
                               :index_contest_choice_titles => {:boost => 2},
                               :index_contest_choice_descriptions => {:boost => 1.5} }

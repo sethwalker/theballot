@@ -7,7 +7,7 @@ class GuidePromoter < ActionMailer::Base
     @body[:guide] = setup[:guide]
     @body[:user] = setup[:user]
     @body[:message] = setup[:message]
-    @body[:url] = "http://#{APPLICATION_HOST_NAME}#{setup[:guide].permalink_url}"
+    @body[:url] = "http://#{session[:current_domain]}#{setup[:guide].permalink_url}"
   end
 
   def approval_request(setup)
