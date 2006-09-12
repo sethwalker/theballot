@@ -45,6 +45,7 @@ class GuidesController < ApplicationController
   end
 
   def access_denied
+    flash[:notice] = "This page requires you to log in.  If you don't have a login yet for the ballot.org, it takes about 10 seconds to <a href=\""+ url_for(:action => 'signup') + "\">sign up</a>.  So no whining.  You could be done by now!"
     return super unless logged_in?
     redirect_to :action => 'show', :id => params[:id]
   end
@@ -203,7 +204,7 @@ class GuidesController < ApplicationController
         page << "invi('guide-form-#{@current}', true)"
         page << "invi('guide-form-#{@next}', false)" if @next
         page << "Element.setStyle('guide_description', {overflow:'hidden'})"
-        page.replace_html 'guide-preview', :file => 'guides/preview', :layout => false
+        page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
       end
     else
       render :update do |page|
