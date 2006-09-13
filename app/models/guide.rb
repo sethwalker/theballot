@@ -14,10 +14,20 @@ class Guide < ActiveRecord::Base
   has_many :pledges
   has_many :members, :through => :pledges, :source => :user
 
-  validates_presence_of :name, :date, :city, :state, :permalink
-
   before_validation :create_permalink
+  validates_presence_of :name, :date, :city, :state
+
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
+
+  def validate
+    if permalink.nil? || permalink.empty?
+      if name.nil? || name.empty?
+        errors.add_to_base "Did i mention that name can't be blank? (permalink error)"
+      else
+        errors.add('permalink', "can't be blank")
+      end
+    end
+  end
 
   def after_save
     GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published
