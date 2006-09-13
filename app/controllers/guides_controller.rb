@@ -3,7 +3,7 @@ class GuidesController < ApplicationController
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
   meantime_filter :scope_published, :except => [:edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
-  meantime_filter :scope_approved_guides, :except => [:edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+  meantime_filter :scope_approved_guides, :except => [ :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
 
   def scope_approved_guides
     conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::C3}'"
@@ -50,7 +50,7 @@ class GuidesController < ApplicationController
 
   def authorized?
     return true if current_user.is_admin?
-    if ['edit', 'update', 'destroy'].include?(action_name)
+    if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets'].include?(action_name)
       @guide ||= Guide.find(params[:id])
       unless @guide.owner?(current_user)
         flash[:error] = 'Permission Denied'
