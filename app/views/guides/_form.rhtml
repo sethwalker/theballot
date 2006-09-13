@@ -25,7 +25,7 @@
 
   <p><label for="guide_permalink">Shortcut</label><br/>
   <span>Your guide will live at this web address:<br/>
-    http://theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
+    http://<% if @c3 %>nonpartisan.<% end %>theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
 
   <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
   <% if @c3 -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>

@@ -2,7 +2,7 @@ class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [:edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+  meantime_filter :scope_published, :except => [ :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
   meantime_filter :scope_approved_guides, :except => [ :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
 
   def scope_approved_guides

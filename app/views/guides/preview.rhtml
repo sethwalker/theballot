@@ -2,7 +2,7 @@
   <h4>The Basics</h4>
   <p id="guide-preview-title"><%= @guide.name || 'Your Guide Title' %></p>
   <p id="guide-preview-location"><span id="guide-preview-city"><%= @guide.city || 'Your City' %></span>, <span id="guide-preview-state"><%= @guide.state || 'USA' %></span></p>
-  <p id="guide-preview-permalink">http://theballot.org/<%= @guide.date ? @guide.date.year : 2006 %>/<%= @guide.permalink %></p>
+  <p id="guide-preview-permalink">http://<% if @c3 %>nonpartisan.<% end %>theballot.org/<%= @guide.date ? @guide.date.year : 2006 %>/<%= @guide.permalink %></p>
   <p id="guide-preview-date"><%= @guide.date ? @guide.date.strftime('%b %e, %Y') : Date.today.strftime('%b %e, %Y') %></p>
   <%= link_to_function 'edit basics', "invi('guide-form-basics', false); $('guide_description').setStyle({overflow:'auto'});" %>
 </div>
