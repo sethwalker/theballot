@@ -11,9 +11,11 @@
 </div>
 <div class="guide-preview-section" id="guide-preview-theme">
   <% @theme = Theme.find(@guide.theme_id ? @guide.theme_id : :first) %>
-  <div><%= image_tag @theme.screenshot.public_filename('thumb') %>
-  <span>Theme: </span><span><%= @theme.name %></span></div>
-  <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
+  <div>
+    <%= image_tag @theme.screenshot.public_filename('thumb') %>
+    <span>Theme: </span><span><%= @theme.name %></span>
+    <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
+  </div>
 </div>
 <div class="guide-preview-section" id="guide-preview-assets">
   <p id="guide-preview-image"><% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %><% else -%>Attached Image: (none)<% end -%></p>
