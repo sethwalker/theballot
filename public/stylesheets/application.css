@@ -10,3 +10,7 @@ textarea#guide_description {
   font-style: italic;
   font-size: 90%;
 }
+
+.screenshot-preview {
+  position: absolute;
+}
