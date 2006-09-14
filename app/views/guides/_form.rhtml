@@ -39,7 +39,20 @@
 <% remote_form_for :guide, guide, :url => { :action => 'update_theme', :id => guide.id } do |f| -%>
   <p>
   <% @themes = Theme.find(:all) -%>
-  <%= f.collection_select 'theme_id', @themes, 'id', 'name', {}, :onchange => @themes.collect{|t| visual_effect(:toggle_appear, "screenshot_#{t.id}") }.join %>
+  <%= f.collection_select 'theme_id', @themes, 'id', 'name', {}, :onchange => 'changeScreenshot(this.value);' %>
+  <%= javascript_tag <<GUIDE_SCREENSHOT_JS
+  function changeScreenshot(id) {
+    var ids = [#{@themes.collect {|t| t.id}.join(', ')}];
+    for (var i=0; i < ids.length; i++) {
+      if(ids[i] == id) {
+        Effect.Appear('screenshot_'+ids[i]);
+      } else {
+        Effect.Fade('screenshot_'+ids[i]);
+      }
+    }
+  }
+GUIDE_SCREENSHOT_JS
+%>
   <%= submit_tag 'next' %>
 <% end -%>
 <div id="guide-theme-screenshot">
