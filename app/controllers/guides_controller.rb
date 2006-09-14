@@ -139,9 +139,17 @@ class GuidesController < ApplicationController
   def show
     @guide ||= Guide.find(params[:id]) if params[:id]
     return not_found unless @guide
+    flash[:notices] ||= []
     if !@guide.is_published?
       if logged_in? && @guide.owner?(current_user)
-        flash[:notice] = 'you are viewing this guide in preview mode'
+        flash[:notices] << 'you are viewing this guide in preview mode'
+      else
+        return not_found
+      end
+    end
+    if !@guide.approved?
+      if logged_in? && @guide.owner?(current_user)
+        flash[:notices] << 'this guide has not yet been approved and so is not visible to the public'
       else
         return not_found
       end
@@ -151,6 +159,7 @@ class GuidesController < ApplicationController
       @liquid = template.render('guide' => @guide)
     end
     @body_id = 'guides-show'
+    flash[:notice] = flash[:notices].join('<br/>')
     render :action => 'show'
   end
 
@@ -248,19 +257,17 @@ class GuidesController < ApplicationController
 
   def update
     @guide = Guide.find(params[:id])
-    @contest = Contest.new(:guide_id => @guide.id)
-    @choice = Choice.new(:contest => @contest)
     return render(:action => 'edit') unless @guide.update_attributes(params[:guide])
 
-    # this is about the only diff between create
     if 'Unpublish' == params[:commit] || 'Save As Draft' == params[:commit]
       @guide.unpublish
     elsif 'Publish Guide' == params[:commit] || 'Submit Guide' == params[:commit]
       @guide.publish
     end
     @guide.save!
-    flash[:notice] = 'Guide was successfully updated.  To edit [or publish] your guide, click on "My Stuff" in the upper right'
-    redirect_to :action => 'show', :id => @guide
+    flash[:notices] ||= []
+    flash[:notices] << "Guide was successfully updated.  To edit#{' [or publish]' unless @guide.is_published?} your guide, click on \"My Stuff\" in the upper right"
+    redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink)
 
   rescue ActiveRecord::MultiparameterAssignmentErrors
     @guide.errors.add :date

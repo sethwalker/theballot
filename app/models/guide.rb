@@ -88,7 +88,7 @@ class Guide < ActiveRecord::Base
   end
 
   def is_published?
-    PUBLISHED == status && ( c3? ? approved? : true )
+    PUBLISHED == status
   end
 
   def approve(user)
@@ -96,7 +96,7 @@ class Guide < ActiveRecord::Base
   end
 
   def approved?
-    !approved_at.nil?
+    !c3? || !approved_at.nil?
   end
 
   def owner?(u)

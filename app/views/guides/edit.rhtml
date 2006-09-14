@@ -25,7 +25,11 @@
     <%= render :partial => 'form', :locals => { :guide => @guide } %>
     <div class="guide-edit-buttons">
       <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form') %>
-        <%= submit_tag 'Save As Draft' %> : <% if @guide.is_published? %><%= submit_tag 'Unpublish' %><% else %><% if @c3 %><%= submit_tag 'Submit Guide' %><% else %><%= submit_tag 'Publish Guide' %><% end %><% end %>
+      <% if @guide.is_published? %>
+        <%= submit_tag 'Save' %> : <%= submit_tag 'Unpublish' %>
+      <% else %>
+        <%= submit_tag 'Save As Draft' %> : <%= submit_tag @guide.c3? ? 'Submit Guide' : 'Publish Guide' %>
+      <% end %>
       <%= end_form_tag %>
     </div>
   </div>
