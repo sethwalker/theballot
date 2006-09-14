@@ -1,0 +1,38 @@
+<div id="author-info">
+  This guide by <div id="author-avatar"><%= image_tag @guide.user.avatar_thumb %><br/><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %></div>
+</div>
+<ul id="world-actions">
+<li><%= link_to_function "Print This Guide", 'window.print(); return false;' %></li>
+<li><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></li>
+</ul>
+<% if logged_in? -%>
+  <ul id="authenticated-actions">
+    <li id="pledged_status">
+      <%= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
+    </li>
+  </ul>
+  <% if @guide.owner?(current_user) || current_user.is_admin? %>
+  <ul id="owner-actions">
+    <li><%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %></li>
+  </ul>
+  <% end %>
+    <% if logged_in? && current_user.is_admin? -%>
+    <ul id="admin-actions">
+      <li id="endorsed_status">
+        <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
+      </li>
+      <% if @guide.c3? %>
+        <li id="approved_status">
+          <%= render :partial => 'guides/approve', :locals => { :guide => @guide } %>
+        </li>
+      <% end %>
+    </ul>
+    <% end -%>
+  <% end -%>
+
+<% unless @guide.members.empty? -%>
+<div id="guide-members">
+  <h3>Friends of this guide</h3>
+  <%= render :partial => 'guides/member', :collection => @guide.members %>
+</div>
+<% end -%>

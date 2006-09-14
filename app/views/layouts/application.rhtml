@@ -4,7 +4,7 @@
   <%= stylesheet_link_tag 'application', :media => 'all' %>
 <% end %>
 <%= render "shared/header" %>
-<body id="application">
+<body id="<%= @body_id || 'application' %>">
   <div id="wrap">
     <%= render "shared/banner" %>
     <div id="container">

@@ -1,50 +1,4 @@
-<% content_for :sidebar do -%>
-<div id="author-info">
-  This guide by <div id="author-avatar"><%= image_tag @guide.user.avatar_thumb %><br/><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %></div>
-</div>
-<ul id="world-actions">
-<li><%= link_to_function "Print This Guide", 'window.print(); return false;' %></li>
-<li><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></li>
-</ul>
-<% if logged_in? -%>
-  <ul id="authenticated-actions">
-    <li id="pledged_status">
-      <%= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
-    </li>
-  </ul>
-  <% if @guide.owner?(current_user) || current_user.is_admin? %>
-  <ul id="owner-actions">
-    <li><%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %></li>
-  </ul>
-  <% end %>
-    <% if logged_in? && current_user.is_admin? -%>
-    <ul id="admin-actions">
-      <li id="endorsed_status">
-        <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
-      </li>
-      <% if @guide.c3? %>
-        <li id="approved_status">
-          <%= render :partial => 'guides/approve', :locals => { :guide => @guide } %>
-        </li>
-      <% end %>
-    </ul>
-    <% end -%>
-  <% end -%>
-<% end -%>
-
-<% content_for :sidebar do -%>
-<div id="guide-members">
-  <h3>Friends of this guide</h3>
-  <%= render :partial => 'guides/member', :collection => @guide.members %>
-</div>
-<% end unless @guide.members.empty? -%>
-
-<% if @guide.endorsed -%>
-<div id="endorsed">This Guide is Endorsed by the League</div>
-<% else -%>
-<div id="unendorsed">This Guide May Not Reflect the Attitude of the League</div>
-<% end -%>
-<% 
+<% #add theme stylesheet links
   if !@guide.theme.nil? && !@guide.theme.style.nil?
     content_for :stylesheets do %>
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
@@ -56,140 +10,16 @@
 <%  end
   end
 %>
-<% if @rendered %>
-  <%= @rendered %>
-<% else %>
-<div class="voterguide_container">
-  <%= link_to 'Edit', {:action => :edit, :id => @guide} %>
-  <div class="voterguide_intro">
-    <h3 class="module_title"><a href=
-    "http://indyvoter.org/voterguide.php">Voter
-    Guides</a></h3>
 
-    <p class="expenditure_notice" id=
-    "expenditure-top">This section paid for
-    by League of Independent Voters Political
-    Action Committee ( LIV PAC) 226 W. 135th
-    St. 4th Fl. NY NY 10030. Not paid for by
-    any candidate or candidate's
-    committee.</p>
+<div id="main">
+  <% if @guide.endorsed -%>
+    <div id="endorsed">This Guide is Endorsed by the League</div>
+  <% else -%>
+    <div id="unendorsed">This Guide May Not Reflect the Attitude of the League</div>
+  <% end -%>
 
-    <p class="new_guide_link"><a href=
-    "http://indyvoter.org/voterguide.php?action=new">
-    Click here to Post a New Voter
-    Guide</a></p>
-
-    <p class="tell_link"></p>
-
-    <form method="post" action="mailto2.php"
-    name="tell_it_loud">
-      <input type="hidden" name="url_link">
-      <a href="javascript:set_tell_Url();"
-      class="tell_link">Email a friend about
-      this page</a>
-    </form>
-  </div>
-
-  <div id="voterguide_header" class=
-  "clearfix">
-    <div style=
-    "text-align: center; padding: 1em;">
-      This guide is submitted by a website
-      user and may not represent the position
-      of the League.
-    </div>
-
-    <h1 class="title"><%= @guide.name %></h1>
-
-    <h4 class="subtitle"><%= [@guide.city, @guide.state].join(', ') %></h4>
-
-    <h4 class="date"><%= @guide.date %></h4>
-
-    <div class="public-url">
-      <%= link_to @guide.permalink_url, @guide.permalink_url %>
-    </div>
-
-    <div class="intro-with-image">
-      <div class="introductory-text">
-        <p class="introduction">
-          <%= @guide.description %>
-        </p>
-      </div>
-    </div>
-
-    <% if @guide.attached_pdf %>
-    <div class="doclink">
-      <p class="doclink_label">Download PDF of guide:</p>
-      <p class="filelink"><a                
-        href="<%= @guide.attached_pdf.public_filename %>">
-      <IMG SRC="/images/pdf.gif" border="0"  
-        align="absmiddle"><%= @guide.attached_pdf.filename %></a>
-      </p>
-    </div>
-    <% end %>
-
-    <% if @guide.image %>
-      <img src="<%= @guide.image.public_filename("thumb") %>" />
-    <% end %>
-
-    <p class="vg_endorse_link" id="header">
-    <%= link_to 'Agree with this guide? Join the voter bloc', {:action => 'join', :id => @guide} %>
-    </p>
-  </div>
-
-  <div id="main_content">
-    <% @guide.contests.each do |e| %>
-      <div class="list_entry">
-        <h2 class="voter_item_title"><%= e.name %></h2>
-        <h4 class="listname"><span class=
-        "name_label">Candidate/Issue:</span>
-        <span class="name_text">
-        <%= %></span></h4>
-
-        <h4 class="position"><span class=
-        "position_label">Endorsed Vote:</span>
-        <span class="position_text">
-        <%= %></span></h4>
-
-        <p class="text"><%= %></p>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="spacer"></div>
-
-  <div class="vg_footer">
-    <p>footer goes here</p>
-  </div>
-
-  <p class="vg_endorse_link" id="footer">
-  <%= link_to 'Agree with this guide? Join the voter bloc', {:action => 'join', :id => @guide} %>
-  </p>
-
-  <p class="expenditure_notice" id=
-  "expenditure-bottom">This section paid for
-  by League of Independent Voters Political
-  Action Committee ( LIV PAC) 226 W. 135th
-  St. 4th Fl. NY NY 10030. Not paid for by
-  any candidate or candidate's committee.</p>
-
-  <div class="notify_link">
-    if this guide is offensive, send email
-    to: <a href=
-      "mailto:voterguides@indyvoter.org?subject=issue%20with%20guide%20<%= @guide.id %>">
-    the League</a>
-  </div>
-
-  <div class="designer-credit">
-    this guide uses the Cityscape - colorful
-    design by <a href=
-    "http://www.nicalorber.com" target=
-    "_blank">Nica Lorber</a>
-  </div>
-
-  <div class="designer-contribute">
-    wanna contribute a css design? <a href=
-    "/designers">click here.</a>
-  </div>
+  <%= @liquid%>
 </div>
-<% end %>
+<div id="sidebar">
+  <%= render "guides/sidebar" %>
+</div>

@@ -1,3 +1,17 @@
 <h1><%= @user.login %></h1>
 
 <%= image_tag @user.avatar.public_filename if @user.avatar %>
+
+<div id="user-profile-location">
+<%= @user.city %>, <%= @user.state %>
+</div>
+
+<% if @user.guides -%>
+<h2>Guides:</h2>
+<ul>
+<% @user.guides.each do |guide| %>
+<li><%= link_to guide.name, guide.permalink %></li>
+<% end -%>
+</ul>
+<% end -%>
+

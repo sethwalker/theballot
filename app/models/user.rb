@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :case_sensitive => false
   validates_uniqueness_of   :email, :case_sensitive => false, :message => 'has already been registered. <a href="/account/forgot_password">Click here</a> if you forgot your password.'
 
+  validates_presence_of     :city, :state
+
   before_save :encrypt_password
 
   before_create :make_activation_code

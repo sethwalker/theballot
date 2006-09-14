@@ -11,18 +11,16 @@
 </div>
 <div class="guide-preview-section" id="guide-preview-theme">
   <% @theme = Theme.find(@guide.theme_id ? @guide.theme_id : :first) %>
-  <div>
-    <%= image_tag @theme.screenshot.public_filename('thumb') %>
-    <span>Theme: </span><span><%= @theme.name %></span>
-    <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
-  </div>
+  <%= image_tag @theme.screenshot.public_filename('thumb') %>
+  <span>Theme: </span><span><%= @theme.name %></span>
+  <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
 </div>
 <div class="guide-preview-section" id="guide-preview-assets">
   <p id="guide-preview-image"><% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %><% else -%>Attached Image: (none)<% end -%></p>
   <% if @guide.attached_pdf -%>
-    <p id="guide-preview-attached-pdf"><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %></p>
+    <p id="guide-preview-attached-pdf"><%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %></p>
   <% else -%>
     <p>Attached PDF: (none)</p>
   <% end -%>
-  <p><%= link_to_function 'Upload image or PDF', "invi('guide-form-assets', false)" %></p>
+  <p><div><%= link_to_function 'Upload image or PDF', "invi('guide-form-assets', false)" %></div></p>
 </div>
