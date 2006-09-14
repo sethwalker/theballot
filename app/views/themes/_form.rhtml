@@ -9,9 +9,11 @@
 
 <p><label for="theme_style">Style</label><br/>
 <%= collection_select 'theme', 'style_id', Style.find(:all), 'id', 'name' %>
+or url: <%= text_field 'theme', 'style_url' %></p>
 
 <p><label for="theme_print_style">Print Style</label><br/>
 <%= collection_select 'theme', 'print_style_id', Style.find(:all), 'id', 'name' %>
+or url: <%= text_field 'theme', 'print_style_url' %></p>
 
 <p><label for="theme_screenshot">Screenshot</label><br/>
 <%= file_field 'screenshot', 'uploaded_data' %>

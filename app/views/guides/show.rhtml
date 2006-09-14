@@ -1,14 +1,24 @@
 <% #add theme stylesheet links
-  if !@guide.theme.nil? && !@guide.theme.style.nil?
+if !@guide.theme.nil?
+  if @guide.theme.style_url
+    content_for :stylesheets do %>
+      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => @guide.theme.style_url }) %>
+<%  end
+  elsif @guide.theme.style
     content_for :stylesheets do %>
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
 <%  end
   end
-  if !@guide.theme.nil? && !@guide.theme.print_style.nil?
+  if @guide.theme.print_style_url
+    content_for :stylesheets do %>
+      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => @guide.theme.print_style_url }) %>
+<%  end
+  elsif @guide.theme.print_style
     content_for :stylesheets do %>
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.print_style.id ) }) %>
 <%  end
   end
+end 
 %>
 
 <div id="main">
@@ -18,7 +28,7 @@
     <div id="unendorsed">This Guide May Not Reflect the Attitude of the League</div>
   <% end -%>
 
-  <%= @liquid%>
+  <%= @liquid %>
 </div>
 <div id="sidebar">
   <%= render "guides/sidebar" %>
