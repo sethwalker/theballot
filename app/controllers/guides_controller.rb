@@ -141,14 +141,14 @@ class GuidesController < ApplicationController
     return not_found unless @guide
     flash[:notices] ||= []
     if !@guide.is_published?
-      if logged_in? && @guide.owner?(current_user)
+      if logged_in? && (@guide.owner?(current_user) || current_user.admin?)
         flash[:notices] << 'you are viewing this guide in preview mode'
       else
         return not_found
       end
     end
     if !@guide.approved?
-      if logged_in? && @guide.owner?(current_user)
+      if logged_in? && (@guide.owner?(current_user) || current_user.admin?)
         flash[:notices] << 'this guide has not yet been approved and so is not visible to the public'
       else
         return not_found
