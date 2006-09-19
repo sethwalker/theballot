@@ -1,4 +1,12 @@
 class ThemesController < ApplicationController
+  before_filter :login_required, :except => [ :preview ]
+
+  def authorized?
+    return true if current_user.admin?
+    flash[:error] = 'Permission Denied'
+    false
+  end
+
   def index
     list
     render :action => 'list'
