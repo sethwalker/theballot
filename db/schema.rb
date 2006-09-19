@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 33) do
+ActiveRecord::Schema.define(:version => 36) do
 
   create_table "assets", :force => true do |t|
     t.column "type", :string
@@ -146,12 +146,12 @@ ActiveRecord::Schema.define(:version => 33) do
 
   create_table "themes", :force => true do |t|
     t.column "name", :string
-    t.column "markup", :text
     t.column "style_id", :integer
     t.column "author_id", :integer
     t.column "print_style_id", :integer
     t.column "style_url", :string
     t.column "print_style_url", :string
+    t.column "template", :string
   end
 
   create_table "users", :force => true do |t|
@@ -170,6 +170,9 @@ ActiveRecord::Schema.define(:version => 33) do
     t.column "postal_code", :string
     t.column "phone", :string
     t.column "signup_domain", :string
+    t.column "firstname", :string
+    t.column "lastname", :string
+    t.column "url", :string
   end
 
 end

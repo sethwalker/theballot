@@ -1,0 +1,90 @@
+<div class="voterguide_container">
+  <div id="voterguide_header" class=
+  "clearfix">
+
+    {% if guide.endorsed %}
+    <div id="vg-endorsed-stamp"><img src="/images/league_stamp.gif" /></div>
+    {% endif %}
+
+    <h1 class="title">{{ guide.name }}</h1>
+
+    <h4 class="subtitle">{{ guide.city }}, {{ guide.state }}</h4>
+
+    <h4 class="date">{{ guide.date }}</h4>
+
+    <div class="public-url">
+      {{ permalink | link_to: permalink }}
+    </div>
+
+    <div class="intro-with-image">
+      <div class="introductory-text">
+        <p class="introduction">
+          {{ guide.description }}
+        </p>
+      </div>
+
+    </div>
+
+    {% if guide.pdf_link %}
+    <div class="doclink">
+      <p class="doclink_label">Download PDF of guide:</p>
+      <p class="filelink"><a                
+        href="{{ guide.pdf_link }}">
+      <IMG SRC="/images/pdf.gif" border="0"  
+        align="absmiddle">{{ guide.pdf_name }}</a>
+      </p>
+    </div>
+    {% endif %}
+
+    {% if guide.image_link %}
+      <img src="{{ guide.image_thumb }}" />
+    {% endif %}
+  </div>
+
+  <div id="main_content">
+    {% for contest in guide.contests %}
+      <div class="list_entry">
+        <h2 class="voter_item_title">{{ contest.name }}</h2>
+        {% for choice in contest.choices %}
+
+          {% if contest.type == 'Candidate' %}
+            <h4 class="listname"><span class=
+            "name_label">Candidate:</span>
+            <span class="name_text">
+            {{ choice.name }}</span></h4>
+          {% endif %}
+
+          {% if choice.selection %}
+            <h4 class="position"><span class=
+            "position_label">Endorsed Vote:</span>
+            <span class="position_text">
+            {{ choice.selection }}</span></h4>
+          {% endif %}
+
+          <p class="text">{{ choice.description }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="notify_link">
+    if this guide is offensive, send email
+    to: <a href=
+      "mailto:voterguides@indyvoter.org?subject=issue%20with%20guide%20{{ guide.id }}">
+    the League</a>
+  </div>
+
+  <div class="designer-credit">
+    this guide uses the {{ guide.theme.name }}
+    design by <a href=
+    "{{ guide.theme.author_url }}" target=
+    "_blank">{{ guide.theme.author_name }}</a>
+  </div>
+
+  <div class="designer-contribute">
+    wanna contribute a css design? <a href=
+    "/designers">click here.</a>
+  </div>
+</div>

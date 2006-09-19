@@ -71,4 +71,19 @@ class ThemesController < ApplicationController
     @guide = Guide.new(:theme => @theme, :date => Date.today, :user => @current_user)
     render "guides/show"
   end
+
+  def template
+    @tmpl = File.join(RAILS_ROOT, 'public', 'themes', params[:id])
+    return unless File.exist?(@tmpl)
+    if request.post?
+      @content = params[:content]
+      return unless @content && !@content.empty?
+      File.open(@tmpl, 'w') do |file|
+        file.write @content
+      end
+      flash[:notice] = 'Updated template'
+    else
+      @content = File.read(@tmpl)
+    end
+  end
 end

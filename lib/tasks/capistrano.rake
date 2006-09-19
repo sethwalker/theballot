@@ -55,6 +55,9 @@ namespace :remote do
   desc "Set up the expected application directory structure on all boxes"
   task(:setup) { cap :setup }
 
+  desc "Begin an interactive Capistrano session."
+  task(:shell) { cap :shell }
+
   desc "Enumerate and describe every available task."
   task(:show_tasks) { cap :show_tasks, '-q' }
 
@@ -63,6 +66,9 @@ namespace :remote do
 
   desc "Update the 'current' symlink to point to the latest version of the application's code."
   task(:symlink) { cap :symlink }
+
+  desc "Updates the code and fixes the symlink under a transaction"
+  task(:update) { cap :update }
 
   desc "Update all servers with the latest release of the source code."
   task(:update_code) { cap :update_code }

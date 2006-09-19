@@ -1,1 +1,8 @@
-<div id="footer"><span id="copyright">&#169;2006 <a href="http://indyvoter.org" target="_blank">The League of Young Voters</a></span><% if logged_in? && current_user.is_admin? -%><br/><span style="color: white;">release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>
+<div id="footer">
+  <% if @c3 -%>
+    <div id="expenditure-notice" />
+      This section paid for by League of Independent Voters Political Action Committee ( LIV PAC) 226 W. 135th St. 4th Fl. NY NY 10030. Not paid for by any candidate or candidate's committee.
+    </div>
+  <% end -%>
+  
+  <span id="copyright">&#169;2006 <a href="http://indyvoter.org" target="_blank">The League of Young Voters</a></span><% if logged_in? && current_user.is_admin? -%><br/><span style="color: white;">release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>

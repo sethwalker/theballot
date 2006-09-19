@@ -22,13 +22,12 @@ end
 %>
 
 <div id="main">
-  <% if @guide.endorsed -%>
-    <div id="endorsed">This Guide is Endorsed by the League</div>
-  <% else -%>
-    <div id="unendorsed">This Guide May Not Reflect the Attitude of the League</div>
+  <% unless @guide.endorsed -%>
+    <div id="unendorsed">This guide was submitted by a website user and may not reflect the position of the League of Young Voters</div>
   <% end -%>
 
   <%= @liquid %>
+
 </div>
 <div id="sidebar">
   <%= render "guides/sidebar" %>
