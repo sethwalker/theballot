@@ -156,7 +156,7 @@ class GuidesController < ApplicationController
     end
     if !@guide.theme.nil?
       template = Liquid::Template.parse(Theme.find(@guide.theme.id).markup)
-      @liquid = template.render('guide' => @guide)
+      @liquid = template.render('guide' => @guide, 'host' => request.host)
     end
     @body_id = 'guides-show'
     flash[:notice] = flash[:notices].join('<br/>')
