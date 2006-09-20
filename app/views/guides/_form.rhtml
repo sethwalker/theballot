@@ -1,7 +1,7 @@
 
 <div class="dynamic guide-form-section" id="guide-form-basics"<% if 'new' == @controller.action_name %>style="visibility:visible;"<% end %>>
   <h2>Create a<% if @c3 %> non-partisan<% end %> voter guide</h2>
-  <% if @c3 %><p>(Basically that means you can compare candidates but can't endorse any.)</p><% end %>
+  <% if @c3 %><p>(Important: Read these <%= link_to 'instructions', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %> first to make sure your guide will get approved!)</p><% end %>
   <h3>Step 1 - The Basics</h3>
   <% unless @c3 -%>
   <span><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'new' } ) %> to create a non-partisan guide</span>

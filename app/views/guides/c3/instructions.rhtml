@@ -1,1 +1,28 @@
-these instructions are for c3 guides
+<div id="c3-instructions">
+
+<h2>Guidelines for creating a non-partisan voter guide</h2>
+
+<p>For non-partisan voter guides, you can endorse legislation that is coming before the voters (i.e. ballot measures, initiatives, propositions), but <strong>you cannot endorse candidates.</strong></p>
+
+<p>To include candidates in your voter guide, you should send the candidates a questionnaire asking for their positions on 5-6 issues.<br />
+If you are endorsing ballot measures in your voter guide, do not ask for the candidates' positions on these measures (since this would imply your preference). </p>
+
+<h4>Requirements for Candidate Questionnaires:</h4>
+<ul>
+<li>Must be sent to all candidates</li>
+<li>Responses must be published verbatim <em>(a good reason to ask yes/no questions, which we highly recommend)</em></li>
+<li>Questions must be framed without bias. <ul>
+    <li>NOT OK: <em>"The Iraq war is killing thousands unnecessarily.  When do you think we should pull out?"</em></li>
+    <li>OK: <em>"Do you support pulling our troops out of Iraq by the end of the year?"</em></li></ul>
+<li>Organizations may not coordinate or cooperate with the candidates <em>(i.e. you cant help candidates fill out the questionnaire)</em></li>
+</ul>
+
+<p>If candidates do not return your questionnaire...<br />
+You may print that they did not answer your questionnaire, but you still may not print information on their positions from any other source.</p>
+</div>
+
+<% if @recently_created_guide -%>
+<%= link_to 'continue', :action => 'new' %>
+<% else -%>
+<%= link_to_function 'close', 'window.close()' %>
+<% end -%>

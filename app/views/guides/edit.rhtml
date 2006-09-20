@@ -3,7 +3,7 @@
 <p>This is a non-partisan informational voter guide.  You can endorse issues, but not candidates.  For candidates, you must at least add the candidates from the major parties and compare their positions on issues.  This will help the voter make an informed choice.</p>
 <p>Note: Non-partisan guides must be approved before they are posted live on the site.</p>
 <% else -%>
-<p><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'edit', :id => @guide } ) %> to make a non-partisan informational voter guide (basically that means you can compare candidates but can't endorse them).</p>
+<p><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'new' } ) %> to make a non-partisan informational voter guide (basically that means you can compare candidates but can't endorse them).</p>
 <% end -%>
 </div>
 

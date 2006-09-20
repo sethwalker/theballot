@@ -2,8 +2,8 @@ class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [ :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
-  meantime_filter :scope_approved_guides, :except => [ :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
 
   def scope_approved_guides
     conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::C3}'"
@@ -197,7 +197,11 @@ class GuidesController < ApplicationController
   def new
     @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
     @guide.legal = Guide::C3 if c3?
-    @guide.save_with_validation(false) unless @guide.id
+    unless @guide.id
+      @guide.save_with_validation(false)
+      @recently_created_guide = true
+      render 'guides/c3/instructions' and return if c3?
+    end
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)
     render :action => 'edit'
@@ -335,7 +339,7 @@ class GuidesController < ApplicationController
 
   def send_message
     @guide = Guide.find(params[:id])
-    @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :user => current_user }
+    @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :user => current_user, :host => request.host }
     if GuidePromoter.deliver_tell_a_friend(@tell)
       flash[:notice] = "Message sent"
       render :action => :show and return
@@ -345,5 +349,11 @@ class GuidesController < ApplicationController
 
   def help
     render :layout => false
+  end
+
+  def instructions
+    if params[:id] && params[:id] == 'c3'
+      render 'guides/c3/instructions'
+    end
   end
 end
