@@ -1,0 +1,4 @@
+<div id="contest-messages"></div>
+<div id="contest-edit-window-left"><%= render :partial => "contests/#{@contest.class.to_s.downcase}/edit", :locals => { :contest => @contest, :choice => @choice } %></div>
+<div id="contest-edit-window-right"><%= render :partial => "contests/#{@contest.class.to_s.downcase}/preview", :locals => { :contest => @contest } %></div>
+<div class="right" id="contest-done-button"><%= link_to_function 'done', "Element.hide('contest-edit-window')" %></div>
