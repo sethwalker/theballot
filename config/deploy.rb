@@ -174,6 +174,7 @@ desc "Symlink attachments folder."
 task :after_symlink do
   revision_number
   run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
+  run "ln -nfs #{shared_path}/public/themes #{current_path}/public/themes"
 end
 
 desc "tail development log files" 
