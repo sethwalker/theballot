@@ -9,7 +9,7 @@ if !@guide.theme.nil?
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'all', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
 <%  end
   end
-  if !@guide.theme.print_style_url.nil? && !@guide.theme.style_url.empty?
+  if !@guide.theme.print_style_url.nil? && !@guide.theme.print_style_url.empty?
     content_for :stylesheets do %>
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => @guide.theme.print_style_url }) %>
 <%  end
