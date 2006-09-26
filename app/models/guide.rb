@@ -70,12 +70,16 @@ class Guide < ActiveRecord::Base
   end
 
   def permalink_url
-    "/guides/#{date.year}/#{permalink}"
+    if date && permalink
+      "/#{date.year}/#{permalink}"
+    else
+      "/guides/show/#{id}"
+    end
   end
 
   def make_permalink(options = {})
     return '/guides/show/' + id if options.empty?
-    "/guides/#{options[:year]}/#{options[:permalink]}"
+    "/#{options[:year]}/#{options[:permalink]}"
   end
 
   def publish
