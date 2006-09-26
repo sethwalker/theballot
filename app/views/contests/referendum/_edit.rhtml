@@ -2,5 +2,5 @@
   <%= hidden_field 'contest', 'guide_id' %>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/referendum/form', :locals => { :contest => contest, :choice => choice } %>
-  <%= submit_tag "#{controller.action_name == 'new' ? 'add' : controller.action_name} issue" %>
+  <%= submit_tag "#{controller.action_name == 'new' ? 'add' : controller.action_name} issue" %> <%= button_to_function "cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
 <%= end_form_tag %>

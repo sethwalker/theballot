@@ -2,9 +2,14 @@
 <% if contest.id -%>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
-  <%= submit_tag "#{controller.action_name == 'new' ? 'add' : controller.action_name} candidate" %> <%= submit_to_remote 'cancel', 'cancel', :url => { :controller => '/contests/candidate', :action => 'add', :id => contest.id } %>
+  <%= submit_tag "#{( controller.action_name == 'new' || !choice.id ) ? 'add' : controller.action_name} candidate" %>
+  <% if @contest.choices.size > (@c3 ? 1 : 0) %>
+    <% content_for :done_button do -%>
+    <div class="right" id="contest-done-button"><%= link_to_function 'done', "Element.hide('contest-edit-window'); Element.show('contest_#{@contest.id}')" %></div>
+    <% end -%>
+  <% end -%>
   <% else -%>
   <%= render :partial => '/contests/form', :locals => { :contest => contest } %>
-  <%= submit_tag "continue" %>
+  <%= submit_tag "continue" %> <%= button_to_function "cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
   <% end -%>
 <%= end_form_tag %>

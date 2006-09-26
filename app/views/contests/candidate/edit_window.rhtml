@@ -1,0 +1,12 @@
+<div id="contest-messages">
+  <% if @contest.errors.on 'name' -%>
+    <div class="errorExplanation">Office <%= @contest.errors.on('name') %></div>
+  <% end -%>
+  <% if @contest.errors.on_base -%>
+    <div class="errorExplanation"><%= @contest.errors.on_base %></div>
+  <% end -%>
+  <%= format_error_messages('choice') %>
+</div>
+<div id="contest-edit-window-left"><%= render :partial => "edit", :locals => { :contest => @contest, :choice => @choice } %></div>
+<div id="contest-edit-window-right"><%= render :partial => "preview", :locals => { :contest => @contest } %></div>
+<%= @content_for_done_button %>

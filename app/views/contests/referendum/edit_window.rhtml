@@ -1,0 +1,5 @@
+<div id="contest-messages">
+  <%= format_error_messages('contest') %>
+  <%= format_error_messages('choice') %>
+</div>
+<div id="contest-edit-window-left"><%= render :partial => "contests/#{@contest.class.to_s.downcase}/edit", :locals => { :contest => @contest, :choice => @choice } %></div>

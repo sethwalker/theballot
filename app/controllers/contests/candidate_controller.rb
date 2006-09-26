@@ -27,19 +27,23 @@ class Contests::CandidateController < Contests::BaseController
     return unless params[:id]
     @contest ||= Contest.find(params[:id])
     @choice ||= Choice.find(params[:choice_id]) if params[:choice_id]
-    @choice ||= Choice.find(params[:choice][:id]) if params[:choice] && params[:choice][:id]
+    @choice ||= Choice.find(params[:choice][:id]) if params[:choice] && params[:choice][:id] && !params[:choice][:id].empty?
+    @choice ||= Choice.new(:contest => @contest)
     @guide = @contest.guide
     if request.post?
       @contest.update_attributes(params[:contest]) if params[:contest]
-      @choice.update_attributes(params[:choice].merge(:contest => @contest)) if params[:choice]
+      if params[:choice]
+        @saved_choice = @choice.update_attributes(params[:choice].merge(:contest => @contest))
+      end
       render :update do |page|
-        page.replace_html 'contest-edit-window-left', :partial => "contests/candidate/edit", :locals => { :contest => @contest, :choice => Choice.new(:contest => @contest) }
-        page.replace_html 'contest-edit-window-right', :partial => "contests/candidate/preview", :locals => { :contest => @contest }
-        page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
-        page['choice_name'].value=''
-        page['choice_description'].value=''
-        page['choice_selection'].value=Choice::NO_ENDORSEMENT unless @c3
-        page.sortable 'contests', :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
+        if @saved_choice
+          @choice = Choice.new
+          page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+          page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
+          page.sortable 'contests', :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
+        else
+          page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+        end
       end
     else
       render :update do |page|
@@ -52,7 +56,6 @@ class Contests::CandidateController < Contests::BaseController
     @choice = Choice.new(:contest => @contest)
     render :update do |page|
       page.update_page_new_form(@contest, @choice)
-      page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } )
       if @recently_created_contest
         page.insert_html :bottom, 'contests', :partial => 'contests/show', :locals => { :contest => @contest, :hidden => true }
       elsif @contest.id

@@ -18,10 +18,22 @@ class Contests::BaseController < ApplicationController
     if request.xhr?
       if request.post?
         @contest ||= Contest.create(params[:contest])
-        render :action => 'errors' and return unless @contest.valid?
+        unless @contest.valid?
+          render :update do |page|
+            page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+          end
+          return
+        end
         if params[:choice]
-          @choice ||= @contest.choices.build(params[:choice])
-          render :action => 'errors' and return unless @choice.save
+          @choice ||= Choice.new(params[:choice])
+          @choice.contest = @contest
+          unless @choice.save
+            render :update do |page|
+              page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+            end
+            return
+          end
+          @contest.choices << @choice
         end
         update_page_after_create
       else
@@ -29,7 +41,10 @@ class Contests::BaseController < ApplicationController
         @contest.guide_id = params[:guide_id]
         @choice ||= Choice.new(:contest => @contest)
         render :update do |page|
-          page.update_page_new_form(@contest, @choice)
+          page.replace_html 'contest-edit-window', :file => "contests/#{@contest.class.to_s.downcase}/edit_window"
+          page << "document.getElementById('contest-edit-window').style.visibility = 'visible'"
+          page.show('contest-edit-window')
+#          page.update_page_new_form(@contest, @choice)
         end
       end
     end
@@ -40,17 +55,19 @@ class Contests::BaseController < ApplicationController
     @guide = @contest.guide
     @choice ||= Choice.find(params[:choice][:id]) if params[:choice] && params[:choice][:id]
     if request.post?
-      @contest.update_attributes(params[:contest]) if params[:contest]
-      @choice.update_attributes(params[:choice]) if @choice
       render :update do |page|
-        page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
-        page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
-        page.hide('contest-edit-window') if @contest.is_a?(Referendum)
+        if ( params[:contest] && !@contest.update_attributes(params[:contest]) ) ||
+           ( @choice && !@choice.update_attributes(params[:choice]) )
+          page.replace_html 'contest-edit-window', :file => "contests/#{@contest.class.to_s.downcase}/edit_window"
+        else
+          page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
+          page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
+          page.hide('contest-edit-window') if @contest.is_a?(Referendum)
+        end
       end
     else
       render :update do |page|
         page.update_page_new_form(@contest, @choice)
-        page.replace_html 'contest-done-button', link_to_remote( 'done', :url => { :controller => '/contests', :action => 'validate', :id => @contest } ) if @contest.is_a?(Candidate)
       end
     end
   end
