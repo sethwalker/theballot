@@ -352,7 +352,7 @@ class GuidesController < ApplicationController
     @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :user => current_user, :host => request.host }
     if GuidePromoter.deliver_tell_a_friend(@tell)
       flash[:notice] = "Message sent"
-      render :action => :show and return
+      redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink) and return
     end
     render :action => :tell
   end
