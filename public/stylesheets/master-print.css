@@ -1,1 +1,56 @@
-/* League of Young Voters CSS Document *//* Default Print Style for theBallot.org Voter Guides *//* ================================================================= GENERAL*/body {	background: none;	margin: 0;}#header, #header a {	background: transparent;display: inline;	}#header a span {	display: inline;	color: black;	}#nav, #account-nav {	display: none;	}#logo a, #sponsored-logo a {	width: 100%;	height: 1em;}	#container {	background: #ffffff;	padding: 0;}#vg-container {	width: 850px;	padding: 0;margin: 1.5em 0;	}#guides-show #sidebar {	display: none;	}#footer {	background: transparent;	margin-top: 2em;	padding: 0;	}#vg-public-url { /* hidden for screen media */	display: block;	}.designer-contribute {	display: none;	}			
+/* League of Young Voters CSS Document */
+
+/* Default Print Style for theBallot.org Voter Guides */
+
+/* ================================================================= GENERAL
+*/
+
+
+body {
+	background: none;
+	margin: 0;
+	}
+#header, #header a {
+	background: transparent;
+	display: inline;
+	}
+#header a span {
+	display: inline;
+	color: black;
+	}
+#nav, #account-nav {
+	display: none;
+	}
+#logo a, #sponsored-logo a {
+	width: 100%;
+	height: 1em;
+	}	
+#container {
+	background: #ffffff;
+	padding: 0;
+	}
+#guides-show #main {
+	width: 100%;
+	}
+#vg-container {
+	padding: 0;
+	margin: 1.5em 0;
+	}
+
+#guides-show #sidebar {
+	display: none;
+	}
+
+#footer {
+	background: transparent;
+	margin-top: 2em;
+	padding: 0;
+	}
+
+#vg-public-url { /* hidden for screen media */
+	display: block;
+	}
+
+.designer-contribute {
+	display: none;
+	}
