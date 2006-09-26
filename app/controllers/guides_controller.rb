@@ -200,7 +200,11 @@ class GuidesController < ApplicationController
     unless @guide.id
       @guide.save_with_validation(false)
       @recently_created_guide = true
-      render 'guides/c3/instructions' and return if c3?
+      if c3?
+        @guide.update_attribute('legal', Guide::C3)
+        render 'guides/c3/instructions'
+       return
+      end
     end
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)
@@ -359,7 +363,7 @@ class GuidesController < ApplicationController
 
   def instructions
     if params[:id] && params[:id] == 'c3'
-      render 'guides/c3/instructions'
+      render :action => 'c3/instructions', :layout => false
     end
   end
 end

@@ -20,7 +20,7 @@
     <% end %>
   </div>
   <div class="guide-list-date">
-    <%= guide.date %>
+    <%= guide.date.strftime('%B %e, %Y') %>
   </div>
   <div class="guide-list-description">
     <%= truncate guide.description, 100 %>
