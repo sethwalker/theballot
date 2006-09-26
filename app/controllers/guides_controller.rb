@@ -83,6 +83,7 @@ class GuidesController < ApplicationController
   def list
     @conditions ||= {} 
     @messages ||= []
+    @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
     @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'state, city, date'
   end
@@ -149,7 +150,7 @@ class GuidesController < ApplicationController
     end
     if !@guide.approved?
       if logged_in? && (@guide.owner?(current_user) || current_user.admin?)
-        flash[:notices] << 'this guide has not yet been approved and so is not visible to the public'
+        flash[:notices] << 'this guide has not been published so it is not visible to the public'
       else
         return not_found
       end
@@ -196,7 +197,6 @@ class GuidesController < ApplicationController
 
   def new
     @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
-    @guide.legal = Guide::C3 if c3?
     unless @guide.id
       @guide.save_with_validation(false)
       @recently_created_guide = true
@@ -268,11 +268,13 @@ class GuidesController < ApplicationController
     elsif 'Publish Guide' == params[:commit] || 'Submit Guide' == params[:commit]
       @guide.publish
     end
+    @guide.legal = Guide::C3 if c3?
     @guide.save!
     flash[:notices] ||= []
     flash[:notices] << "Guide was successfully updated.  To edit#{' [or publish]' unless @guide.is_published?} your guide, click on \"My Stuff\" in the upper right"
-    redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink)
-
+    redirect_to = { :year => @guide.date.year, :permalink => @guide.permalink }
+    redirect_to[:host] = session[:login_domain] if session[:login_domain]
+    redirect_to guide_permalink_url(redirect_to)
   rescue ActiveRecord::MultiparameterAssignmentErrors
     @guide.errors.add :date
     render :action => 'edit'

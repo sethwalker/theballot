@@ -28,7 +28,7 @@
       <% if @guide.is_published? %>
         <%= submit_tag 'Save' %> : <%= submit_tag 'Unpublish' %>
       <% else %>
-        <%= submit_tag 'Save As Draft' %> : <%= submit_tag @guide.c3? ? 'Submit Guide' : 'Publish Guide' %>
+        <%= submit_tag 'Save As Draft' %> : <%= submit_tag (@c3 || @guide.c3?) ? 'Submit Guide' : 'Publish Guide' %>
       <% end %>
       <%= end_form_tag %>
     </div>

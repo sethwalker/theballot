@@ -5,6 +5,7 @@ class AccountController < ApplicationController
     @user = User.find_by_activation_code(params[:id]) unless params[:id].nil?
     if @user and @user.activate
       self.current_user = @user
+      session[:login_domain] = request.host
       redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Your account has been activated.  You can <a href=\"" + url_for(:controller => 'guides', :action => 'new') + "\">create a voter guide</a> or <a href=\"" + url_for(:controller => 'guides', :action => 'list') + "\">view existing guides</a>."
     else
@@ -91,6 +92,7 @@ class AccountController < ApplicationController
     return unless request.post?
     self.current_user = User.authenticate(params[:email], params[:password])
     if current_user
+      session[:login_domain] = request.host
       redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Logged in successfully"
     else

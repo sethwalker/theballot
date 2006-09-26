@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   # -- just remember to delete public/index.html.
   map.connect '', :controller => "guides"
 
-  map.guide_permalink 'guides/:year/:permalink', :controller => 'guides', :action => 'show', :requirements => { :year => /\d+/ }
+  map.guide_permalink ':year/:permalink', :controller => 'guides', :action => 'show', :requirements => { :year => /\d+/ }
 
   map.connect 'guides/by_state/:state', :controller => 'guides', :action => 'by_state'
 
