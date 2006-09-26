@@ -326,7 +326,11 @@ class GuidesController < ApplicationController
     @guide.pledges << pledge
     current_user.pledges << pledge
     pledge.save
-    render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
+    if request.xhr?
+      render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
+    else
+      redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink)
+    end
   end
 
   def unjoin
