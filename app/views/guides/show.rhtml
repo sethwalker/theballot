@@ -10,11 +10,11 @@ if !@guide.theme.nil?
 <%  end
   end
   if !@guide.theme.print_style_url.nil? && !@guide.theme.print_style_url.empty?
-    content_for :stylesheets do %>
+    content_for :print_stylesheets do %>
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => @guide.theme.print_style_url }) %>
 <%  end
   elsif @guide.theme.print_style
-    content_for :stylesheets do %>
+    content_for :print_stylesheets do %>
       <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.print_style.id ) }) %>
 <%  end
   end
