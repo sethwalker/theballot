@@ -12,7 +12,7 @@
 <%= f.text_field 'city' %></p>
 
 <p><label for="user_state">State:</label><br/>
-<%= f.us_state_select 'state', :show => :abbreviations %></p>
+<%= f.us_state_select 'state', { :show => :abbreviations }, :include_blank => true %></p>
 
 <p><label for="user_postal_code">Zip:</label><br/>
 <%= f.text_field 'postal_code' %></p>
