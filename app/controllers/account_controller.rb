@@ -6,7 +6,7 @@ class AccountController < ApplicationController
     if @user and @user.activate
       self.current_user = @user
       redirect_back_or_default(:controller => '/account', :action => 'profile')
-      flash[:notice] = "Your account has been activated." 
+      flash[:notice] = "Your account has been activated.  You can <a href=\"" + url_for(:controller => 'guides', :action => 'new') + "\">create a voter guide</a> or <a href=\"" + url_for(:controller => 'guides', :action => 'list') + "\">view existing guides</a>."
     else
       flash[:error] = "Unable to activate the account.  Did you provide the correct information?" 
     end
