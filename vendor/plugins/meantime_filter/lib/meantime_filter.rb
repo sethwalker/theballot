@@ -70,21 +70,15 @@ module ActionController
       module InstanceMethods
         def self.included(base) #:nodoc:
           base.module_eval do
-            alias :perform_action :perform_action_with_filters
+            alias_method :perform_action_without_meantime, :perform_action_without_filters
+            alias_method :perform_action_without_filters, :perform_action_with_meantime
           end
         end
-        
-        def perform_action_with_filters
-          before_action_result = before_action
-          
-          unless before_action_result == false || performed?
-            during_action { perform_action_without_filters }
-            after_action
-          end
-          
-          @before_filter_chain_aborted = (before_action_result == false)
-        end
-        
+
+        def perform_action_with_meantime
+          during_action { perform_action_without_meantime }
+        end 
+
         private
         
         def during_action(&action)
