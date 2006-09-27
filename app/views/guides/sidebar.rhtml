@@ -1,4 +1,10 @@
-<div id="author-info">
+
+<div id="world-actions" class="sidebar-frame">
+	<div id="print-guide-link"><%= link_to_function "Print This Guide", 'window.print(); return false;' %></div>
+	<div id="email-guide-link"><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></div>
+</div>
+
+<div id="author-info" class="sidebar-frame">
   This guide by <div id="author-avatar"><%= image_tag @guide.user.avatar_thumb %><br/><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %></div>
 <% if logged_in? -%>
   <% if @guide.owner?(current_user) || current_user.is_admin? %>
@@ -8,10 +14,6 @@
   <% end %>
 <% end %>
 </div>
-<ul id="world-actions">
-<li><%= link_to_function "Print This Guide", 'window.print(); return false;' %></li>
-<li><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></li>
-</ul>
 <% if logged_in? -%>
 <!--  <ul id="authenticated-actions">
     <li id="pledged_status">
@@ -41,15 +43,15 @@ admin:<br />
     <% end -%>
   <% end -%>
 
-<div id="guide-members">
+<div id="guide-members" class="sidebar-frame">
   <h3>Voter Bloc for this guide</h3>
   <h4>(a.k.a. Friends of the guide)</h4>
 <% if @guide.members.empty? -%>
-      <li id="endorsed_status">
+      <div id="endorsed_status">
           Be the first to 
 <% end -%>
         <%#= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
         <%= link_to "Join the Bloc", :controller => 'guides', :action => 'join', :id => @guide unless @guide.members.to_a.include? current_user %>
-      </li>
+      </div>
   <%= render :partial => 'guides/member', :collection => @guide.members %>
 </div>
