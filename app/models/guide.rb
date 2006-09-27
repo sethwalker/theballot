@@ -30,7 +30,7 @@ class Guide < ActiveRecord::Base
   end
 
   def after_save
-    GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published
+    GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published && c3?
   end
 
   acts_as_ferret :fields => { :name => {:boost => 3}, 

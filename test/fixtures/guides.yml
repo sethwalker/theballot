@@ -59,3 +59,20 @@ no_candidate_endorsements:
   city: san francisco
   state: CA
   user_id: 1
+
+partisan:
+  id: 8
+  name: partisan guide
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+  legal:
+nonpartisan:
+  id: 9
+  name: nonpartisan guide
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+  legal: <%= Guide::C3 %>

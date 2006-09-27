@@ -7,6 +7,7 @@ class GuidePromoterTest < Test::Unit::TestCase
 
   include ActionMailer::Quoting
 
+  fixtures :guides
   def setup
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
@@ -16,8 +17,16 @@ class GuidePromoterTest < Test::Unit::TestCase
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
   end
 
-  def test_truth
-    assert true
+  def test_delivers_approval_request
+    assert guides(:nonpartisan).c3?
+    assert guides(:nonpartisan).publish
+    assert guides(:nonpartisan).save
+    assert_equal ActionMailer::Base.deliveries.size, 1
+
+    assert !guides(:partisan).c3?
+    assert guides(:partisan).publish
+    assert guides(:partisan).save
+    assert_equal ActionMailer::Base.deliveries.size, 1
   end
 
   private
