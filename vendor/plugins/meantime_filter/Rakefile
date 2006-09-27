@@ -3,7 +3,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 RELEASE_NAME = "meantime_filter"
-RELEASE_VERSION = '0.1.0'
+RELEASE_VERSION = '0.1.2'
 
 desc 'Default: run unit tests.'
 task :default => :test
@@ -20,7 +20,7 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'MeantimeFilter'
   rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('README', 'CHANGELOG')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
@@ -38,7 +38,7 @@ task :release do
   # Clean useless files
   cd "#{dir}/plugin" do
     system 'rm -rf ' << (Dir['**/.svn'] << "#{RELEASE_NAME}/{releases,rdoc}").join(' ')
-    system "tar zcvf #{RELEASE_NAME}-#{RELEASE_VERSION}.tar.gz #{RELEASE_NAME}"
+    system "tar czvf #{RELEASE_NAME}-#{RELEASE_VERSION}.tar.gz --exclude '.*' #{RELEASE_NAME}"
   end
   
   # Remove the temporary directory
@@ -47,9 +47,9 @@ task :release do
   # Documentation
   system 'rake rdoc'
   system 'rm -rf ' << Dir['rdoc/**/.svn'].join(' ')
-  cp_r 'rdoc', "#{dir}"
+  cp_r 'rdoc', dir
   
   # Finished
   puts
-  puts "=> #{RELEASE_NAME} v#{RELEASE_VERSION} released"
+  puts "=> #{RELEASE_NAME} v#{RELEASE_VERSION} ready"
 end

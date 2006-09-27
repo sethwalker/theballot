@@ -1,18 +1,21 @@
 = meantime_filter for Rails controllers
 
 A plugin for Ruby On Rails extending ActionController features.
-It works with Rails v1.1.4, it has not been tested with other versions.
+It works with Rails version 1.1.4 to 1.1.6, it has not been tested with other
+versions.
+
 
 == Description
 This plugin introduces a new filter type to <em>ActionController::Base</em>:
-meantime filters. They are called at the time of the action call just after
-+before+ filters. They allow to do things around the action by yielding when
-the action has to be performed. This enables the action to be executed within
-the block of any method.
+_meantime_ filters (or _wrap_ filters). They are called at the time of the
+action call just after +before+ filters and wrap the actions into the block of
+the filter. They allow to do things around the action by yielding when the
+action has to be performed.
+
 
 == Getting and installing it
 1.  In order to get and install it, download the plugin archive file from:
-    meantime_filter-0.1.0.tar.gz[http://roman2k.free.fr/rails/meantime_filter/0.1.0/plugin/meantime_filter-0.1.0.tar.gz]
+    meantime_filter-0.1.2.tar.gz[http://roman2k.free.fr/rails/meantime_filter/0.1.2/plugin/meantime_filter-0.1.2.tar.gz]
 
 2.  Gunzip and untar it in the <tt>plugin/</tt> subdirectory of your Rails
     application.
@@ -25,7 +28,7 @@ takes a block and it was not possible to reproduce its behaviour with +before+
 and +after+ filters since there is no method to _scope_ without a block and no
 method to _remove_ the last scope.
 
-With meantime filters, it's possible to do such things in a simple and clean
+With _wrap_ filters, it's possible to do such things in a simple and clean
 manner.
 
 I think it is a better way to do things both before and after actions than
@@ -40,6 +43,16 @@ This plugins adds three public class methods to ActionController::Base:
   (ActionController::Filters::MeantimeFilter::ClassMethods.append_meantime_filter)
 * <tt>prepend_meantime_filter</tt>
   (ActionController::Filters::MeantimeFilter::ClassMethods.prepend_meantime_filter)
+But there are aliases for these which are more appropriate to this type of
+filter:
+* <tt>wrap_filter</tt>
+* <tt>append_wrap_filter</tt>
+* <tt>prepend_wrap_filter</tt>
+And
+* <tt>wrap_actions</tt>
+* <tt>append_wrap_actions</tt>
+* <tt>prepend_wrap_actions</tt>
+
 They all accept one or more filters as parameter(s) and the same conditions
 hash as +before+ and +after+ filters registering methods as last parameter.
 
@@ -47,8 +60,8 @@ A filter:
 * *Can* be either:
   * A _Symbol_ that is the name of one of the controller's instance methods,
   * A _Method_ that takes the controller as only parameter,
-  * Any object that responds to <tt>:filter</tt> and whose +filter+ method
-    takes the controller as only parameter.
+  * Any object that implements a +filter+ method taking the controller as
+    only parameter.
 * *Cannot* be a +Proc+ because <tt>Proc</tt>s cannot yield unfortunately.
 
 And of course, it <b>must</b> either:
@@ -58,17 +71,18 @@ And of course, it <b>must</b> either:
 
 
 === Nested filtering
-You can even nest several meantime filters by registering several ones for the
+You can even nest several wrapping filters by registering several ones for the
 same action(s). They are executed in the same order as they have been register
-through +meantime_filter+. The first filter yields to the second that yields
-to the third and so on. The last one yields the action.
+through +wrap_filter+ (or any other method listed above). The first filter
+yields to the second that yields to the third and so on. The last one yields
+for the action to be performed.
 
 
 == Usage example
 
   class PostsController < ApplicationController
     before_filter :authenticate
-    meantime_filter :scope_posts_to_user
+    wrap_filter :scope_posts_to_user
     
     # Displays the posts of the logged in user.
     def show

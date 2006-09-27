@@ -42,38 +42,42 @@ class PostsController < ActionController::Base
   
   module_eval %w( raises_before raises_after raises_both no_raise no_filter ).map {|action| "def #{action} ; default_action ; end" }.join("\n")
   
-  private
-  
-  def default_action
-    render :nothing => true
+  def redirect_to_default
+    # Do things...
+    redirect_to :action => :default_action
   end
+  
+  private
+    def default_action
+      render :nothing => true
+    end
 end
 
 class ControllerWithSymbolAsFilter < PostsController
   meantime_filter :raise_before, :only => :raises_before
   meantime_filter :raise_after, :only => :raises_after
-  meantime_filter :without_exception, :only => :no_raise
+  meantime_filter :without_exception, :only => [:no_raise, :redirect_to_default]
   
   private
-  def raise_before
-    raise Before
-    yield
-  end
+    def raise_before
+      raise Before
+      yield
+    end
   
-  def raise_after
-    yield
-    raise After
-  end
+    def raise_after
+      yield
+      raise After
+    end
   
-  def without_exception
-    # Do stuff...
-    1 + 1
+    def without_exception
+      # Do stuff...
+      1 + 1
     
-    yield
+      yield
     
-    # Do stuff...
-    1 + 1
-  end
+      # Do stuff...
+      1 + 1
+    end
 end
 
 class ControllerWithFilterClass < PostsController
@@ -115,6 +119,15 @@ end
 
 class ControllerWithNestedFilters < ControllerWithSymbolAsFilter
   meantime_filter :raise_before, :raise_after, :without_exception, :only => :raises_both
+end
+
+REGISTER_FILTERS_WITH_ALIASES = lambda do
+  class AliasesTestsController < ControllerWithFilterClass
+    wrap_actions YieldingFilter
+    wrap_filter YieldingFilter
+    prepend_wrap_actions YieldingFilter
+    meantime_filter YieldingFilter
+  end
 end
 
 class MeantimeFilterTest < Test::Unit::TestCase
@@ -195,5 +208,14 @@ class MeantimeFilterTest < Test::Unit::TestCase
       rescue After
       end
     end
+  end
+  
+  def test_aliases
+    assert_nothing_raised { REGISTER_FILTERS_WITH_ALIASES.call }
+  end
+  
+  def test_redirect
+    @controller = @with_symbol
+    assert_nothing_raised { get :redirect_to_default }
   end
 end

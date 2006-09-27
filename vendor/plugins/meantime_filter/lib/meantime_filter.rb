@@ -33,28 +33,37 @@ module ActionController
       module ClassMethods
         
         # The passed <tt>filters</tt> will be appended to the array of filters
-        # that's run _while_ actions on this controller are performed.
+        # that's run _wrapping_ actions performed on this controller.
         def append_meantime_filter(*filters)
           conditions = extract_conditions!(filters)
           add_action_conditions(filters, conditions)
           append_filter_to_chain('meantime', filters)
         end
         
-        # The passed <tt>filters</tt> will be prepended to the array of filters
-        # that's run _while_ actions on this controller are performed.
+        # The passed <tt>filters</tt> will be prepended to the array of
+        # filters that's run _wrapping_ actions performed on this controller.
         def prepend_meantime_filter(*filters)
           conditions = extract_conditions!(filters)
           add_action_conditions(filters, conditions)
           prepend_filter_to_chain('meantime', filters)
         end
         
-        # Short-hand for append_while_filter since that's the most common of the
+        # Short-hand for append_meantime_filter since that's the most common of the
         # two.
         alias :meantime_filter :append_meantime_filter
         
-        # Returns all the while filters for this class and all its ancestors.
+        # Returns all the wrap filters for this class and all its ancestors.
         def meantime_filters #:nodoc:
           @meantime_filters ||= read_inheritable_attribute('meantime_filters') || []
+        end
+        
+        # Aliases for +meantime_filter+
+        for name in [:wrap_filter, :wrap_actions]
+          eval <<-EOA
+            alias prepend_#{name} prepend_meantime_filter
+            alias append_#{name}  append_meantime_filter
+            alias #{name}         append_meantime_filter
+          EOA
         end
       end
       
@@ -94,14 +103,14 @@ module ActionController
           else
             todo = lambda { call_meantime_filters_or_action(filters_and_action) }
             case
-            when filter.is_a?(Symbol) then  self.method(filter).call(&todo)
-            when filter.is_a?(Method) then  filter.call(self, &todo)
-            when filter_class?(filter) then filter.filter(self, &todo)
-            else
-              raise(
-                ActionControllerError, 
-                'Meantime filters need to be either a symbol, a method, or any type of object implementing a static filter method which receives the controller as only parameter'
-              )
+              when filter.is_a?(Symbol) then  send(filter, &todo)
+              when filter.is_a?(Method) then  filter.call(self, &todo)
+              when filter_class?(filter) then filter.filter(self, &todo)
+              else
+                raise(
+                  ActionControllerError, 
+                  'Meantime filter needs to be either a Symbol, a Method, or any object implementing a "filter" method which receives the controller as only parameter'
+                )
             end
           end
         end

@@ -1,0 +1,19 @@
+= v0.1.2
+* Previous versions used Method#call when filters were registered with Symbols
+  as controller method name which modified the safe level (thanks to Lee Jensen
+  for reporting this). This has been changed to both not modify the safe level
+  anymore and be faster simply using "send".
+  See http://blog.outerim.com/articles/2006/08/01/meantime-filter.
+
+= v0.1.1
+* Added aliases for +meantime_filter+: +wrap_filter+ and +wrap_actions+. Those
+  filters can now be registered with:
+  * wrap_actions
+  * append_wrap_actions
+  * prepend_wrap_actions
+  And:
+  * wrap_filter
+  * append_wrap_filter
+  * prepend_wrap_filter
+  They are indeed more appropriate to the goal of those "yielding" filters.
+  Thanks to Ezra Zygmuntowicz for the justified proposals of aliases.
