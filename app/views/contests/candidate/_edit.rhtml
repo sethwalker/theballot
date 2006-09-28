@@ -7,6 +7,10 @@
     <% content_for :done_button do -%>
     <div class="right" id="contest-done-button"><%= link_to_function 'done', "Element.hide('contest-edit-window'); Element.show('contest_#{@contest.id}')" %></div>
     <% end -%>
+  <% elsif (@c3 || contest.c3?) && @contest.choices.size == 1 %>
+    <% content_for :done_button do -%>
+    <div class="right" id="contest-done-button"><%= link_to_function 'done', "alert('You must compare candidates from at least the two major parties')" %></div>
+    <% end -%>
   <% end -%>
   <% else -%>
   <%= render :partial => '/contests/form', :locals => { :contest => contest } %>

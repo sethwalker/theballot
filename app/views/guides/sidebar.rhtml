@@ -15,20 +15,20 @@
 <% end %>
 </div>
 <% if logged_in? && current_user.is_admin? -%>
-admin:<br />
-  <ul id="admin-actions">
-    <li id="endorsed_status">
+<div id="admin-actions" class="sidebar-frame">
+  admin:<br />
+    <div id="endorsed_status">
       <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
-    </li>
+    </div>
     <% if @guide.c3? %>
-      <li id="approved_status">
+      <div id="approved_status">
         <%= render :partial => 'guides/approve', :locals => { :guide => @guide } %>
-      </li>
+      </div>
     <% end %>
-    <li id="published_status">
+    <div id="published_status">
       <%= render :partial => 'guides/publish', :locals => { :guide => @guide } %>
-    </li>
-  </ul>
+    </div>
+  </div>
 <% end -%>
 
 <div id="guide-members" class="sidebar-frame">
