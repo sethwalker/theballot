@@ -46,12 +46,8 @@ admin:<br />
 <div id="guide-members" class="sidebar-frame">
   <h3>Voter Bloc for this guide</h3>
   <h4>(a.k.a. Friends of the guide)</h4>
-<% if @guide.members.empty? -%>
-      <div id="endorsed_status">
-          Be the first to 
-<% end -%>
-        <%#= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
-        <%= link_to "Join the Bloc", :controller => 'guides', :action => 'join', :id => @guide unless @guide.members.to_a.include? current_user %>
-      </div>
+  <div id="endorsed_status">
+  <% if @guide.members.empty? -%>Be the first to <% end -%><%= link_to "Join the Bloc", :controller => 'guides', :action => 'join', :id => @guide unless @guide.members.to_a.include? current_user %>
+  </div>
   <%= render :partial => 'guides/member', :collection => @guide.members %>
 </div>
