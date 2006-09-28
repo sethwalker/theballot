@@ -3,7 +3,7 @@
 
 <style type="text/css">
 
-* {
+body {
   display: block;
   padding: 10px 15px;
   font-family: Arial, Helvetica, sans-serif;
@@ -54,7 +54,7 @@ You may print that they did not answer your questionnaire, but you still may not
 <% elsif @recently_updated_guide_legal_status -%>
 <%= link_to 'continue', :action => 'edit', :id => @guide %>
 <% else -%>
-<%= link_to_function 'close', 'window.close()' %>
+<%= link_to_function 'Close this window', 'window.close()' %>
 <% end -%>
 
 </body>
