@@ -343,8 +343,13 @@ class GuidesController < ApplicationController
 
   def unjoin
     pledge = Pledge.find_by_guide_id_and_user_id(params[:id], current_user.id)
-    pledge.destroy
-    render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
+    pledge.destroy if pledge
+    if request.xhr?
+      render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
+    else
+      @guide = pledge.guide
+      redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink)
+    end
   end
 
   def tell

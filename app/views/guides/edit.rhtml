@@ -1,7 +1,7 @@
 <div id="guide-edit-header">
 <% if @c3 || @guide.c3? -%>
 <p>This is a non-partisan informational voter guide.  You can endorse issues, but not candidates.  For candidates, you must at least add the candidates from the major parties and compare their positions on issues.  This will help the voter make an informed choice.</p>
-<p>Note: Non-partisan guides must be approved before they are posted live on the site.  <%= link_to 'Click here', :action => 'legal', :id => @guide, :update_legal => Guide::PARTISAN %> to make this a partisan guide.</p>
+<p>Note: Non-partisan guides must be approved before they are posted live on the site.  <%= link_to 'Click here', :action => 'update_legal', :id => @guide, :legal => Guide::PARTISAN %> to make this a partisan guide.</p>
 <% else -%>
 <p><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => @guide, :legal => Guide::NONPARTISAN } ) %> to make a non-partisan informational voter guide (basically that means you can compare candidates but can't endorse them).</p>
 <% end -%>

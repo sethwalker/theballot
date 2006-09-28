@@ -35,7 +35,12 @@ admin:<br />
   <h3>Voter Bloc for this guide</h3>
   <h4>(a.k.a. Friends of the guide)</h4>
   <div id="endorsed_status">
-  <% if @guide.members.empty? -%>Be the first to <% end -%><%= link_to "Join the Bloc", :controller => 'guides', :action => 'join', :id => @guide unless @guide.members.to_a.include? current_user %>
+  <% if @guide.members.empty? -%>Be the first to <% end -%>
+  <% if @guide.members.include? current_user -%>
+    <%= link_to "Remove yourself from Bloc", :controller => 'guides', :action => 'unjoin', :id => @guide %>
+  <% else -%>
+    <%= link_to "Join the Bloc", :controller => 'guides', :action => 'join', :id => @guide %>
+  <% end -%>
   </div>
   <%= render :partial => 'guides/member', :collection => @guide.members %>
 </div>
