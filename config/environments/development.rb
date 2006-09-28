@@ -21,10 +21,8 @@ config.action_view.debug_rjs                         = true
 config.action_mailer.raise_delivery_errors = false
 
 APPLICATION_HOST_NAME = 'voterguides.devel.radicaldesigns.org:3080'
-#APPLICATION_C3_DOMAIN = 'c3voterguides.devel.radicaldesigns.org'
-#APPLICATION_STANDARD_DOMAIN = 'voterguides.devel.radicaldesigns.org'
-APPLICATION_C3_DOMAIN = 'c3.local_guides.org'
-APPLICATION_STANDARD_DOMAIN = 'local_guides.org'
+APPLICATION_C3_DOMAIN = 'c3voterguides.devel.radicaldesigns.org'
+APPLICATION_STANDARD_DOMAIN = 'voterguides.devel.radicaldesigns.org'
 
 ActionController::Base.session_options[:session_key] = 'voterguides_session_id'
 ActionController::Base.session_options[:session_domain] = '.local_guides.org'
