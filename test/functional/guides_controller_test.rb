@@ -195,7 +195,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     login_as :quentin
     post :new
     assert assigns(:guide)
-    assert_equal assigns(:guide).legal, Guide::C3
+    assert_equal assigns(:guide).legal, Guide::NONPARTISAN
     assert assigns(:guide).c3?
   end
 end

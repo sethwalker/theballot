@@ -2,6 +2,8 @@ class Guide < ActiveRecord::Base
   PUBLISHED = 'Published'
   DRAFT = 'Draft'
   C3 = 'c3'
+  PARTISAN = 'partisan'
+  NONPARTISAN = 'c3'
 
   has_many :contests, :dependent => :destroy, :include => :choices, :order => 'contests.position'
   has_many :links, :dependent => :destroy
@@ -108,11 +110,15 @@ class Guide < ActiveRecord::Base
   end
 
   def c3?
-    C3 == legal
+    NONPARTISAN == legal
   end
 
   def candidate_contests
     contests.find_all_by_type 'Candidate'
+  end
+
+  def member?(u)
+    members.include?(u)
   end
 
   protected

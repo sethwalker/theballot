@@ -2,11 +2,11 @@ class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
-  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets ]
+  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal ]
+  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal ]
 
   def scope_approved_guides
-    conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::C3}'"
+    conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::NONPARTISAN}'"
     Guide.with_scope({
       :find => { :conditions => conditions }
     }) { yield }
@@ -201,7 +201,7 @@ class GuidesController < ApplicationController
       @guide.save_with_validation(false)
       @recently_created_guide = true
       if c3?
-        @guide.update_attribute('legal', Guide::C3)
+        @guide.update_attribute('legal', Guide::NONPARTISAN)
         render 'guides/c3/instructions'
        return
       end
@@ -272,7 +272,7 @@ class GuidesController < ApplicationController
     elsif 'Publish Guide' == params[:commit] || 'Submit Guide' == params[:commit]
       @guide.publish
     end
-    @guide.legal = Guide::C3 if c3?
+    @guide.legal = Guide::NONPARTISAN if c3?
     @guide.save!
     flash[:notices] ||= []
     flash[:notices] << "Guide was successfully updated.  To edit#{' [or publish]' unless @guide.is_published?} your guide, click on \"My Stuff\" in the upper right"
@@ -326,10 +326,12 @@ class GuidesController < ApplicationController
 
   def join
     @guide = Guide.find(params[:id])
-    pledge = Pledge.new
-    @guide.pledges << pledge
-    current_user.pledges << pledge
-    pledge.save
+    unless @guide.member?(current_user)
+      pledge = Pledge.new
+      @guide.pledges << pledge
+      current_user.pledges << pledge
+      pledge.save
+    end
     if request.xhr?
       render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
     else
@@ -366,4 +368,28 @@ class GuidesController < ApplicationController
       render :action => 'c3/instructions', :layout => false
     end
   end
+
+  def update_legal
+    @guide ||= Guide.find(params[:id])
+    @legal = params[:legal]
+    if @legal == Guide::PARTISAN
+      @guide.update_attribute_with_validation_skipping(:legal, Guide::PARTISAN)
+    elsif @legal == Guide::NONPARTISAN
+      @guide.update_attribute_with_validation_skipping(:legal, Guide::NONPARTISAN)
+      @recently_updated_guide_legal_status = true
+      render 'guides/c3/instructions' and return
+    else
+      if request.xhr?
+        render :update do |page|
+          page.alert 'did not recognize that legal status'
+        end
+      else
+        flash[:error] = 'did not recognize that legal status'
+        redirect_to :action => 'edit', :id => @guide
+      end
+      return
+    end
+    redirect_to :action => 'edit', :id => @guide
+  end
+
 end

@@ -67,7 +67,7 @@ partisan:
   city: san francisco
   state: CA
   user_id: 1
-  legal:
+  legal: <%= Guide::PARTISAN %>
 nonpartisan:
   id: 9
   name: nonpartisan guide
@@ -75,4 +75,4 @@ nonpartisan:
   city: san francisco
   state: CA
   user_id: 1
-  legal: <%= Guide::C3 %>
+  legal: <%= Guide::NONPARTISAN %>

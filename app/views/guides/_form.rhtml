@@ -1,10 +1,10 @@
 
 <div class="dynamic guide-form-section" id="guide-form-basics"<% if 'new' == @controller.action_name %>style="visibility:visible;"<% end %>>
-  <h2>Create a<% if @c3 %> non-partisan<% end %> voter guide</h2>
-  <% if @c3 %><p>(Important: Read these <%= link_to 'instructions', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %> first to make sure your guide will get approved!)</p><% end %>
+  <h2>Create a<% if @c3 || @guide.c3? %> non-partisan<% end %> voter guide</h2>
+  <% if @c3 || @guide.c3? %><p>(Important: Read these <%= link_to 'instructions', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %> first to make sure your guide will get approved!)</p><% end %>
   <h3>Step 1 - The Basics</h3>
-  <% unless @c3 -%>
-  <span><%= link_to 'Click here', url_for( { :only_path => false, :host => APPLICATION_C3_DOMAIN, :action => 'new' } ) %> to create a non-partisan guide</span>
+  <% unless @c3 || @guide.c3? -%>
+  <span><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => guide.id, :legal => Guide::NONPARTISAN } ) %> to create a non-partisan guide</span>
   <% end -%>
   <!--[form:guide]-->
   <div id="guide-basics-error-messages">
@@ -27,7 +27,7 @@
     http://<% if @c3 %>nonpartisan.<% end %>theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
 
   <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
-  <% if @c3 -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
+  <% if @c3 || @guide.c3? -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
   <%= f.text_area 'description', :rows => 10 %></p>
 
   <%= submit_tag 'next' %>

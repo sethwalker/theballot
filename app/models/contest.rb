@@ -10,4 +10,8 @@ class Contest < ActiveRecord::Base
   def to_liquid
     { 'name' => name, 'type' => self.class.to_s, 'choices' => choices }
   end
+
+  def c3?
+    guide.c3?
+  end
 end

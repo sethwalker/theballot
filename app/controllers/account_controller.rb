@@ -55,7 +55,7 @@ class AccountController < ApplicationController
       @user = current_user
     end
     if c3?
-      Guide.with_exclusive_scope(:find => { :conditions => "(legal IS NULL OR legal = '#{Guide::C3}') AND user_id = #{current_user.id}" }) do
+      Guide.with_exclusive_scope(:find => { :conditions => "(legal IS NULL OR legal = '#{Guide::PARTISAN}') AND user_id = #{current_user.id}" }) do
         @num_partisan_guides = Guide.count
       end
     end

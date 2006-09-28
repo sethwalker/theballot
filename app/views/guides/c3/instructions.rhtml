@@ -23,6 +23,8 @@ You may print that they did not answer your questionnaire, but you still may not
 
 <% if @recently_created_guide -%>
 <%= link_to 'continue', :action => 'new' %>
+<% elsif @recently_updated_guide_legal_status -%>
+<%= link_to 'continue', :action => 'edit', :id => @guide %>
 <% else -%>
 <%= link_to_function 'close', 'window.close()' %>
 <% end -%>
