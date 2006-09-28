@@ -14,34 +14,22 @@
   <% end %>
 <% end %>
 </div>
-<% if logged_in? -%>
-<!--  <ul id="authenticated-actions">
-    <li id="pledged_status">
-      <%= render :partial => 'guides/pledge', :locals => { :guide => @guide } %>
+<% if logged_in? && current_user.is_admin? -%>
+admin:<br />
+  <ul id="admin-actions">
+    <li id="endorsed_status">
+      <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
+    </li>
+    <% if @guide.c3? %>
+      <li id="approved_status">
+        <%= render :partial => 'guides/approve', :locals => { :guide => @guide } %>
+      </li>
+    <% end %>
+    <li id="published_status">
+      <%= render :partial => 'guides/publish', :locals => { :guide => @guide } %>
     </li>
   </ul>
--->
-  <% if @guide.owner?(current_user) || current_user.is_admin? %>
-<!--
-  <ul id="owner-actions">
-    <li><%= link_to "Edit this guide", :controller => 'guides', :action => 'edit', :id => @guide %></li>
-  </ul>
--->
-  <% end %>
-    <% if logged_in? && current_user.is_admin? -%>
-admin:<br />
-    <ul id="admin-actions">
-      <li id="endorsed_status">
-        <%= render :partial => 'guides/endorse', :locals => { :guide => @guide } %>
-      </li>
-      <% if @guide.c3? %>
-        <li id="approved_status">
-          <%= render :partial => 'guides/approve', :locals => { :guide => @guide } %>
-        </li>
-      <% end %>
-    </ul>
-    <% end -%>
-  <% end -%>
+<% end -%>
 
 <div id="guide-members" class="sidebar-frame">
   <h3>Voter Bloc for this guide</h3>

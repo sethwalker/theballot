@@ -1,0 +1,5 @@
+<% if guide.published? -%>
+<%= link_to_remote "Unpublish", :url => { :controller => 'guides', :action => 'published_status', :id => guide, :publish => false }, :update => 'published_status' %>
+<% else -%>
+<%= link_to_remote "Publish", :url => { :controller => 'guides', :action => 'published_status', :id => guide, :publish => true }, :update => 'published_status' %>
+<% end -%>

@@ -7,6 +7,7 @@
 <% end %>
 <div class="guide-list-basics">
   <% if guide.endorsed %><div class="guide-endorsed-stamp"><%= image_tag 'league_stamp.gif' %></div><% end %>
+  <% if guide.c3? && !@c3 %><div class="guide-non-partisan">non-partisan</div><% end %>
   <div class="guide-list-name">
     <%= link_to guide.name, guide.permalink_url %>
   </div>

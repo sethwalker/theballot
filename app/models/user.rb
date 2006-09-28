@@ -22,6 +22,17 @@ class User < ActiveRecord::Base
 
   validates_acceptance_of :tos, :message => "You must agree to the box at the bottom to participate"
 
+  def after_validation
+    if errors[:login]
+      errs = errors.each {|err, msg|}
+      errors.clear
+      errs.reject {|err, msg| err == 'login'}.each do |err, msg|
+        msg.each {|m| errors.add err, m}
+      end
+      errs['login'].each {|msg| errors.add :username, msg }
+    end
+  end
+
   has_many :guides
   has_many :pledges
   has_many :blocs, :through => :pledges, :source => :guide
@@ -44,10 +55,8 @@ class User < ActiveRecord::Base
     roles.any? {|r| 'developer' == r.title.downcase }
   end
 
-  def guide_in_progress(is_c3 = false)
-    conditions = []
-    conditions << "status IS NULL"
-    guides.find(:first, :conditions => conditions.join(' AND '))
+  def guide_in_progress
+    guides.find(:first, :conditions => "status IS NULL")
   end
 
   def avatar_thumb
@@ -72,6 +81,10 @@ class User < ActiveRecord::Base
   # Returns true if the user has just been activated.
   def recently_activated?
     @activated
+  end
+
+  def self.activated?(email)
+    find :first, :conditions => ['email = ? and activated_at IS NOT NULL', email]
   end
 
   def forgot_password

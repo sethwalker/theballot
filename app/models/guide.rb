@@ -1,6 +1,7 @@
 class Guide < ActiveRecord::Base
   PUBLISHED = 'Published'
   DRAFT = 'Draft'
+  UNPUBLISHED = 'Unpublished'
   C3 = 'c3'
   PARTISAN = 'partisan'
   NONPARTISAN = 'c3'
@@ -94,6 +95,10 @@ class Guide < ActiveRecord::Base
   end
 
   def is_published?
+    published?
+  end
+
+  def published?
     PUBLISHED == status
   end
 

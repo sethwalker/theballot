@@ -9,7 +9,7 @@ class AccountController < ApplicationController
       redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Your account has been activated.  You can <a href=\"" + url_for(:controller => 'guides', :action => 'new') + "\">create a voter guide</a> or <a href=\"" + url_for(:controller => 'guides', :action => 'list') + "\">view existing guides</a>."
     else
-      flash[:error] = "Unable to activate the account.  Did you provide the correct information?" 
+      flash.now[:error] = "Unable to activate the account.  Did you provide the correct information?" 
     end
   end  
 
@@ -22,7 +22,7 @@ class AccountController < ApplicationController
       flash[:notice] = "A password reset link has been sent to your email address.  Check your email and then login below."
       redirect_to(:action => 'login')
     else
-      flash[:notice] = "Could not find a user with that email address" 
+      flash.now[:notice] = "Could not find a user with that email address" 
     end
   end
 
@@ -96,7 +96,12 @@ class AccountController < ApplicationController
       redirect_back_or_default(:controller => '/account', :action => 'profile')
       flash[:notice] = "Logged in successfully"
     else
-      flash[:error] = "Could not login"
+      user = User.find_by_email(params[:email])
+      if user && !user.activated_at?
+        flash[:error] = "Could not login.   You must first activate your account.  Check your email for the activation link."
+      else
+        flash.now[:error] = "Login incorrect"
+      end
     end
   end
 

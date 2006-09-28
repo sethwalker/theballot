@@ -2,8 +2,8 @@ class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal ]
-  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal ]
+  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :approved_status, :published_status ]
+  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :approved_status, :published_status ]
 
   def scope_approved_guides
     conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::NONPARTISAN}'"
@@ -17,17 +17,6 @@ class GuidesController < ApplicationController
       :find => { :conditions => "status = '#{Guide::PUBLISHED}'" }
     }) { yield }
   end
-
-  in_place_edit_for :guide, :name
-  in_place_edit_for :guide, :description
-  in_place_edit_for :guide, :permalink
-  in_place_edit_for :guide, :city
-
-  in_place_edit_for :contest, :name
-  in_place_edit_for :contest, :description
-  in_place_edit_for :choice, :name
-  in_place_edit_for :choice, :description
-  in_place_edit_for :choice, :selection
 
   def find_guide_by_permalink
     if(params[:year] && params[:permalink])
@@ -50,7 +39,7 @@ class GuidesController < ApplicationController
 
   def authorized?
     return true if current_user.is_admin?
-    if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets'].include?(action_name)
+    if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets', 'update_legal'].include?(action_name)
       @guide ||= Guide.find(params[:id])
       unless @guide.owner?(current_user)
         flash[:error] = 'Permission Denied'
@@ -138,6 +127,7 @@ class GuidesController < ApplicationController
   end
 
   def show
+    @guide = Guide.find(@guide.id) if @guide
     @guide ||= Guide.find(params[:id]) if params[:id]
     return not_found unless @guide
     flash[:notices] ||= []
@@ -196,7 +186,7 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = current_user.guide_in_progress(c3?) || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
+    @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
     unless @guide.id
       @guide.save_with_validation(false)
       @recently_created_guide = true
@@ -322,6 +312,18 @@ class GuidesController < ApplicationController
     @guide = Guide.find(params[:id])
     @guide.approve(current_user) if params[:approved]
     render :partial => 'approve', :locals => { :guide => @guide }, :layout => false
+  end
+
+  def published_status
+    @guide ||= Guide.find(params[:id])
+    return unless @guide
+    if params[:publish]
+      @guide.status = Guide::PUBLISHED
+    else
+      @guide.status = Guide::UNPUBLISHED
+    end
+    @guide.save
+    render :partial => 'guides/publish', :locals => { :guide => @guide }, :layout => false
   end
 
   def join
