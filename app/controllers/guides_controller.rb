@@ -267,7 +267,7 @@ class GuidesController < ApplicationController
     flash[:notices] ||= []
     flash[:notices] << "Guide was successfully updated.  To edit#{' [or publish]' unless @guide.is_published?} your guide, click on \"My Stuff\" in the upper right"
     redirect_to = { :year => @guide.date.year, :permalink => @guide.permalink }
-    redirect_to[:host] = session[:login_domain] if session[:login_domain]
+    redirect_to[:host] = session[:login_domain] if session[:login_domain] && session[:login_domain] != request.host
     redirect_to guide_permalink_url(redirect_to)
   rescue ActiveRecord::MultiparameterAssignmentErrors
     @guide.errors.add :date
