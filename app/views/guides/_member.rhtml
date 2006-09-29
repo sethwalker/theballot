@@ -1,8 +1,6 @@
 <div class="guide-member">
   <div class="member-avatar">
-    <%= image_tag member.avatar_thumb %>
-  </div>
-  <div class="member-login">
     <%= link_to member.login, url_for( :controller => 'users', :action => 'show', :id => member.id ) %>
+    <%= image_tag member.avatar_thumb %>
   </div>
 </div>

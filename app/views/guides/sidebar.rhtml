@@ -5,7 +5,8 @@
 </div>
 
 <div id="author-info" class="sidebar-frame">
-  This guide by <div id="author-avatar"><%= image_tag @guide.user.avatar_thumb %><br/><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %></div>
+  This guide by <div id="author-avatar"><%= link_to @guide.user.login, url_for( :controller => 'users', :action => 'show', :id => @guide.user.id ) %><%= image_tag @guide.user.avatar_thumb %>
+  </div>
 <% if logged_in? -%>
   <% if @guide.owner?(current_user) || current_user.is_admin? %>
   <div id="owner-actions">
