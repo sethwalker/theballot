@@ -188,14 +188,11 @@ class GuidesController < ApplicationController
   def new
     @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
     unless @guide.id
+      @guide.legal = Guide::NONPARTISAN if c3?
       @guide.save_with_validation(false)
       @recently_created_guide = true
-      if c3?
-        @guide.update_attribute('legal', Guide::NONPARTISAN)
-        render 'guides/c3/instructions'
-       return
-      end
     end
+    render 'guides/c3/instructions' and return if c3?
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)
     render :action => 'edit'
@@ -276,7 +273,13 @@ class GuidesController < ApplicationController
 
   def destroy
     Guide.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    if request.xhr?
+      render :update do |page|
+        page.remove "guide_#{params[:id]}"
+      end
+    else
+      redirect_to :action => 'list'
+    end
   end
 
   def order

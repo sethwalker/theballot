@@ -1,19 +1,28 @@
-<h1>Profile for <%= @user.login %></h1>
-
 <% if current_user.is_admin? %>
 <div id="admin_control">
   <%= render :partial => 'admin_control', :locals => { :user => @user } %>
 </div>
 <% end %>
 
+<span>Your Profile</span> <span>(<%= link_to 'edit profile', :action => 'edit', :id => @user %>)</span>
+
+<hr />
+
+<p><span>Username:</span><%= @user.login %></p>
 <%= image_tag @user.avatar.public_filename('thumb') if @user.avatar %>
-<%= link_to 'edit profile', :action => 'edit', :id => @user %>
+<p><%= @user.email %></p>
+
+<p><%= @user.firstname %> <%= @user.lastname %></p>
+<p><%= @user.street %></p>
+<p><%= @user.city %>, <%= @user.state %> <%= @user.postal_code %>
+
+<hr />
 
 <% if @user.guide_in_progress -%>
-<%= link_to 'your current guide', url_for( :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress ) %>
+<h3>In Progress</h3>
+<%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to 'delete', :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress %>
 <% end -%>
 
-<h1>Your Guides</h1>
 <% if @num_partisan_guides %>
 You also have a guide on the partisan voter guide site.  To access it you must go to theballot.org.
 <% end %>
@@ -24,13 +33,11 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   end
 %>
 
-<% if ! (@published.empty? && @draft.empty?) %><h2><%= 'Upcoming' %></h2><% end %>
-
 <% if !@published.empty? %>
-  <h3>Published</h3>
+  <h3>Published Guides</h3>
   <ul>
   <% @published.each do |g| %>
-  <li><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></li>
+  <li id="guide_<%= g.id %>"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g } %> - <%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></li>
   <% end %>
   </ul>
 
@@ -38,49 +45,22 @@ You also have a guide on the partisan voter guide site.  To access it you must g
 <% end %>
 
 <% if !@draft.empty? %>
-  <h3>Draft</h3>
+  <h3>Saved Draft</h3>
   <ul>
   <% @draft.each do |g| %>
-  <li><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></li>
+  <li id="guide_<%= g.id %>"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g } %> - <%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></li>
   <% end %>
 </ul>
 <% end %>
 
-<% Guide.with_scope(:find => { :conditions => [ "date < ?", Time.now ] }) do
-  @published =  @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :order => 'date DESC')
-  @draft = @user.guides.find_all_by_status("#{Guide::DRAFT}", :order => 'date DESC')
-  end
-%>
-
-<% if ! (@published.empty? && @draft.empty?) %><h2><%= 'Past' %></h2><% end %>
-
-<% if !@published.empty? %>
-  <h3>Published</h3>
-  <ul>
-  <% @published.each do |g| %>
-  <li><%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink ) %></li>
-  <% end %>
-  </ul>
-
-  <br/>
-<% end %>
-
-<% if !@draft.empty? %>
-  <h3>Draft</h3>
-  <ul>
-  <% @draft.each do |g| %>
-    <li><%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink ) %></li>
-  <% end %>
-  </ul>
-<% end %>
-
+<h3>Your Voter Blocs</h3>
 <% if @user.blocs -%>
-  <h3>Your Blocs</h3>
+You have joined the bloc for the following guides:
   <ul>
   <% @user.blocs.each do |b| -%>
   <li><%= link_to b.name, guide_permalink_url(:year => b.date.year, :permalink => b.permalink)%></li>
   <% end -%>
   </ul>
+<% else -%>
+To sign on to a voter bloc for guide you agree with, click "Join This Bloc"
 <% end -%>
-    
-

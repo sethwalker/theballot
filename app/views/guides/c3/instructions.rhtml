@@ -51,12 +51,10 @@ If you are endorsing ballot measures in your voter guide, do not ask for the can
 You may print that they did not answer your questionnaire, but you still may not print information on their positions from any other source.</p>
 </div>
 
-<% if @recently_created_guide -%>
-<%= link_to 'OK, I got it.  Continue to creating a guide', :action => 'new' %>
-<% elsif @recently_updated_guide_legal_status -%>
-<%= link_to 'OK, I got it.  Continue to creating a guide', :action => 'edit', :id => @guide %>
-<% else -%>
+<% if @controller.action_name == 'instructions' %>
 <%= link_to_function 'Close this window', 'window.close()' %>
+<% else -%>
+<%= link_to 'OK, I got it.  Continue to creating a guide', :action => 'edit', :id => @guide %>
 <% end -%>
 
 </body>
