@@ -38,7 +38,7 @@ class AccountController < ApplicationController
     else
       flash[:notice] = "Password mismatch" 
     end  
-    redirect_back_or_default(:controller => '/account', :action => 'index') 
+    redirect_back_or_default(:controller => '/account', :action => 'profile') 
   end
 
   def index
@@ -47,7 +47,6 @@ class AccountController < ApplicationController
   end
 
   def profile
-    flash.keep :notice
     redirect_to(:action => 'login') and return unless logged_in?
     if params[:id] && (params[:id] == current_user.id || current_user.is_admin?)
       @user = User.find(params[:id])
@@ -68,7 +67,7 @@ class AccountController < ApplicationController
     if request.post?
       @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar].size != 0
       render :action => 'edit' and return unless @user.update_attributes(params[:user])
-      flash[:notice] = 'Successfully upated profile'
+      flash[:notice] = 'Successfully updated profile'
       redirect_to :action => 'profile' and return
     end
   end

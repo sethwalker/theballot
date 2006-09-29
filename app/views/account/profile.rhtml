@@ -20,7 +20,7 @@
 
 <% if @user.guide_in_progress -%>
 <h3>In Progress</h3>
-<%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to 'delete', :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress %>
+<%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress }, :confirm => 'Are you sure?' %>
 <% end -%>
 
 <% if @num_partisan_guides %>
@@ -37,7 +37,7 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <h3>Published Guides</h3>
   <ul>
   <% @published.each do |g| %>
-  <li id="guide_<%= g.id %>"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g } %> - <%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></li>
+  <li id="guide_<%= g.id %>"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %> - <%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></li>
   <% end %>
   </ul>
 
@@ -48,7 +48,7 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <h3>Saved Draft</h3>
   <ul>
   <% @draft.each do |g| %>
-  <li id="guide_<%= g.id %>"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g } %> - <%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></li>
+  <li id="guide_<%= g.id %>"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %> - <%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></li>
   <% end %>
 </ul>
 <% end %>
