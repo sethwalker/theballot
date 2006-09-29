@@ -6,62 +6,7 @@
     <h2><span>Select your State</span></h2>
       <p><%= select_tag 'state', us_state_options_for_select( @state, {:show => :abbreviations, :include_blank => true}), :onchange => "window.location.href='/guides/by_state/' + this.value" %>
       Click on the map below or use the dropdown menu to view voter guides from the state.</p>
-    <map name="state_image_map" id="state_image_map">
-      <area shape="poly" alt="New Hampshire" coords="449,57, 446,82, 458,77" href="guides/by_state/NH" />
-      <area shape="poly" alt="Vermont" coords="435,63, 441,84, 445,82, 446,59" href="guides/by_state/VT" />
-      <area shape="poly" alt="Washington" coords="52,14, 51,39, 60,46, 101,53, 107,23, 67,13" href="guides/by_state/WA" />
-      <area shape="poly" alt="Hawaii" coords="116,266, 131,258, 180,277, 199,302, 180,312, 144,292" href="guides/by_state/HI" />
-      <area shape="poly" alt="Florida" coords="349,234, 367,241, 413,284, 421,274, 397,226" href="guides/by_state/FL" />
-      <area shape="poly" alt="Alabama" coords="352,187, 332,187, 332,236, 362,226" href="guides/by_state/AL" />
-      <area shape="poly" alt="Georgia" coords="354,185, 362,212, 364,228, 391,226, 399,211, 372,185" href="guides/by_state/GA" />
-      <area shape="poly" alt="South Carolina" coords="377,187, 399,209, 416,187, 395,179, 375,183, 375,185" href="guides/by_state/SC" />
-      <area shape="poly" alt="North Carolina" coords="383,165, 364,182, 377,181, 394,177, 408,180, 420,187, 434,172, 435,155" href="guides/by_state/NC" />
-      <area shape="poly" alt="Kentucky" coords="331,158, 326,165, 327,169, 370,164, 379,155, 372,144, 356,142, 344,154" href="guides/by_state/KY" />
-      <area shape="poly" alt="Tennessee" coords="319,172, 314,185, 361,183, 381,165, 332,169" href="guides/by_state/TN" />
-      <area shape="poly" alt="Mississippi" coords="313,187, 305,227, 321,228, 325,238, 332,235, 330,187" href="guides/by_state/MS" />
-      <area shape="poly" alt="Virginia" coords="411,131, 400,141, 396,151, 387,155, 380,155, 372,165, 434,155, 427,139" href="guides/by_state/VA" />
-      <area shape="poly" alt="West Virginia" coords="387,129, 375,144, 378,151, 385,154, 393,151, 398,140, 408,130, 406,128" href="guides/by_state/WV" />
-      <area shape="rect" alt="District of Columbia" coords="453,158,471,168" href="guides/by_state/DC" />
-      <area shape="rect" alt="Maryland" coords="453,144,471,154" href="guides/by_state/MD" />
-      <area shape="rect" alt="Delaware" coords="456,129,475,139" href="guides/by_state/DE" />
-      <area shape="rect" alt="New Jersey" coords="463,115,481,126" href="guides/by_state/NJ" />
-      <area shape="rect" alt="Connecticut" coords="473,100,488,111" href="guides/by_state/CT" />
-      <area shape="rect" alt="Rhode Island" coords="482,84,497,96" href="guides/by_state/RI" />
-      <area shape="rect" alt="Massachusetts" coords="480,70,498,82" href="guides/by_state/MA" />
-      <area shape="rect" alt="New Hampshire" coords="434,37,448,47" href="guides/by_state/NH" />
-      <area shape="rect" alt="Vermont" coords="420,50,434,59" href="guides/by_state/VT" />
-      <area shape="poly" alt="Maine" coords="451,56, 459,77, 482,50, 468,29, 455,29" href="guides/by_state/ME" />
-      <area shape="poly" alt="New York" coords="401,87, 391,101, 427,94, 439,103, 441,103, 435,63, 421,63" href="guides/by_state/" />
-      <area shape="poly" alt="Pennsylvania" coords="387,104, 390,128, 427,121, 435,113, 430,100, 425,97" href="guides/by_state/PA" />
-      <area shape="poly" alt="Ohio" coords="354,111, 356,140, 374,141, 387,127, 384,104, 370,111" href="guides/by_state/OH" />
-      <area shape="poly" alt="Indiana" coords="331,114, 333,141, 330,155, 343,152, 354,141, 351,111" href="guides/by_state/IN" />
-      <area shape="poly" alt="Illinois" coords="306,107, 309,113, 299,131, 320,165, 327,162, 331,144, 330,113, 327,104" href="guides/by_state/IL" />
-      <area shape="poly" alt="Louisiana" coords="279,212, 280,246, 327,249, 324,239, 319,229, 303,229, 306,211" href="guides/by_state/LA" />
-      <area shape="poly" alt="Arkansas" coords="274,173, 275,202, 279,205, 279,209, 306,209, 314,176, 312,172" href="guides/by_state/AR" />
-      <area shape="poly" alt="Missouri" coords="266,131, 273,145, 273,171, 316,171, 319,165, 296,131" href="guides/by_state/MO" />
-      <area shape="poly" alt="Iowa" coords="258,97, 256,107, 265,130, 297,130, 307,113, 300,104, 297,97" href="guides/by_state/IA" />
-      <area shape="poly" alt="Michigan" coords="303,63, 327,77, 336,94, 337,111, 364,108, 367,100, 364,84, 351,63, 316,56" href="guides/by_state/MI" />
-      <area shape="poly" alt="Wisconsin" coords="294,63, 286,70, 286,83, 299,94, 303,105, 327,104, 327,80, 314,70, 296,63" href="guides/by_state/WI" />
-      <area shape="poly" alt="Minnesota" coords="253,40, 258,70, 258,95, 297,95, 285,83, 285,70, 306,50, 269,40" href="guides/by_state/MN" />
-      <area shape="poly" alt="North Dakota" coords="201,67, 202,37, 252,39, 256,70" href="guides/by_state/ND" />
-      <area shape="poly" alt="South Dakota" coords="198,70, 198,100, 236,101, 256,104, 256,71" href="guides/by_state/SD" />
-      <area shape="poly" alt="Nebraska" coords="198,103, 195,121, 211,122, 212,131, 265,134, 255,107, 236,103" href="guides/by_state/NE" />
-      <area shape="poly" alt="Kansas" coords="211,134, 209,165, 270,165, 270,145, 266,135" href="guides/by_state/KS" />
-      <area shape="poly" alt="Oklahoma" coords="226,168, 226,194, 273,202, 272,168" href="guides/by_state/" />
-      <area shape="poly" alt="Texas" coords="198,171, 195,219, 164,219, 178,235, 181,242, 194,252, 198,242, 209,245, 228,273, 236,283, 249,286, 252,265, 252,263, 279,246, 276,205, 225,196, 225,171" href="guides/by_state/TX" />
-      <area shape="poly" alt="New Mexico" coords="149,162, 140,220, 149,221, 151,216, 195,219, 198,165" href="guides/by_state/NM" />
-      <area shape="poly" alt="Arizona" coords="104,155, 103,165, 101,167, 91,199, 121,216, 138,219, 147,161" href="guides/by_state/AZ" />
-      <area shape="poly" alt="Colorado" coords="155,119, 148,159, 208,165, 209,124" href="guides/by_state/CO" />
-      <area shape="poly" alt="Utah" coords="117,103, 105,152, 147,158, 152,118, 137,117, 138,104" href="guides/by_state/UT" />
-      <area shape="poly" alt="Wyoming" coords="144,77, 139,115, 194,121, 196,80, 145,75" href="guides/by_state/WY" />
-      <area shape="poly" alt="Montana" coords="117,23, 121,60, 128,74, 151,74, 196,77, 199,37" href="guides/by_state/MT" />
-      <area shape="poly" alt="Idaho" coords="108,24, 93,94, 113,99, 139,103, 142,77, 128,76, 118,61, 114,24" href="guides/by_state/ID" />
-      <area shape="poly" alt="Orgeon" coords="36,80, 91,94, 97,73, 101,54, 58,47, 50,41, 37,71" href="guides/by_state/OR" />
-      <area shape="poly" alt="Nevada" coords="69,91, 61,120, 97,169, 104,157, 114,101" href="guides/by_state/" />
-      <area shape="poly" alt="California" coords="35,83, 30,110, 44,167, 73,197, 91,197, 95,172, 60,121, 68,90" href="guides/by_state/CA" />
-      <area shape="poly" alt="Alaska" coords="93,235, 40,226, 14,244, 20,259, 22,335, 79,310, 129,335, 132,328, 95,298" href="guides/by_state/AK" />
-    </map>
-    <%= image_tag 'http://ixley.com/ballot/images/us_map.jpg', :border => 0, :usemap => '#state_image_map' %>
+      <%= render 'guides/map' %>
   </div>
   <div id="search-guides">
     <h4><span>Search All Guides</span></h4>

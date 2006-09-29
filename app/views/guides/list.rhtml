@@ -3,6 +3,9 @@
 <div id="guide-list-container">
 <%= render :partial => 'list_item', :collection => @guides %>
 </div>
+<div id="list-map">
+  <%= render 'guides/map' %>
+</div>
 
 <%= link_to 'Previous page', { :page => @guide_pages.current.previous } if @guide_pages.current.previous %>
 <%= link_to 'Next page', { :page => @guide_pages.current.next } if @guide_pages.current.next %> 
