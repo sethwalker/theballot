@@ -50,9 +50,9 @@ You may print that they did not answer your questionnaire, but you still may not
 </div>
 
 <% if @recently_created_guide -%>
-<%= link_to 'continue', :action => 'new' %>
+<%= link_to 'OK, I got it.  Continue to creating a guide', :action => 'new' %>
 <% elsif @recently_updated_guide_legal_status -%>
-<%= link_to 'continue', :action => 'edit', :id => @guide %>
+<%= link_to 'OK, I got it.  Continue to creating a guide', :action => 'edit', :id => @guide %>
 <% else -%>
 <%= link_to_function 'Close this window', 'window.close()' %>
 <% end -%>
