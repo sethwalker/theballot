@@ -1,5 +1,5 @@
 Fill in the fields below to sign up for an account at theballot.org<br/>
-(if you already have an account <%= link_to 'click here', :action => 'login' %> to login)
+(if you already have an account <%= link_to 'click here', :action => 'login' %> to login)<br />
 
 <% if @user && !@user.errors.empty? -%>
   <% @user.errors.each do |field, err| -%>
