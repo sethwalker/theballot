@@ -50,7 +50,7 @@ class GuidesController < ApplicationController
   end
 
   def access_denied
-    flash[:notice] = "This page requires you to log in.  If you don't have a login yet for the ballot.org, it takes about 10 seconds to <a href=\""+ url_for(:action => 'signup') + "\">sign up</a>.  So no whining.  You could be done by now!"
+    flash[:notice] = "This page requires you to log in.  If you don't have a login yet for the ballot.org, it takes about 10 seconds to sign up."
     return super unless logged_in?
     redirect_to :action => 'show', :id => params[:id]
   end
@@ -86,9 +86,9 @@ class GuidesController < ApplicationController
     @listheader = "Showing All Guides from #{@state}"
     list
     if @guides.empty?
-      @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- we'll show you how.  <a href=\""+url_for(:action => 'index')+"\">back to map</a>"
+      @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- it's easy.  <a href=\""+url_for(:action => 'index')+"\">back to map</a><br /><br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
     else
-      @messages << "Don't see a guide for your area?  Or don't agree with the ones there are?  <a href=\""+url_for(:action => 'new')+"\">Create your own!</a> -- we'll show you how."
+      @messages << "Don't see a guide for your area?  Or don't agree with the ones there are?  <a href=\""+url_for(:action => 'new')+"\">Create your own!</a> -- it's easy.<br /><br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
     end
     render :action => 'list'
   end
