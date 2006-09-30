@@ -260,7 +260,7 @@ class GuidesController < ApplicationController
     @guide.legal = Guide::NONPARTISAN if c3?
     @guide.save!
     flash[:notices] ||= []
-    flash[:notices] << "Guide was successfully updated.  To edit#{' [or publish]' unless @guide.is_published?} your guide, click on \"My Stuff\" in the upper right"
+    flash[:notices] << "Guide was successfully updated.  #{'To publish your guide, edit it and click Submit Guide.  ' unless @guide.is_published?}"
     redirect_to = { :year => @guide.date.year, :permalink => @guide.permalink }
     redirect_to[:host] = session[:login_domain] if session[:login_domain] && session[:login_domain] != request.host
     redirect_to guide_permalink_url(redirect_to)
