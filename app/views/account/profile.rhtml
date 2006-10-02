@@ -4,9 +4,8 @@
 </div>
 <% end %>
 
+<div class="account-section" id="user-profile">
 <span>Your Profile</span> <span>(<%= link_to 'edit profile', :action => 'edit', :id => @user %>)</span>
-
-<hr />
 
 <p><span>Username:</span><%= @user.login %></p>
 <%= image_tag @user.avatar.public_filename('thumb') if @user.avatar %>
@@ -16,11 +15,13 @@
 <p><%= @user.street %></p>
 <p><%= @user.city %>, <%= @user.state %> <%= @user.postal_code %>
 
-<hr />
+</div>
 
 <% if @user.guide_in_progress -%>
+<div class="account-section" id="in-progress">
 <h3>In Progress</h3>
 <%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress }, :confirm => 'Are you sure?' %>
+</div>
 <% end -%>
 
 <% if @num_partisan_guides %>
@@ -34,25 +35,34 @@ You also have a guide on the partisan voter guide site.  To access it you must g
 %>
 
 <% if !@published.empty? %>
+<div class="account-section" id="published">
   <h3>Published Guides</h3>
-  <ul>
+  <div class="account-guide-list">
   <% @published.each do |g| %>
-  <li id="guide_<%= g.id %>"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %> - <%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></li>
+    <div id="guide_<%= g.id %>">
+      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
+      <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
+    </div>
   <% end %>
-  </ul>
-
-  <br/>
+  </div>
+</div>
 <% end %>
 
 <% if !@draft.empty? %>
-  <h3>Saved Draft</h3>
-  <ul>
+<div class="account-section" id="drafts">
+  <h3>Saved Drafts</h3>
+  <div class="account-guide-list">
   <% @draft.each do |g| %>
-  <li id="guide_<%= g.id %>"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %> - <%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></li>
+    <div id="guide_<%= g.id %>">
+      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></div>
+      <div class="account-guide-links"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
+    </div>
   <% end %>
-</ul>
+  </div>
+</div>
 <% end %>
 
+<div id="blocs">
 <h3>Your Voter Blocs</h3>
 <% if @user.blocs -%>
 You have joined the bloc for the following guides:
@@ -64,3 +74,4 @@ You have joined the bloc for the following guides:
 <% else -%>
 To sign on to a voter bloc for guide you agree with, click "Join This Bloc"
 <% end -%>
+</div>
