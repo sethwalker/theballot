@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="account-section" id="user-profile">
-<span>Your Profile</span> <span>(<%= link_to 'edit profile', :action => 'edit', :id => @user %>)</span>
+<h3>Your Profile</h3> <span>(<%= link_to 'edit profile', :action => 'edit', :id => @user %>)</span>
 
 <p><span>Username:</span><%= @user.login %></p>
 <%= image_tag @user.avatar.public_filename('thumb') if @user.avatar %>
@@ -39,7 +39,7 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <h3>Published Guides</h3>
   <div class="account-guide-list">
   <% @published.each do |g| %>
-    <div id="guide_<%= g.id %>">
+    <div class="account-guide-list-item" id="guide_<%= g.id %>">
       <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
       <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
     </div>
@@ -53,7 +53,7 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <h3>Saved Drafts</h3>
   <div class="account-guide-list">
   <% @draft.each do |g| %>
-    <div id="guide_<%= g.id %>">
+    <div class="account-guide-list-item" id="guide_<%= g.id %>">
       <div class="account-guide-title"><%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></div>
       <div class="account-guide-links"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> - <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
     </div>
@@ -62,15 +62,15 @@ You also have a guide on the partisan voter guide site.  To access it you must g
 </div>
 <% end %>
 
-<div id="blocs">
+<div class="account-section" id="blocs">
 <h3>Your Voter Blocs</h3>
 <% if @user.blocs -%>
 You have joined the bloc for the following guides:
-  <ul>
+  <div id="account-bloc-list">
   <% @user.blocs.each do |b| -%>
-  <li><%= link_to b.name, guide_permalink_url(:year => b.date.year, :permalink => b.permalink)%></li>
+    <div class="account-bloc-list-item"><%= link_to b.name, guide_permalink_url(:year => b.date.year, :permalink => b.permalink)%></div>
   <% end -%>
-  </ul>
+  </div>
 <% else -%>
 To sign on to a voter bloc for guide you agree with, click "Join This Bloc"
 <% end -%>
