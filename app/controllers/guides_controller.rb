@@ -39,6 +39,7 @@ class GuidesController < ApplicationController
 
   def authorized?
     return true if current_user.is_admin?
+    return true if action_name == 'new'
     if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets', 'update_legal'].include?(action_name)
       @guide ||= Guide.find(params[:id])
       return true if @guide.owner?(current_user)
@@ -261,6 +262,7 @@ class GuidesController < ApplicationController
     @guide.save!
     flash[:notices] ||= []
     flash[:notices] << "Guide was successfully updated.  #{'To publish your guide, edit it and click Submit Guide.  ' unless @guide.is_published?}"
+#    flash[:notices] << "As soon as we check your guide to make sure it's non-partisan, it will be publicly visible on the site.  That usually happens the same day.  If you have questions email us at voterguides@youngvoter.org." if @guide.c3? && @guide.instance_variable_get(:@recently_published)
     redirect_to = { :year => @guide.date.year, :permalink => @guide.permalink }
     redirect_to[:host] = session[:login_domain] if session[:login_domain] && session[:login_domain] != request.host
     redirect_to guide_permalink_url(redirect_to)
