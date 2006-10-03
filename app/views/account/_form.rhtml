@@ -8,10 +8,10 @@
 <p><label for="user_street">Street Address:</label><br/>
 <%= f.text_field 'street' %></p>
 
-<p><label for="user_city">City:</label><br/>
+<p><label class="required" for="user_city">City:</label><br/>
 <%= f.text_field 'city' %></p>
 
-<p><label for="user_state">State:</label><br/>
+<p><label class="required" for="user_state">State:</label><br/>
 <%= f.us_state_select 'state', { :show => :abbreviations }, :include_blank => true %></p>
 
 <p><label for="user_postal_code">Zip:</label><br/>

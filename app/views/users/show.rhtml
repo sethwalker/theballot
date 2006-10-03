@@ -8,10 +8,10 @@
 
 <% if @user.guides -%>
 <h2>Guides:</h2>
-<ul>
+<div id="user-guides-list">
 <% @user.guides.each do |guide| %>
-<li><%= link_to guide.name, guide.permalink %></li>
+<div class="user-guides-list-item"><%= link_to guide.name, guide.permalink %></div>
 <% end -%>
-</ul>
+</div>
 <% end -%>
 
