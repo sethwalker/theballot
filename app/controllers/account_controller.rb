@@ -111,7 +111,7 @@ class AccountController < ApplicationController
     @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar] && params[:uploaded_avatar].size != 0
     if @user.save
       flash[:notice] = "Thanks for signing up.  We're shootin' you an email right now.  Just click on the link in the email to activate your account and you'll be up and running."
-      redirect_to :action => 'profile'
+      redirect_to :action => 'login'
     end
   end
   
