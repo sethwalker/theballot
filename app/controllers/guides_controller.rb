@@ -1,6 +1,6 @@
 class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
-  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help ]
+  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help, :instructions ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
   meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status ]
   meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status ]
@@ -262,7 +262,7 @@ class GuidesController < ApplicationController
     @guide.save!
     flash[:notices] ||= []
     flash[:notices] << "Guide was successfully updated.  #{'To publish your guide, edit it and click Submit Guide.  ' unless @guide.is_published?}"
-#    flash[:notices] << "As soon as we check your guide to make sure it's non-partisan, it will be publicly visible on the site.  That usually happens the same day.  If you have questions email us at voterguides@youngvoter.org." if @guide.c3? && @guide.instance_variable_get(:@recently_published)
+    flash[:notices] << "As soon as we check your guide to make sure it's non-partisan, it will be publicly visible on the site.  That usually happens the same day.  If you have questions email us at voterguides@youngvoter.org." if @guide.c3? && @guide.instance_variable_get(:@recently_published)
     redirect_to = { :year => @guide.date.year, :permalink => @guide.permalink }
     redirect_to[:host] = session[:login_domain] if session[:login_domain] && session[:login_domain] != request.host
     redirect_to guide_permalink_url(redirect_to)
@@ -375,7 +375,7 @@ class GuidesController < ApplicationController
 
   def instructions
     if params[:id] && params[:id] == 'c3'
-      render :action => 'c3/instructions', :layout => false
+      render :action => 'c3/instructions', :layout => 'instructions'
     end
   end
 
