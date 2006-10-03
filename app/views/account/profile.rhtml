@@ -5,16 +5,18 @@
 <% end %>
 
 <div class="account-section" id="user-profile">
-<h3>Your Profile</h3> <span>(<%= link_to 'edit profile', :action => 'edit', :id => @user %>)</span>
+<h3>Your Profile</h3> <span><%= link_to 'edit profile', :action => 'edit', :id => @user %></span>
 
 <p><span>Username:</span><%= @user.login %></p>
 <%= image_tag @user.avatar.public_filename('thumb') if @user.avatar %>
-<p><%= @user.email %></p>
 
-<p><%= @user.firstname %> <%= @user.lastname %></p>
-<p><%= @user.street %></p>
-<p><%= @user.city %>, <%= @user.state %> <%= @user.postal_code %>
+<div id="account-user-basics">
+<%= @user.firstname %> <%= @user.lastname %><br/>
+<%= @user.street %><br/>
+<%= @user.city %>, <%= @user.state %> <%= @user.postal_code %><br/>
 
+<%= @user.email %>
+</div>
 </div>
 
 <% if @user.guide_in_progress -%>
