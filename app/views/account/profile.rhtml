@@ -44,6 +44,9 @@ You also have a guide on the partisan voter guide site.  To access it you must g
     <div class="account-guide-list-item" id="guide_<%= g.id %>">
       <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
       <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> - <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
+      <% unless g.approved? %>
+      <div class="pending-approval">(pending approval)</div>
+      <% end %>
     </div>
   <% end %>
   </div>
