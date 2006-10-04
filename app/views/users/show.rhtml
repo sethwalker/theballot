@@ -1,7 +1,7 @@
 <div id="user-profile-basics">
   <h1><%= @user.login %></h1>
 
-  <%= image_tag @user.avatar.public_filename if @user.avatar %>
+  <%= image_tag @user.avatar.public_filename('profile') if @user.avatar %>
 
   <div id="user-profile-location">
     <%= @user.city %>, <%= @user.state %>
