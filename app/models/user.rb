@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def avatar_thumb
-    has_avatar? ? avatar.public_filename('thumb') : 'avatar.jpg'
+    has_avatar? ? avatar.public_filename('thumb') : 'avatar.gif'
   end
 
 
