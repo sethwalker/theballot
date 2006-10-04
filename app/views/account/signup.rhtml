@@ -1,4 +1,6 @@
+<div id="account-signup-intro">
 <%= link_to 'Log In', :action => 'login' %> to your account or Sign-up below
+</div>
 
 <% if @user && !@user.errors.empty? -%>
   <% @user.errors.each do |field, err| -%>
