@@ -73,7 +73,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
-    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'state, city, date'
+    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, state, city'
   end
 
   def by_state
@@ -185,7 +185,7 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state)
+    @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state, :theme_id => 1)
     unless @guide.id
       @guide.legal = Guide::NONPARTISAN if c3?
       @guide.save_with_validation(false)
