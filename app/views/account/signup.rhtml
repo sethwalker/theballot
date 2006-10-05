@@ -12,6 +12,11 @@
   <% end -%>
 <% end -%>
 <% form_for :user, @user, :html => { :multipart => true } do |f| -%>
+
+<div id="signup_form">
+
+<div  class="account-section" id="signup_email_pwd">
+
 <p><label class="required" for="user_email">Email</label><br/>
 <%= f.text_field :email %></p>
 
@@ -20,9 +25,16 @@
 <p><label class="required" for="user_login">Username  (how you will be known on the site)</label><br/>
 <%= f.text_field :login %></p>
 
+</div>
+
+<div  class="account-section" id="signup_basics">
+
 <%= render :partial => 'form', :locals => { :f => f, :avatar => @avatar } %>
+
+</div>
 
 <p><%= check_box :user, :tos %><label class="required" for="user_tos">I pledge that any guides I post on this site will be accurate to the best of my knowledge, and will not be inappropriate or offensive.</label></p>
 
 <p><%= submit_tag 'Sign up' %></p>
+</div>
 <% end -%>
