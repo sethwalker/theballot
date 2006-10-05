@@ -18,14 +18,14 @@ h2, h3, h4 { margin-bottom: .2em; }
 
 p { margin-bottom: .5em; }
 
-a { text-decoration: underline; }
+a, a:visited { text-decoration: underline; color: #333333; }
 a:hover { text-decoration: none; }
 
 #flash-notice, #flash-error {
 	font-weight: bold;
 	}
 #flash-notice {
-	color: #00CC00;
+	color: #FF6600;
 	}	
 #flash-error {
 	color: #CC0000;
@@ -67,7 +67,6 @@ body {
 	display: block;
 	width: 850px;
 	margin: 0 auto;
-	padding: 0;
 	}
 	
 #header {
@@ -219,7 +218,7 @@ body {
 	line-height: 1.2em;
 	color: #37301e;
 	background-color: #dfd7b1;
-	background-image: url(http://ixley.com/ballot/images/intro_bg.gif);
+	/*background-image: url(http://ixley.com/ballot/images/intro_bg.gif);*/
 	background-position: bottom;
 	background-repeat: no-repeat;
 	}	
@@ -410,7 +409,7 @@ body {
 	background-color: #FFFFFF;
 	}
 #guide-contests-container a {
-	color: #ff9933;
+	color: #ff6600;
 	text-decoration: underline; }
 #guide-contests-container a:hover {
 	text-decoration: none;	}
@@ -577,7 +576,20 @@ body {
 	}	
 .guide-endorsed-stamp {
 	float: right;
-	width: 30px;
+	width: 50px;
+	height: 30px;
+	margin-left: 3px;
+	}
+.guide-non-partisan {
+	display: block;
+	float: right;
+	background-image: url(http://ixley.com/ballot/images/np_stamp.gif);
+	height: 30px;
+	width: 50px;
+	margin-left: 3px;
+	}	
+.guide-non-partisan span {
+	display: none;	
 	}
 #application .guide-list-image {
 	float: left;
@@ -641,11 +653,18 @@ body {
 	border: solid #cccccc;
 	border-width: 5px 1px 1px 1px;
 	}
-#guides-show #sidebar a {
+#sidebar a {
+	text-decoration: underline;
+	color: #666666;
+	line-height: 1.2em;
+	}
+#sidebar a:hover {
+	color: #333333;
 	text-decoration: none;
 	}
 
-#guides-show #sidebar ul, #guides-show #sidebar li {
+#guides-show #sidebar ul, 
+#guides-show #sidebar li {
 	list-style: none;
 	}
 .sidebar-frame {
@@ -654,7 +673,7 @@ body {
 #guides-show #world-actions {
 	background-color: #ffffff;
 	}
-#world-actions a {
+#guides-show #world-actions a {
 	color: #FF9900;
 	font-weight: bold;
 	line-height: 1.5em;
@@ -662,6 +681,9 @@ body {
 	background-position: center left;
 	background-repeat: no-repeat;
 	}
+#guides-show #world-actions a:hover {
+	color: #FF6600;
+	}	
 #print-guide-link a {
 	background-image: url(http://ixley.com/ballot/images/print_icon.gif);
 	}
@@ -669,28 +691,47 @@ body {
 	background-image: url(http://ixley.com/ballot/images/email_icon.gif);
 	}
 
-#author-avatar, .guide-member {
+#author-avatar, 
+.member-avatar {
 	display: block;
-	height: 35px;
-	padding: 5px;
+	margin: 3px 0 2px 0;
+	padding: 3px;
 	text-align: left;
+	vertical-align: middle;
 	background-color: #ededed;
 	}
-#author-avatar {
-	margin: 4px 0;
-	}
+#author-avatar:after, 
+.member-avatar:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+/* Hides from IE-mac \*/
+* html #author-avatar, 
+* html .member-avatar {height: 1%;}
+/* End hide from IE-mac */
+
 	
-#author-avatar img, .member-avatar img {
+#author-avatar img, 
+.member-avatar img {
 	float: right;
 	}
-#author-avatar a, .guide-member a {
+#sidebar #author-avatar a, 
+#sidebar .member-avatar a {
 	float: left;
 	margin-left: 5px;
 	color: #666666;
 	font-size: 14px;
 	font-weight: bold;
+	line-height: 35px;
+	text-decoration: none;
 	}
-
+#sidebar #author-avatar a:hover, 
+#sidebar .member-avatar a:hover {
+	color: #999999;
+	}
 #guide-members h3 {
 	font-size: 14px;
 	font-weight: bold;
@@ -701,8 +742,151 @@ body {
 	font-size: 11px;
 	font-weight: normal;
 	}
+	
+/* ================================================================================ EDIT & VIEW USER PROFILE
+*/
+#admin_control {
+	margin-bottom: 5px;
+	}
+.account-section,
+#user-guides-list,
+#user-profile-basics {
+	display: block;
+	padding: 8px;
+	margin-bottom: 5px;
+	border: solid #cccccc;
+	border-width: 5px 1px 1px 1px;
+	background-color: #F3F5F7;
+	}
+.account-section {
+	width: 400px;
+	}	
+.account-section h3 {
+	color: #333333;
+	font-size: 14px;
+	}	
+.account-guide-list-item, 
+.account-bloc-list-item,
+.user-guides-list-item {
+	display: block;
+	background-color: #ededed;
+	padding: 5px;
+	height: 1em;
+	clear: both;
+	margin-top: 3px;
+	}
+.account-guide-list-item:hover, 
+.account-bloc-list-item:hover,
+.user-guides-list-item:hover {	
+	background-color: #e3edf7;
+	}
+	
+.account-guide-title  {
+	float: left;
+	}
+.account-guide-title a, 
+.account-bloc-list-item a,
+.user-guides-list-item a {
+	font-weight: bold;
+	color: #666666;
+	text-decoration: none;
+	}
+.account-guide-title a:hover, 
+.account-bloc-list-item a:hover
+.user-guides-list-item a:hover {
+	color: #333333;
+	}	
+.account-guide-links {
+	float: right;
+	}
+.account-guide-links a, 
+#in-progress a,
+#user-profile a  {
+	color: #ff6600;
+	}
+.account-guide-links a:hover,
+#in-progress a:hover
+#user-profile a:hover {
+	text-decoration: none;
+	}
+#in-progress a {
+	text-align: right;
+	}
+#user-profile {
+	color: #666666;
+	}
+#user-profile img {	
+	margin-top: -4em;
+	float: right;
+	border: 1px solid #cccccc;
+	}
+#account-user-basics {
+	line-height: 1.2em;
+	}
 
 
+#user-guides-list,
+#user-profile-basics {
+	width: 450px;
+	}
+#user-profile-basics img {
+	margin-top: -2em;
+	float: right;
+	border: 1px solid #cccccc;
+	}	
+#user-profile-location:after,
+#account-user-basics:after {
+	content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+	}		
+/* Hide from IE-mac \*/
+* html #user-profile-basics {height: 1%;}
+/* End hide from IE-mac */	
+
+/* ================================================================================ SIGN UP
+*/
+#account-signup-intro {
+	display: block;
+	padding: 6px;
+	background-color: #FEFAE4;
+	border: 1px solid #666666;
+	margin-bottom: 1em;
+	font-weight: bold;
+	}
+	
+	
+
+/* ================================================================================ C3 INSTRUCTIONS
+*/
+
+
+#c3-instructions {
+	color: #333333;
+	display: block;
+	width: 550px;
+	background-color: #ffffff;
+	padding: 15px;
+	border: solid #cccccc;
+	border-width: 5px 1px 1px 1px;
+	margin: 1em 0;
+	}
+#c3-instructions p {
+	line-height: 1.2em;
+	}
+#c3-instructions li {
+	margin-left: 1.5em;
+	margin-bottom: .4em;
+	}
+#c3-instructions li ul {
+	margin-top: .4em;
+	}	
+#c3-instructions li li {
+	list-style: none;
+	margin-left: .5em;
+	}
 
 
 /* ================================================================================ FOOTER
@@ -710,8 +894,9 @@ body {
 #footer {
 	clear: both;
 	display: block;
-	padding: 5px 20px;
+	padding: 10px 20px;
 	vertical-align: bottom;
+	margin-bottom: 1.5em;
 	font-size: 10px;
 	color: #666666;
 	background-image: url(http://ixley.com/ballot/images/footer_bg.gif);
