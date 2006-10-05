@@ -71,7 +71,7 @@ GUIDE_SCREENSHOT_JS
   <div id="guide-assets-image-error-messages"><%= error_messages_for 'image' %></div>
   <div id="guide-assets-pdf-error-messages"><%= error_messages_for 'pdf' %></div>
 <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
-<p><label for="guide_image">You can attach an image to your guide:</label><br/>
+<p><label for="guide_image">You can attach an icon to your guide:</label><br/>
 <%= file_field_tag 'uploaded_image'  %>
 <% if @guide.image -%>
 <br/>
