@@ -24,7 +24,7 @@
 <h3>In Progress</h3>
   <div class="account-guide-list">
     <div class="account-guide-list-item" id="guide_<%= @user.guide_in_progress.id %>">
-      <div class="account-guide-title"><%= link_to '@user.guide_in_progress.name', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %></div>
+      <div class="account-guide-title"><%= link_to @user.guide_in_progress.name, :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %></div>
       <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress }, :confirm => 'Are you sure?' %>
 </div>
     </div>
