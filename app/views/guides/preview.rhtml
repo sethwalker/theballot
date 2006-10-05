@@ -7,7 +7,7 @@
   <%= link_to_function 'edit basics', "invi('guide-form-basics', false); $('guide_description').setStyle({overflow:'auto'});" %>
 </div>
 <div class="guide-preview-section" id="guide-preview-description">
-  <%= @guide.description ? truncate( simple_format( @guide.description ), 200 ) : 'Your guides description' %>
+  <%= @guide.description ? simple_format( truncate( @guide.description, 200 ) ) : 'Your guides description' %>
 </div>
 <div class="guide-preview-section" id="guide-preview-theme">
   <% @theme = Theme.find(@guide.theme_id ? @guide.theme_id : :first) %>
