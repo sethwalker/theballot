@@ -1,6 +1,6 @@
 class AvatarProfileAndPreview < ActiveRecord::Migration
   def self.up
-    Avatar.find(:all).each do |a|
+    Avatar.find(:all, :conditions => 'parent_id IS NULL').each do |a|
       a.create_or_update_thumbnail(:profile, '300>x300>')
       a.create_or_update_thumbnail(:preview, '150>x150>')
     end
