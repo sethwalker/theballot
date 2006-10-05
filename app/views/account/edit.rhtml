@@ -1,12 +1,24 @@
 <%= error_messages_for 'user' %>
 <% form_for :user, @user, :url => { :action => 'edit', :id => @user }, :html => { :multipart => true } do |f| -%>
-  <p><label>Login:</label><%= @user.login %></p>
 
-  <p><label>Email:</label><%= @user.email %></p>
+<div id="profile-edit">
 
+<div  class="account-section" id="edit-profile-email">
+  <p><label>Username: </label><%= @user.login %></p>
+
+  <p><label>Email: </label><%= @user.email %></p>
+</div>
+
+<div  class="account-section" id="edit-profile-password">
   <%= render :partial => 'set_password', :locals => { :f => f } %>
+</div>
 
+<div  class="account-section" id="edit-profile-avatar">
   <%= render :partial => 'form', :locals => { :f => f, :avatar => @avatar } %>
+</div>
 
   <%= submit_tag 'Update' %>
+
+</div>
+
 <% end -%>
