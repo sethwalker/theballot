@@ -9,9 +9,12 @@
 
   <p><label>Email: </label><%= @user.email %></p>
 
-  <%= render :partial => 'form', :locals => { :f => f, :avatar => @avatar } %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
 </div>
 
+<div class="account-section" id="edit-profile-avatar">
+  <%= render 'account/avatar' %>
+</div>
 
 <div  class="account-section" id="edit-profile-password">
 <h3>Change Password</h3>

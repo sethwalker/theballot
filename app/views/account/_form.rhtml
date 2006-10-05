@@ -15,14 +15,3 @@
 
 <p><label for="user_postal_code">Zip:</label><br/>
 <%= f.text_field 'postal_code' %></p>
-------------
-<p><label for="uploaded_avatar">If you want you can upload an icon to represent yourself:</label><br/>
-<%= file_field_tag 'uploaded_avatar' %>
-<br/>
-<% if avatar -%>
-currently: <%= image_tag avatar.public_filename("thumb") %>
-<% else -%>
-otherwise, you'll look like this!<br/>
-<%= image_tag "avatar.gif" %>
-<% end -%>
-</p>
