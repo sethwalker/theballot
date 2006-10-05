@@ -12,7 +12,7 @@
 <div id="user-guides-list">
   <h3>Guides:</h3>
   <% @user.guides.each do |guide| %>
-  <div class="user-guides-list-item"><%= link_to guide.name, guide.permalink %></div>
+  <div class="user-guides-list-item"><%= link_to guide.name, guide.permalink_url %></div>
   <% end -%>
 </div>
 <% end -%>
