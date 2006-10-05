@@ -4,18 +4,23 @@
 <div id="profile-edit">
 
 <div  class="account-section" id="edit-profile-email">
+<h3>The Basics</h3>
   <p><label>Username: </label><%= @user.login %></p>
 
   <p><label>Email: </label><%= @user.email %></p>
 </div>
 
+<div  class="account-section" id="edit-profile-avatar">
+<h3>Your Info / Icon</h3>
+  <%= render :partial => 'form', :locals => { :f => f, :avatar => @avatar } %>
+</div>
+
+
 <div  class="account-section" id="edit-profile-password">
+<h3>Change Password</h3>
   <%= render :partial => 'set_password', :locals => { :f => f } %>
 </div>
 
-<div  class="account-section" id="edit-profile-avatar">
-  <%= render :partial => 'form', :locals => { :f => f, :avatar => @avatar } %>
-</div>
 
   <%= submit_tag 'Update' %>
 
