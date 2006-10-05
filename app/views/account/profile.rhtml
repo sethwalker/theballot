@@ -22,7 +22,11 @@
 <% if @user.guide_in_progress -%>
 <div class="account-section" id="in-progress">
 <h3>In Progress</h3>
-<%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress }, :confirm => 'Are you sure?' %>
+    <div class="account-guide-list-item" id="guide_<%= @user.guide_in_progress.id %>">
+      <div class="account-guide-title"><%= link_to @user.guide_in_progress.name, guide_permalink_url( :year => @user.guide_in_progress.date.year, :permalink => @user.guide_in_progress.permalink ) %></div>
+      <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress }, :confirm => 'Are you sure?' %>
+</div>
+</div>
 </div>
 <% end -%>
 
