@@ -8,7 +8,7 @@
 <h3>Your Profile</h3> <span><%= link_to 'edit profile', :action => 'edit', :id => @user %></span>
 
 <p><span>Username:</span><%= @user.login %></p>
-<%= image_tag @user.avatar.public_filename('thumb') if @user.avatar %>
+<%= image_tag @user.avatar.public_filename('preview') if @user.avatar %>
 
 <div id="account-user-basics">
 <%= @user.firstname %> <%= @user.lastname %><br/>
