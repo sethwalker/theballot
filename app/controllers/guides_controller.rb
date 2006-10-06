@@ -2,8 +2,8 @@ class GuidesController < ApplicationController
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help, :instructions ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status ]
-  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status ]
+  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
+  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
 
   def scope_approved_guides
     conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::NONPARTISAN}'"
@@ -39,7 +39,7 @@ class GuidesController < ApplicationController
 
   def authorized?
     return true if current_user.is_admin?
-    return true if action_name == 'new'
+    return true if ['new', 'join', 'unjoin'].include?(action_name)
     if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets', 'update_legal'].include?(action_name)
       @guide ||= Guide.find(params[:id])
       return true if @guide.owner?(current_user)
