@@ -1,7 +1,6 @@
 <% if contest.id -%>
-<%= contest.name %>
-<%= contest.description %>
-<a href="#">edit</a>
+<b><%= contest.name %></b> <a href="#">edit</a><br />
+<i><%= contest.description %></i>
 <ul id="contest_choices_preview">
   <%= render :partial => 'guides/choice', :collection => contest.choices %>
 </ul>
