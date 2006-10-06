@@ -639,6 +639,10 @@ body {
 	margin-bottom: 3px; 
 	}	
 
+#vg-public-url {
+	display: none;
+}
+
 /* ========================================== SIDEBAR 
 */
 #guides-show #sidebar {
