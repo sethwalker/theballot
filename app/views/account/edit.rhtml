@@ -5,12 +5,11 @@
 
 <div  class="account-section" id="edit-profile-email">
 <h3>Your Info</h3>
-  <p><label>Username: </label><%= @user.login %></p>
-
-<p><label for="user_login">Username:</label><br/>
-<%= f.text_field 'login' %></p>
 
   <p><label>Email: </label><%= @user.email %></p>
+
+<p><label for="user_login">Username (how you are known on the site):</label><br/>
+<%= f.text_field 'login' %></p>
 
   <%= render :partial => 'form', :locals => { :f => f } %>
 </div>
