@@ -185,7 +185,9 @@ class GuidesController < ApplicationController
   end
 
   def new
-    @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state, :theme_id => 1)
+    Guide.with_scope(:find => { :conditions => (c3? ? "legal = '#{Guide::NONPARTISAN}'" : "legal <> '#{Guide::NONPARTISAN}'") }) do
+      @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state, :theme_id => 1)
+    end
     unless @guide.id
       @guide.legal = Guide::NONPARTISAN if c3?
       @guide.save_with_validation(false)
