@@ -8,7 +8,7 @@ class Contest < ActiveRecord::Base
   validates_presence_of :name
 
   def to_liquid
-    { 'name' => name, 'type' => self.class.to_s, 'choices' => choices }
+    { 'name' => name, 'description' => description, 'type' => self.class.to_s, 'choices' => choices }
   end
 
   def c3?
