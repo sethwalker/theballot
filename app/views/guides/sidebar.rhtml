@@ -1,7 +1,7 @@
 
 <div id="world-actions" class="sidebar-frame">
 	<div id="print-guide-link"><%= link_to_function "Print This Guide", 'window.print(); return false;' %></div>
-<% if @guide.published? -%>
+<% if @guide.published? && @guide.approved? -%>
 	<div id="email-guide-link"><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></div>
 <% end %>
 </div>
