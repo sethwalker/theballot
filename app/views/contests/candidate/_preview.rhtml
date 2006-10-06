@@ -1,5 +1,5 @@
 <% if contest.id -%>
-<b><%= contest.name %></b> <a href="#">edit</a><br />
+<b><%= contest.name %></b> <%= link_to_remote 'edit', { :url => { :controller => 'contests/candidate', :action => 'edit', :id => contest.id }, :method => :get } %><br />
 <i><%= contest.description %></i>
 <ul id="contest_choices_preview">
   <%= render :partial => 'guides/choice', :collection => contest.choices %>
