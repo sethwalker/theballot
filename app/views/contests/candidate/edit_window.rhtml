@@ -8,5 +8,5 @@
   <%= format_error_messages('choice') %>
 </div>
 <div id="contest-edit-window-left"><%= render :partial => "edit", :locals => { :contest => @contest, :choice => @choice } %></div>
-<div id="contest-edit-window-right"><%= render :partial => "preview", :locals => { :contest => @contest } %></div>
+<div id="contest-edit-window-right"><%= render :partial => "preview", :locals => { :contest => @contest, :choice => @choice } %></div>
 <%= @content_for_done_button %>

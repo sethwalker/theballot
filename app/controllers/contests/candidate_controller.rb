@@ -4,6 +4,7 @@ class Contests::CandidateController < Contests::BaseController
       if params[:id]
         @contest = Candidate.find(params[:id])
         @contest.update_attributes(params[:contest]) if params[:contest]
+        @recently_updated_contest = true
       else
         @contest = Candidate.create(params[:contest])
         @recently_created_contest = true
@@ -32,6 +33,7 @@ class Contests::CandidateController < Contests::BaseController
     @guide = @contest.guide
     if request.post?
       @contest.update_attributes(params[:contest]) if params[:contest]
+      @recently_updated_contest = true
       if params[:choice]
         @saved_choice = @choice.update_attributes(params[:choice].merge(:contest => @contest))
       end

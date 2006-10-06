@@ -1,5 +1,5 @@
 <%= form_remote_tag :url => { :action => controller.action_name, :id => contest.id } %>
-<% if contest.id -%>
+<% if contest.id && ( @recently_updated_contest || @recently_created_contest || !choice.id.nil? ) -%>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
   <%= submit_tag "#{( controller.action_name == 'new' || !choice.id ) ? 'add' : controller.action_name} candidate" %> <%= button_to_function( 'cancel', remote_function( :url => { :controller => '/contests', :action => 'destroy', :id => contest.id }, :confirm => "The office '#{contest.name}' will be removed", :after => sortable_element_js('contests', :url => { :controller => '/guides', :action => 'order' }) + "; document.getElementById('contest-edit-window').style.visibility = 'hidden'" ) ) if @contest.choices.size == 0 %>
