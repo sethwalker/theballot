@@ -1,5 +1,5 @@
 <span class="candidate-contest-name"><b><%= contest.name %></b></span> <%= link_to_remote 'edit', { :url => { :controller => '/contests/candidate', :action => 'edit', :id => contest.id }, :method => :get }, :class => 'candidate-contest-edit-link' %> <%= link_to_remote 'delete', { :url => { :controller => '/contests', :action => 'destroy', :id => contest.id } }, :class => 'candidate-contest-delete-link' %><br/>
-<span class="candidate-contest-description"><%= contest.description %></span><br />
+<div class="candidate-contest-description"><%= contest.description %></div>
 
   <ul id="contest_<%= contest.id %>_choices">
     <%= render :partial => 'guides/choice', :collection => contest.choices %>
