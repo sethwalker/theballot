@@ -1,10 +1,10 @@
 <%= hidden_field 'contest', 'guide_id' %>
 <h3>First, which office is it?</h3>
 <p><%= text_field 'contest', 'name'  %></p>
-<p>(e.g. "City Council, District 5", "Alderman, District 1", "Senator", "President", etc)</p>
+<div class="vg-example_text">e.g. "City Council, District 5", "Alderman, District 1", "Senator", "President", etc</div>
 <br />
 <p><i>Optional: </i> Describe the office:<br />
-Don't describe the candidates yet!  That comes next...<br />
+&nbsp;&nbsp;<i>Don't describe the candidates yet!  That's next...</i><br />
 <%= text_area 'contest', 'description', :rows => 3  %></p>
-<p>(e.g. "The Secretary of State serves as the state's elections chief and record keeper...")</p>
+<div class="vg-example_text">e.g. "The Secretary of State serves as the state's elections chief and record keeper...")</div>
 <br />
