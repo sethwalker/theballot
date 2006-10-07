@@ -101,10 +101,10 @@ class GuidesController < ApplicationController
 
   def search
     if params[:q]
-      @query = params[:q]
+      @query = params[:q].split.collect {|p| ['and', 'or', '*'].include?(p.downcase) || p.include?('*') ? p : p + '*'}.join(' ')
       @guide_pages = Paginator.new self, Guide.count, 10, params['page']
       @guides = Guide.find_by_contents(@query, :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
-      @listheader = "Searching for \"#{@query}\""
+      @listheader = "Searching for \"#{@query.gsub(/\*/,'')}\""
       @messages = ["No results"] if @guides.empty?
       render :action => 'list' and return
     elsif params[:guide]
