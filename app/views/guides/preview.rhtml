@@ -15,8 +15,10 @@
   <span>Theme: </span><span><%= @theme.name %></span>
   <%= link_to_function 'edit theme', "invi('guide-form-theme', false)" %>
 </div>
-  <div class="guide-preview-section" id="guide-preview-image"><% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %>Guide Icon: <%= @guide.image.filename %><% else -%>(none)<% end -%></div>
+  <div class="guide-preview-section" id="guide-preview-image">Guide Icon: <% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %><% else -%>(none)<% end -%></div>
+    <div class="guide-preview-section" id="guide-preview-attached-pdf">
   <% if @guide.attached_pdf -%>
-    <div class="guide-preview-section" id="guide-preview-attached-pdf"><%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %>Attached PDF: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %></div>
+Attached PDF: <%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
   <% else -%>(none)<% end -%>
+    </div>
   <p><div><%= link_to_function 'Upload icon or PDF', "invi('guide-form-assets', false)" %></div></p>
