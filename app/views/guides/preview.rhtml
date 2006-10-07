@@ -17,8 +17,8 @@
 </div>
   <div class="guide-preview-section" id="guide-preview-image">Guide Icon: <% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %><% else -%>(none)<% end -%></div>
     <div class="guide-preview-section" id="guide-preview-attached-pdf">
-  <% if @guide.attached_pdf -%>
-Attached PDF: <%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
+  Attached PDF: <% if @guide.attached_pdf -%>
+<%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
   <% else -%>(none)<% end -%>
     </div>
   <p><div><%= link_to_function 'Upload icon or PDF', "invi('guide-form-assets', false)" %></div></p>
