@@ -15,11 +15,10 @@
   <span>Theme: </span><span><%= @theme.name %></span>
  <span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-theme', false)") %></span>
 </div>
-  <div class="guide-preview-section" id="guide-preview-image">Guide Icon: <% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %><% else -%>(none)<% end -%>
+  <div class="guide-preview-section" id="guide-preview-image"><% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><% end -%>Guide Icon: <% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><%= @guide.image.filename %><% else -%>(none)<% end -%>
  <span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-assets', false)") %></span>
 </div>
-    <div class="guide-preview-section" id="guide-preview-attached-pdf">
-  Attached PDF: <% if @guide.attached_pdf -%>
+    <div class="guide-preview-section" id="guide-preview-attached-pdf"><% if @guide.attached_pdf -%><%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><% end -%>Attached PDF: <% if @guide.attached_pdf -%>
 <%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
   <% else -%>(none)<% end -%>
  <span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-assets', false)") %></span>
