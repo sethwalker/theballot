@@ -74,17 +74,5 @@ You also have a guide on the partisan voter guide site.  To access it you must g
 <% end %>
 
 <div class="account-section" id="blocs">
-<h3>Your Voter Blocs</h3>
-<% if @user.blocs -%>
-You are a &quot;friend&quot; of the following guides:
-  <div id="account-bloc-list">
-  <% @user.blocs.each do |b| -%>
-    <div class="account-bloc-list-item"><div class="account-guide-title"><%= link_to b.name, guide_permalink_url(:year => b.date.year, :permalink => b.permalink)%></div>
-    <div class="account-guide-links"><%= link_to 'un-join this bloc', url_for( :controller => 'guides', :action => 'unjoin', :id => b, :confirm => "Are you sure?" ) %> <%= link_to_remote 'un-join this bloc', :url => { :controller => 'guides', :action => 'unjoin', :id => b }, :confirm => 'Are you sure?' %></div>
-  </div>
-  <% end -%>
-  </div>
-<% else -%>
-To sign on to a voter bloc for guide you agree with, click "Join This Bloc"
-<% end -%>
+  <%= render :partial => 'account/blocs', :locals => { :user => @user } %>
 </div>

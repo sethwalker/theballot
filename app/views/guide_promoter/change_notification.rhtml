@@ -1,0 +1,5 @@
+<% @guide.diff.each do |attribute, changes| %>
+<%= attribute %>:
+  new: <%= changes[0] %>
+  old: <%= changes[1] %>
+<% end %>

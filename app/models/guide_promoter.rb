@@ -18,4 +18,12 @@ class GuidePromoter < ActionMailer::Base
     @body[:guide] = setup[:guide]
     @body[:url] = "http://#{APPLICATION_C3_DOMAIN}#{setup[:guide].permalink_url}"
   end
+
+  def change_notification(guide)
+    @recipients = 'sam@indyvoter.org, seth@indyvoter.org'
+    @from = 'voterguides@indyvoter.org'
+    @subject = 'changed c3 guide'
+    @send_on = Time.now
+    @body[:guide] = guide
+  end
 end

@@ -1,4 +1,5 @@
 class GuidesController < ApplicationController
+  observer :guide_observer
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help, :instructions ]
   before_filter :check_date, :only => [ :edit, :update_basics ]
@@ -352,7 +353,7 @@ class GuidesController < ApplicationController
     pledge = Pledge.find_by_guide_id_and_user_id(params[:id], current_user.id)
     pledge.destroy if pledge
     if request.xhr?
-      render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
+      render :partial => 'account/blocs', :locals => {:user => current_user}, :layout => false
     else
       @guide = pledge.guide
       redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink)
