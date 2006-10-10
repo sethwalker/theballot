@@ -85,7 +85,9 @@ class GuidesController < ApplicationController
     @listheader = "Showing All Guides from #{@state}"
     list
     if @guides.empty?
-      @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- it's easy.  <a href=\""+url_for(:action => 'index')+"\">back to map</a><br /><br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
+      @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- it's easy.  <a href=\""+url_for(:action => 'index')+"\">back to map</a><br />
+<div id="create_guide_icon"><a href=\""+url_for(:action => 'new')+"\"><% image_tag('create_guide_btn.gif', :alt => 'Create a Guide') %></div>
+<br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
     else
       @messages << "Don't see a guide for your area?  Or don't agree with the ones there are?  <a href=\""+url_for(:action => 'new')+"\">Create your own!</a> -- it's easy.<br /><br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
     end
