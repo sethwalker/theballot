@@ -4,7 +4,7 @@
   <% if @guides.empty? -%>
     <% if @state -%>
       There are no guides for the region you selected.  <%= link_to('Create one!', url_for(:action => 'new')) %> -- it's easy.  <%= link_to 'back to map', url_for(:action => 'index') %><br />
-      <div id=\"create_guide_icon\"><%= link_to image_tag('create_guide_btn.gif', :alt => 'Create a Guide'), url_for(:action => 'new') %></div><br />
+      <div id="create_guide_icon"><%= link_to image_tag('create_guide_btn.gif', :alt => 'Create a Guide'), url_for(:action => 'new') %></div><br />
       <%= link_to 'View All Guides', url_for(:action => 'list') %>
     <% end -%>
   <% else -%>
