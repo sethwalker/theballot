@@ -20,11 +20,7 @@
       <%= link_to 'view more guides', { :action => 'list' }, :id => 'view-link' %>
       <%= link_to 'create new guide', { :action => 'new' }, :id => 'create-link' %>
     </div>
-    <div id="guide-list-top">
-    </div>
     <div id="guide-list">
       <%= render :partial => 'list_item', :collection => @guides %>
     </div>
-    <div id="guide-list-bottom"></div>
-  </div>
 </div>
