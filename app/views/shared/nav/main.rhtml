@@ -2,7 +2,7 @@
       <div id="nav_links">
       <%= link_to "Create a Guide", :controller => 'guides', :action => 'new' %> | 
      <%= link_to "View All Guides", :controller => 'guides', :action => 'list' %> |
-      <label for="state">View Guides by State</label> <%= select_tag 'state', options_for_select('--' => '', 'ALL' => 'all') + us_state_options_for_select( @state, {:show => :abbreviations}), :onchange => "window.location.href='/guides/by_state/' + this.value" %>
+      <label for="state">View Guides by State</label> <%= select_tag 'state', options_for_select('--' => '') + us_state_options_for_select( @state, {:show => :abbreviations}), :onchange => "window.location.href='/guides/by_state/' + this.value" %>
        </div>
       <span id="nav-search">
         <%= render "shared/search" %>
