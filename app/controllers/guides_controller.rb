@@ -235,6 +235,7 @@ class GuidesController < ApplicationController
       render :update do |page|
         page.replace_html "guide-#{@current}-error-messages", format_error_messages('guide')
       end
+      @response.headers['Status'] = 500.to_s
     end
   end
 
