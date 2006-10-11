@@ -1,5 +1,16 @@
 <p id="guide-list-header"><%= @listheader %></p>
-<div id="guide-list-messages"><%= @messages.join('<br/>') if @messages %></div>
+<div id="guide-list-messages">
+  <%= @messages.join('<br/>') if @messages %>
+  <% if @guides.empty? -%>
+    <% if @state -%>
+      There are no guides for the region you selected.  <%= link_to('Create one!', url_for(:action => 'new')) %> -- it's easy.  <%= link_to 'back to map', url_for(:action => 'index') %><br />
+      <div id=\"create_guide_icon\"><%= link_to image_tag('create_guide_btn.gif', :alt => 'Create a Guide'), url_for(:action => 'new') %></div><br />
+      <%= link_to 'View All Guides', url_for(:action => 'list') %>
+    <% end -%>
+  <% else -%>
+  Don't see a guide for your area?  Or don't agree with the ones there are?  <%= link_to 'Create your own!', :action => 'new' %> -- it's easy.<br /><br /><%= link_to 'View All Guides', :action => 'list' %>
+  <% end -%>
+</div>
 <div id="guide-list-container">
 <%= render :partial => 'list_item', :collection => @guides %>
 </div>

@@ -85,12 +85,9 @@ class GuidesController < ApplicationController
     @conditions[:state] = "state = '#{@state}'"
     @listheader = "Showing All Guides from #{@state}"
     list
-    if @guides.empty?
-      @messages << "There are no guides for the region you selected.  <a href=\""+url_for(:action => 'new')+"\">Create one!</a> -- it's easy.  <a href=\""+url_for(:action => 'index')+"\">back to map</a><br />
-<div id=\"create_guide_icon\"><a href=\""+url_for(:action => 'new')+"\">this method doesnt work so i need seth's help - image_tag('create_guide_btn.gif', :alt => 'Create a Guide')</div>
-<br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
-    else
-      @messages << "Don't see a guide for your area?  Or don't agree with the ones there are?  <a href=\""+url_for(:action => 'new')+"\">Create your own!</a> -- it's easy.<br /><br /><a href=\""+url_for(:action => 'list')+"\">View All Guides</a>"
+    if @guides.empty? && request.env['HTTP_REFERER'] && !request.env['HTTP_REFERER'].include?(request.host)
+        flash[:notice] = "There are no guides for the region you selected."
+        redirect_to :action => 'index' and return
     end
     render :action => 'list'
   end
@@ -188,7 +185,7 @@ class GuidesController < ApplicationController
   end
 
   def new
-    Guide.with_scope(:find => { :conditions => (c3? ? "legal = '#{Guide::NONPARTISAN}'" : "legal <> '#{Guide::NONPARTISAN}'") }) do
+    Guide.with_scope(:find => { :conditions => (c3? ? "legal = '#{Guide::NONPARTISAN}'" : "legal IS NULL OR legal <> '#{Guide::NONPARTISAN}'") }) do
       @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state, :theme_id => 1)
     end
     unless @guide.id

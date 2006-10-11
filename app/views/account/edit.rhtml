@@ -8,8 +8,11 @@
 
   <p><label>Email: </label><%= @user.email %></p>
 
-<p><label for="user_login">Username (how you are known on the site):</label><br/>
-<%= f.text_field 'login' %></p>
+  <p><label for="user_login">Username (how you are known on the site):</label><br/>
+  <%= f.text_field 'login' %></p>
+
+  <p><label for="user_about_me">About me:</label><br/>
+  <%= f.text_area 'about_me' %></p>
 
   <%= render :partial => 'form', :locals => { :f => f } %>
 </div>

@@ -67,27 +67,31 @@ GUIDE_SCREENSHOT_JS
 
 </div>
 
-<div class="dynamic guide-form-section" id="guide-form-assets">
+<div class="dynamic guide-form-section" id="guide-form-image">
   <div id="guide-assets-image-error-messages"><%= error_messages_for 'image' %></div>
+  <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
+    <p><label for="guide_image">You can attach an icon to your guide:</label><br/>
+    <%= file_field_tag 'uploaded_image'  %>
+    <% if @guide.image -%>
+      <br/>
+      currently: <%= image_tag @guide.image.public_filename("thumb") %>
+    <% end -%>
+    </p>
+    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)" %>
+  <%= end_form_tag %>
+</div>
+
+<div class="dynamic guide-form-section" id="guide-form-pdf">
   <div id="guide-assets-pdf-error-messages"><%= error_messages_for 'pdf' %></div>
-<%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
-<p><label for="guide_image">You can attach an icon to your guide:</label><br/>
-<%= file_field_tag 'uploaded_image'  %>
-<% if @guide.image -%>
-<br/>
-currently: <%= image_tag @guide.image.public_filename("thumb") %>
-<% end -%>
-</p>
-
-<p><label for="uploaded_pdf">You can also attach a PDF version of your guide:</label><br/>
-<%= file_field_tag 'uploaded_pdf'  %>
-<% if @guide.attached_pdf -%>
-<br/>
-currently: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
-<% end -%></p>
-
-<%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-assets', true)" %>
-<%= end_form_tag %>
+  <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
+    <p><label for="uploaded_pdf">You can attach a PDF version of your guide:</label><br/>
+    <%= file_field_tag 'uploaded_pdf'  %>
+    <% if @guide.attached_pdf -%>
+      <br/>
+      currently: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
+      <% end -%>
+    </p>
+    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-pdf', true)" %>
+  <%= end_form_tag %>
 </div>
 <!--[eoform:guide]-->
-

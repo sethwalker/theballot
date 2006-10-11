@@ -6,6 +6,10 @@
   <div id="user-profile-location">
     <%= @user.city %>, <%= @user.state %>
   </div>
+
+  <div id="user-profile-aboutme">
+    <%= @user.about_me %>
+  </div>
 </div>
 
 <% if @user.guides.any? {|g| g.published? && g.approved?} -%>
