@@ -41,7 +41,7 @@ class GuidesController < ApplicationController
   def authorized?
     return true if current_user.is_admin?
     return true if ['new', 'join', 'unjoin'].include?(action_name)
-    if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets', 'update_legal'].include?(action_name)
+    if ['edit', 'update', 'destroy', 'update_basics', 'update_theme', 'update_assets', 'update_legal', 'order'].include?(action_name)
       @guide ||= Guide.find(params[:id])
       return true if @guide.owner?(current_user)
     end
