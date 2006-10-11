@@ -12,13 +12,12 @@
 <div class="guide-preview-section" id="guide-preview-theme">
   <% @theme = Theme.find(@guide.theme_id ? @guide.theme_id : :first) %>
   <%= image_tag(@theme.screenshot.public_filename('thumb')) if @theme.screenshot %>
-  <span>Theme: <br /></span><span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-theme', false)") %></span><span><%= @theme.name %></span>
+  <span>Theme: <br /></span><span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-theme', false)") %></span> <span><%= @theme.name %></span>
 </div>
   <div class="guide-preview-section" id="guide-preview-image">
-<% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><% end -%>Guide Icon: <br /><span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-image', false)") %></span><% if @guide.image -%><%= @guide.image.filename %><% else -%>(none)<% end -%>
+<% if @guide.image -%><%= image_tag @guide.image.public_filename("thumb") %><% end -%>Guide Icon: <br /><span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-image', false)") %></span> <% if @guide.image -%><%= @guide.image.filename %><% else -%>(none)<% end -%>
 </div>
   <div class="guide-preview-section" id="guide-preview-attached-pdf">
-   <span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-pdf', false)") %></span>
-  <% if @guide.attached_pdf -%><%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><% end -%>Attached PDF: <% if @guide.attached_pdf -%><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
+  <% if @guide.attached_pdf -%><%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><% end -%>Attached PDF: <br /><span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-pdf', false)") %></span> <% if @guide.attached_pdf -%><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
   <% else -%>(none)<% end -%>
   </div>
