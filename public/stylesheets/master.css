@@ -1,1002 +1,1 @@
-/*
----------------------------------
-theBallot.org Screen Styles
-Author: Jeff French
-Version: 1 - Sept. 5, 2006
---------------------------------- */
-
-/* ================================================================================ UNIVERSAL
-*/
-* { 
-	margin: 0;
-	padding: 0;
-	}
-h2 { font-size: 18px; }
-h3 { font-size: 16px; }
-h4 { font-size: 14px; }
-h2, h3, h4 { margin-bottom: .2em; }
-
-p { margin-bottom: .5em; }
-
-a, a:visited { text-decoration: underline; color: #333333; }
-a:hover { text-decoration: none; }
-
-#flash-notice, #flash-error {
-	font-weight: bold;
-	}
-#flash-notice {
-	color: #FF6600;
-	}	
-#flash-error {
-	color: #CC0000;
-	}
-
-select {
-	border: 1px solid #999999;
-	background-color: #eae7db;
-	color: #333333;
-	font-size: 10px;
-	}	
-input, textarea {
-	background-color: #FaFaFa;
-	border: 1px solid #999999;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	padding: .2em;
-	color: #333333;
-	}
-input:focus, textarea:focus {
-	background-color: #FFFFFF;
-	color: #000000;
-	border-color: #CCCCCC;
-	}
-	
-.clear { clear: both;}
-.right { float: right;}
-/* ================================================================================ LAYOUT
-*/	
-	
-body {
-	background-color: #15324e;
-	background-image: url(http://ixley.com/ballot/images/background.gif);
-	background-repeat: repeat-x;
-	background-position: center top;
-	}
-	
-#wrap {
-	display: block;
-	width: 850px;
-	margin: 0 auto;
-	}
-	
-#header {
-	margin: 0;
-	padding-top: 3px;
-	display: block;
-	vertical-align: top;
-	height: 77px;
-	width: 850px;
-	background-image: url(http://ixley.com/ballot/images/header-bottom.gif);
-	background-position: bottom;
-	background-repeat: no-repeat;
-	}
-
-/* ================================================================================ HEADER
-*/
-#header a {
-	color: #fffa86;
-	font-size: 12px;
-	font-weight: bold;
-	text-decoration: none;
-	}
-#header a:hover {
-	color: #FFCC00;
-	}
-
-#logo a, #nonpartisan-logo a {
-	display: block;
-	float: left;
-	background-repeat: no-repeat;
-	background-position: top;
-	}
-#logo a {
-	width: 260px;
-	height: 67px;
-	background-image: url(http://ixley.com/ballot/images/logo.jpg);
-	}
-#nonpartisan-logo a {
-	width: 480px;
-	height: 67px;
-	background-image: url(http://ixley.com/ballot/images/logo-c3.jpg);
-	}
-	
-#logo a:hover, 
-#nonpartisan-logo a:hover {
-	background-position: bottom;
-	}
-	
-	
-#logo span, 
-#nonpartisan-logo span {
-	display: none;
-	}
-#sponsored-logo a, 
-#nonpartisan-sponsored-logo a {
-	float: right;
-	vertical-align: top;
-	display: block;
-	height: 60px;
-	width: 154px;
-	padding: 0;
-	background-position: top;
-	}
-#sponsored-logo a {
-	background-image: url(http://ixley.com/ballot/images/league_stamp.gif);
-	}
-#nonpartisan-sponsored-logo a {
-	background-image: url(http://ixley.com/ballot/images/league_stamp-c3.gif);
-	}
-#sponsored-logo a:hover, 
-#nonpartisan-sponsored-logo a:hover {
-	background-position: bottom;
-	}
-#sponsored-logo span, 
-#nonpartisan-sponsored-logo span {
-	display: none;
-	}
-	
-#account-nav {
-	padding: 5px;
-	display: block;
-	float: right;
-	vertical-align: bottom;
-	font-family: Arial, Helvetica, sans-serif;
-	color: #CCCCCC;
-	font-weight: normal;
-	}
-/* ================================================================================ NAV
-*/
-#nav {
-	margin: -8px -5px 10px -5px;
-	background-color: #333333;
-	padding: 2px 5px;
-	color: #cccccc;
-	font-size: 11px;
-	vertical-align: middle;
-	}
-#nav a {
-	text-decoration: none;
-	font-weight: bold;
-	color: #66ccff;
-	padding: 0 3px;
-	}
-#nav a:hover {
-	text-decoration: none;
-	color: #FFFFFF;
-	}
-#nav-search {
-	display: block;
-	text-align: right;
-	margin-top: -1.3em;
-	margin-right: 1px;
-	margin-bottom: 1px;
-	}
-#nav-search input[type="text"] {
-	font-size: 11px;
-	padding: 1px;
-	}
-
-#nav-search input[type="image"] {
-	background-color: transparent;
-	border: none;
-	margin-left: 2px;
-	padding: 0;
-	height: 17px;
-	vertical-align: bottom;
-	}
-
-/* ================================================================================ CONTAINER
-*/
-#container, #footer {
-	background-color: #e9e0c2;
-	}
-#container {
-	display: block;
-	padding: 10px 15px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	min-height: 40em;
-	}
-	/* Hide from IE-mac \*/
-* html #container { height: 1%; }	
-	/* End hide from IE-mac */
-	
-#home h2, #home h3 {
-	color: #333333;
-	background-repeat: no-repeat;
-	background-position: left;
-	border-bottom: 1px solid #fff7d9;
-	margin-bottom: 2px;
-	}
-#home h2 span, #home h3 span, #home h4 span {
-	display: none;
-	margin: 0;
-	}
-/* ================================================================================ LEFT COLUMN
-*/	
-#container .front-page-left {
-	display: block;
-	float: left;
-	width: 520px;
-
-	}
-#intro {
-	display: block;
-	width: 490px;
-	padding: 20px 15px 10px 15px;
-	/*margin-top: -10px; */
-	margin-bottom: 15px;
-	font-size: 14px;
-	line-height: 1.2em;
-	color: #37301e;
-	background-color: #dfd7b1;
-	/*background-image: url(http://ixley.com/ballot/images/intro_bg.gif);*/
-	background-position: bottom;
-	background-repeat: no-repeat;
-	}	
-
-#map {
-	padding: 0 7px;
-	margin-bottom: 20px;
-	}
-#map h2 {
-	height: 25px;
-	background-image: url(http://ixley.com/ballot/images/select_state.gif);
-	background-repeat: no-repeat;
-	}
-
-#map p {
-	margin-bottom: 3px;
-	color: #666666;
-	}
-#map img {
-	border: 1px solid #705f4d;
-	}
-	
-#search-guides {
-	display: block;
-	width: 280px;
-	height: 68px;
-	padding: 5px 10px;
-	margin: 10px 7px;
-	vertical-align: top;
-	background-image: url(http://ixley.com/ballot/images/search_bg.gif);
-	background-repeat: no-repeat;
-	}
-#search-guides h4 {
-	display: block;
-	width: 150px;
-	height: 18px;
-	margin-bottom: .2em;
-	background-image: url(http://ixley.com/ballot/images/search_guides.gif);
-	background-repeat: no-repeat;
-	}
-#search-guides input[type="text"] {
-	font-size: 14px;
-	height: 20px;
-	background-color: #FFFFFF;
-	border: 1px solid #CCCCCC;
-	}
-#search-guides input[type="image"] {	
-	background-color: transparent;
-	border: none;
-	margin-left: 3px;
-	padding: 0;
-	vertical-align: bottom;
-	}
-	
-	
-/* ================================================================================ RIGHT COLUMN
-*/		
-
-#container .front-page-right {
-	display: block;
-	float: right;
-	width: 260px;
-	padding: 10px;
-	}
-/* ================================================================================ VOTER GUIDE LIST
-*/		
-#guide-list {
-	background-color: #f3f5f7;
-	padding: 0 7px;
-	}
-#voter-guides h3 {
-	display: block;
-	height: 18px;
-	background-image: url(http://ixley.com/ballot/images/browse_voter_guides.gif);
-	background-repeat: no-repeat;
-	}
-#voter-guide-links, #voter-guide-links a {
-	font-size: 12px;
-	font-weight: bold;
-	color: #377300;
-	text-decoration: none;
-	height: 10px;
-}
-#voter-guide-links a:hover {
-	color: #339900;
-	}
-#view-link { float: left;}
-#create-link { float: right;}
-#voter-guide-links { margin-bottom: 8px; }
-	
-/* hide icons on home page only */	
-#home .guide-list-image img {
-	display: none;
-	}
-	
-#guide-list-bottom, #guide-list-top {
-	display: block;
-	width: 260px;
-	height: 15px;
-	background-repeat: no-repeat;
-	}
-#guide-list-bottom { background-image: url(http://ixley.com/ballot/images/voter_guides-bottom.gif);	}
-#guide-list-top { background-image: url(http://ixley.com/ballot/images/voter_guides-top.gif); }
-	
-	
-#home .guide-list-element	{
-	padding: 4px 0;
-	border-bottom: 1px solid #FFFFFF;
-	}
-
-.guide-list-name, .guide-list-name a {
-	font-size: 12px;
-	font-weight: bold;
-	color: #333333;
-	text-decoration: none;
-	}
-
-/* ================================================================================ CONTENT - CREATE/EDIT GUIDES
-*/
-#guide-edit-header {
-	padding-bottom: 8px;
-	font-weight: bold;
-	}
-#guide-edit-header:hover {
-	color: #000000;
-	}	
-#guide-preview h4, #guide-contests-container h4 {
-	font-size: 16px;
-	color: #333333;
-	padding-bottom: 3px;
-	border-bottom: 1px solid #999999;
-	}
-#guide-edit-header, #guide-edit-header a:hover {
-	color: #666666;
-	margin-bottom: 5px;
-	}
-#guide-edit-header a {
-	color: #999999;
-	}	
-.guide-edit-left {                /*  LEFT  */
-	display: block;
-	width: 250px;
-	float: left;
-	}
-
-.guide-edit-right {                /*  RIGHT  */
-	display: block;
-	width: 550px;
-	float: right;
-	line-height: 1.2em;
-	}
-	
-/*====================================guide-preview = The BASICS Window   */
-
-#guide-preview {
-	display: block;
-	margin-bottom: 15px;
-	padding: 15px 15px 25px 15px;
-	background-color: #f6f2e7;
-	color: #333333;
-	}
-#guide-preview-basics p {
-	margin-bottom: 0;
-	line-height: 1.1em;
-	}	
-.guide-preview-section {
-	margin-bottom: 1.2em;
-	clear: both;
-	}
-.guide-preview-section img {
-	float: right;
-	border: 1px solid #333333;
-	}
-.edit_icon img {
-	border: none;
-	float: none;
-	margin: 2px;
-	}
-/* see POPUPS for guide window */
-
-#guide-preview-theme,
-#guide-preview-image,
-#guide-preview-attached-pdf {
-	display: block;
-	background-color: #f1f1f1;
-	border: 1px solid #d8d8d8;
-	padding: 5px;
-	margin-bottom: 5px;
-	height: 37px;
-	}	
-#guide-preview-attached-pdf img {
-	border: none;
-	}	
-	
-#guide-preview a {
-	color: #333333;
-	text-decoration: underline; }
-#guide-preview a:hover {
-	color: #000000;		
-	text-decoration: none;	}
-
-		
-/*====================================guide-contests-container = The BALLOT Window   */	
-
-#guide-contests-container  {
-	display: block;
-	margin-bottom: 15px;
-	padding: 15px 15px 25px 15px;
-	background-color: #FFFFFF;
-	}
-#guide-contests-container a {
-	color: #ff6600;
-	text-decoration: underline; }
-#guide-contests-container a:hover {
-	text-decoration: none;	}
-
-#add-contests {
-	display: block;
-	height: 70px;
-	padding: 10px 0 0 3px;
-	border-bottom: 1px solid #999999;
-	background-image: url(http://ixley.com/ballot/images/buttons_gradient_bg.gif);
-	background-position: bottom;
-	background-repeat: repeat-x;
-	
-	}
-#add-issue-link, 
-#add-office-link {
-	padding: 5px;
-	clear: both;
-	}	
-#add-issue-link a, 
-#add-office-link a {
-	float: left;
-	margin-right: 8px;
-	vertical-align: middle;
-	}	
-#add-office-example, 
-#add-issue-example {
-	padding: 5px 0;
-	vertical-align: bottom;
-	color: #666666;
-	font-style: italic;
-	}	
-#add-issue-link img, 
-#add-office-link img { 
-	border: none; 
-	}	
-.ballot-instructions {
-	color: #666666;
-	padding-top: 10px;
-	margin: 0 0 5px 5px;
-	font-style: italic;
-	}	
-#contests li {
-	cursor: move;
-	}
-#contests li, 
-#contests li ul,
-#contest-edit-window-right li,
-#contest-edit-window-right li ul {
-	margin-left: 10px;
-	list-style-type: none;
-	list-style-image: url(http://ixley.com/ballot/images/carrot.gif);
-	}
-#contests li:hover {
-	list-style-image: url(http://ixley.com/ballot/images/carrot-over.gif);
-	}
-#contests li, 
-#contests li ul 
-#contest-edit-window-right li {
-	margin-bottom: .5em;
-	padding-top: .2em;
-	}
-.candidate-name {
-	font-weight: bold;
-	}
-.candidate-contest-description {
-	font-style: italic;
-	}	
-.guide-edit-buttons {
-	display: block;
-	width: 530px;
-	background-color: #ffffff;
-	padding: 10px;
-	text-align: right;
-	}
-.guide-edit-buttons {
-	}
-/* ================================================================================ POPUPS
-*/	
-.dynamic {
-	z-index: 5;
-	position: absolute;
-	left: 50%;
-	top: 180px;
-	margin-left: -125px;
-	background-color: #fefae4;
-	border: 20px solid #666666;
-	padding: 20px; 
-	}
-.dynamic p {
-	color: #333333;
-	font-size: 12px;
-	padding-bottom: .1em;
-	margin-top: .5em;
-	}
-.dynamic .required {
-	}
-#guide-form-theme {
-	width: 280px;
-	height: 200px;
-	}
-#guide-theme-screenshot img {
-	border: 1px solid #999999;
-	}	
-#contest-edit-window {
-	width: 400px;
-	}
-
-#contest-edit-window-left {
-  width: 300px;
-  margin-bottom: 10px;
-	}
-#contest-edit-window-right {
-	}
-#contest-edit-window-right li {
-	padding-top: .5em;
-	}
-#contest-done-button a {
-	margin-top: 10px;
-	background-color: #666666;
-	padding: 5px 8px;
-	color: #ffffff;
-	text-decoration: none;
-	font-weight: bold;
-	clear: both;
-	}
-#contest-done-button a:hover {
-	background-color: #333333;
-	color: #ffffff;
-	}
-	
-
-.guide-form-section {
-	position: absolute;
-	top: 130px;
-	margin-left: -420px;
-	}
-/* ================================================================================ GUIDE LIST
-*/
-#guide-list-header {
-	color: #333333;
-	font-size: 14px;
-	font-weight: bold;
-	border-bottom: 1px dotted #999999;
-	margin-bottom: 3px;
-	}
-#guide-list-messages {
-	margin: .5em 0 1em 0;
-	}
-#guide-list-messages a {
-	color: #666666;
-	}
-
-#application #guide-list-container {
-	display: block;
-	width: 550px;
-	padding: 10px;
-	background-color: #fafafa;
-	margin-bottom: 8px;
-	}
-#application .guide-list-element {
-	padding: 10px;
-	height: 50px; /* icon height */
-	margin-bottom: 5px;
-	background-color: #f5f5f5;
-	clear: both;
-	}
-#application .guide-list-element:hover {
-	background-color: #ffffff;
-	}	
-.guide-endorsed-stamp {
-	float: right;
-	width: 50px;
-	height: 30px;
-	margin-left: 3px;
-	}
-.guide-non-partisan {
-	display: block;
-	float: right;
-	background-image: url(http://ixley.com/ballot/images/np_stamp.gif);
-	height: 30px;
-	width: 50px;
-	margin-left: 3px;
-	}	
-.guide-non-partisan span {
-	display: none;	
-	}
-#application .guide-list-image {
-	float: left;
-	height: 50px;
-	padding-right: 10px;
-	border-right: 1px dotted #999999;
-	}
-#application .guide-list-image img {
-	border: 1px solid #333333;
-	}
-#application .guide-list-basics {
-	margin-left: 70px;
-	}
-	
-.guide-list-name a {
-	border-bottom: 1px dotted #CCCCCC;
-	}
-.guide-list-name a:hover {
-	color: #666666;
-	border-bottom: none;
-	text-decoration: none;
-	}	
-.guide-list-location {
-	font-size: 11px;
-	font-weight: bold;
-	color: #666666;
-	}
-.guide-list-date {
-	font-size: 10px;
-	color: #999999;
-	}
-
-.guide-list-description {
-	font-size: 10px;
-	color: #b09c5a;
-	}	
-/* ================================================================================ VIEW GUIDE - voter guide
-*/
-#guides-show #main {
-	display: block;
-	float: left;
-	width: 600px;
-	}
-#endorsed, #unendorsed {
-	font-weight: bold; 
-	color: #333333;
-	margin-bottom: 3px; 
-	}	
-
-/* ========================================== SIDEBAR 
-*/
-#guides-show #sidebar {
-	display: block;
-	float: right;
-	width: 210px;
-	}
-#guides-show .sidebar-frame { 
-	padding: 8px 5px;
-	background-color: #f3f5f7;
-	margin-bottom: 5px;
-	border: solid #cccccc;
-	border-width: 5px 1px 1px 1px;
-	}
-#sidebar a {
-	text-decoration: underline;
-	color: #666666;
-	line-height: 1.2em;
-	}
-#sidebar a:hover {
-	color: #333333;
-	text-decoration: none;
-	}
-
-#guides-show #sidebar ul, 
-#guides-show #sidebar li {
-	list-style: none;
-	}
-.sidebar-frame {
-	color: #999999;
-	}
-#guides-show #world-actions {
-	background-color: #ffffff;
-	}
-#guides-show #world-actions a {
-	color: #FF9900;
-	font-weight: bold;
-	line-height: 1.5em;
-	padding-left: 20px;
-	background-position: center left;
-	background-repeat: no-repeat;
-	}
-#guides-show #world-actions a:hover {
-	color: #FF6600;
-	}	
-#print-guide-link a {
-	background-image: url(http://ixley.com/ballot/images/print_icon.gif);
-	}
-#email-guide-link a {
-	background-image: url(http://ixley.com/ballot/images/email_icon.gif);
-	}
-
-#author-avatar, 
-.member-avatar {
-	display: block;
-	margin: 3px 0 2px 0;
-	padding: 3px;
-	text-align: left;
-	vertical-align: middle;
-	background-color: #ededed;
-	}
-#author-avatar:after, 
-.member-avatar:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
-    visibility: hidden;
-}
-/* Hide from IE-mac \*/
-* html #author-avatar, 
-* html .member-avatar {height: 1%;}
-/* End hide from IE-mac */
-
-	
-#author-avatar img, 
-.member-avatar img {
-	float: right;
-	}
-#sidebar #author-avatar a, 
-#sidebar .member-avatar a {
-	float: left;
-	margin-left: 5px;
-	color: #666666;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 35px;
-	text-decoration: none;
-	}
-#sidebar #author-avatar a:hover, 
-#sidebar .member-avatar a:hover {
-	color: #999999;
-	}
-#guide-members h3 {
-	font-size: 14px;
-	font-weight: bold;
-	color: #333333;
-	margin: 0;
-	}
-#guide-members h4 {
-	font-size: 11px;
-	font-weight: normal;
-	}
-	
-/* ================================================================================ EDIT & VIEW USER PROFILE
-*/
-#admin_control {
-	margin-bottom: 5px;
-	}
-.account-section,
-#user-guides-list,
-#user-profile-basics {
-	display: block;
-	padding: 8px;
-	margin-bottom: 5px;
-	border: solid #cccccc;
-	border-width: 5px 1px 1px 1px;
-	background-color: #F3F5F7;
-	}
-.account-section {
-	width: 400px;
-	}	
-.account-section h3 {
-	color: #333333;
-	font-size: 14px;
-	}	
-.account-guide-list-item, 
-.account-bloc-list-item,
-.user-guides-list-item {
-	display: block;
-	background-color: #ededed;
-	padding: 5px;
-	height: 1em;
-	clear: both;
-	margin-top: 3px;
-	}
-.account-guide-list-item:hover, 
-.account-bloc-list-item:hover,
-.user-guides-list-item:hover {	
-	background-color: #e3edf7;
-	}
-	
-.account-guide-title  {
-	float: left;
-	}
-.account-guide-title a, 
-.account-bloc-list-item a,
-.user-guides-list-item a {
-	font-weight: bold;
-	color: #666666;
-	text-decoration: none;
-	}
-.account-guide-title a:hover, 
-.account-bloc-list-item a:hover
-.user-guides-list-item a:hover {
-	color: #333333;
-	}	
-.account-guide-links {
-	float: right;
-	}
-.account-guide-links a, 
-#in-progress a,
-#user-profile a  {
-	color: #ff6600;
-	}
-.account-guide-links a:hover,
-#in-progress a:hover
-#user-profile a:hover {
-	text-decoration: none;
-	}
-#in-progress a {
-	text-align: right;
-	}
-#user-profile {
-	color: #666666;
-	}
-#user-profile img {	
-	margin-top: -4em;
-	float: right;
-	border: 1px solid #cccccc;
-	}
-#account-user-basics {
-	line-height: 1.2em;
-	}
-
-
-#user-guides-list,
-#user-profile-basics {
-	width: 450px;
-	}
-#user-profile-basics img {
-	margin-top: -2em;
-	float: right;
-	border: 1px solid #cccccc;
-	}	
-#user-profile-location:after,
-#account-user-basics:after {
-	content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
-    visibility: hidden;
-	}		
-/* Hide from IE-mac \*/
-* html #user-profile-basics {height: 1%;}
-/* End hide from IE-mac */	
-
-#edit-profile-avatar img {
-	border: 1px solid #cccccc;
-	}
-
-/* ================================================================================ SIGN UP
-*/
-#signup_form {
-	width: 420px;
-	}
-#account-signup-intro {
-	display: block;
-	padding: 6px;
-	background-color: #FEFAE4;
-	border: 1px solid #666666;
-	margin-bottom: 1em;
-	font-weight: bold;
-	}
-#signup_avatar img {
-	border: 1px solid #cccccc;
-	}
-.required:after {
-	content: "*";
-	color: #FF6600;
-	font-size: 12px;
-	}	
-
-/* ================================================================================ C3 INSTRUCTIONS
-*/
-
-
-#c3-instructions {
-	color: #333333;
-	display: block;
-	width: 550px;
-	background-color: #ffffff;
-	padding: 15px;
-	border: solid #cccccc;
-	border-width: 5px 1px 1px 1px;
-	margin: 1em 0;
-	}
-#c3-instructions p {
-	line-height: 1.2em;
-	}
-#c3-instructions li {
-	margin-left: 1.5em;
-	margin-bottom: .4em;
-	}
-#c3-instructions li ul {
-	margin-top: .4em;
-	}	
-#c3-instructions li li {
-	list-style: none;
-	margin-left: .5em;
-	}
-
-
-/* ================================================================================ FOOTER
-*/
-#footer {
-	clear: both;
-	display: block;
-	padding: 10px 20px;
-	vertical-align: bottom;
-	margin-bottom: 1.5em;
-	font-size: 10px;
-	color: #666666;
-	background-image: url(http://ixley.com/ballot/images/footer_bg.gif);
-	background-position: bottom;
-	background-repeat: no-repeat;
-	}
-#copyright {
-	display: block;
-	float: right;
-	text-align: right;
-	}
-#footer a, #footer a:visited {
-	color: #666666;
-	text-decoration: underline;
-	}
-#footer a:hover {
-	color: #666666;
-	text-decoration: none;
-	}
-	
-	
-/* ================================================================================ APPLICATION
-*/	
-
-#vg-public-url { /* hide for screen - set to display for print */
-	display: none;
-	}
-
-#contest-container p.ballot-instructions {
-  clear: both;
-	}
-
-#contest-edit-window {
-	visibility: hidden;
-	}
-
-.errorExplanation {
-	color: red;
-	font-weight: bold;
-	font-size: 12px;
-	}
+/*---------------------------------theBallot.org Screen StylesAuthor: Jeff FrenchVersion: 1 - Sept. 5, 2006--------------------------------- *//* ================================================================================ UNIVERSAL*/* { 	margin: 0;	padding: 0;	}h2 { font-size: 18px; }h3 { font-size: 16px; }h4 { font-size: 14px; }h2, h3, h4 { margin-bottom: .2em; }p { margin-bottom: .5em; }a, a:visited { text-decoration: underline; color: #333333; }a:hover { text-decoration: none; }#flash-notice, #flash-error {	font-weight: bold;	}#flash-notice {	color: #FF6600;	}	#flash-error {	color: #CC0000;	}select {	border: 1px solid #999999;	background-color: #eae7db;	color: #333333;	font-size: 10px;	}	input, textarea {	background-color: #FaFaFa;	border: 1px solid #999999;	font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 11px;	padding: .2em;	color: #333333;	}input:focus, textarea:focus {	background-color: #FFFFFF;	color: #000000;	border-color: #CCCCCC;	}	.clear { clear: both;}.right { float: right;}/* ================================================================================ LAYOUT*/		body {	background-color: #15324e;	background-image: url(http://ixley.com/ballot/images/background.gif);	background-repeat: repeat-x;	background-position: center top;	}	#wrap {	display: block;	width: 850px;	margin: 0 auto;	}	#header {	margin: 0;	padding-top: 3px;	display: block;	vertical-align: top;	height: 77px;	width: 850px;	background-image: url(http://ixley.com/ballot/images/header-bottom.gif);	background-position: bottom;	background-repeat: no-repeat;	}/* ================================================================================ HEADER*/#header a {	color: #fffa86;	font-size: 12px;	font-weight: bold;	text-decoration: none;	}#header a:hover {	color: #FFCC00;	}#logo a, #nonpartisan-logo a {	display: block;	float: left;	background-repeat: no-repeat;	background-position: top;	}#logo a {	width: 260px;	height: 67px;	background-image: url(http://ixley.com/ballot/images/logo.jpg);	}#nonpartisan-logo a {	width: 480px;	height: 67px;	background-image: url(http://ixley.com/ballot/images/logo-c3.jpg);	}	#logo a:hover, #nonpartisan-logo a:hover {	background-position: bottom;	}		#logo span, #nonpartisan-logo span {	display: none;	}#sponsored-logo a, #nonpartisan-sponsored-logo a {	float: right;	vertical-align: top;	display: block;	height: 60px;	width: 154px;	padding: 0;	background-position: top;	}#sponsored-logo a {	background-image: url(http://ixley.com/ballot/images/league_stamp.gif);	}#nonpartisan-sponsored-logo a {	background-image: url(http://ixley.com/ballot/images/league_stamp-c3.gif);	}#sponsored-logo a:hover, #nonpartisan-sponsored-logo a:hover {	background-position: bottom;	}#sponsored-logo span, #nonpartisan-sponsored-logo span {	display: none;	}	#account-nav {	padding: 5px;	display: block;	float: right;	vertical-align: bottom;	font-family: Arial, Helvetica, sans-serif;	color: #CCCCCC;	font-weight: normal;	}/* ================================================================================ NAV*/#nav {	margin: -8px -5px 10px -5px;	background-color: #333333;	padding: 2px 5px;	color: #cccccc;	font-size: 11px;	vertical-align: middle;	}#nav_links {	margin-top: 2px;	vertical-align: middle;	}#nav a {	text-decoration: none;	font-weight: bold;	color: #66ccff;	padding: 0 3px;	}#nav a:hover {	text-decoration: none;	color: #FFFFFF;	}#nav-search {	display: block;	text-align: right;	margin-top: -1.4em;	margin-right: 1px;	margin-bottom: 1px;	font-size: 11px;	}#nav-search input[type="text"] {	font-size: 10px;	padding: 1px 1px 1px 3px;	}#nav-search input[type="image"] {	background-color: transparent;	border: none;	margin-left: 2px;	padding: 0;	height: 17px;	vertical-align: bottom;	}/* ================================================================================ CONTAINER*/#container, #footer {	background-color: #e9e0c2;	}#container {	display: block;	padding: 10px 15px;	font-family: Arial, Helvetica, sans-serif;	font-size: 11px;	min-height: 40em;	}	/* Hide from IE-mac \*/* html #container { height: 1%; }		/* End hide from IE-mac */	#home h2, #home h3 {	color: #333333;	background-repeat: no-repeat;	background-position: left;	border-bottom: 1px solid #fff7d9;	margin-bottom: 2px;	}#home h2 span, #home h3 span, #home h4 span {	display: none;	margin: 0;	}/* ================================================================================ LEFT COLUMN*/	#container .front-page-left {	display: block;	float: left;	width: 520px;	}#intro {	display: block;	width: 490px;	padding: 20px 15px 10px 15px;	/*margin-top: -10px; */	margin-bottom: 15px;	font-size: 14px;	line-height: 1.2em;	color: #37301e;	background-color: #dfd7b1;	/*background-image: url(http://ixley.com/ballot/images/intro_bg.gif);*/	background-position: bottom;	background-repeat: no-repeat;	}	#map {	padding: 0 7px;	margin-bottom: 20px;	}#map h2 {	height: 25px;	background-image: url(http://ixley.com/ballot/images/select_state.gif);	background-repeat: no-repeat;	}#map p {	margin-bottom: 3px;	color: #666666;	}#map img {	border: 1px solid #705f4d;	}	#search-guides {	display: block;	width: 280px;	height: 68px;	padding: 5px 10px;	margin: 10px 7px;	vertical-align: top;	background-image: url(http://ixley.com/ballot/images/search_bg.gif);	background-repeat: no-repeat;	}#search-guides h4 {	display: block;	width: 150px;	height: 18px;	margin-bottom: .2em;	background-image: url(http://ixley.com/ballot/images/search_guides.gif);	background-repeat: no-repeat;	}#search-guides input[type="text"] {	font-size: 14px;	height: 20px;	background-color: #FFFFFF;	border: 1px solid #CCCCCC;	}#search-guides input[type="image"] {		background-color: transparent;	border: none;	margin-left: 3px;	padding: 0;	vertical-align: bottom;	}		/* ================================================================================ RIGHT COLUMN*/		#container .front-page-right {	display: block;	float: right;	width: 260px;	padding: 10px;	}/* ================================================================================ VOTER GUIDE LIST*/		#create_guide_icon img {	margin-top: 8px;	border: none;	}#guide-list {	background-color: #f3f5f7;	padding: 0 7px;	}#voter-guides h3 {	display: block;	height: 18px;	background-image: url(http://ixley.com/ballot/images/browse_voter_guides.gif);	background-repeat: no-repeat;	}#voter-guide-links, #voter-guide-links a {	font-size: 12px;	font-weight: bold;	color: #0099FF;	text-decoration: none;	height: 10px;}#voter-guide-links a:hover {	color: #66CCFF;	}#view-link { float: right;}#create-link { float: left;}#voter-guide-links { margin-bottom: 8px; }	/* hide icons on home page only */	#home .guide-list-image img {	display: none;	}	#guide-list-bottom, #guide-list-top {	display: block;	width: 260px;	height: 15px;	background-repeat: no-repeat;	}#guide-list-bottom { background-image: url(http://ixley.com/ballot/images/voter_guides-bottom.gif);	}#guide-list-top { background-image: url(http://ixley.com/ballot/images/voter_guides-top.gif); }		#home .guide-list-element	{	padding: 4px 0;	border-bottom: 1px solid #FFFFFF;	}.guide-list-name, .guide-list-name a {	font-size: 12px;	font-weight: bold;	color: #333333;	text-decoration: none;	}/* ================================================================================ CONTENT - CREATE/EDIT GUIDES*/#guide-edit-header {	padding-bottom: 8px;	font-weight: bold;	}#guide-preview h4, #guide-contests-container h4 {	font-size: 16px;	color: #333333;	padding-bottom: 3px;	border-bottom: 1px solid #999999;	}#guide-edit-header, #guide-edit-header a:hover {	color: #666666;	margin-bottom: 5px;	}#guide-edit-header a {	color: #999999;	}	.guide-edit-left {                /*  LEFT  */	display: block;	width: 250px;	float: left;	}.guide-edit-right {                /*  RIGHT  */	display: block;	width: 550px;	float: right;	line-height: 1.2em;	}	/*====================================guide-preview = The BASICS Window   */#guide-preview {	display: block;	margin-bottom: 15px;	padding: 15px 15px 25px 15px;	background-color: #f6f2e7;	color: #333333;	}#guide-preview-basics p {	margin-bottom: 0;	line-height: 1.1em;	}	.guide-preview-section {	margin-bottom: 1.2em;	clear: both;	}.guide-preview-section img {	float: right;	border: 1px solid #333333;	}.edit_icon img {	border: none;	margin-bottom: -2px;	float: none;	}/* see POPUPS for guide window */#guide-preview-theme,#guide-preview-image,#guide-preview-attached-pdf {	display: block;	background-color: #f1f1f1;	border: 1px solid #d8d8d8;	padding: 5px;	margin-bottom: 5px;	height: 37px;	}	#guide-preview-attached-pdf img {	border: none;	}		#guide-preview a {	color: #333333;	text-decoration: underline; }#guide-preview a:hover {	color: #000000;			text-decoration: none;	}		/*====================================guide-contests-container = The BALLOT Window   */	#guide-contests-container  {	display: block;	margin-bottom: 15px;	padding: 15px 15px 25px 15px;	background-color: #FFFFFF;	}#guide-contests-container a {	color: #ff6600;	text-decoration: underline; }#guide-contests-container a:hover {	text-decoration: none;	}#add-contests {	display: block;	height: 70px;	padding: 10px 0 0 3px;	border-bottom: 1px solid #999999;	background-image: url(http://ixley.com/ballot/images/buttons_gradient_bg.gif);	background-position: bottom;	background-repeat: repeat-x;		}#add-issue-link, #add-office-link {	padding: 5px;	clear: both;	}	#add-issue-link a, #add-office-link a {	float: left;	margin-right: 8px;	vertical-align: middle;	}	#add-office-example, #add-issue-example {	padding: 5px 0;	vertical-align: bottom;	color: #666666;	font-style: italic;	}	#add-issue-link img, #add-office-link img { 	border: none; 	}	.ballot-instructions {	color: #666666;	padding-top: 10px;	margin: 0 0 5px 5px;	font-style: italic;	}	#contests {	clear: both;	}	#contests li {	cursor: move;	}#contests li, #contests li ul,#contest-edit-window-right li,#contest-edit-window-right li ul {	margin-left: 10px;	list-style-type: none;	list-style-image: url(http://ixley.com/ballot/images/carrot.gif);	}#contests li:hover {	list-style-image: url(http://ixley.com/ballot/images/carrot-over.gif);	}#contests li, #contests li ul #contest-edit-window-right li {	margin-bottom: .5em;	padding-top: .2em;	}.candidate-name {	font-weight: bold;	}.candidate-contest-description {	font-style: italic;	}	.guide-edit-buttons {	display: block;	width: 530px;	background-color: #ffffff;	padding: 10px;	text-align: right;	}.guide-edit-buttons {	}/* ================================================================================ POPUPS*/	.dynamic {	z-index: 5;	position: absolute;	left: 50%;	top: 180px;	margin-left: -125px;	background-color: #fefae4;	border: 20px solid #666666;	padding: 20px; 	}.dynamic p {	color: #333333;	font-size: 12px;	padding-bottom: .1em;	margin-top: .5em;	}.dynamic .required {	}#guide-form-theme {	width: 280px;	height: 200px;	}#guide-theme-screenshot img {	border: 1px solid #999999;	}	#contest-edit-window {	width: 400px;	}#contest-edit-window-left {  width: 300px;  margin-bottom: 10px;	}#contest-edit-window-right {	}#contest-edit-window-right li {	padding-top: .5em;	}#contest-done-button a {	margin-top: 10px;	background-color: #666666;	padding: 5px 8px;	color: #ffffff;	text-decoration: none;	font-weight: bold;	clear: both;	}#contest-done-button a:hover {	background-color: #333333;	color: #ffffff;	}	.guide-form-section {	position: absolute;	top: 130px;	margin-left: -420px;	}/* ================================================================================ GUIDE LIST*/#guide-list-header {	color: #333333;	font-size: 14px;	font-weight: bold;	border-bottom: 1px dotted #999999;	margin-bottom: 3px;	}#guide-list-messages {	margin: .5em 0 1em 0;	}#guide-list-messages a {	color: #666666;	}#application #guide-list-container {	display: block;	width: 550px;	padding: 10px;	background-color: #fafafa;	margin-bottom: 8px;	}#application .guide-list-element {	padding: 10px;	height: 50px; /* icon height */	margin-bottom: 5px;	background-color: #f5f5f5;	clear: both;	}#application .guide-list-element:hover {	background-color: #ffffff;	}	.guide-endorsed-stamp {	float: right;	width: 50px;	height: 30px;	margin-left: 3px;	}.guide-non-partisan {	display: block;	float: right;	background-image: url(http://ixley.com/ballot/images/np_stamp.gif);	height: 30px;	width: 50px;	margin-left: 3px;	}	.guide-non-partisan span {	display: none;		}#application .guide-list-image {	float: left;	height: 50px;	padding-right: 10px;	border-right: 1px dotted #999999;	}#application .guide-list-image img {	border: 1px solid #cccccc;	}#application .guide-list-basics {	margin-left: 70px;	}	.guide-list-name a {	border-bottom: 1px dotted #CCCCCC;	}.guide-list-name a:hover {	color: #666666;	border-bottom: none;	text-decoration: none;	}	.guide-list-location {	font-size: 11px;	font-weight: bold;	color: #666666;	}.guide-list-date {	font-size: 10px;	color: #999999;	}.guide-list-description {	font-size: 10px;	color: #b09c5a;	}	/* ================================================================================ VIEW GUIDE - voter guide*/#guides-show #main {	display: block;	float: left;	width: 600px;	}#endorsed, #unendorsed {	font-weight: bold; 	color: #333333;	margin-bottom: 3px; 	}	/* ========================================== SIDEBAR */#guides-show #sidebar {	display: block;	float: right;	width: 210px;	}#guides-show .sidebar-frame { 	padding: 8px 5px;	background-color: #f3f5f7;	margin-bottom: 5px;	border: solid #cccccc;	border-width: 5px 1px 1px 1px;	}#sidebar a {	text-decoration: underline;	color: #666666;	line-height: 1.2em;	}#sidebar a:hover {	color: #333333;	text-decoration: none;	}#guides-show #sidebar ul, #guides-show #sidebar li {	list-style: none;	}.sidebar-frame {	color: #999999;	}#guides-show #world-actions {	background-color: #ffffff;	}#guides-show #world-actions a {	color: #FF9900;	font-weight: bold;	line-height: 1.5em;	padding-left: 20px;	background-position: center left;	background-repeat: no-repeat;	}#guides-show #world-actions a:hover {	color: #FF6600;	}	#print-guide-link a {	background-image: url(http://ixley.com/ballot/images/print_icon.gif);	}#email-guide-link a {	background-image: url(http://ixley.com/ballot/images/email_icon.gif);	}#author-avatar, .member-avatar {	display: block;	margin: 3px 0 2px 0;	padding: 3px;	text-align: left;	vertical-align: middle;	background-color: #ededed;	}#author-avatar:after, .member-avatar:after {    content: ".";     display: block;     height: 0;     clear: both;     visibility: hidden;}/* Hide from IE-mac \*/* html #author-avatar, * html .member-avatar {height: 1%;}/* End hide from IE-mac */	#author-avatar img, .member-avatar img {	float: right;	}#sidebar #author-avatar a, #sidebar .member-avatar a {	float: left;	margin-left: 5px;	color: #666666;	font-size: 14px;	font-weight: bold;	line-height: 35px;	text-decoration: none;	}#sidebar #author-avatar a:hover, #sidebar .member-avatar a:hover {	color: #999999;	}#guide-members h3 {	font-size: 14px;	font-weight: bold;	color: #333333;	margin: 0;	}#guide-members h4 {	font-size: 11px;	font-weight: normal;	}	/* ================================================================================ EDIT & VIEW USER PROFILE*/#admin_control {	margin-bottom: 5px;	}.account-section,#user-guides-list,#user-profile-basics {	display: block;	padding: 8px;	margin-bottom: 5px;	border: solid #cccccc;	border-width: 5px 1px 1px 1px;	background-color: #F3F5F7;	}.account-section {	width: 400px;	}	.account-section h3 {	color: #333333;	font-size: 14px;	}	.account-guide-list-item, .account-bloc-list-item,.user-guides-list-item {	display: block;	background-color: #ededed;	padding: 5px;	height: 1em;	clear: both;	margin-top: 3px;	}.account-guide-list-item:hover, .account-bloc-list-item:hover,.user-guides-list-item:hover {		background-color: #e3edf7;	}	.account-guide-title  {	float: left;	}.account-guide-title a {	font-weight: bold;	color: #666666;	text-decoration: none;	}.account-guide-title a:hover, .account-bloc-list-item a:hover.user-guides-list-item a:hover {	color: #333333;	}	.account-guide-links {	float: right;	}.account-guide-links a, #in-progress a,#user-profile a  {	color: #ff6600;	}.account-guide-links a:hover,#in-progress a:hover#user-profile a:hover {	text-decoration: none;	}#in-progress a {	text-align: right;	}#user-profile {	color: #666666;	}#user-profile img {		margin-top: -4em;	float: right;	border: 1px solid #cccccc;	}#account-user-basics {	line-height: 1.2em;	}#user-guides-list,#user-profile-basics {	width: 450px;	}#user-profile-basics img {	margin-top: -2em;	float: right;	border: 1px solid #cccccc;	}	#user-profile-location:after,#account-user-basics:after {	content: ".";     display: block;     height: 0;     clear: both;     visibility: hidden;	}		/* Hide from IE-mac \*/* html #user-profile-basics {height: 1%;}/* End hide from IE-mac */	#edit-profile-avatar img {	border: 1px solid #cccccc;	}/* ================================================================================ SIGN UP*/#signup_form {	width: 420px;	}#account-signup-intro {	display: block;	padding: 6px;	background-color: #FEFAE4;	border: 1px solid #666666;	margin-bottom: 1em;	font-weight: bold;	}#signup_avatar img {	border: 1px solid #cccccc;	}.required:after {	content: "*";	color: #FF6600;	font-size: 12px;	}	/* ================================================================================ C3 INSTRUCTIONS*/#c3-instructions {	color: #333333;	display: block;	width: 550px;	background-color: #ffffff;	padding: 15px;	border: solid #cccccc;	border-width: 5px 1px 1px 1px;	margin: 1em 0;	}#c3-instructions p {	line-height: 1.2em;	}#c3-instructions li {	margin-left: 1.5em;	margin-bottom: .4em;	}#c3-instructions li ul {	margin-top: .4em;	}	#c3-instructions li li {	list-style: none;	margin-left: .5em;	}/* ================================================================================ FOOTER*/#footer {	clear: both;	display: block;	padding: 10px 20px;	vertical-align: bottom;	margin-bottom: 1.5em;	font-size: 10px;	color: #666666;	background-image: url(http://ixley.com/ballot/images/footer_bg.gif);	background-position: bottom;	background-repeat: no-repeat;	}#copyright {	display: block;	float: right;	text-align: right;	}#footer a, #footer a:visited {	color: #666666;	text-decoration: underline;	}#footer a:hover {	color: #666666;	text-decoration: none;	}		/* ================================================================================ APPLICATION*/	#vg-public-url { /* hide for screen - set to display for print */	display: none;	}#contest-container p.ballot-instructions {  float: left;	}#contest-edit-window {	visibility: hidden;	}.errorExplanation {	color: red;	font-weight: bold;	font-size: 12px;	}
