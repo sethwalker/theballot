@@ -3,16 +3,19 @@
 
 <div id="profile-edit">
 
-<div  class="account-section" id="edit-profile-email">
-<h3>Your Info</h3>
-
-  <p><label>Email: </label><%= @user.email %></p>
-
+<div  class="account-section" id="edit-profile-public">
+<h3>Public Info</h3>
   <p><label for="user_login">Username (how you are known on the site):</label><br/>
   <%= f.text_field 'login' %></p>
 
   <p><label for="user_about_me">About me (optional - shows up on public profile):</label><br/>
   <%= f.text_area 'about_me', :rows => 5 %></p>
+</div>
+
+<div  class="account-section" id="edit-profile-private">
+<h3>Private Info</h3>
+
+  <p><label>Email: </label><%= @user.email %></p>
 
   <%= render :partial => 'form', :locals => { :f => f } %>
 </div>
