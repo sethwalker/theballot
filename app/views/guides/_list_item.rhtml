@@ -1,10 +1,12 @@
 <% guide ||= list_item %>
 <div class="guide-list-element">
-<% if guide.image %>
   <div class="guide-list-image">
+<% if guide.image %>
     <%= image_tag guide.image.public_filename("display") %>
-  </div>
+<% else %>
+    <%= image_tag 'default_guide_icon.gif') %>
 <% end %>
+  </div>
 <div class="guide-list-basics">
   <% if guide.endorsed %><div class="guide-endorsed-stamp"><%= image_tag 'league_stamp.gif' %></div><% end %>
   <% if guide.c3? && !@c3 %><div class="guide-non-partisan"><%= image_tag 'nonpartisan_stamp.gif' %></div><% end %>
