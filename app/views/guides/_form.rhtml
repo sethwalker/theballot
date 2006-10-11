@@ -13,7 +13,9 @@
   <div id="guide-basics-error-messages">
     <%= format_error_messages('guide') %>
   </div>
-  <% remote_form_for :guide, guide, :url => { :action => 'update_basics', :id => guide.id } do |f| -%>
+  <% remote_form_options = { :url => { :action => 'update_basics', :id => guide.id } } -%>
+  <% remote_form_options.merge!(:success => "invi('guide-form-theme', false)") if @recently_created_guide -%>
+  <% remote_form_for :guide, guide, remote_form_options do |f| -%>
   <p><label for="guide_name" class="required">Guide name:</label><br/>
   <%= f.text_field 'name'  %></p>
 
