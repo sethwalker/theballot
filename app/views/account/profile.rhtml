@@ -7,11 +7,11 @@
 <div class="account-section" id="user-profile">
 <h3>Your Profile</h3> <span><%= link_to 'edit profile', :action => 'edit', :id => @user %></span>
 
-<p><span>Username:</span> <%= @user.login %><br />
-<span>About me:</span> <%= @user.about_me %><br />
-<span>Email:</span> <%= @user.email %><br />
-<span>Password:</span> ******</p>
 <%= image_tag @user.avatar.public_filename('preview') if @user.avatar %>
+<p><span class="profile_field_title">Username:</span> <%= @user.login %></p>
+<p><span class="profile_field_title">About me:</span> <%= @user.about_me %></p>
+<p><span class="profile_field_title">Email:</span> <%= @user.email %></p>
+<p><span class="profile_field_title">Password:</span> ******</p>
 
 <div id="account-user-basics">
 <%= @user.firstname %> <%= @user.lastname %><br/>
