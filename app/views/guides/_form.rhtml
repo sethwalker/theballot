@@ -61,7 +61,7 @@
   }
 GUIDE_SCREENSHOT_JS
 %>
-  <%= submit_tag 'OK' %>  <%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %>
+  <%= submit_tag 'OK' %>  <% if @recently_created_guide -%><%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %><% end -%>
 <% end -%>
 <div id="guide-theme-screenshot">
   <% @themes.each do |t| %>
@@ -83,7 +83,7 @@ GUIDE_SCREENSHOT_JS
       currently: <%= image_tag @guide.image.public_filename("thumb") %>
     <% end -%>
     </p>
-    <%= submit_tag 'Upload' -%> <% if @recently_created_guide -%><%= button_to_function 'Cancel', "invi('guide-form-image', true)" %><% end -%>
+    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)" %>
   <%= end_form_tag %>
 </div><!-- end popup-inner div -->
 </div>
