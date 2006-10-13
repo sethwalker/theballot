@@ -1,14 +1,8 @@
 <div id="container">
 <%= error_messages_for 'user' %>
-<%= start_form_tag %>
-<p><label for="login">Email</label><br/>
-<%= text_field_tag 'email' %></p>
 
-<p><label for="password">Password</label><br/>
-<%= password_field_tag 'password' %></p>
+<%= render :partial => 'login_box' %>
 
-<p><%= submit_tag 'Log in' %></p>
-<%= end_form_tag %>
 <%= link_to "Forgot your password?", :action => 'forgot_password' %> <%= link_to "Sign Up", :action => 'signup' %>
 
 </div>
