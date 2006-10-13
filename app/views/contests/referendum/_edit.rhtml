@@ -7,5 +7,6 @@
   <% else -%>
     <%= submit_tag 'Save Changes' -%>
   <% end -%>
-  <%= submit_tag "#{controller.action_name == 'new' ? 'edit' : controller.action_name} issue" %> <%= button_to_function "cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
+&nbsp;&nbsp;
+ <%= button_to_function "cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
 <%= end_form_tag %>
