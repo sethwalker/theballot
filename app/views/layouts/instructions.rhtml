@@ -1,8 +1,11 @@
 <html>
 <head>
-
+<% content_for :stylesheets do %>
+  <%#= stylesheet_link_tag 'screen', :media => 'all' %>
+  <%#= stylesheet_link_tag 'print', :media => 'print' %>
+<% end %>
 <style type="text/css">
-
+/*
 body {
   display: block;
   padding: 10px 15px;
@@ -20,7 +23,7 @@ p { margin-bottom: .5em; }
 a { text-decoration: underline; }
 
 a:hover { text-decoration: none; }
-
+*/
 </style>
 
 </head>
