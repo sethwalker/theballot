@@ -3,11 +3,11 @@
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
   <% if (controller.action_name == 'new' || !choice.id ) -%>
-    <%= submit_tag 'Add Candidate to this office' %>
+    <%= submit_tag 'Add this Candidate to the office' %>
   <% else -%>
-    <%= submit_tag 'Save Changes' %>
+    <%= submit_tag 'Save These Changes' %>
   <% end -%>
-  <%= submit_tag "#{( controller.action_name == 'new' || !choice.id ) ? 'add' : controller.action_name} candidate" %> <%= button_to_function( 'Cancel', remote_function( :url => { :controller => '/contests', :action => 'destroy', :id => contest.id }, :confirm => "The office '#{contest.name}' will be removed", :after => sortable_element_js('contests', :url => { :controller => '/guides', :action => 'order' }) + "; document.getElementById('contest-edit-window').style.visibility = 'hidden'" ) ) if @contest.choices.size == 0 %>
+   <%= button_to_function( 'Cancel', remote_function( :url => { :controller => '/contests', :action => 'destroy', :id => contest.id }, :confirm => "The office '#{contest.name}' will be deleted from your guide", :after => sortable_element_js('contests', :url => { :controller => '/guides', :action => 'order' }) + "; document.getElementById('contest-edit-window').style.visibility = 'hidden'" ) ) if @contest.choices.size == 0 %>
   <% if @contest.choices.size > ((@c3 || contest.c3?) ? 1 : 0) %>
     <% content_for :done_button do -%>
     <div class="right" id="contest-done-button"><%= link_to_function 'done', "Element.hide('contest-edit-window'); Element.show('contest_#{@contest.id}')" %></div>
@@ -18,6 +18,9 @@
     <% end -%>
   <% end -%>
   <% else -%>
+<div id="candidate-preview-intro">
+This office is saved in your guide as it appears below:
+</div>
   <%= render :partial => '/contests/form', :locals => { :contest => contest } %>
   <%= submit_tag "continue" %> <%= button_to_function "cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
   <% end -%>
