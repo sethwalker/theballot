@@ -1,5 +1,6 @@
 
 <div class="dynamic guide-form-section" id="guide-form-basics"<% if 'new' == @controller.action_name || !(@guide.name && @guide.city && @guide.state && @guide.date) %>style="visibility:visible;"<% end %>>
+<div class="popup-inner">
   <h2>Create a<% if @c3 || @guide.c3? %> non-partisan<% end %> voter guide</h2>
   <% if @c3 || @guide.c3? %><p>(Important: Read these <%= link_to 'instructions', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %> first to make sure your guide will get approved!)</p>
   <% unless @c3 %>
@@ -37,9 +38,11 @@
 
   <%= submit_tag 'next' %>
   <% end -%>
+</div><!-- end popup-inner div -->
 </div><!-- end guide basics -->
 
 <div class="dynamic guide-form-section" id="guide-form-theme">
+<div class="popup-inner">
   <h3>Next, choose a style</h3>
 <% remote_form_for :guide, guide, :url => { :action => 'update_theme', :id => guide.id } do |f| -%>
   <p>
@@ -66,10 +69,11 @@ GUIDE_SCREENSHOT_JS
   <% end %>
   <div class="clear"></div>
 </div>
-
+</div> <!-- end popup-inner div -->
 </div>
 
 <div class="dynamic guide-form-section" id="guide-form-image">
+<div class="popup-inner">
   <div id="guide-assets-image-error-messages"><%= error_messages_for 'image' %></div>
   <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
     <p><label for="guide_image">You can attach an icon to your guide:</label><br/>
@@ -81,9 +85,11 @@ GUIDE_SCREENSHOT_JS
     </p>
     <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)" %>
   <%= end_form_tag %>
+</div><!-- end popup-inner div -->
 </div>
 
 <div class="dynamic guide-form-section" id="guide-form-pdf">
+<div class="popup-inner">
   <div id="guide-assets-pdf-error-messages"><%= error_messages_for 'pdf' %></div>
   <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
     <p><label for="uploaded_pdf">You can attach a PDF version of your guide:</label><br/>
@@ -95,5 +101,6 @@ GUIDE_SCREENSHOT_JS
     </p>
     <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-pdf', true)" %>
   <%= end_form_tag %>
+</div> <!-- end popup-inner div -->
 </div>
 <!--[eoform:guide]-->
