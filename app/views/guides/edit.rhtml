@@ -1,9 +1,9 @@
 <div id="guide-edit-header">
 <% if @c3 || @guide.c3? -%>
-<p>This is a non-partisan informational voter guide.</p>
+<div class="guide-non-partisan"><%= image_tag 'nonpartisan_stamp.gif' %></div><p>This is a non-partisan informational voter guide. (<%= link_to 'huh?', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %>)</p>
 <% unless @c3 %><p><%= link_to 'Click here', :action => 'update_legal', :id => @guide, :legal => Guide::PARTISAN %> to make this a partisan guide.</p><% end %>
 <% else -%>
-<p><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => @guide, :legal => Guide::NONPARTISAN } ) %> to make this a non-partisan informational voter guide (<%= link_to '?', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %>).</p>
+<p><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => @guide, :legal => Guide::NONPARTISAN } ) %> to make this a non-partisan informational voter guide (<%= link_to 'huh?', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %>).</p>
 <% end -%>
 </div>
 
