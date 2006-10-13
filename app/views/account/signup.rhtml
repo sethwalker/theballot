@@ -1,5 +1,5 @@
 
-<div id="login_fields" class="account-section">
+<div id="login_fields">
 <h3>Log In</h3><br />
   <%= render :partial => 'login_box' %>
 
@@ -10,7 +10,7 @@
 <div id="signup_form">
 
 <div id="account-signup-intro">
-<h3>Sign Up</h3> or log in using the box to the right</div>
+<h3>Sign Up</h3> or log in on the right side</div>
 
 <% if @user && !@user.errors.empty? -%>
   <% @user.errors.each do |field, err| -%>
