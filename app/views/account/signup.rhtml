@@ -1,6 +1,6 @@
 
-<div id="login_fields">
-or <h3>Log In</h3><br />
+<div id="login_fields" class="account-section">
+<h3>Log In</h3><br />
   <%= render :partial => 'login_box' %>
 
 <%= link_to "Forgot your password?", :action => 'forgot_password' %>
@@ -10,7 +10,7 @@ or <h3>Log In</h3><br />
 <div id="signup_form">
 
 <div id="account-signup-intro">
-<h3>Sign Up</h3> or log in --></div>
+<h3>Sign Up</h3> or log in using the box to the right</div>
 
 <% if @user && !@user.errors.empty? -%>
   <% @user.errors.each do |field, err| -%>
