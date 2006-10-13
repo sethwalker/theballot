@@ -2,8 +2,7 @@
 <% if contest.id && ( @recently_updated_contest || @recently_created_contest || !choice.id.nil? ) -%>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/candidate/form', :locals => { :contest => contest, :choice => choice } %>
-<br />
-<br />
+&nbsp;&nbsp;
   <% if (controller.action_name == 'new' || !choice.id ) -%>
     <%= submit_tag 'Save This Candidate' %>
   <% else -%>
