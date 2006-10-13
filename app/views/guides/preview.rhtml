@@ -21,3 +21,5 @@
   <% if @guide.attached_pdf -%><%= image_tag 'http://ixley.com/ballot/images/pdf-icon.gif' %><% end -%>Attached PDF: <br /><span class="edit_icon"><%= link_to_function(image_tag('edit_icon.gif', :alt => 'edit'), "invi('guide-form-pdf', false)") %></span> <% if @guide.attached_pdf -%><%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
   <% else -%>(none)<% end -%>
   </div>
+
+<div id="research-link" class="ballot-instructions">Need to research your ballot? Check <a href="http://www.vote-smart.org" target="_blank">Project VoteSmart</a>.</div>

@@ -14,7 +14,7 @@
 <br />This office is saved in your guide as it appears below:
 </div>
     <% content_for :done_button do -%>
-    <div class="right" id="contest-done-button"><%= link_to_function 'done', "Element.hide('contest-edit-window'); Element.show('contest_#{@contest.id}')" %></div>
+    <div class="right" id="contest-done-button"><%= link_to_function 'Close', "Element.hide('contest-edit-window'); Element.show('contest_#{@contest.id}')" %></div>
     <% end -%>
   <% elsif (@c3 || contest.c3?) && @contest.choices.size == 1 %>
     <% content_for :done_button do -%>
