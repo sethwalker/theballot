@@ -1,4 +1,5 @@
 <div id="guide-edit-header">
+<% if @guide.endorsed %><div class="guide-endorsed-stamp"><%= image_tag 'league_stamp.gif' %></div><% end %>
 <% if @c3 || @guide.c3? -%>
 <div class="guide-non-partisan"><%= image_tag 'nonpartisan_stamp.gif' %></div><p>This is a non-partisan informational voter guide. (<%= link_to 'huh?', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %>)</p>
 <% unless @c3 %><p><%= link_to 'Click here', :action => 'update_legal', :id => @guide, :legal => Guide::PARTISAN %> to make this a partisan guide.</p><% end %>

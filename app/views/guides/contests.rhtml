@@ -6,8 +6,6 @@
     <div id="add-issue-link"><%= link_to_remote image_tag('http://ixley.com/ballot/images/add_issue-btn.gif', :alt => 'Add Issue (ex. Proposition 100, Measure A)'), { :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => @guide.id }, :method => :get } %><div id="add-issue-example">(Proposition 100, Measure A)</div></div>
     <div id="add-office-link"><%= link_to_remote image_tag('http://ixley.com/ballot/images/add_office-btn.gif', :alt => 'Add Office (ex. City Council District 5, Governor)'), { :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => @guide.id }, :method => :get } %><div id="add-office-example">(City Council District 5, Governor)</div></div>
   </div>
-<% if @guide.endorsed %><div class="guide-endorsed-stamp"><%= image_tag 'league_stamp.gif' %></div><% end %>
-  <% if @guide.c3? && !@c3 %><div class="guide-non-partisan"><%= image_tag 'nonpartisan_stamp.gif' %></div><% end %>
   <p class="ballot-instructions">Drag ballot items by the bold type to re-order them.</p> 
   <ul id="contests">
     <% if !@guide.contests.empty? -%>
