@@ -36,7 +36,7 @@
   <% if @c3 || @guide.c3? -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
   <%= f.text_area 'description', :rows => 10 %></p>
 
-  <%= submit_tag 'next' %>
+  <%= submit_tag 'next' %>     <% if !(@recently_created_guide) -%><%= button_to_function 'Cancel', "invi('guide-form-basics', true)" %><% end -%>
   <% end -%>
 </div><!-- end popup-inner div -->
 </div><!-- end guide basics -->
@@ -61,7 +61,7 @@
   }
 GUIDE_SCREENSHOT_JS
 %>
-  <%= submit_tag 'OK' %>  <% if !(@recently_created_guide) -%><%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %><% end -%>
+  <%= submit_tag 'OK' %>     <% if !(@recently_created_guide) -%><%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %><% end -%>
 <% end -%>
 <div id="guide-theme-screenshot">
   <% @themes.each do |t| %>
