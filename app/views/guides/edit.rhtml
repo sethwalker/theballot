@@ -1,9 +1,9 @@
 <div id="guide-edit-header">
 <% if @c3 || @guide.c3? -%>
-<p>This is a non-partisan informational voter guide.  You can endorse issues, but not candidates.  For candidates, you must at least add the candidates from the major parties and compare their positions on issues.  This will help the voter make an informed choice.</p>
-<p>Note: Non-partisan guides must be approved before they are posted live on the site.<% unless @c3 %>  <%= link_to 'Click here', :action => 'update_legal', :id => @guide, :legal => Guide::PARTISAN %> to make this a partisan guide.<% end %></p>
+<p>This is a non-partisan informational voter guide.</p>
+<% unless @c3 %><p><%= link_to 'Click here', :action => 'update_legal', :id => @guide, :legal => Guide::PARTISAN %> to make this a partisan guide.</p><% end %>
 <% else -%>
-<p><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => @guide, :legal => Guide::NONPARTISAN } ) %> to make this a non-partisan informational voter guide (basically that means you can compare candidates but can't endorse them).</p>
+<p><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => @guide, :legal => Guide::NONPARTISAN } ) %> to make this a non-partisan informational voter guide (<%= link_to '?', { :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %>).</p>
 <% end -%>
 </div>
 
@@ -24,6 +24,11 @@
     <div id="guide-form-container">
     <%= render :partial => 'form', :locals => { :guide => @guide } %>
     <div class="guide-edit-buttons">
+<% if @c3 || @guide.c3? -%>
+<div id="nonpartisan-submit-text">
+Note: Non-partisan guides must be approved before they are posted live on the site.
+</div>
+<% end -%>
       <%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form') %>
       <% if @guide.is_published? %>
         <%= submit_tag 'Save' %> : <%= submit_tag 'Unpublish' %>
