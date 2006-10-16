@@ -9,7 +9,7 @@ class GuidesController < ApplicationController
   meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
 
   def scope_approved_guides
-    conditions = "approved_at IS NOT NULL OR legal IS NULL OR NOT legal = '#{Guide::NONPARTISAN}'"
+    conditions = "approved_at IS NOT NULL OR legal IS NULL OR legal != '#{Guide::NONPARTISAN}'"
     Guide.with_scope({
       :find => { :conditions => conditions }
     }) { yield }
