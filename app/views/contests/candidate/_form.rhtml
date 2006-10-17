@@ -1,4 +1,3 @@
-<div id="popup-inner">
 <h3>Now add specific candidates.</h3>
 <% if @c3 || @contest.c3? -%>
 <p>Remember, a non-partisan guide cannot endorse candidates.  You must compare the candidates' stands on issues and let the voter decide.  And you must include at least the candidates from any involved major parties.  <%= link_to 'Click here', { :controller => '/guides', :action => 'instructions', :id => 'c3' }, :popup => ['height=600,width=875'] %> for the full rundown.</p>
@@ -15,4 +14,3 @@
 <%= select 'choice', 'selection', Choice::SELECTION_OPTIONS.values %>
 
 <% end -%>
-</div>
