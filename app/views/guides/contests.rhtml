@@ -3,8 +3,8 @@
 <div id="contest-container" class="column">
   <h4>The Ballot</h4>
   <div id="add-contests">
-    <div id="add-issue-link"><%= link_to_remote image_tag('http://ixley.com/ballot/images/add_issue-btn.gif', :alt => 'Add Issue (ex. Proposition 100, Measure A)'), { :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => @guide.id }, :method => :get } %><div id="add-issue-example">(Proposition 100, Measure A)</div></div>
-    <div id="add-office-link"><%= link_to_remote image_tag('http://ixley.com/ballot/images/add_office-btn.gif', :alt => 'Add Office (ex. City Council District 5, Governor)'), { :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => @guide.id }, :method => :get } %><div id="add-office-example">(City Council District 5, Governor)</div></div>
+    <div id="add-issue-link"><%= link_to_remote image_tag('add_issue-btn.gif', :alt => 'Add Issue (ex. Proposition 100, Measure A)'), { :url => { :controller => 'contests/referendum', :action => 'new', :guide_id => @guide.id }, :method => :get } %><div id="add-issue-example">(Proposition 100, Measure A)</div></div>
+    <div id="add-office-link"><%= link_to_remote image_tag('add_office-btn.gif', :alt => 'Add Office (ex. City Council District 5, Governor)'), { :url => { :controller => 'contests/candidate', :action => 'new', :guide_id => @guide.id }, :method => :get } %><div id="add-office-example">(City Council District 5, Governor)</div></div>
   </div>
   <p class="ballot-instructions">Drag ballot items by the bold type to re-order them.</p> 
   <ul id="contests">
