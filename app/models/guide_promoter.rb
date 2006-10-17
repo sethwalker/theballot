@@ -2,7 +2,7 @@ class GuidePromoter < ActionMailer::Base
   def tell_a_friend(setup)
     @recipients = setup[:recipients]
     @from = "voterguides@indyvoter.org"
-    @subject = 'Check out this dope guide'
+    @subject = 'check out this voter guide'
     @send_on = Time.now
     @body[:guide] = setup[:guide]
     @body[:user] = setup[:user]
