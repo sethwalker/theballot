@@ -1,6 +1,13 @@
 <h1>Tell a Friend:</h1>
 
 <%= form_tag :action => 'send_message', :id => @guide %>
+<% unless logged_in? -%>
+  <p><label for="from_email">Your Email</label><br/>
+  <%= text_field_tag 'from[email]' %></p>
+
+  <p><label for="from_name">Your Name</label><br/>
+  <%= text_field_tag 'from[name]' %></p>
+<% end -%>
 
 <p><label for="recipients_email">Friends Email (comma separated)</label><br/>
 <%= text_field 'recipients', 'email'  %></p>
