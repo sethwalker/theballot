@@ -99,6 +99,7 @@ class AccountController < ApplicationController
       if user && !user.activated_at?
         flash[:error] = "Could not login.   You must first activate your account.  Check your email for the activation link."
       else
+        redirect_to(:action => 'signup')
         flash.now[:error] = "Login incorrect"
       end
     end
