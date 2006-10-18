@@ -2,7 +2,6 @@
   <%= hidden_field 'contest', 'guide_id' %>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/referendum/form', :locals => { :contest => contest, :choice => choice } %>
-<br />
   <% if (controller.action_name == 'new') -%>
     <%= submit_tag 'Add to Guide' %>
   <% else -%>
