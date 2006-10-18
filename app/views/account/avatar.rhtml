@@ -2,7 +2,7 @@
 <%= file_field_tag 'uploaded_avatar' %>
 <br/>
 <% if @avatar -%>
-currently:
+currently:<br />
 <div class="vg-avatar"><%= image_tag @avatar.public_filename("thumb") %></div>
 <% else -%>
 otherwise, you'll look like this!

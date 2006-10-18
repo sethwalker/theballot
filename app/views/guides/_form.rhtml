@@ -63,12 +63,12 @@
   }
 GUIDE_SCREENSHOT_JS
 %>
-  <%= submit_tag 'OK' %>     <%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %>
 <% end -%>
 <div id="guide-theme-screenshot">
   <% @themes.each do |t| %>
   <div class="screenshot-preview" id="screenshot_<%= t.id %>"<% unless t == (@guide.theme ? @guide.theme : @themes.first) %> style="display:none;"<% end %>><%= image_tag(t.screenshot.public_filename('preview')) if t.screenshot %></div>
   <% end %>
+  <%= submit_tag 'OK' %>     <%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %>
   <div class="clear"></div>
 </div>
 </div> <!-- end popup-inner div -->
