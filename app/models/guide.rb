@@ -62,7 +62,7 @@ class Guide < ActiveRecord::Base
   end
 
   def to_liquid
-    liquid = { 'id' => id, 'name' => name, 'city' => city, 'state' => state, 'date' => date.strftime('%B %e, %Y'), 'description' => description, 'contests' => contests, 'theme' => theme, 'endorsed' => endorsed?, 'permalink' => permalink_url }
+    liquid = { 'id' => id, 'name' => name, 'city' => city, 'state' => state, 'date' => date.strftime('%B %e, %Y'), 'description' => description, 'contests' => contests, 'theme' => theme, 'endorsed' => endorsed?, 'permalink' => permalink_url, 'c3' => c3? }
     if image
       liquid.merge!(  { 'image_link' => image.public_filename, 'image_name' => image.filename, 'image_thumb' => image.public_filename('thumb') } )
     end
