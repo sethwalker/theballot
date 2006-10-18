@@ -1,17 +1,16 @@
 
-<div id="login_fields">
+<div id="login_form">
+  <div id="login_fields" class="account-section">
 <h3>Log In</h3><br />
   <%= render :partial => 'login_box' %>
 
 <%= link_to "Forgot your password?", :action => 'forgot_password' %>
-
+  </div>
 </div>
 
 <div id="signup_form">
 
-<div id="account-signup-intro">
 <h3>Sign Up</h3>
-</div>
 
 <% if @user && !@user.errors.empty? -%>
   <% @user.errors.each do |field, err| -%>

@@ -1,8 +1,16 @@
 <div id="container">
+
+<div id="login_form">
+  <div id="login_fields" class="account-section">
+
+
 <%= error_messages_for 'user' %>
 
 <%= render :partial => 'login_box' %>
 
 <%= link_to "Forgot your password?", :action => 'forgot_password' %> <%= link_to "Sign Up", :action => 'signup' %>
+
+  </div>
+</div>
 
 </div>

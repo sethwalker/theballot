@@ -13,10 +13,9 @@
   <%= javascript_include_tag 'niftycube' %>
   <%= javascript_tag '
     window.onload=function(){
+      Nifty("div#intro","big");
       Nifty("div#nav","small, transparent");
-      Nifty("div#guide-preview,div#guide-contests-container,div.guide-edit-buttons,div#guide-list-container"); 
-      Nifty("div#intro,div#guide-list","big");
-      Nifty("div.dynamic");
-    }' %>
+      Nifty("div#guide-preview,div#guide-contests-container,div.guide-edit-buttons,div#guide-list-container,div#guide-list");
+      Nifty("div.account-section,div#user-guides-list,div#user-profile-basics");    }' %>
   
 </head>
