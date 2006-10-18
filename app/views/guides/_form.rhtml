@@ -63,7 +63,7 @@
   }
 GUIDE_SCREENSHOT_JS
 %>
-  <%= submit_tag 'OK' %>     <% if !(@recently_created_guide) -%><%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %><% end -%>
+  <%= submit_tag 'OK' %>     <%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %>
 <% end -%>
 <div id="guide-theme-screenshot">
   <% @themes.each do |t| %>
