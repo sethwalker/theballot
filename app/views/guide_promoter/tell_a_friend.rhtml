@@ -1,8 +1,8 @@
-Sent by "<%= @user.login %>"
+Sent by <%= @from_name %>
 
 A friend thought you would like this voter guide on theballot.org:
 
-<%= "http://#{APPLICATION_HOST_NAME}#{@guide.permalink_url}" %>
+<%= @url %>
 
 Your friend's message follows:
 ------------------------------

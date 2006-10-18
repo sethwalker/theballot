@@ -1,7 +1,7 @@
 class GuidesController < ApplicationController
   observer :guide_observer
   prepend_before_filter :find_guide_by_permalink
-  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help, :instructions ]
+  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help, :instructions, :tell, :send_message ]
 
   #don't allow guides to be edited after the date of the election
   before_filter :check_date, :only => [ :edit, :update_basics ]
@@ -151,7 +151,7 @@ class GuidesController < ApplicationController
       @liquid = template.render('guide' => @guide, 'host' => request.host)
     end
     @body_id = 'guides-show'
-    flash[:notice] = flash[:notices].join('<br/>')
+    flash.now[:notice] = flash[:notices].join('<br/>')
     render :action => 'show'
   end
 
@@ -367,12 +367,17 @@ class GuidesController < ApplicationController
 
   def send_message
     @guide = Guide.find(params[:id])
-    @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :user => current_user, :host => request.host }
-    if GuidePromoter.deliver_tell_a_friend(@tell)
-      flash[:notice] = "Message sent"
-      redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink) and return
+    @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :from_name => logged_in? ? "#{current_user.firstname} #{current_user.lastname}" : params[:from][:name], :from_email => logged_in? ? current_user.email : params[:from][:email], :host => request.host }
+    unless @tell[:from_email] =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+      flash.now[:error] = "Invalid email address"
+      render :action => :tell and return
     end
-    render :action => :tell
+    if GuidePromoter.deliver_tell_a_friend(@tell)
+      flash[:notices] = ["Message sent"]
+      redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink) 
+    else
+      render :action => :tell
+    end
   end
 
   def help

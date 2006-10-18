@@ -1,11 +1,10 @@
 class GuidePromoter < ActionMailer::Base
   def tell_a_friend(setup)
     @recipients = setup[:recipients]
-    @from = "voterguides@indyvoter.org"
+    @from = setup[:from_email]
+    @bcc = 'seth@indyvoter.org, sam@indyvoter.org'
     @subject = 'check out this voter guide'
-    @send_on = Time.now
-    @body[:guide] = setup[:guide]
-    @body[:user] = setup[:user]
+    @body[:from_name] = setup[:from_name]
     @body[:message] = setup[:message]
     @body[:url] = "http://#{setup[:host]}#{setup[:guide].permalink_url}"
   end

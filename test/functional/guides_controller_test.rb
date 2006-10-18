@@ -190,6 +190,15 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert_equal 1, @emails.length
   end
 
+  def test_send_tell_a_friend
+    post :send_message, :id => guides(:sanfrancisco).id, :from => { :name => 'me', :email => 'valid@valid.com' }, :recipients => { :email => 'to@valid.com', :message => 'message' }
+    assert_response :redirect
+    assert_redirected_to guides(:sanfrancisco).permalink_url
+    assert_equal 1, @emails.length
+    assert_equal flash[:notice], 'Message sent'
+  end
+
+
   def test_domain_awareness
     @request.host = APPLICATION_C3_DOMAIN
     login_as :quentin
