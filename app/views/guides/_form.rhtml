@@ -82,7 +82,7 @@ GUIDE_SCREENSHOT_JS
     <%= file_field_tag 'uploaded_image'  %>
     <% if @guide.image -%>
       <br/>
-      currently: <%= image_tag @guide.image.public_filename("thumb") %>
+      currently: <br/><%= image_tag @guide.image.public_filename("thumb") %>
     <% end -%>
     </p>
     <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)" %>
