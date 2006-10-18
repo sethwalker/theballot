@@ -232,6 +232,7 @@ class GuidesController < ApplicationController
         page << "invi('guide-form-#{@next}', false)" if @next
         page << "Element.setStyle('guide_description', {overflow:'hidden'})"
         page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
+        page.replace_html 'guide-form-basics-buttons', :file => 'guides/basics_buttons', :layout => false
       end
     else
       render :update do |page|
