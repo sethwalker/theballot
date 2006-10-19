@@ -2,11 +2,11 @@
   <%= hidden_field 'contest', 'guide_id' %>
   <%= hidden_field 'choice', 'id' %>
   <%= render :partial => 'contests/referendum/form', :locals => { :contest => contest, :choice => choice } %>
+ <%= button_to_function "Cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
   <% if (controller.action_name == 'new') -%>
     <%= submit_tag 'Add to Guide' %>
   <% else -%>
     <%= submit_tag 'Save Changes' %>
   <% end -%>
 &nbsp;&nbsp;
- <%= button_to_function "Cancel", "document.getElementById('contest-edit-window').style.visibility = 'hidden'" %>
 <%= end_form_tag %>
