@@ -147,6 +147,8 @@ class GuidesController < ApplicationController
       end
     end
     if !@guide.theme.nil?
+      Liquid::Template.register_filter(ActionView::Helpers::TagHelper)
+      Liquid::Template.register_filter(ActionView::Helpers::TextHelper)
       template = Liquid::Template.parse(Theme.find(@guide.theme.id).markup)
       @liquid = template.render('guide' => @guide, 'host' => request.host)
     end
