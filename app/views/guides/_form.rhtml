@@ -30,10 +30,10 @@
   <%= f.us_state_select 'state', :show => :abbreviations %></p>
 
   <p><label for="guide_permalink">Your guide will live at this web address:</label><br/>
-    http://<% if @c3 %>nonpartisan.<% end %>theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
+    <span>http://<% if @c3 %>nonpartisan.<% end %>theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
 
   <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
-  <% if @c3 || @guide.c3? -%><p class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</p><% end %>
+  <% if @c3 || @guide.c3? -%><div class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</div><% end %>
   <%= f.text_area 'description', :rows => 10 %></p>
 
   <div id="guide-form-basics-buttons">
@@ -47,7 +47,6 @@
 <div class="popup-inner">
   <h3>Next, choose a style</h3>
 <% remote_form_for :guide, guide, :url => { :action => 'update_theme', :id => guide.id } do |f| -%>
-  <p>
   <% @themes = Theme.find(:all) -%>
   <%= f.collection_select 'theme_id', @themes, 'id', 'name', {}, :onchange => 'changeScreenshot(this.value);' %>
   <%= javascript_tag <<GUIDE_SCREENSHOT_JS
