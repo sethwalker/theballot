@@ -67,7 +67,7 @@ GUIDE_SCREENSHOT_JS
   <% @themes.each do |t| %>
   <div class="screenshot-preview" id="screenshot_<%= t.id %>"<% unless t == (@guide.theme ? @guide.theme : @themes.first) %> style="display:none;"<% end %>><%= image_tag(t.screenshot.public_filename('preview')) if t.screenshot %></div>
   <% end %>
-  <%= submit_tag 'OK' %>     <%= button_to_function 'Cancel', "invi('guide-form-theme', true)" %>
+  <%= submit_tag 'OK', :class => 'form_button' %>     <%= button_to_function 'Cancel', "invi('guide-form-theme', true)", :class => 'form_button' %>
   <div class="clear"></div>
 </div>
 </div> <!-- end popup-inner div -->
@@ -84,7 +84,7 @@ GUIDE_SCREENSHOT_JS
       currently: <br/><%= image_tag @guide.image.public_filename("thumb") %>
     <% end -%>
     </p>
-    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)" %>
+    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)", :class => 'form_button' %>
   <%= end_form_tag %>
 </div><!-- end popup-inner div -->
 </div>
@@ -100,7 +100,7 @@ GUIDE_SCREENSHOT_JS
       currently: <%= link_to @guide.attached_pdf.filename, @guide.attached_pdf.public_filename %>
       <% end -%>
     </p>
-    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-pdf', true)" %>
+    <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-pdf', true)", :class => 'form_button' %>
   <%= end_form_tag %>
 </div> <!-- end popup-inner div -->
 </div>
