@@ -34,6 +34,12 @@
   </div>
 <% end -%>
 
+<div id="embed-code" class="sidebar-frame">
+<h3>Link this guide from your page</h3>
+<input type="text" value="<a href="http://<%= "#{@controller.request.host}/#{@guide.permalink_url}" %>"><img border="0" src="http://theballot.org/images/theballot_banner1.jpg"></a><br/>
+<a href="http://<%= @controller.request.host %><%= @guide.permalink_url %>"><%= @guide.name %></a>">
+</div>
+
 <div id="guide-members" class="sidebar-frame">
   <h3>Voter Bloc for this guide</h3>
   <h4>(a.k.a. Friends of the guide)</h4>
