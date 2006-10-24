@@ -36,7 +36,7 @@
 
 <div id="embed-code" class="sidebar-frame">
 <h3>Link this guide from your page</h3>
-<div class="code_input"><input type="text" size="25" value='<a href="http://<%= "#{@controller.request.host}/#{@guide.permalink_url}" %>"><img border="0" src="http://theballot.org/images/theballot_banner1.jpg"></a><br/><a href="http://<%= @controller.request.host + @guide.permalink_url %>"><%= @guide.name %></a>'></div>
+<div class="code_input"><input type="text" size="25" value='<a href="http://<%= @controller.request.host + @guide.permalink_url %>"><img border="0" src="http://<%= @controller.request.host %>/images/theballot_banner1.jpg"></a><br/><a href="http://<%= @controller.request.host + @guide.permalink_url %>"><%= @guide.name %></a>'></div>
 <h4>add this code into your page to link to this guide</h4>
 </div>
 
