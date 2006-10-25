@@ -7,7 +7,7 @@
 <%= link_to_function 'Link From MySpace / etc', "$('embed-code').toggle()" %>
 <div id="embed-code" style="display: none;">
 <h4>Copy this code and add it to your page to create a link to this voter guide</h4>
-<div class="code_input"><textarea cols="25" rows="6" onBlur='javascript:this.value = "<%= escape_javascript(render "guides/link_code") %>";'><%= render "guides/link_code" %></textarea></div>
+<div class="code_input"><textarea cols="25" rows="6" onClick="highlight(this);" readonly ><%= render "guides/link_code" %></textarea></div>
 <h4>Copy all the way to "&lt;!-- end --&gt;".</h4>
 <%= link_to_function 'Hide this box', "$('embed-code').toggle()" %>
 </div>
