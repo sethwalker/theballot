@@ -1,46 +1,6 @@
 
 <div class="dynamic guide-form-section" id="guide-form-basics"<% if 'new' == @controller.action_name || !(@guide.name && @guide.city && @guide.state && @guide.date) %>style="visibility:visible;"<% end %>>
-<div class="popup-inner">
-  <h2>Create a<% if @c3 || @guide.c3? %> non-partisan<% end %> voter guide</h2>
-  <% if @c3 || @guide.c3? %><p>(Important: Read these <%= link_to 'instructions', { :action => 'instructions', :id => 'c3' }, :popup => ['height=500,width=700'] %> first to make sure your guide will get approved!)</p>
-  <% unless @c3 %>
-  <p><%= link_to 'Click here', :action => 'update_legal', :id => @guide, :legal => Guide::PARTISAN %> to make this a partisan guide.</p><% end %>
-  <% end %>
-  <h3>Step 1 - The Basics</h3>
-  <% unless @c3 || @guide.c3? -%>
-  <span><%= link_to 'Click here', url_for( { :action => 'update_legal', :id => guide.id, :legal => Guide::NONPARTISAN } ) %> to create a non-partisan guide</span>
-  <% end -%>
-  <!--[form:guide]-->
-  <div id="guide-basics-error-messages">
-    <%= format_error_messages('guide') %>
-  </div>
-  <% remote_form_options = { :url => { :action => 'update_basics', :id => guide.id } } -%>
-  <% remote_form_options.merge!(:success => "invi('guide-form-theme', false)") if @recently_created_guide -%>
-  <% remote_form_for :guide, guide, remote_form_options do |f| -%>
-  <p><label for="guide_name" class="required">Guide name:</label><br/>
-  <%= f.text_field 'name'  %></p>
-
-  <p><label for="guide_date" class="required">Election Date:</label><br/>
-  <%= f.date_select 'date', :order => [:month, :day, :year]  %></p>
-
-  <p><label for="guide_city" class="required">City</label><br/>
-  <%= f.text_field 'city', :size => 22  %></p>
-
-  <p><label for="guide_state" class="required">State</label><br/>
-  <%= f.us_state_select 'state', :show => :abbreviations %></p>
-
-  <p><label for="guide_permalink">Your guide will live at this web address:</label><br/>
-    <span>http://<% if @c3 %>nonpartisan.<% end %>theballot.org/<%= Date.today.year %>/</span><%= f.text_field 'permalink', :size => 24  %></p>
-
-  <p><label for="guide_description">Description / Introduction for your guide:</label><br/>
-  <% if @c3 || @guide.c3? -%><div class="explain">Remember, this is a non-partisan voter guide, so you can endorse issues but not specific candidates.</div><% end %>
-  <%= f.text_area 'description', :rows => 10 %></p>
-
-  <div id="guide-form-basics-buttons">
-    <%= render 'guides/basics_buttons' %>
-  </div>
-  <% end -%>
-</div><!-- end popup-inner div -->
+  <%= render :partial => 'basics_form' %>
 </div><!-- end guide basics -->
 
 <div class="dynamic guide-form-section" id="guide-form-theme">

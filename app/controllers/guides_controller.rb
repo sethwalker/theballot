@@ -215,34 +215,25 @@ class GuidesController < ApplicationController
 
   def update_basics
     @guide ||= Guide.find(params[:id])
-    @current = 'basics'
-    @next = 'theme' unless @guide.theme
-    @saved = @guide.update_attributes(params[:guide])
-    update_section
+    render :update do |page|
+      if @guide.update_attributes(params[:guide])
+        page << "invi('guide-form-basics', true)"
+        page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
+        page << "Element.setStyle('guide_description', {overflow:'hidden'})"
+        page.replace_html 'guide-form-basics', :partial => 'guides/basics_form', :layout => false
+      else
+        page.replace_html "guide-#{@current}-error-messages", format_error_messages('guide')
+        @response.headers['Status'] = 500.to_s
+      end
+    end
   end
 
   def update_theme
     @guide ||= Guide.find(params[:id])
-    @current = 'theme'
     @guide.update_attribute_with_validation_skipping(:theme_id, params[:guide][:theme_id])
-    @saved = true
-    update_section
-  end
-
-  def update_section
-    if @saved
-      render :update do |page|
-        page << "invi('guide-form-#{@current}', true)"
-        page << "invi('guide-form-#{@next}', false)" if @next
-        page << "Element.setStyle('guide_description', {overflow:'hidden'})"
-        page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
-        page.replace_html 'guide-form-basics-buttons', :file => 'guides/basics_buttons', :layout => false
-      end
-    else
-      render :update do |page|
-        page.replace_html "guide-#{@current}-error-messages", format_error_messages('guide')
-      end
-      @response.headers['Status'] = 500.to_s
+    render :update do |page|
+      page << "invi('guide-form-theme', true)"
+      page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
     end
   end
 
