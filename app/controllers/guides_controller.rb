@@ -63,7 +63,7 @@ class GuidesController < ApplicationController
   end
   
   def index
-    @guides = Guide.find(:all, :conditions => "date >= '#{Time.now.to_s(:db)}'", :limit => 20)
+    list
     render :action => 'index', :layout => 'frontpage'
   end
 
@@ -76,7 +76,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
-    @guide_pages, @guides = paginate :guides, :per_page => 10, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, state, city'
+    @guide_pages, @guides = paginate :guides, :per_page => 30, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, state, city'
   end
 
   def by_state
