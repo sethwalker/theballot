@@ -30,3 +30,9 @@ function invi(element,flag)
   var x = new getObj(element);
   x.style.visibility = (flag) ? 'hidden' : 'visible'
 }
+
+function scrollToContestEditWindow() {
+if(Position.page($('contest-edit-window'))[1] < 0) {
+    $('contest-edit-window').scrollTo();
+  }
+}
