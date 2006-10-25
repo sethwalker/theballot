@@ -4,6 +4,12 @@
 <% if @guide.published? && @guide.approved? -%>
 	<div id="email-guide-link"><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></div>
 <% end %>
+<%= link_to_function 'Link from myspace/etc', "$('embed_code').toggle" %>
+<div id="embed_code" class="sidebar-frame">
+<h3>Link to this guide</h3>
+<div class="code_input"><input type="text" size="25" value='<%= render "guides/link_code" %>' onBlur='javascript:this.value = "<%= escape_javascript(render "guides/link_code") %>";'></div>
+<h4>add this code to your myspace page, etc to create a link to this guide</h4>
+</div>
 </div>
 
 <div id="author-info" class="sidebar-frame">
