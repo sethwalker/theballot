@@ -36,7 +36,7 @@
 
 <div id="embed-code" class="sidebar-frame">
 <h3>Link to this guide</h3>
-<div class="code_input"><input type="text" size="25" value='<%= render "guides/link_code" %>' onFocus='javascript:this.value == '<%= render "guides/link_code" %>' ? this.value = '': null;" onBlur="javascript:this.value == '' ? this.value = '<%= render "guides/link_code" %>': null;"></div>
+<div class="code_input"><input type="text" size="25" value='<%= render "guides/link_code" %>' onFocus='javascript:this.value == \"<%= render "guides/link_code" %>\" ? this.value = \"\": null;' onBlur='javascript:this.value == \"\" ? this.value = \"<%= render "guides/link_code" %>\": null;'></div>
 <h4>add this code to your myspace/etc page to insert a link to this voter guide</h4>
 </div>
 
