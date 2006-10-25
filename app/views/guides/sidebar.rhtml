@@ -35,9 +35,9 @@
 <% end -%>
 
 <div id="embed-code" class="sidebar-frame">
-<h3>Link this guide from your page</h3>
-<div class="code_input"><input type="text" size="25" value='<a href="http://<%= @controller.request.host + @guide.permalink_url %>"><img border="0" src="http://<%= @controller.request.host %>/images/theballot_banner1.jpg"></a><br/><center><a href="http://<%= @controller.request.host + @guide.permalink_url %>"><%= @guide.name %></a></center>'></div>
-<h4>add this code into your page to link to this guide</h4>
+<h3>Link to this guide</h3>
+<div class="code_input"><input type="text" size="25" value='<a href="http://<%= @controller.request.host + @guide.permalink_url %>"><img border="0" src="http://<%= @controller.request.host %>/images/theballot_banner1.jpg"></a><br/><center><a href="http://<%= @controller.request.host + @guide.permalink_url %>"><%= @guide.name %></a></center>' onFocus='javascript:this.value == '<a href="http://<%= @controller.request.host + @guide.permalink_url %>"><img border="0" src="http://<%= @controller.request.host %>/images/theballot_banner1.jpg"></a><br/><center><a href="http://<%= @controller.request.host + @guide.permalink_url %>"><%= @guide.name %></a></center>' ? this.value = '': null;" onBlur="javascript:this.value == '' ? this.value = '<a href="http://<%= @controller.request.host + @guide.permalink_url %>"><img border="0" src="http://<%= @controller.request.host %>/images/theballot_banner1.jpg"></a><br/><center><a href="http://<%= @controller.request.host + @guide.permalink_url %>"><%= @guide.name %></a></center>': null;"></div>
+<h4>add this code to your myspace/etc page to insert a link to this voter guide</h4>
 </div>
 
 <div id="guide-members" class="sidebar-frame">
