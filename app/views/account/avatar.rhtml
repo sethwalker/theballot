@@ -1,6 +1,7 @@
-<p><label for="uploaded_avatar">If you want you can upload an icon to represent yourself</label><br/>
+<p><label for="uploaded_avatar">If you want you can upload an icon to represent yourself</label><br />
+(file formats: .jpg, .gif, or .png)<br />
 <%= file_field_tag 'uploaded_avatar' %>
-<br/>
+<br />
 <% if @avatar -%>
 currently:<br />
 <div class="vg-avatar"><%= image_tag @avatar.public_filename("thumb") %></div>
