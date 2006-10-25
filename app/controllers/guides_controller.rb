@@ -63,7 +63,7 @@ class GuidesController < ApplicationController
   end
   
   def index
-    list
+    @guides = Guide.find(:all, :conditions => "date >= '#{Time.now.to_s(:db)}'", :limit => 20)
     render :action => 'index', :layout => 'frontpage'
   end
 
