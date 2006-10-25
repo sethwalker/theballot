@@ -7,8 +7,7 @@
 <%= link_to_function 'Link From MySpace / etc', "$('embed-code').toggle()" %>
 <div id="embed-code" style="display: none;">
 <h4>Copy this code and add it to your page to create a link to this voter guide</h4>
-<div class="code_input"><textarea cols="25" rows="6" onClick="highlight(this);" readonly ><%= render "guides/link_code" %></textarea></div>
-<h4>Copy all the way to "&lt;!-- end --&gt;".</h4>
+<div class="code_input"><input type="text" width="25" onClick="this.focus(); this.select();" readonly value='<%= render "guides/link_code" %>'></div>
 <%= link_to_function 'Hide this box', "$('embed-code').toggle()" %>
 </div>
 </div>
