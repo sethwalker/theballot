@@ -59,7 +59,7 @@ class GuidesController < ApplicationController
 
   def xml
     @guide = Guide.find(params[:id])
-    render :xml => @guide.to_xml(:include => :endorsements)
+    render :xml => @guide.to_xml(:include => :contests)
   end
   
   def index
