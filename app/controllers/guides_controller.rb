@@ -76,7 +76,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
-    @guide_pages, @guides = paginate :guides, :per_page => 30, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, state, city'
+    @guide_pages, @guides = paginate :guides, :per_page => 30, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state, city'
   end
 
   def by_state
@@ -332,12 +332,7 @@ class GuidesController < ApplicationController
 
   def join
     @guide = Guide.find(params[:id])
-    unless @guide.member?(current_user)
-      pledge = Pledge.new
-      @guide.pledges << pledge
-      current_user.pledges << pledge
-      pledge.save
-    end
+    @guide.add_member(current_user)
     if request.xhr?
       render :partial => 'pledge', :locals => { :guide => @guide }, :layout => false
     else
@@ -346,12 +341,11 @@ class GuidesController < ApplicationController
   end
 
   def unjoin
-    pledge = Pledge.find_by_guide_id_and_user_id(params[:id], current_user.id)
-    pledge.destroy if pledge
+    @guide = Guide.find(params[:id])
+    @guide.remove_member(current_user)
     if request.xhr?
       render :partial => 'account/blocs', :locals => {:user => current_user}, :layout => false
     else
-      @guide = pledge.guide
       redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink)
     end
   end

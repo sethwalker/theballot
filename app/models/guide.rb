@@ -126,6 +126,23 @@ class Guide < ActiveRecord::Base
     members.include?(u)
   end
 
+  def add_member(u)
+    return if member?(u)
+    Pledge.create(:user => u, :guide => self)
+    update_attribute(:num_members, members.count)
+    u.blocs(true)
+    members(true)
+  end
+
+  def remove_member(u)
+    pledge = pledges.find_by_user_id(u.id)
+    return unless pledge
+    pledge.destroy
+    update_attribute(:num_members, members.count)
+    u.blocs(true)
+    members(true)
+  end
+
   protected
   # from acts_as_urlnameable
   def create_permalink
