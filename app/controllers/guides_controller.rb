@@ -5,7 +5,7 @@ class GuidesController < ApplicationController
 
   #don't allow guides to be edited after the date of the election
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
+  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order, :admin ]
   meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
 
   def scope_approved_guides
@@ -19,6 +19,10 @@ class GuidesController < ApplicationController
     Guide.with_scope({
       :find => { :conditions => "status = '#{Guide::PUBLISHED}'" }
     }) { yield }
+  end
+
+  def admin
+    @guides = Guide.find(:all)
   end
 
   def find_guide_by_permalink

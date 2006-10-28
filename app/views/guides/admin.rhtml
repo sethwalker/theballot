@@ -1,0 +1,19 @@
+
+
+<% if logged_in? -%>
+  <% if current_user.is_admin? %>
+
+
+<div id="guide-list-container">
+<%= render :partial => '_admin_list_item', :collection => @guides %>
+</div>
+
+
+
+<% pagination_params = @pagination_params || {} -%>
+<%= link_to 'Previous page', pagination_params.merge({ :page => @guide_pages.current.previous }) if @guide_pages.current.previous %>
+<%= link_to 'Next page', pagination_params.merge({ :page => @guide_pages.current.next }) if @guide_pages.current.next %> 
+
+
+  <% end %>
+<% end %>
