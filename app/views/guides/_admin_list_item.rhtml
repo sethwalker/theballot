@@ -28,7 +28,7 @@
   <div class="guide-list-description">
     <%= truncate guide.description, 100 %>
   </div>
-Author: guide.author.firstname guide.author.lastname<br />
-guide.members.count friends<br />
+Author: <%= guide.author.firstname %> <%= guide.author.lastname %><br />
+<%= guide.members.count %> friends<br />
 </div>
 </div>

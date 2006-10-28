@@ -5,7 +5,15 @@
 
 
 <div id="guide-list-container">
-<%= render :partial => 'admin_list_item', :collection => @guides %>
+published:<br><br>
+<%= render :partial => 'admin_list_item', :collection => @published %>
+
+<br>
+<br>
+unpublished:<br><br>
+<%= render :partial => 'admin_list_item', :collection => @unpublished %>
+
+
 </div>
 
 
