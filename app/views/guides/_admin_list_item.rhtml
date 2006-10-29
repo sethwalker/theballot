@@ -23,14 +23,10 @@
     <% end %>
   </div>
   <div class="guide-list-date">
-    <%= guide.date? ? guide.date.strftime('%B %e, %Y') : 'no date' %>
+    <%= guide.date? ? guide.date.strftime('%B %e, %Y') : 'no date' %> | <%= guide.members.count %> friends | Author: <%= guide.user.firstname %> <%= guide.user.lastname %>  <%= link_to "profile", :controller => 'account', :action => 'profile', :id => guide.user.id %> <%= link_to "user", :controller => 'users', :action => 'show', :id => guide.user.id %>
   </div>
   <div class="guide-list-description">
     <%= truncate guide.description, 100 %>
-  </div>
-  <div class="guide-list-date">
-     Author: <%= guide.user.firstname %> <%= guide.user.lastname %>  <%= link_to "profile", :controller => 'account', :action => 'profile', :id => guide.user.id %> <%= link_to "show user", :controller => 'user', :action => 'show', :id => guide.user.id %> <br />
-     <%= guide.members.count %> friends
   </div>
 </div>
 </div>
