@@ -28,7 +28,9 @@
   <div class="guide-list-description">
     <%= truncate guide.description, 100 %>
   </div>
-Author: <%= guide.user.firstname %> <%= guide.user.lastname %><br />
-<%= guide.members.count %> friends<br />
+  <div class="guide-list-date">
+     Author: <%= guide.user.firstname %> <%= guide.user.lastname %>  <%= link_to "profile", :controller => 'account', :action => 'profile', :id => guide.user.id %> <%= link_to "show user", :controller => 'user', :action => 'show', :id => guide.user.id %> <br />
+     <%= guide.members.count %> friends
+  </div>
 </div>
 </div>
