@@ -1,3 +1,4 @@
+http://theballot.org/guides/show/<%= @guide.id %>
 <% @guide.diff.each do |attribute, changes| %>
 <%= attribute %>:
   new: <%= changes[0] %>
