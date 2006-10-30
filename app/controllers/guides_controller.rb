@@ -83,7 +83,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
-    @guide_pages, @guides = paginate :guides, :per_page => 30, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state, city'
+    @guide_pages, @guides = paginate :guides, :per_page => 50, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state, city'
   end
 
   def by_state
