@@ -24,7 +24,7 @@
   </div>
   <div class="guide-list-date">
     <%= guide.date.strftime('%B %e, %Y') %>
-    <% if guide.members.count > 2 %> | <%= guide.members.count %> guide 'friends'<% end %>
+    <% if guide.members.count > 2 %> &bull; guide has <%= guide.members.count %> 'friends'<% end %>
   </div>
   <div class="guide-list-description">
     <%= truncate guide.description, 100 %>
