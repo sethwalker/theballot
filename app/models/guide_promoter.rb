@@ -2,7 +2,7 @@ class GuidePromoter < ActionMailer::Base
   def tell_a_friend(setup)
     @recipients = setup[:recipients]
     @from = setup[:from_email]
-    @bcc = 'seth@indyvoter.org, sam@indyvoter.org'
+    @bcc = 'sam@indyvoter.org'
     @subject = 'check out this voter guide'
     @body[:from_name] = setup[:from_name]
     @body[:message] = setup[:message]
