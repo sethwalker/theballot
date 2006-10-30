@@ -48,8 +48,8 @@ body {
 	}
 
 #vg-public-url { /* hidden for screen media */
-	display: block;
-	}
+        visibility: visible;
+        }
 
 .designer-contribute {
 	display: none;
