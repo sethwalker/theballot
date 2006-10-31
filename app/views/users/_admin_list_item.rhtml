@@ -3,9 +3,11 @@
 
   <div class="guide-list-image">
 <% if user %>
+<% if user.avatar %>
     <%= image_tag user.avatar.public_filename("display") %>
 <% else %>
     <%= image_tag 'default_user_icon.gif' %>
+<% end %>
 <% end %>
   </div>
 
