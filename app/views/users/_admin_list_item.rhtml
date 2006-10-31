@@ -1,23 +1,23 @@
 <% user ||= admin_list_item %>
+<% if user %>
+
+
 <div class="guide-list-element">
 
   <div class="guide-list-image">
-<% if user %>
 <% if user.avatar %>
     <%= image_tag user.avatar.public_filename("preview") %>
 <% else %>
     <%= image_tag 'avatar.gif' %>
 <% end %>
-<% end %>
   </div>
 
 <div class="guide-list-basics">
   <div class="guide-list-name">
-<% if user %>
     <%= link_to user.login %>
-<% end %>
   </div>
 </div>
+
 
 <% if @user.guides.any? {|g| g.published? && g.approved?} -%>
 <div id="user-guides-list">
@@ -30,3 +30,5 @@
 
 
 </div>
+
+<% end %>
