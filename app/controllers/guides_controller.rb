@@ -59,7 +59,7 @@ class GuidesController < ApplicationController
   end
 
   def access_denied
-    flash[:notice] = "This page requires you to log in.  If you don't have a login yet for the ballot.org, it takes about 10 seconds to sign up."
+    flash[:notice] = "This page requires you to log in.  If you don't have a login, it takes about 10 seconds to sign up below."
     return super unless logged_in?
     redirect_to :action => 'show', :id => params[:id]
   end
