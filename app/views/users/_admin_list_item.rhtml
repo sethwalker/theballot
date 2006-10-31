@@ -4,9 +4,9 @@
   <div class="guide-list-image">
 <% if user %>
 <% if user.avatar %>
-    <%= image_tag user.avatar.public_filename("display") %>
+    <%= image_tag user.avatar.public_filename("preview") %>
 <% else %>
-    <%= image_tag 'default_user_icon.gif' %>
+    <%= image_tag 'avatar.gif' %>
 <% end %>
 <% end %>
   </div>
@@ -18,4 +18,15 @@
 <% end %>
   </div>
 </div>
+
+<% if @user.guides.any? {|g| g.published? && g.approved?} -%>
+<div id="user-guides-list">
+  <h3>Guides</h3>
+  <% @user.guides.select {|g| g.published? && g.approved?}.each do |guide| %>
+  <div class="user-guides-list-item"><%= link_to guide.name, guide.permalink_url %></div>
+  <% end -%>
+</div>
+<% end -%>
+
+
 </div>
