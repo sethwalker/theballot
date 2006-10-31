@@ -1,6 +1,14 @@
 <% user ||= admin_list_item %>
 <div class="guide-list-element">
-yay
+
+  <div class="guide-list-image">
+<% if user %>
+    <%= image_tag user.avatar.public_filename("display") %>
+<% else %>
+    <%= image_tag 'default_user_icon.gif' %>
+<% end %>
+  </div>
+
 <div class="guide-list-basics">
   <div class="guide-list-name">
 <% if user %>
