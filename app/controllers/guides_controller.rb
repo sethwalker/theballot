@@ -70,6 +70,7 @@ class GuidesController < ApplicationController
   end
   
   def index
+    @showing_author = false
     list
     render :action => 'index', :layout => 'frontpage'
   end
@@ -229,7 +230,7 @@ class GuidesController < ApplicationController
         page << "Element.setStyle('guide_description', {overflow:'hidden'})"
         page.replace_html 'guide-form-basics', :partial => 'guides/basics_form', :layout => false
       else
-        page.replace_html "guide-#{@current}-error-messages", format_error_messages('guide')
+        page.replace_html "guide-basics-error-messages", format_error_messages('guide')
         @response.headers['Status'] = 500.to_s
       end
     end

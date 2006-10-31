@@ -12,9 +12,12 @@
   <% if guide.c3? && !@c3 %><div class="guide-non-partisan"><%= image_tag 'nonpartisan_stamp.gif' %></div><% end %>
   <div class="guide-list-name">
     <%= link_to guide.name, guide.permalink_url %>
-  </div> <div class="guide-list-author-info">
+  </div>
+  <% if showing_author? %>
+  <div class="guide-list-author-info">
    posted by <span class="guide-list-author-username"><%= guide.user.login %></span>
   </div>
+  <% end -%>
   <div class="guide-list-location">
     <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
       <%= guide.city %>, <%= guide.state %>
