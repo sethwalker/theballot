@@ -1,8 +1,9 @@
 <% user ||= admin_list_item %>
 <div class="guide-list-element">
+yay
 <div class="guide-list-basics">
   <div class="guide-list-name">
-<% if guide.image %>
+<% if user.login %>
     <%= link_to user.login %>
 <% end %>
   </div>
