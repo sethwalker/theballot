@@ -163,7 +163,7 @@ class GuidesController < ApplicationController
       @liquid = template.render('guide' => @guide, 'host' => request.host)
     end
     @body_id = 'guides-show'
-    flash.now[:notice] = flash[:notices].join('<br/>')
+    flash.now[:notice] = flash[:notices].join('<br/>') if !flash[:notices].empty?
     render :action => 'show'
   end
 
