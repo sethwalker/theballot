@@ -29,7 +29,7 @@ class GuidePromoter < ActionMailer::Base
   def join_notification(guide, user)
   	@recipients = 'sam@indyvoter.org'
 	@from = 'voterguides@indyvoter.org'
-	@subject = "[voterguides] #{user.firstname} joined the bloc for guide {guide.name}"
+	@subject = "[voterguides] #{user.firstname} joined the bloc for guide #{guide.name}"
 	@body[:guide] = guide
 	@body[:user] = user
   end
