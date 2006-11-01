@@ -11,11 +11,11 @@
   Don't see a guide for your area?  Or don't agree with the ones there are?  <%= link_to 'Create your own!', :action => 'new' %> &mdash; it's easy.<br /><br /><%= link_to 'View All Guides', :action => 'list' %>
   <% end -%>
 </div>
-<div id="guide-resources">
- <h3>Voter Resources</h3>
- <a>link</a>
- <a>link</a>
+
+<div id="guide-list-resources">
+  <%= render 'guides/resources' %>
 </div>
+
 <div id="guide-list-container">
 <%= render :partial => 'list_item', :collection => @guides %>
 </div>
