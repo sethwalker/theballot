@@ -20,7 +20,7 @@ class Guide < ActiveRecord::Base
   before_validation :create_permalink
   validates_presence_of :name, :date, :city, :state
 
-  validates_format_of :permalink, :with => /[-_[:alnum]]+/i
+  validates_format_of :permalink, :with => /[-_[:alnum:]]+/
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
   def validate
@@ -35,6 +35,7 @@ class Guide < ActiveRecord::Base
 
   def after_save
     GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published && c3?
+	GuidePromoter.deliver_publish_notification(self) if @recently_published
   end
 
   acts_as_ferret :fields => { :name => {:boost => 3}, 
@@ -130,6 +131,7 @@ class Guide < ActiveRecord::Base
   def add_member(u)
     return if member?(u)
     Pledge.create(:user => u, :guide => self)
+	GuidePromoter.deliver_join_notification(self, u)
     update_attribute(:num_members, members.count)
     u.blocs(true)
     members(true)
@@ -152,7 +154,7 @@ class Guide < ActiveRecord::Base
   # from acts_as_urlnameable
   def create_permalink
     if permalink.nil? || permalink.empty?
-      self.permalink = name.to_s.downcase.strip.gsub(/[^-_\s[:alnum]]/i, '').squeeze(' ').tr(' ', '_')
+      self.permalink = name.to_s.downcase.strip.gsub(/[^-_\s[:alnum:]]/, '').squeeze(' ').tr(' ', '_')
     end
   end
 
