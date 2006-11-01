@@ -20,6 +20,7 @@ class Guide < ActiveRecord::Base
   before_validation :create_permalink
   validates_presence_of :name, :date, :city, :state
 
+  validates_format_of :permalink, :with => /[-_[:alnum]]+/i
   validates_uniqueness_of :permalink, :scope => :date, :message => "not unique for this election date"
 
   def validate
@@ -143,11 +144,15 @@ class Guide < ActiveRecord::Base
     members(true)
   end
 
+  def blank?
+    !name && !permalink && !description && !city && !status && !endorsed && !approved_at && !approved_by && contests.empty? && members.empty?
+  end
+
   protected
   # from acts_as_urlnameable
   def create_permalink
     if permalink.nil? || permalink.empty?
-      self.permalink = name.to_s.downcase.strip.gsub(/[^-_\s[:alnum:]]/, '').squeeze(' ').tr(' ', '_')
+      self.permalink = name.to_s.downcase.strip.gsub(/[^-_\s[:alnum]]/i, '').squeeze(' ').tr(' ', '_')
     end
   end
 
