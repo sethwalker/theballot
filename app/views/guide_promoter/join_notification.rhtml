@@ -1,1 +1,4 @@
-<%= @user.firstname %>(/account/profile/<%= @user.id %>) joined the guide for <%= @guide.permalink_url %>
+<%= @user.firstname %> <%= @user.lastname %> <%= @user.email %> (http://<%= @user.signup_domain %>/account/profile/<%= @user.id %>) joined the guide:
+
+<%= @guide.name %>
+http://<%= @user.signup_domain %><%= @guide.permalink_url %>

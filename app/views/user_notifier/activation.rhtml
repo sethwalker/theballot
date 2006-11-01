@@ -1,3 +1,12 @@
-<%= @user.login %> just activated their account on <%= @user.signup_domain %>
+Account activated on <%= @user.signup_domain %>
+
+First: <%= @user.firstname %>
+Last: <%= @user.lastname %>
+Email: <%= @user.email %>
+Username: <%= @user.login %>
+Street: <%= @user.street %>
+City: <%= @user.city %>
+State: <%= @user.state %>
+Zip: <%= @user.postal_code %>
 
 http://<%= @user.signup_domain %>/account/profile/<%= @user.id %>
