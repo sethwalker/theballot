@@ -1,11 +1,13 @@
     <div id="nav">
-      <span id="nav-search">
-        <%= render "shared/search" %>
-      </span>
 
       <div id="nav_links">
       <%= link_to "Create a Guide", :controller => 'guides', :action => 'new' %> | 
      <%= link_to "View All Guides", :controller => 'guides', :action => 'list' %> |
       <label for="state">View Guides by State</label> <%= select_tag 'state', options_for_select('--' => 'all') + us_state_options_for_select( @state, {:show => :abbreviations}), :onchange => "window.location.href='/guides/by_state/' + this.value" %>
        </div>
+
+      <span id="nav-search">
+        <%= render "shared/search" %>
+      </span>
+
     </div>
