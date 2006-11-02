@@ -1,5 +1,6 @@
 class StylesController < ApplicationController
   before_filter :login_required, :except => [ :show ]
+  caches_page :show
 
   def authorized?
     return true if current_user.admin?
@@ -24,8 +25,7 @@ class StylesController < ApplicationController
   def show
     @headers["Content-Type"] = "text/css; charset=utf-8"
     @style = Style.find(params[:id])
-    template = Liquid::Template.parse(@style.stylesheet)
-    render :text => template.render
+    render :text => @style.stylesheet
   end
 
   def new
@@ -49,6 +49,7 @@ class StylesController < ApplicationController
   def update
     @style = Style.find(params[:id])
     if @style.update_attributes(params[:style])
+      expire_page :controller => 'styles', :action => 'show', :id => params[:id]
       flash[:notice] = 'Style was successfully updated.'
       redirect_to :action => 'show', :id => @style
     else
