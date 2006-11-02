@@ -8,7 +8,7 @@ class UserNotifier < ActionMailer::Base
   def activation(user)
     setup_email(user)
     @recipients  = "seth@radicaldesigns.org,sam@indyvoter.org"
-    @subject    += 'new account: #{user.email}'
+    @subject    += "new account: #{user.email}"
   end
 
   def forgot_password(user)
