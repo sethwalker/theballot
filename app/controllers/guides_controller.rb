@@ -1,7 +1,7 @@
 class GuidesController < ApplicationController
   observer :guide_observer
   prepend_before_filter :find_guide_by_permalink
-  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_state, :search, :help, :instructions, :tell, :send_message ]
+  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_date, :by_state, :search, :help, :instructions, :tell, :send_message ]
 
   #don't allow guides to be edited after the date of the election
   before_filter :check_date, :only => [ :edit, :update_basics ]
@@ -85,6 +85,13 @@ class GuidesController < ApplicationController
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{Time.now.to_s(:db)}'"
     @guide_pages, @guides = paginate :guides, :per_page => 50, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state, city'
+  end
+
+  def by_date
+    @conditions = { :date => "YEAR(date) = #{params[:year]}" }
+    @listheader = "Listing All Voter Guides for #{params[:year]}"
+    list
+    render :action => 'list'
   end
 
   def by_state

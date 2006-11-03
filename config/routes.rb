@@ -15,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.guide_permalink ':year/:permalink', :controller => 'guides', :action => 'show', :requirements => { :year => /\d+/ }
 
+  map.connect ':year', :controller => 'guides', :action => 'by_date', :requirements => { :year => /\d+/ }
+
   map.connect 'guides/by_state/:state', :controller => 'guides', :action => 'by_state'
 
   map.connect 'contests/candidate/:action/:id', :controller => 'contests/candidate'
