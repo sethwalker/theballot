@@ -34,7 +34,7 @@ role :dev, "gertie.radicaldesigns.org"
 # OPTIONAL VARIABLES
 # =============================================================================
 set :deploy_to, "/home/theball/#{application}" # defaults to "/u/apps/#{application}"
-set :user, "theball"            # defaults to the currently logged in user
+#set :user, "theball"            # defaults to the currently logged in user
 # set :scm, :darcs               # defaults to :subversion
 # set :svn, "/path/to/svn"       # defaults to searching the PATH
 # set :darcs, "/path/to/darcs"   # defaults to searching the PATH
@@ -175,6 +175,7 @@ task :after_symlink do
   revision_number
   run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
   run "ln -nfs #{shared_path}/public/themes #{current_path}/public/themes"
+  run "ln -nfs #{shared_path}/public/styles #{current_path}/public/styles"
 end
 
 desc "tail development log files" 
