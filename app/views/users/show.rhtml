@@ -7,13 +7,16 @@
     <%= @user.city %>, <%= @user.state %>
   </div>
 
+  <% if logged_in? && @user == current_user %>
   <div id="user-profile-aboutme">
-    <%= @user.about_me %>
-  <% if @user == current_user && !@user.about_me? %>
-	<h3>About Me:</h3>
-    Hey, this is you!  <%= link_to "Add a sentence about yourself", :controller => 'account', :action => 'edit', :id => @user.id %>
-  <% end %>
+     <% if @user.about_me? %>
+           <%= @user.about_me %>
+     <% else %>
+	   <h3>About Me:</h3> [blank]    
+     <% end %>
   </div>
+    <%= link_to "Edit your profile", :controller => 'account', :action => 'edit', :id => @user.id %>
+  <% end %>
 </div>
 
 <% if @user.guides.any? {|g| g.published? && g.approved?} -%>
