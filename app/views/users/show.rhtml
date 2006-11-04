@@ -9,6 +9,10 @@
 
   <div id="user-profile-aboutme">
     <%= @user.about_me %>
+  <% if @user == current_user && !@user.about_me? %>
+	<h3>About Me:</h3>
+    Hey, this is you!  <%= link_to "Add a sentence about yourself", :controller => 'account', :action => 'edit', :id => @user.id %>
+  <% end %>
   </div>
 </div>
 
