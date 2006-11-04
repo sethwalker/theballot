@@ -104,6 +104,10 @@ class Guide < ActiveRecord::Base
     PUBLISHED == status
   end
 
+  def self.count_published
+    count(:conditions => "status = '#{Guide::PUBLISHED}'")
+  end
+
   def approve(user)
     update_attributes(:approved_at => Time.now, :approved_by => user)
   end
