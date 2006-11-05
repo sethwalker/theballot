@@ -12,7 +12,7 @@
      <% if @user.about_me? %>
            <%= @user.about_me %>
      <% else %>
-	   <h3>About Me:</h3> [blank]    
+	   <h4>About Me:</h4> [blank]    
      <% end %>
   </div>
     <%= link_to "Edit your profile", :controller => 'account', :action => 'edit', :id => @user.id %>
