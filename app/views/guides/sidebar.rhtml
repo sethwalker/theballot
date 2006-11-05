@@ -1,7 +1,7 @@
 
 <div id="world-actions" class="sidebar-frame">
 
- <% if @guide.attached_pdf -%>	<div id="pdf-guide-link"><%= link_to "Get the PDF", @guide.attached_pdf %></div>          <% end -%>
+ <% if @guide.attached_pdf -%>	<div id="pdf-guide-link"><%= link_to "Get the PDF", url_for (@guide.attached_pdf) %></div>          <% end -%>
 
 	<div id="print-guide-link"><%= link_to_function "Print This Guide", 'window.print(); return false;' %></div>
 <% if @guide.published? && @guide.approved? -%>
