@@ -15,11 +15,11 @@
 </div>
 <div class="front-page-right">
 
-
+<% if (Guide.count_published > 19) -%>
 <div id="guide-count">
   <span id="guide-count-number"><%= Guide.count_published %></span> guides and counting... Join the fun!
 </div>
-
+<% end -%>
 
   <div id="voter-guides">
     <h3><span>Browse Voter Guides</span></h3>
