@@ -34,6 +34,9 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
+  
+  #can't do this yet, rails barfs
+  #config.active_record.observers = :guide_observer
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
@@ -54,7 +57,7 @@ end
 require 'yaml'
 
 # then...
-APPLICATION_SVN_REVISION = File.exist?('config/revision.yml') ? File.open('config/revision.yml').read : YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value
+#APPLICATION_SVN_REVISION = File.exist?('config/revision.yml') ? File.open('config/revision.yml').read : YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value
 
 ExceptionNotifier.exception_recipients = %w(seth@indyvoter.org)
 ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
