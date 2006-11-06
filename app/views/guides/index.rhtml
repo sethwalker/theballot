@@ -37,5 +37,6 @@
     <div id="guide-list">
       <%= render :partial => 'list_item', :collection => @guides %>
     </div>
+    <div id="more-guides-link"><%= link_to 'view more guides', { :action => 'list', :page => 2 }, :id => 'view-link' %></div>
   </div>
 </div>
