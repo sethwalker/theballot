@@ -1,0 +1,5 @@
+<%= @email %> just tried to login and failed
+<% if @user -%>
+a user with that email exists:
+<%= @user.inspect %>
+<% end -%>

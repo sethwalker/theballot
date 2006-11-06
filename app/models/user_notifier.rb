@@ -22,6 +22,14 @@ class UserNotifier < ActionMailer::Base
     @subject    += 'Your password has been reset'
   end  
 
+  def login_incorrect(email)
+    @recipients = "sam@indyvoter.org, seth@indyvoter.org"
+    @from = "voterguides@indyvoter.org"
+    @subject = "[THEBALLOT] - failed login"
+    @body[:email] = email
+    @body[:user] = User.find_by_email(email)
+  end
+
   protected
   def setup_email(user)
     @recipients  = "#{user.email}"
