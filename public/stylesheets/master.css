@@ -1169,17 +1169,15 @@ body {
 	margin-top: .7em;
   float: left;
 	}
+#footer #hosted-by {
+  margin-top: .7em;
+  float: right;
+  }
 #copyright {
 	display: block;
 	float: right;
 	text-align: right;
-  }
-#hosted-by {
-  margin-top: .7em;
-  display: block;
-  float: right;
-  text-align: right;
-  }
+	}
 #footer a, #footer a:visited {
 	color: #666666;
 	text-decoration: underline;
