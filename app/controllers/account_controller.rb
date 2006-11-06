@@ -63,7 +63,11 @@ class AccountController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @avatar = @user.avatar
-    return false unless @user == current_user || current_user.admin?
+    unless @user == current_user || current_user.admin?
+      @user = current_user
+      render :action => 'profile'
+      return false 
+    end
     if request.post?
       @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar].size != 0
       render :action => 'edit' and return unless @user.update_attributes(params[:user])
