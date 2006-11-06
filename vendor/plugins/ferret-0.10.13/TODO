@@ -1,0 +1,14 @@
+= TODO
+
+* user defined sorting
+* add field compression
+* Fix highlighting to work for compressed fields
+* Fix highlighting to work for external fields
+* Add Ferret::Index::Index
+
+= Done
+* Add string Sort descripter
+* fix memory bug
+* add MultiReader interface
+* add lexicographical sort (byte sort)
+* Add highlighting
