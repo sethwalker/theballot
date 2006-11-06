@@ -138,6 +138,10 @@ task :stage, :roles => :staging do
    ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml
   CMD
 
+  #SYMLINK
+  on_rollback { run "ln -nfs #{previous_release} #{current_path}" }
+  run "ln -nfs #{current_release} #{current_path}"
+
   #AFTER SYMLINK
   run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
   run "ln -nfs #{shared_path}/public/themes #{current_path}/public/themes"
