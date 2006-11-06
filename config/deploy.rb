@@ -110,7 +110,7 @@ task :after_symlink, :roles => :app , :except => {:no_symlink => true} do
   sudo "ln -nfs #{shared_path}/public/attachments #{release_path}/public/attachments"
 end 
 
-role :staging, 'theball@gertie.radicaldesigns.org'
+role :staging, 'theball@gertie.radicaldesigns.org', :no_release => true, :no_symlink => true
 task :stage, :roles => :staging do
   #UPDATE CODE
   on_rollback { delete release_path, :recursive => true }
