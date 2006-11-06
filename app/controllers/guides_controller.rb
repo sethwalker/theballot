@@ -233,12 +233,12 @@ class GuidesController < ApplicationController
     render :update do |page|
       if @guide.update_attributes(params[:guide])
         page << "invi('guide-form-basics', true)"
+        page << "invi('guide-form-theme', false)" if params[:show_theme]
         page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
         page << "Element.setStyle('guide_description', {overflow:'hidden'})"
         page.replace_html 'guide-form-basics', :partial => 'guides/basics_form', :layout => false
       else
         page.replace_html "guide-basics-error-messages", format_error_messages('guide')
-        @response.headers['Status'] = 500.to_s
       end
     end
   end
