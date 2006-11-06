@@ -399,7 +399,7 @@ body {
 	background-image: url(http://ixley.com/ballot/images/browse_voter_guides.gif);
 	background-repeat: no-repeat;
 	}
-#voter-guide-links, #voter-guide-links a {
+#voter-guide-links, #voter-guide-links a, #more-guides-link {
 	font-size: 12px;
 	font-weight: bold;
 	color: #0099FF;
