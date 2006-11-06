@@ -22,11 +22,12 @@ Because of the huge increase in traffic coming through the site (that's good), w
 </div>
 <div class="front-page-right">
 
-<% if (Guide.count_published > 19) -%>
 <div id="guide-count">
+<% if (Guide.count_published > 19) -%>
   <span id="guide-count-number"><%= Guide.count_published %></span> guides and counting... Join the fun!
-</div>
 <% end -%>
+ <div class="resource-link"><a href="http://vote411.org" target="_blank">Find Your Polling Place</a></div>
+</div>
 
   <div id="voter-guides">
     <h3><span>Browse Voter Guides</span></h3>
