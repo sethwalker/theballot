@@ -16,7 +16,9 @@
      <% if !@user.about_me? %>
 	   <h4>About Me:</h4> [blank]    
      <% end %>
+        <div id="profile-edit-link">
     <%= link_to "Edit your profile", :controller => 'account', :action => 'edit', :id => @user.id %>
+       </div>
   <% end %>
 </div>
 
