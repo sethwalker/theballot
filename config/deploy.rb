@@ -107,4 +107,5 @@ end
 task :after_symlink, :roles => :app , :except => {:no_symlink => true} do
   sudo "ln -nfs #{shared_path}/public/themes #{release_path}/public/themes"
   sudo "chmod 755 #{release_path}/public/themes/default.liquid"
+  sudo "ln -nfs #{shared_path}/public/attachments #{release_path}/public/attachments"
 end 
