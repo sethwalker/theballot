@@ -5,9 +5,9 @@
 
 <div id="world-actions" class="sidebar-frame">
 
- <% if @guide.attached_pdf -%>	<div id="pdf-guide-link"><%= link_to "Get the Attached PDF", url_for (@guide.attached_pdf.public_filename) %></div>          <% end -%>
+ <% if @guide.attached_pdf -%>	<div id="pdf-guide-link"><%= link_to "View PDF", url_for (@guide.attached_pdf.public_filename) %></div>          <% end -%>
 
-	<div id="print-guide-link"><%= link_to_function "Print This Guide", 'window.print(); return false;' %></div>
+	<div id="print-guide-link"><%= link_to_function "Print Guide", 'window.print(); return false;' %></div>
 <% if @guide.published? && @guide.approved? -%>
 	<div id="email-guide-link"><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></div>
 <% end %>
