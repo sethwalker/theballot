@@ -9,4 +9,4 @@
 
 <!--  <span id="copyright">&#169;2006 <a href="http://indyvoter.org" target="_blank">The League of Young Voters</a></span> -->
 
-<% if logged_in? && current_user.is_admin? -%><br/><span>IP: <%= request.env['SERVER_ADDR'] %>; release: <%= APPLICATION_SVN_REVISION %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>
+<% if logged_in? && current_user.is_admin? -%><br/><span style="color: white;">IP: <%= request.env['SERVER_ADDR'] %>; rails ver: <%= RAILS_GEM_VERSION %></span><% end -%></div>
