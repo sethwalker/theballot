@@ -1,6 +1,7 @@
 class StylesController < ApplicationController
   before_filter :login_required, :except => [ :show ]
   caches_page :show
+  @@page_cache_extension = '.css'
 
   def authorized?
     return true if current_user.admin?
