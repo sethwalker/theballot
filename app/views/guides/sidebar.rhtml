@@ -1,4 +1,8 @@
 
+<div id="polling-place" class="sidebar-frame">
+ <div class="resource-link"><a href="http://vote411.org" target="_blank">Find Your Polling Place</a></div>
+</div>
+
 <div id="world-actions" class="sidebar-frame">
 
  <% if @guide.attached_pdf -%>	<div id="pdf-guide-link"><%= link_to "Get the Attached PDF", url_for (@guide.attached_pdf.public_filename) %></div>          <% end -%>
@@ -43,10 +47,6 @@
     </div>
   </div>
 <% end -%>
-
-<div id="polling-place" class="sidebar-frame">
- <div class="resource-link"><a href="http://vote411.org" target="_blank">Find Your Polling Place</a></div>
-</div>
 
 <div id="guide-members" class="sidebar-frame">
   <h3>Voter Bloc for this guide</h3>
