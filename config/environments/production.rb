@@ -23,3 +23,9 @@ APPLICATION_STANDARD_DOMAIN = 'theballot.org'
 
 ActionController::Base.session_options[:session_key] = 'voterguides_session_id'
 ActionController::Base.session_options[:session_domain] = '.theballot.org'
+
+ActionMailer::Base.server_settings = {
+  :domain             => "theballot.com",
+  :perform_deliveries => true,
+  :address            => 'smtp.engineyard.com',
+  :port               => 25 } 
