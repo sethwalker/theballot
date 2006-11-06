@@ -30,7 +30,7 @@ set :svn_password, ''
 
 role :web, "theballot@65.74.169.199:8050"
 role :app, "theballot@65.74.169.199:8050"
-role :app,  "theballot@65.74.169.199:8051", :no_release => true, :no_symlink => true
+role :app, "theballot@65.74.169.199:8051", :no_release => true, :no_symlink => true
 role :db,  "theballot@65.74.169.199:8050", :primary => true
 
 # =============================================================================
@@ -109,3 +109,44 @@ task :after_symlink, :roles => :app , :except => {:no_symlink => true} do
   sudo "chmod 755 #{release_path}/public/themes/default.liquid"
   sudo "ln -nfs #{shared_path}/public/attachments #{release_path}/public/attachments"
 end 
+
+role :staging, 'theball@gertie.radicaldesigns.org'
+task :stage, :roles => :staging do
+  #UPDATE CODE
+  on_rollback { delete release_path, :recursive => true }
+
+  source.checkout(self)
+
+  run <<-CMD
+    rm -rf #{release_path}/log #{release_path}/public/system &&
+    ln -nfs #{shared_path}/log #{release_path}/log &&
+    ln -nfs #{shared_path}/system #{release_path}/public/system
+  CMD
+  
+  run <<-CMD
+    test -d #{shared_path}/pids && 
+    rm -rf #{release_path}/tmp/pids && 
+    ln -nfs #{shared_path}/pids #{release_path}/tmp/pids; true
+  CMD
+
+  # uncache the list of releases, so that the next time it is called it will
+  # include the newly released path.
+  @releases = nil
+
+  #AFTER UPDATE CODE
+  run <<-CMD
+   ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml
+  CMD
+
+  #AFTER SYMLINK
+  run "ln -nfs #{shared_path}/public/attachments #{current_path}/public/attachments"
+  run "ln -nfs #{shared_path}/public/themes #{current_path}/public/themes"
+
+  #RESTART
+  begin
+    run "cd #{current_path} && mongrel_rails restart"
+  rescue RuntimeError => e
+    puts e
+    puts "Probably not a big deal, so I'll just keep trucking..."
+  end
+end
