@@ -29,3 +29,16 @@ ActionMailer::Base.server_settings = {
   :perform_deliveries => true,
   :address            => 'smtp.engineyard.com',
   :port               => 25 } 
+
+require 'memcache'
+CACHE = MemCache.new :c_threshold => 10_000,
+                     :compression => true,
+                     :debug => false,
+                     :namespace => "app-#{RAILS_ENV}",
+                     :readonly => false,
+                     :urlencode => false
+CACHE.servers = '10.0.128.51'
+
+require 'mem_cache_fragment_store'
+config.action_controller.fragment_cache_store = :mem_cache_fragment_store, CACHE, 15.minutes
+config.action_controller.session_store = :mem_cache_store
