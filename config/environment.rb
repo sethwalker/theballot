@@ -61,19 +61,3 @@ require 'yaml'
 
 ExceptionNotifier.exception_recipients = %w(seth@indyvoter.org sam@indyvoter.org)
 ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
-
-require 'memcache'
-memcache_options = {
-  :c_threshold => 10_000,
-  :compression => true,
-  :debug => false,
-  :namespace => "app-#{RAILS_ENV}",
-  :readonly => false,
-  :urlencode => false
-}
-
-CACHE = MemCache.new memcache_options
-CACHE.servers = '10.0.128.51'
-
-ActionController::Base.session_options[:expires] = 1800
-ActionController::Base.session_options[:cache] = CACHE

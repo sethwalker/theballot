@@ -1,0 +1,25 @@
+defaults:
+  readonly: false
+  urlencode: false
+  c_threshold: 10000
+  compression: true
+  debug: false
+  namespace: app
+  sessions: true
+  fragments: true
+  servers: localhost:11211
+  benchmarking: true
+
+development:
+  sessions: true
+  fragments: true
+  servers: localhost:11211
+
+# turn off caching
+test: 
+  disabled: true
+
+production:
+  benchmarking: false
+  servers:
+    - 10.0.128.51:11211

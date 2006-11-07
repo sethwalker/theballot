@@ -29,6 +29,3 @@ ActionMailer::Base.server_settings = {
   :perform_deliveries => true,
   :address            => 'smtp.engineyard.com',
   :port               => 25 } 
-
-
-config.action_controller.session_store = :mem_cache_store
