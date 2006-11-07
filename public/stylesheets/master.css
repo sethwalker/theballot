@@ -109,7 +109,7 @@ input:focus, textarea:focus {
 	
 body {
 	background-color: #15324e;
-	background-image: url(http://ixley.com/ballot/images/background.gif);
+	background-image: url(/images/background.gif);
 	background-repeat: repeat-x;
 	background-position: center top;
 	}
@@ -127,7 +127,7 @@ body {
 	vertical-align: top;
 	height: 77px;
 	width: 850px;
-	background-image: url(http://ixley.com/ballot/images/header-bottom.gif);
+	background-image: url(/images/header-bottom.gif);
 	background-position: bottom;
 	background-repeat: no-repeat;
 	}
@@ -154,12 +154,12 @@ body {
 #logo a {
 	width: 260px;
 	height: 67px;
-	background-image: url(http://ixley.com/ballot/images/logo.jpg);
+	background-image: url(/images/logo.jpg);
 	}
 #nonpartisan-logo a {
 	width: 480px;
 	height: 67px;
-	background-image: url(http://ixley.com/ballot/images/logo-c3.jpg);
+	background-image: url(/images/logo-c3.jpg);
 	}
 	
 #logo a:hover, 
@@ -183,10 +183,10 @@ body {
 	background-position: top;
 	}
 #sponsored-logo a {
-	background-image: url(http://ixley.com/ballot/images/league_stamp.gif);
+	background-image: url(/images/league_stamp.gif);
 	}
 #nonpartisan-sponsored-logo a {
-	background-image: url(http://ixley.com/ballot/images/league_stamp-c3.gif);
+	background-image: url(/images/league_stamp-c3.gif);
 	}
 #sponsored-logo a:hover, 
 #nonpartisan-sponsored-logo a:hover {
@@ -315,7 +315,7 @@ body {
 	}
 #map h2 {
 	height: 25px;
-	background-image: url(http://ixley.com/ballot/images/select_state.gif);
+	background-image: url(/images/select_state.gif);
 	background-repeat: no-repeat;
 	}
 
@@ -334,7 +334,7 @@ body {
 	padding: 5px 10px;
 	margin: 10px 7px;
 	vertical-align: top;
-	background-image: url(http://ixley.com/ballot/images/search_bg.gif);
+	background-image: url(/images/search_bg.gif);
 	background-repeat: no-repeat;
 	}
 #search-guides h4 {
@@ -342,7 +342,7 @@ body {
 	width: 150px;
 	height: 18px;
 	margin-bottom: .2em;
-	background-image: url(http://ixley.com/ballot/images/search_guides.gif);
+	background-image: url(/images/search_guides.gif);
 	background-repeat: no-repeat;
 	}
 #search-guides input[type="text"] {
@@ -396,7 +396,7 @@ body {
 #voter-guides h3 {
 	display: block;
 	height: 18px;
-	background-image: url(http://ixley.com/ballot/images/browse_voter_guides.gif);
+	background-image: url(/images/browse_voter_guides.gif);
 	background-repeat: no-repeat;
 	}
 #voter-guide-links, #voter-guide-links a, #more-guides-link {
@@ -544,7 +544,7 @@ body {
 	height: 70px;
 	padding: 5px 5px 5px 7px;
 	border-bottom: 1px solid #999999;
-	background-image: url(http://ixley.com/ballot/images/buttons_gradient_bg.gif);
+	background-image: url(/images/buttons_gradient_bg.gif);
 	background-position: bottom;
 	background-repeat: repeat-x;
 	}
@@ -591,10 +591,10 @@ body {
 #contest-edit-window-right li ul {
 	margin-left: 10px;
 	list-style-type: none;
-	list-style-image: url(http://ixley.com/ballot/images/carrot.gif);
+	list-style-image: url(/images/carrot.gif);
 	}
 #contests li:hover {
-	list-style-image: url(http://ixley.com/ballot/images/carrot-over.gif);
+	list-style-image: url(/images/carrot-over.gif);
 	}
 #contests li, 
 #contests li ul 
@@ -903,13 +903,13 @@ body {
 	}
 
 #print-guide-link a {
-	background-image: url(http://ixley.com/ballot/images/print_icon.gif);
+	background-image: url(/images/print_icon.gif);
 	}
 #email-guide-link a {
-	background-image: url(http://ixley.com/ballot/images/email_icon.gif);
+	background-image: url(/images/email_icon.gif);
 	}
 #guidelink-code-link a {
-	background-image: url(http://ixley.com/ballot/images/link_icon.gif);
+	background-image: url(/images/link_icon.gif);
 	}
 #embed-code a {
 	background-image: none;
@@ -1161,7 +1161,7 @@ body {
 	margin-bottom: 1.5em;
 	font-size: 10px;
 	color: #666666;
-	background-image: url(http://ixley.com/ballot/images/footer_bg.gif);
+	background-image: url(/images/footer_bg.gif);
 	background-position: bottom;
 	background-repeat: no-repeat;
 	}
