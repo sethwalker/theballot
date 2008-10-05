@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_legal
   filter_parameter_logging "password"
 
-  meantime_filter :scope_guides_by_site
+  around_filter :scope_guides_by_site
 
   def scope_guides_by_site
     if c3?

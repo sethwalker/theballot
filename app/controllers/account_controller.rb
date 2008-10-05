@@ -1,5 +1,4 @@
 class AccountController < ApplicationController
-  observer :user_observer
 
   def activate
     @user = User.find_by_activation_code(params[:id]) unless params[:id].nil?

@@ -1,12 +1,11 @@
 class GuidesController < ApplicationController
-  observer :guide_observer
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :list_past, :index, :xml, :archive, :by_date, :by_state, :search, :help, :instructions, :tell, :send_message, :credits ]
 
   #don't allow guides to be edited after the date of the election
   before_filter :check_date, :only => [ :edit, :update_basics ]
-  meantime_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order, :admin ]
-  meantime_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
+  around_filter :scope_published, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order, :admin ]
+  around_filter :scope_approved_guides, :except => [ :new, :show, :edit, :update, :destroy, :update_basics, :update_theme, :update_assets, :update_legal, :endorsed_status, :approved_status, :published_status, :order ]
 
   def credits
   end
