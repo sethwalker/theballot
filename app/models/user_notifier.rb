@@ -7,7 +7,7 @@ class UserNotifier < ActionMailer::Base
   
   def activation(user)
     setup_email(user)
-    @recipients  = "seth@radicaldesigns.org,sam@indyvoter.org"
+    @recipients  = "voterguides@theleague.com"
     @subject    += "new account: #{user.email}"
   end
 
@@ -23,8 +23,8 @@ class UserNotifier < ActionMailer::Base
   end  
 
   def login_incorrect(email)
-    @recipients = "sam@indyvoter.org, seth@indyvoter.org"
-    @from = "voterguides@indyvoter.org"
+    @recipients = "voterguides@theleague.com"
+    @from = "voterguides@theleague.com"
     @subject = "[THEBALLOT] - failed login"
     @body[:email] = email
     @body[:user] = User.find_by_email(email)
@@ -33,7 +33,7 @@ class UserNotifier < ActionMailer::Base
   protected
   def setup_email(user)
     @recipients  = "#{user.email}"
-    @from        = "voterguides@indyvoter.org"
+    @from        = "voterguides@theleague.com"
     @subject     = "[voterguides] "
     @sent_on     = Time.now
     @body[:user] = user

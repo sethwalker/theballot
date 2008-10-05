@@ -1,0 +1,34 @@
+<p id="guide-list-header"><%= @listheader %></p>
+<div id="guide-list-messages">
+  <%= @messages.join('<br/>') if @messages %>
+  <% if @guides_past.empty? -%>
+    <% if @state -%>
+      There are no guides for the region you selected.  <%= link_to('Create a new one!', url_for(:action => 'new')) %> &mdash; it's easy.<br />
+      <div id="create_guide_icon"><%= link_to image_tag('create_guide_btn.gif', :alt => 'Create a Guide'), url_for(:action => 'new') %></div><br />
+      <%= link_to 'View Current Guides', url_for(:action => 'list') %> | <%= link_to 'Back to Map', url_for(:action => 'index') %>
+    <% end -%>
+  <% else -%>
+  Want to create your own guide for an upcoming election?  <%= link_to 'Create your own!', :action => 'new' %> &mdash; it's easy.<br /><br /><%= link_to 'View Current Guides', :action => 'list' %>
+  <% end -%>
+</div>
+
+<div id="guide-list-resources">
+  <%= render 'guides/resources' %>
+</div>
+
+<div id="guide-list-container">
+<%= render :partial => 'list_item', :collection => @guides_past %>
+</div>
+<!--
+<div id="list-map">
+  <%= render 'guides/map' %>
+</div>
+-->
+
+<div class="clear"></div>
+
+<div id="pagination">
+<% pagination_params = @pagination_params || {} -%>
+<%= link_to 'Previous page', pagination_params.merge({ :page => @guide_past_pages.current.previous }) if @guide_past_pages.current.previous %>
+<%= link_to 'Next page', pagination_params.merge({ :page => @guide_past_pages.current.next }) if @guide_past_pages.current.next %> 
+</div>

@@ -26,7 +26,7 @@
     <%= guide.date? ? guide.date.strftime('%B %e, %Y') : 'no date' %> | <%= guide.members.count %> friends | Author: <%= guide.user.firstname %> <%= guide.user.lastname %>  <%= link_to "profile", :controller => 'account', :action => 'profile', :id => guide.user.id %> <%= link_to "user", :controller => 'users', :action => 'show', :id => guide.user.id %>
   </div>
   <div class="guide-list-description">
-    <%= truncate guide.description, 100 %>
+    <%=h truncate guide.description, 100 %>
   </div>
 </div>
 </div>

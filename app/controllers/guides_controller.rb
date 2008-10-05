@@ -1,7 +1,7 @@
 class GuidesController < ApplicationController
   observer :guide_observer
   prepend_before_filter :find_guide_by_permalink
-  before_filter :login_required, :except => [ :show, :list, :index, :xml, :archive, :by_date, :by_state, :search, :help, :instructions, :tell, :send_message, :credits ]
+  before_filter :login_required, :except => [ :show, :list, :list_past, :index, :xml, :archive, :by_date, :by_state, :search, :help, :instructions, :tell, :send_message, :credits ]
 
   #don't allow guides to be edited after the date of the election
   before_filter :check_date, :only => [ :edit, :update_basics ]
@@ -75,6 +75,8 @@ class GuidesController < ApplicationController
   def index
     @showing_author = false
     list
+    @conditions = {} #hack
+    list_past
     render :action => 'index', :layout => 'frontpage'
   end
 
@@ -86,8 +88,16 @@ class GuidesController < ApplicationController
     @conditions ||= {} 
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
-    @conditions[:date] ||= "date >= '#{(Time.now-6.month).to_s(:db)}'"
+    @conditions[:date] ||= "date >= '#{(1.week.ago).to_s(:db)}'"
     @guide_pages, @guides = paginate :guides, :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state, city'
+  end
+
+  def list_past
+    @conditions ||= {} 
+    @messages ||= []
+    @listheader ||= "Listing Past Voter Guides"
+    @conditions[:date] ||= "date < '#{(Time.now).to_s(:db)}'"
+    @guide_past_pages, @guides_past = paginate :guides, :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city'
   end
 
   def by_date
@@ -210,7 +220,7 @@ class GuidesController < ApplicationController
 
   def new
     Guide.with_scope(:find => { :conditions => (c3? ? "legal = '#{Guide::NONPARTISAN}'" : "legal IS NULL OR legal <> '#{Guide::NONPARTISAN}'") }) do
-      @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2006,11,7), :state => current_user.state, :theme_id => 1)
+      @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2008,2,5), :state => current_user.state, :theme_id => 1)
     end
     unless @guide.id
       @guide.legal = Guide::NONPARTISAN if c3?

@@ -1,11 +1,14 @@
 
 <div id="polling-place" class="sidebar-frame">
  <div class="resource-link"><a href="http://vote411.org/pollingplacebystate.php" target="_blank">Find Your Polling Place</a></div>
+ <div class="resource-link"><a href="http://votepoke.org" target="_blank">Find If You're Registered</a></div>
 </div>
 
 <div id="world-actions" class="sidebar-frame">
 
- <% if @guide.attached_pdf -%>	<div id="pdf-guide-link"><%= link_to "View PDF", url_for (@guide.attached_pdf.public_filename) %></div>          <% end -%>
+ <% if @guide.attached_pdf -%>
+	<div id="pdf-guide-link"><%= link_to "View PDF", url_for (@guide.attached_pdf.public_filename) %></div>      
+    <% end -%>
 
 	<div id="print-guide-link"><%= link_to_function "Print Guide", 'window.print(); return false;' %></div>
 <% if @guide.published? && @guide.approved? -%>

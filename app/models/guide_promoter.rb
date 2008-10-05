@@ -2,7 +2,7 @@ class GuidePromoter < ActionMailer::Base
   def tell_a_friend(setup)
     @recipients = setup[:recipients]
     @from = setup[:from_email]
-    @bcc = 'sam@indyvoter.org'
+    @bcc = 'voterguides@theleague.com'
     @subject = 'check out this voter guide'
     @body[:from_name] = setup[:from_name]
     @body[:message] = setup[:message]
@@ -10,8 +10,8 @@ class GuidePromoter < ActionMailer::Base
   end
 
   def approval_request(setup)
-    @recipients = "sam@indyvoter.org, seth@indyvoter.org"
-    @from = "voterguides@indyvoter.org"
+    @recipients = "voterguides@theleague.com"
+    @from = "voterguides@theleague.com"
     @subject = 'c3 guide approval request'
     @send_on = Time.now
     @body[:guide] = setup[:guide]
@@ -19,24 +19,24 @@ class GuidePromoter < ActionMailer::Base
   end
 
   def change_notification(guide)
-    @recipients = 'sam@indyvoter.org, seth@indyvoter.org'
-    @from = 'voterguides@indyvoter.org'
+    @recipients = 'voterguides@theleague.com'
+    @from = 'voterguides@theleague.com'
     @subject = 'changed c3 guide'
     @send_on = Time.now
     @body[:guide] = guide
   end
 
   def join_notification(guide, user)
-  	@recipients = 'sam@indyvoter.org'
-	@from = 'voterguides@indyvoter.org'
+  	@recipients = 'voterguides@theleague.com'
+	@from = 'voterguides@theleague.com'
 	@subject = "[voterguides] #{user.firstname} joined '#{guide.name}' bloc"
 	@body[:guide] = guide
 	@body[:user] = user
   end
 
   def publish_notification(guide)
-  	@recipients = 'sam@indyvoter.org'
-	@from = 'voterguides@indyvoter.org'
+  	@recipients = 'voterguides@theleague.com'
+	@from = 'voterguides@theleague.com'
 	@subject = "[voterguides] #{guide.user.login} published #{guide.name}"
 	@body[:guide] = guide
   end

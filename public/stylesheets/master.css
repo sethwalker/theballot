@@ -376,11 +376,11 @@ body {
 	margin-top: 8px;
 	border: none;
 	}
-#home #guide-list {
+#home #guide-list, #home #guide-past-list {
 	background-color: #FAFAFA;
 	padding: 9px 7px;
 	}
-#home #guide-count, #home #polling-place {
+#home #guide-count, #home #polling-place, #how-to {
 	background-color: #DFD7B1;
 	padding: 9px 7px 9px 10px;
 	color: #666666;
@@ -399,6 +399,15 @@ body {
 	background-image: url(/images/browse_voter_guides.gif);
 	background-repeat: no-repeat;
 	}
+
+#voter-guides-past-title h3 {
+	display: block;
+	height: 18px;
+	background-image: url(/images/past_voter_guides.gif);
+	background-repeat: no-repeat;
+        margin-top: 10px;
+        }
+
 #voter-guide-links, #voter-guide-links a, #more-guides-link {
 	font-size: 12px;
 	font-weight: bold;
@@ -409,7 +418,7 @@ body {
 #voter-guide-links a:hover {
 	color: #66CCFF;
 	}
-#view-link { float: right;}
+#view-link, #view-past-link { float: right;}
 #create-link { float: left;}
 #voter-guide-links { margin-bottom: 8px; }
 
@@ -849,6 +858,10 @@ body {
 	font-weight: bold; 
 	color: #333333;
 	margin-bottom: 3px; 
+	}
+#unendorsed {
+	color: red;
+	font-size: 12px;
 	}	
 
 /* ========================================== SIDEBAR 
@@ -1204,3 +1217,14 @@ body {
 	font-weight: bold;
 	font-size: 12px;
 	}
+
+/* ================================================================================ HOW-TO GUIDE
+*/	
+
+#how-to li {
+	margin: 4px 0 4px 18px;
+}
+
+#how-to ul {
+	margin-left: 20px;
+}

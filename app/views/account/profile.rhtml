@@ -43,9 +43,14 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   end
 %>
 
+<% @published_past = @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :conditions => ["date < ?", Time.now], :order => 'date DESC')
+  @not_published_past = @user.guides.find(:all, :conditions => ["status != ? AND date < ?", Guide::PUBLISHED, Time.now], :order => 'date DESC')
+%>
+
+
 <% if !@published.empty? %>
 <div class="account-section" id="published">
-  <h3>Published Guides</h3>
+  <h3>Current Published Guides</h3>
   <div class="account-guide-list">
   <% @published.each do |g| %>
     <div class="account-guide-list-item" id="guide_<%= g.id %>">
@@ -74,6 +79,41 @@ You also have a guide on the partisan voter guide site.  To access it you must g
 </div>
 <% end %>
 
+<% if !@published_past.empty? %>
+<div class="account-section" id="published">
+  <h3>Past Published Guides</h3>
+  <div class="account-guide-list">
+  <% @published_past.each do |g| %>
+    <div class="account-guide-list-item" id="guide_<%= g.id %>">
+      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
+      <% unless g.approved? %>
+      <div class="pending-approval"> (pending approval)</div>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% end %>
+
 <div class="account-section" id="blocs">
   <%= render :partial => 'account/blocs', :locals => { :user => @user } %>
 </div>
+
+<% if current_user.is_admin? %>
+<% if !@not_published_past.empty? %>
+<div class="account-section" id="published">
+  <h3>Past Unpublished Guides (admin only)</h3>
+  <div class="account-guide-list">
+  <% @not_published_past.each do |g| %>
+    <div class="account-guide-list-item" id="guide_<%= g.id %>">
+      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
+      <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>     
+      <% unless g.approved? %>
+      <div class="pending-approval"> (pending approval)</div>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% end %>
+<% end %>

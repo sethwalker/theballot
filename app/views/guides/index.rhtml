@@ -12,6 +12,10 @@
     <h4><span>Search All Guides</span></h4>
     <%= render "shared/search" %>
   </div>
+<a name="howto"></a> 
+  <div id="how-to">
+    <%= render :partial => "how_to" %>
+  </div>
 
 
 </div>
@@ -19,6 +23,9 @@
 
 <div id="polling-place">
  <div class="resource-link"><a href="http://vote411.org/pollingplacebystate.php" target="_blank">Find Your Polling Place</a></div>
+ <div class="resource-link"><a href="http://votepoke.org" target="_blank">Find Out If You're Registered</a></div>
+ 
+  <!-- <div class="resource-link"><a href="http://theleague.com/how-to-create-a-voter-guide" target="_blank">How to Create a Voter Guide</a></div> -->
 </div>
 
 <% if (Guide.count_published > 19) -%>
@@ -38,5 +45,15 @@
       <%= render :partial => 'list_item', :collection => @guides %>
     </div>
     <div id="more-guides-link"><%= link_to 'view more guides', { :action => 'list', :page => 2 }, :id => 'view-link' %></div>
-  </div>
+
+    <div id="voter-guides-past-title">
+      <h3><span>Past Voter Guides</span></h3>
+    </div>
+    <div id="guide-past-list">
+      <%= render :partial => 'list_item', :collection => @guides_past %>
+    </div>
+    <div id="more-guides-link"><%= link_to 'view more past guides', { :action => 'list_past', :page => 2 }, :id => 'view-past-link' %></div>
 </div>
+
+</div>
+
