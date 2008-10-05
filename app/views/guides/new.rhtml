@@ -16,12 +16,12 @@
 <div id="guide-preview"></div>
 <div id="guide-create">
 <div id="guide-form-container">
-<%= start_form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form', :multipart => true ) %>
+<% form_tag( { :action => 'update', :id => @guide }, :id => 'guide-form', :multipart => true ) do -%>
   <%= render :partial => 'form' %>
   <div class="right">
     <%= submit_tag "Publish", :name => 'status' %> : <%= submit_tag 'Save As Draft', :name => 'status' %>
   </div>
-<%= end_form_tag %>
+<% end -%>
 <%= observe_form 'guide-form', :frequency => 1, :update => 'guide-preview', :complete => "Element.show('guide-preview')", :url => { :action => :preview } %>
 </div>
 

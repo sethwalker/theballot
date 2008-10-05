@@ -1,10 +1,10 @@
 <h1>Editing style</h1>
 
 <div style="float: left;">
-<%= start_form_tag :action => 'update', :id => @style %>
+<% form_tag :action => 'update', :id => @style do -%>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+<% end -%>
 </div>
 <div>
   <%= render :partial => 'images/selection', :collection => Image.find(:all) %>

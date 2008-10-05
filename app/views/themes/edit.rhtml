@@ -1,9 +1,9 @@
 <h1>Editing theme</h1>
 
-<%= start_form_tag( { :action => 'update', :id => @theme }, :multipart => true ) %>
+<% form_tag( { :action => 'update', :id => @theme }, :multipart => true ) do -%>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+<% end -%>
 
 <%= link_to 'Show', :action => 'show', :id => @theme %> |
 <%= link_to 'Back', :action => 'list' %>

@@ -3,10 +3,10 @@
 <table>
 	<tr>
 		<td>
-<%= start_form_tag :action => 'update', :id => @style %>
+<% form_tag :action => 'update', :id => @style do -%>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+<% end -%>
 </td>
 <td>
 	<%= error_messages_for 'image' %>

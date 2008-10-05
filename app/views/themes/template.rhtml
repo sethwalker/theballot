@@ -1,4 +1,4 @@
-<%= start_form_tag :action => 'template', :id => params[:id] %>
+<% form_tag :action => 'template', :id => params[:id] -%>
   <p><%= text_area_tag 'content', @content, :rows => 100, :cols => 80 %></p>
   <%= submit_tag 'edit' %>
-<%= end_form_tag %>
+<% end -%>

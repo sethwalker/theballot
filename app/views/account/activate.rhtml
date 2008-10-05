@@ -1,6 +1,6 @@
-<%= start_form_tag :action => "activate" %>
+<% form_tag :action => "activate" do -%>
 <p><label for="id">Activation Code</label><br/>
-<%= text_field_tag(:id, @params[:id], :size=>50 ) %>
+<%= text_field_tag(:id, params[:id], :size=>50 ) %>
 </p>
 <p><%= submit_tag 'Activate' %></p>
-<%= end_form_tag %>
+<% end -%>

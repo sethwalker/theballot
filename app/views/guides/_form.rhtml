@@ -36,7 +36,7 @@ GUIDE_SCREENSHOT_JS
 <div class="dynamic guide-form-section" id="guide-form-image">
 <div class="popup-inner">
   <div id="guide-assets-image-error-messages"><%= error_messages_for 'image' %></div>
-  <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
+  <% form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) do -%>
     <p><label for="guide_image">You can attach an icon to your guide:</label><br/>
     <%= file_field_tag 'uploaded_image'  %>
     <% if @guide.image -%>
@@ -45,14 +45,14 @@ GUIDE_SCREENSHOT_JS
     <% end -%>
     </p>
     <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-image', true)", :class => 'form_button' %>
-  <%= end_form_tag %>
+  <% end -%>
 </div><!-- end popup-inner div -->
 </div>
 
 <div class="dynamic guide-form-section" id="guide-form-pdf">
 <div class="popup-inner">
   <div id="guide-assets-pdf-error-messages"><%= error_messages_for 'pdf' %></div>
-  <%= start_form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) %>
+  <% form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) do -%>
     <p><label for="uploaded_pdf">You can attach a PDF version of your guide:</label><br/>
     <%= file_field_tag 'uploaded_pdf'  %>
     <% if @guide.attached_pdf -%>
@@ -61,7 +61,7 @@ GUIDE_SCREENSHOT_JS
       <% end -%>
     </p>
     <%= submit_tag 'Upload' %> <%= button_to_function 'Cancel', "invi('guide-form-pdf', true)", :class => 'form_button' %>
-  <%= end_form_tag %>
+  <% end -%>
 </div> <!-- end popup-inner div -->
 </div>
 <!--[eoform:guide]-->
