@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 38) do
+ActiveRecord::Schema.define(:version => 39) do
 
   create_table "assets", :force => true do |t|
     t.column "type", :string
@@ -50,16 +50,6 @@ ActiveRecord::Schema.define(:version => 38) do
     t.column "updated_at", :datetime
   end
 
-  create_table "endorsement_drafts", :force => true do |t|
-    t.column "endorsement_id", :integer
-    t.column "updated_at", :datetime
-    t.column "guide_id", :integer
-    t.column "contest", :string
-    t.column "candidate", :string
-    t.column "position_id", :integer
-    t.column "description", :text
-  end
-
   create_table "endorsements", :force => true do |t|
     t.column "guide_id", :integer
     t.column "contest", :string
@@ -67,19 +57,6 @@ ActiveRecord::Schema.define(:version => 38) do
     t.column "description", :text
     t.column "position", :integer
     t.column "selection", :string
-  end
-
-  create_table "guide_drafts", :force => true do |t|
-    t.column "guide_id", :integer
-    t.column "updated_at", :datetime
-    t.column "name", :string
-    t.column "city", :string
-    t.column "state", :string
-    t.column "date", :date
-    t.column "description", :text
-    t.column "owner_id", :integer
-    t.column "theme_id", :integer
-    t.column "endorsements", :text
   end
 
   create_table "guides", :force => true do |t|
@@ -98,6 +75,7 @@ ActiveRecord::Schema.define(:version => 38) do
     t.column "approved_by", :integer
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+    t.column "num_members", :integer
   end
 
   create_table "links", :force => true do |t|
