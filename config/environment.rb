@@ -42,6 +42,7 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
+  config.gem "rspec-rails", :lib => "spec" 
 end
 
 # Add new inflection rules using the following format 
