@@ -226,7 +226,7 @@ class GuidesController < ApplicationController
       @guide.save_with_validation(false)
       @recently_created_guide = true
     end
-    render 'guides/c3/instructions' and return if c3?
+    render :file => 'guides/c3/instructions' and return if c3?
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)
     render :action => 'edit'
@@ -414,7 +414,7 @@ class GuidesController < ApplicationController
     elsif @legal == Guide::NONPARTISAN
       @guide.update_attribute_with_validation_skipping(:legal, Guide::NONPARTISAN)
       @recently_updated_guide_legal_status = true
-      render 'guides/c3/instructions' and return
+      render :file => 'guides/c3/instructions' and return
     else
       if request.xhr?
         render :update do |page|

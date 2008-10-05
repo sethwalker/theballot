@@ -16,7 +16,7 @@ class AccountController < ApplicationController
     return unless request.post?
     if @user = User.find_by_email(params[:email])
       @user.forgot_password
-      @user.current_domain = @request.host
+      @user.current_domain = request.host
       @user.save
       flash[:notice] = "A password reset link has been sent to your email address.  Check your email and then login below."
       redirect_to(:action => 'login')
@@ -112,7 +112,7 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
-    @user.signup_domain = @request.host
+    @user.signup_domain = request.host
     @avatar = @user.build_avatar(:uploaded_data => params[:uploaded_avatar]) if params[:uploaded_avatar] && params[:uploaded_avatar].size != 0
     if @user.save
       flash[:notice] = "Thanks for signing up.  We're shootin' you an email right now.  Just click on the link in the email to activate your account and you'll be up and running."

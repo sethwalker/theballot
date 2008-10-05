@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def c3?
-    @c3 = (@request.host == APPLICATION_C3_DOMAIN)
+    @c3 = (request.host == APPLICATION_C3_DOMAIN)
   end
 
   def is_c3

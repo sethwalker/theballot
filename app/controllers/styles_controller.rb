@@ -24,7 +24,7 @@ class StylesController < ApplicationController
   end
 
   def show
-    @headers["Content-Type"] = "text/css; charset=utf-8"
+    headers["Content-Type"] = "text/css; charset=utf-8"
     @style = Style.find(params[:id])
     render :text => @style.stylesheet
   end

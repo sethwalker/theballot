@@ -9,8 +9,8 @@
     <%= render "shared/banner" %>
     <div id="container">
     <div id="content" class="column">
-      <% if @flash[:error] %><p id="flash-error"><%= flash[:error] %></p><% end %>
-      <% if @flash[:notice] %><p id="flash-notice"><%= flash[:notice] %></p><% end %>
+      <% if flash[:error] %><p id="flash-error"><%= flash[:error] %></p><% end %>
+      <% if flash[:notice] %><p id="flash-notice"><%= flash[:notice] %></p><% end %>
       <%= @content_for_layout %>
     </div>
     <div class="clear"></div>
