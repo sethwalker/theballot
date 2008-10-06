@@ -1,0 +1,78 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+sanfrancisco:
+  id: 1
+  name: sf
+  description: sf description
+  city: san francisco
+  state: CA
+  date: 2006-06-06
+  user_id: 1
+  permalink: sf
+  status: <%= Guide::PUBLISHED %>
+
+newyork:
+  id: 2
+  name: nyc
+  description: nyc description
+  city: new york
+  state: NY
+  date: 2006-11-07
+  user_id: 2
+  permalink: nyc
+  status: <%= Guide::DRAFT %>
+
+future:
+  id: 3
+  name: future guide
+  city: san francisco
+  state: CA
+  permalink: future_guide
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  user_id: 1
+  status: <%= Guide::PUBLISHED %>
+
+past:
+  id: 4
+  name: past guide
+  permalink: past_guide
+  date: <%= (Time.now - 1.day).to_date.to_s %>
+  status: <%= Guide::PUBLISHED %>
+  user_id: 1
+
+no_contests:
+  id: 5
+  name: no contests
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  user_id: 1
+
+candidate_endorsements:
+  id: 6
+  name: candidate endorsements allowed
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+no_candidate_endorsements:
+  id: 7
+  name: no candidate endorsements allowed
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+
+partisan:
+  id: 8
+  name: partisan guide
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+  legal: <%= Guide::PARTISAN %>
+nonpartisan:
+  id: 9
+  name: nonpartisan guide
+  date: <%= (Time.now + 1.day).to_date.to_s %>
+  city: san francisco
+  state: CA
+  user_id: 1
+  legal: <%= Guide::NONPARTISAN %>

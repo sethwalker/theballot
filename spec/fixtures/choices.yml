@@ -1,0 +1,41 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+janet:
+  id: 1
+  name: janet reilly
+  description: janet desc
+  contest_id: 1
+  selection: <%= Choice::YES %>
+fiona:
+  id: 2
+  name: fiona ma
+  description: fiona desc
+  contest_id: 1
+  selection: <%= Choice::NO %>
+gonzalez:
+  id: 3
+  name: matt gonzalez
+  description: green party
+  contest_id: 2
+  selection: <%= Choice::YES %>
+newsom:
+  id: 4
+  name: gavin newsom
+  description: democratic party
+  contest_id: 2
+  selection: <%= Choice::NO %>
+phil:
+  id: 5
+  name: phil angelides
+  description: democratic challenger
+  contest_id: 3
+arnold:
+  id: 6
+  name: arnold schwarzenegger
+  description: republican body builder incumbent
+  contest_id: 3
+prop13:
+  id: 7
+  name: NO on Prop 13
+  description: the reason why the californian education system is failing
+  contest_id: 10
+  selection: <%= Choice::NO %>

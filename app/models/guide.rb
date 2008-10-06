@@ -37,7 +37,7 @@ class Guide < ActiveRecord::Base
 
   def after_save
     GuidePromoter.deliver_approval_request( { :guide => self } ) if @recently_published && c3?
-	GuidePromoter.deliver_publish_notification(self) if @recently_published
+    GuidePromoter.deliver_publish_notification(self) if @recently_published
   end
 
   acts_as_ferret :fields => { :name => {:boost => 3}, 
@@ -137,7 +137,7 @@ class Guide < ActiveRecord::Base
   def add_member(u)
     return if member?(u)
     Pledge.create(:user => u, :guide => self)
-	GuidePromoter.deliver_join_notification(self, u)
+    GuidePromoter.deliver_join_notification(self, u)
     update_attribute(:num_members, members.count)
     u.blocs(true)
     members(true)
