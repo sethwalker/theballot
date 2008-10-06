@@ -1,10 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'images_controller'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-# Re-raise errors caught by the controller.
-class ImagesController; def rescue_action(e) raise e end; end
-
-class ImagesControllerTest < Test::Unit::TestCase
+describe ImagesController do
   def setup
     @controller = ImagesController.new
     @request    = ActionController::TestRequest.new

@@ -1,16 +1,15 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'links_controller'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-# Re-raise errors caught by the controller.
-class LinksController; def rescue_action(e) raise e end; end
+describe ThemesController do
+  fixtures :themes
 
-class LinksControllerTest < Test::Unit::TestCase
-  fixtures :links
+  before(:all) do
+    @user = create_user
+    @user.roles << Role.find_or_create_by_title('admin')
+  end
 
-  def setup
-    @controller = LinksController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  before do
+    request.session[:user] = @user.id
   end
 
   def test_index
@@ -25,7 +24,7 @@ class LinksControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:links)
+    assert_not_nil assigns(:themes)
   end
 
   def test_show
@@ -34,8 +33,8 @@ class LinksControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'show'
 
-    assert_not_nil assigns(:link)
-    assert assigns(:link).valid?
+    assert_not_nil assigns(:theme)
+    assert assigns(:theme).valid?
   end
 
   def test_new
@@ -44,18 +43,18 @@ class LinksControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'new'
 
-    assert_not_nil assigns(:link)
+    assert_not_nil assigns(:theme)
   end
 
   def test_create
-    num_links = Link.count
+    num_themes = Theme.count
 
-    post :create, :link => { :url => 'updated' }
+    post :create, :theme => {}
 
-    assert_response :success
-    assert_template 'show'
+    assert_response :redirect
+    assert_redirected_to :action => 'list'
 
-    assert_equal num_links + 1, Link.count
+    assert_equal num_themes + 1, Theme.count
   end
 
   def test_edit
@@ -64,8 +63,8 @@ class LinksControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:link)
-    assert assigns(:link).valid?
+    assert_not_nil assigns(:theme)
+    assert assigns(:theme).valid?
   end
 
   def test_update
@@ -75,14 +74,14 @@ class LinksControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    assert_not_nil Link.find(1)
+    assert_not_nil Theme.find(1)
 
     post :destroy, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Link.find(1)
+      Theme.find(1)
     }
   end
 end

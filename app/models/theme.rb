@@ -31,7 +31,7 @@ class Theme < ActiveRecord::Base
 
   def to_liquid
     liquid = { 'name' => name }
-    if has_author?
+    unless author.nil?
       liquid.merge!({ 'author_name' => "#{author.firstname} #{author.lastname}", 'author_url' => author.url })
     end
     return liquid

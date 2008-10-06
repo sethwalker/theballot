@@ -118,6 +118,33 @@ class Guide < ActiveRecord::Base
     !c3? || !approved_at.nil?
   end
 
+  def self.with_approved
+    Guide.with_scope({ :find => { :conditions => "approved_at IS NOT NULL OR legal IS NULL OR legal != '#{Guide::NONPARTISAN}'" } }) do
+      yield
+    end
+  end
+
+  def self.with_published
+    Guide.with_scope({ :find => { :conditions => "status = '#{Guide::PUBLISHED}'" } }) do
+      yield
+    end
+  end
+
+  def self.with_c3
+    Guide.with_scope({ :find => { :conditions => "legal = '#{Guide::C3}'" },
+                       :create => { :legal => Guide::C3 }}) do
+      yield
+    end
+  end
+
+  named_scope :legal, lambda {|status|
+    { :conditions => (status == NONPARTISAN) ? "legal = '#{Guide::NONPARTISAN}'" : "legal IS NULL OR legal <> '#{Guide::NONPARTISAN}'" }
+  }
+
+  named_scope :in_progress, {:conditions => "status IS NULL"}
+  named_scope :nonpartisan, {:conditions => ["legal = ?", NONPARTISAN]}
+  named_scope :partisan,    {:conditions => ["legal IS NULL OR LEGAL <> ?", NONPARTISAN]}
+
   def owner?(u)
     u == user
   end

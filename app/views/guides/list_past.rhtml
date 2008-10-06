@@ -29,6 +29,6 @@
 
 <div id="pagination">
 <% pagination_params = @pagination_params || {} -%>
-<%= link_to 'Previous page', pagination_params.merge({ :page => @guide_past_pages.current.previous }) if @guide_past_pages.current.previous %>
-<%= link_to 'Next page', pagination_params.merge({ :page => @guide_past_pages.current.next }) if @guide_past_pages.current.next %> 
+<%= link_to 'Previous page', pagination_params.merge({ :page => @guides_past.previous_page }) if @guides_past.previous_page %>
+<%= link_to 'Next page', pagination_params.merge({ :page => @guides_past.next_page }) if @guides_past.current.next %> 
 </div>

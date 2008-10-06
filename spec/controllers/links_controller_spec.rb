@@ -1,14 +1,10 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'styles_controller'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-# Re-raise errors caught by the controller.
-class StylesController; def rescue_action(e) raise e end; end
-
-class StylesControllerTest < Test::Unit::TestCase
-  fixtures :styles
+describe LinksController do
+  fixtures :links
 
   def setup
-    @controller = StylesController.new
+    @controller = LinksController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -25,17 +21,17 @@ class StylesControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:styles)
+    assert_not_nil assigns(:links)
   end
 
   def test_show
     get :show, :id => 1
 
     assert_response :success
-#    assert_template 'show'
+    assert_template 'show'
 
-    assert_not_nil assigns(:style)
-    assert assigns(:style).valid?
+    assert_not_nil assigns(:link)
+    assert assigns(:link).valid?
   end
 
   def test_new
@@ -44,18 +40,18 @@ class StylesControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'new'
 
-    assert_not_nil assigns(:style)
+    assert_not_nil assigns(:link)
   end
 
   def test_create
-    num_styles = Style.count
+    num_links = Link.count
 
-    post :create, :style => {}
+    post :create, :link => { :url => 'updated' }
 
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_response :success
+    assert_template 'show'
 
-    assert_equal num_styles + 1, Style.count
+    assert_equal num_links + 1, Link.count
   end
 
   def test_edit
@@ -64,8 +60,8 @@ class StylesControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:style)
-    assert assigns(:style).valid?
+    assert_not_nil assigns(:link)
+    assert assigns(:link).valid?
   end
 
   def test_update
@@ -75,14 +71,14 @@ class StylesControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    assert_not_nil Style.find(1)
+    assert_not_nil Link.find(1)
 
     post :destroy, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Style.find(1)
+      Link.find(1)
     }
   end
 end

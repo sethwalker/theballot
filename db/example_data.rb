@@ -40,8 +40,8 @@ module FixtureReplacement
 	end
 
   attributes_for :user do |a|
-    a.login = 'quire'
-    a.email = 'quire@example.com'
+    a.login = login = String.random
+    a.email = "#{login}@example.com"
     a.password = 'quire'
     a.password_confirmation = 'quire'
     a.city = 'san francisco'

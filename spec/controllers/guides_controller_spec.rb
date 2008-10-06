@@ -1,10 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'guides_controller'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-# Re-raise errors caught by the controller.
-class GuidesController; def rescue_action(e) raise e end; end
-
-class GuidesControllerTest < Test::Unit::TestCase
+describe GuidesController do
   fixtures :guides, :contests, :users
 
   def setup
@@ -63,7 +59,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     num_guides = Guide.count
     get :new
     assert_response :redirect
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'signup'
 
     assert_equal num_guides, Guide.count
 
@@ -82,7 +78,7 @@ class GuidesControllerTest < Test::Unit::TestCase
   end
 
   def test_create
-    login_as :quentin
+    controller.stub!(:login_required).and_return(true)
     num_guides = Guide.count
 
     post :create, :guide => {:name => 'test create name', :date => Time.now, :description => 'guide description', :city => 'guide city', :state => 'guide state', :user_id => 1, :permalink => '', :image => nil}
@@ -99,7 +95,7 @@ class GuidesControllerTest < Test::Unit::TestCase
 
   def test_edit
     get :edit, :id => 3
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'signup'
     login_as :quentin
 
     get :edit, :id => 3
@@ -120,12 +116,12 @@ class GuidesControllerTest < Test::Unit::TestCase
 
   def test_update
     post :update, :id => 3
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'signup'
 
     login_as :quentin
     post :update, :id => 3, :guide => { :name => 'updated' }
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 3
+    assert_redirected_to :controller => 'guides', :action => 'show', :permalink => assigns[:guide].permalink, :year => assigns[:guide].date.year
   end
 
   def test_update_past
@@ -139,7 +135,7 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert_not_nil Guide.find(1)
     post :destroy, :id => 1
     assert_response :redirect
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'signup'
 
     login_as :quentin
     post :destroy, :id => 1
@@ -183,19 +179,13 @@ class GuidesControllerTest < Test::Unit::TestCase
     assert !updated_again.is_published?
   end
 
-  def test_should_send_request_for_approval
-    g = Guide.new(:name => 'c3ish', :date => Time.now, :city => 'sf', :state => 'CA', :user_id => users(:quentin).id)
-    g.publish
-    assert g.save
-    assert_equal 1, @emails.length
-  end
-
   def test_send_tell_a_friend
+    GuidePromoter.should_receive(:deliver_tell_a_friend).and_return(true)
     post :send_message, :id => guides(:sanfrancisco).id, :from => { :name => 'me', :email => 'valid@valid.com' }, :recipients => { :email => 'to@valid.com', :message => 'message' }
     assert_response :redirect
     assert_redirected_to guides(:sanfrancisco).permalink_url
-    assert_equal 1, @emails.length
-    assert_equal flash[:notice], 'Message sent'
+#    assert_equal 1, @emails.length
+    flash[:notices].first.should match(/An email has been sent/)
   end
 
 

@@ -11,10 +11,9 @@ class ApplicationController < ActionController::Base
 
   def scope_guides_by_site
     if c3?
-      Guide.with_scope({
-        :find => { :conditions => "legal = '#{Guide::C3}'" },
-        :create => { :legal => Guide::C3 }
-      }) { yield }
+      Guide.with_c3 do
+        yield
+      end
     else
       yield
     end

@@ -20,7 +20,7 @@ class StylesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @style_pages, @styles = paginate :styles, :per_page => 10
+    @styles = Style.paginate(:all, :page => params[:page], :per_page => 10)
   end
 
   def show

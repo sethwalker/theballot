@@ -17,7 +17,7 @@ class ThemesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @theme_pages, @themes = paginate :themes, :per_page => 10
+    @themes = Theme.paginate(:all, :page => params[:page], :per_page => 10)
   end
 
   def show

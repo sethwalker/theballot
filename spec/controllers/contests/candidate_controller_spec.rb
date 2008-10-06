@@ -1,10 +1,6 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'contests/candidate_controller'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-# Re-raise errors caught by the controller.
-class Contests::CandidateController; def rescue_action(e) raise e end; end
-
-class Contests::CandidateControllerTest < Test::Unit::TestCase
+describe Contests::CandidateController do
   fixtures :users, :guides, :contests
 
   def setup
@@ -19,7 +15,7 @@ class Contests::CandidateControllerTest < Test::Unit::TestCase
     assert g.contests.empty?
     xhr :post, :new, :contest => { :name => 'test create candidate contest', :guide_id => guides(:no_contests).id }
     assert_response :redirect
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'signup'
 
     num_candidate_contests = Candidate.count
     login_as :quentin

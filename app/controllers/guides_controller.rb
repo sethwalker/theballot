@@ -11,16 +11,11 @@ class GuidesController < ApplicationController
   end
 
   def scope_approved_guides
-    conditions = "approved_at IS NOT NULL OR legal IS NULL OR legal != '#{Guide::NONPARTISAN}'"
-    Guide.with_scope({
-      :find => { :conditions => conditions }
-    }) { yield }
+    Guide.with_approved { yield }
   end
 
   def scope_published
-    Guide.with_scope({
-      :find => { :conditions => "status = '#{Guide::PUBLISHED}'" }
-    }) { yield }
+    Guide.with_published { yield }
   end
 
   def admin
@@ -32,9 +27,7 @@ class GuidesController < ApplicationController
 
   def find_guide_by_permalink
     if(params[:year] && params[:permalink])
-      Guide.with_scope(:find => { :conditions => ['YEAR(date) = ?', params[:year]] } ) do
-        @guide = Guide.find_by_permalink(params[:permalink])
-      end
+      @guide = Guide.find_by_permalink(params[:permalink], :conditions => ['YEAR(date) = ?', params[:year]])
     end
     true
   end
@@ -88,7 +81,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{(1.week.ago).to_s(:db)}'"
-    @guide_pages, @guides = paginate :guides, :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
+    @guides = Guide.paginate :all, :page => params[:page], :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
   end
 
   def list_past
@@ -96,7 +89,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing Past Voter Guides"
     @conditions[:date] ||= "date < '#{(Time.now).to_s(:db)}'"
-    @guide_past_pages, @guides_past = paginate :guides, :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city'
+    @guides_past = Guide.paginate :page => params[:page], :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city'
   end
 
   def by_date
@@ -147,9 +140,7 @@ class GuidesController < ApplicationController
       @conditions = "1 = 1"
       @conditions << " AND state = '#{params[:guide][:state]}'" if !params[:guide][:state].empty?
       @guide_pages = Paginator.new self, Guide.count, 10, params['page']
-      Guide.with_scope(:find => { :conditions => @conditions }) do
-        @guides = Guide.find_by_contents(@query.join(' AND '), :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
-      end
+      @guides = Guide.find_by_contents(@query.join(' AND '), :conditions => @conditions, :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
       @listheader = "Searching for \"#{@query}\""
       @messages = ["No results"] if @guides.empty?
       render :action => 'list' and return
@@ -218,10 +209,13 @@ class GuidesController < ApplicationController
   end
 
   def new
-    Guide.with_scope(:find => { :conditions => (c3? ? "legal = '#{Guide::NONPARTISAN}'" : "legal IS NULL OR legal <> '#{Guide::NONPARTISAN}'") }) do
-      @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2008,11,4), :state => current_user.state, :theme_id => 1)
+    if c3?
+      @guide = current_user.guides.in_progress.nonpartisan.find(:first)
+    else
+      @guide = current_user.guides.in_progress.partisan.find(:first)
     end
-    unless @guide.id
+    @guide ||= Guide.new(:user => current_user, :date => Date.new(2008,11,4), :state => current_user.state, :theme_id => 1)
+    if @guide.new_record?
       @guide.legal = Guide::NONPARTISAN if c3?
       @guide.save_with_validation(false)
       @recently_created_guide = true

@@ -1,10 +1,6 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'contests/base_controller'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-# Re-raise errors caught by the controller.
-class Contests::BaseController; def rescue_action(e) raise e end; end
-
-class Contests::BaseControllerTest < Test::Unit::TestCase
+describe Contests::BaseController do
   fixtures :contests, :guides, :users
   def setup
     @controller = Contests::BaseController.new

@@ -12,7 +12,7 @@ class LinksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @link_pages, @links = paginate :links, :per_page => 10
+    @links = Link.paginate(:all, :page => params[:page], :per_page => 10)
   end
 
   def show
