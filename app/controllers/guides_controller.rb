@@ -124,9 +124,7 @@ class GuidesController < ApplicationController
   def search
     if params[:q]
       @query = params[:q].split.collect {|p| ['and', 'or', '*'].include?(p.downcase) || p.include?('*') ? p : p + '*'}.join(' ')
-      page = params['page'] || 1
-      @guides = Guide.find_by_contents(@query, :limit => 10, :offset => 10 * (page.to_i-1))
-      @guide_pages = Paginator.new self, @guides.total_hits, 10, params['page']
+      @guides = Guide.find_with_ferret(@query, :page => params[:page], :per_page => 10)
       @pagination_params = { :q => params[:q] }
       @listheader = "Searching for \"#{@query.gsub(/\*/,'')}\""
       @messages = ["No results"] if @guides.empty?
@@ -139,8 +137,7 @@ class GuidesController < ApplicationController
       @query = ['*'] if @query.empty?
       @conditions = "1 = 1"
       @conditions << " AND state = '#{params[:guide][:state]}'" if !params[:guide][:state].empty?
-      @guide_pages = Paginator.new self, Guide.count, 10, params['page']
-      @guides = Guide.find_by_contents(@query.join(' AND '), :conditions => @conditions, :limit => @guide_pages.items_per_page, :offset => @guide_pages.current.offset)
+      @guides = Guide.find_with_ferret(@query.join(' AND '), :conditions => @conditions, :page => params[:page], :per_page => 10)
       @listheader = "Searching for \"#{@query}\""
       @messages = ["No results"] if @guides.empty?
       render :action => 'list' and return
