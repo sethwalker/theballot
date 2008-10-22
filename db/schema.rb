@@ -45,11 +45,6 @@ ActiveRecord::Schema.define(:version => 20081005222724) do
   add_index "attachments", ["user_id"], :name => "index_on_user_id"
   add_index "attachments", ["theme_id"], :name => "index_on_theme_id"
 
-  add_index "attachments", ["parent_id"], :name => "ey_parent_id_key"
-  add_index "attachments", ["guide_id"], :name => "ey_guide_id_key"
-  add_index "attachments", ["user_id"], :name => "ey_user_id_key"
-  add_index "attachments", ["theme_id"], :name => "ey_theme_id_key"
-
   create_table "choices", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -60,14 +55,15 @@ ActiveRecord::Schema.define(:version => 20081005222724) do
     t.datetime "updated_at"
   end
 
-  create_table "comments", :force => true do |t|
-    t.column "subject", :string
-    t.column "body", :text
-    t.column "user_id", :integer
-    t.column "guide_id", :integer
-    t.column "created_at", :datetime
-  end
   add_index "choices", ["contest_id"], :name => "index_on_contest_id"
+
+  create_table "comments", :force => true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "guide_id"
+    t.datetime "created_at"
+  end
 
   create_table "contests", :force => true do |t|
     t.string   "name"
@@ -113,9 +109,6 @@ ActiveRecord::Schema.define(:version => 20081005222724) do
 
   add_index "guides", ["user_id"], :name => "index_on_user_id"
   add_index "guides", ["theme_id"], :name => "index_on_theme_id"
-
-  add_index "guides", ["user_id"], :name => "ey_user_id_key"
-  add_index "guides", ["theme_id"], :name => "ey_theme_id_key"
 
   create_table "links", :force => true do |t|
     t.string  "url"
@@ -163,7 +156,7 @@ ActiveRecord::Schema.define(:version => 20081005222724) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], :name => "sessions_session_id_index"
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
 
   create_table "styles", :force => true do |t|
     t.text    "stylesheet"
