@@ -137,6 +137,11 @@ class Guide < ActiveRecord::Base
     end
   end
 
+  named_scope :future, {:conditions => ["date > ?", Time.now]}
+
+  named_scope :published, {:conditions => ["status = ?", PUBLISHED]}
+  named_scope :draft, {:conditions => ["status = ?", DRAFT]}
+
   named_scope :legal, lambda {|status|
     { :conditions => (status == NONPARTISAN) ? "legal = '#{Guide::NONPARTISAN}'" : "legal IS NULL OR legal <> '#{Guide::NONPARTISAN}'" }
   }

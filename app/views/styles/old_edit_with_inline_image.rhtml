@@ -10,9 +10,9 @@
 </td>
 <td>
 	<%= error_messages_for 'image' %>
-	<%= form_remote_tag :url => { :controller => 'images', :action => 'create' }, :update => 'selections', :html => { :multipart => true } %>
+	<% form_remote_tag :url => { :controller => 'images', :action => 'create' }, :update => 'selections', :html => { :multipart => true } do -%>
 	<%= render :partial => 'images/upload' %>
-	<%= end_form_tag %>
+	<% end -%>
 	<br/>
 	<% images = Image.find(:all) %>
 	<% if !images.empty? %>

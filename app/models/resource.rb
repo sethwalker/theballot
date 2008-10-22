@@ -1,3 +1,3 @@
 class Resource < ActiveRecord::Base
-  acts_as_attachment :storage => :file_system
+  has_attachment :storage => :file_system
 end

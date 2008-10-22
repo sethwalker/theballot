@@ -217,7 +217,7 @@ class GuidesController < ApplicationController
       @guide.save_with_validation(false)
       @recently_created_guide = true
     end
-    render :file => 'guides/c3/instructions' and return if c3?
+    render :template => 'guides/c3/instructions' and return if c3?
     @contest = Contest.new(:guide_id => @guide.id)
     @choice = Choice.new(:contest => @contest)
     render :action => 'edit'
@@ -237,7 +237,7 @@ class GuidesController < ApplicationController
       if @guide.update_attributes(params[:guide])
         page << "invi('guide-form-basics', true)"
         page << "invi('guide-form-theme', false)" if params[:show_theme]
-        page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
+        page.replace_html 'guide-preview-contents', :file => 'guides/preview', :use_full_path => true
         page << "Element.setStyle('guide_description', {overflow:'hidden'})"
         page.replace_html 'guide-form-basics', :partial => 'guides/basics_form', :layout => false
       else
@@ -251,7 +251,7 @@ class GuidesController < ApplicationController
     @guide.update_attribute_with_validation_skipping(:theme_id, params[:guide][:theme_id])
     render :update do |page|
       page << "invi('guide-form-theme', true)"
-      page.replace_html 'guide-preview-contents', :file => 'guides/preview', :layout => false
+      page.replace_html 'guide-preview-contents', :file => 'guides/preview', :use_full_path => true
     end
   end
 
@@ -405,7 +405,7 @@ class GuidesController < ApplicationController
     elsif @legal == Guide::NONPARTISAN
       @guide.update_attribute_with_validation_skipping(:legal, Guide::NONPARTISAN)
       @recently_updated_guide_legal_status = true
-      render :file => 'guides/c3/instructions' and return
+      render :template => 'guides/c3/instructions' and return
     else
       if request.xhr?
         render :update do |page|

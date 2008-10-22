@@ -1,5 +1,5 @@
-<%= form_remote_tag :url => { :controller => 'contests/referendum', :action => 'create' } %>
+<% form_remote_tag :url => { :controller => 'contests/referendum', :action => 'create' } do -%>
   <%= hidden_field 'contest', 'guide_id' %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'add issue' %>
-<%= end_form_tag %>
+<% end -%>

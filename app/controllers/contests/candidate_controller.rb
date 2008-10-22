@@ -40,11 +40,11 @@ class Contests::CandidateController < Contests::BaseController
       render :update do |page|
         if @saved_choice
           @choice = Choice.new
-          page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+          page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window", :use_full_path => true
           page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
           page.sortable 'contests', :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
         else
-          page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+          page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window", :use_full_path => true
         end
       end
     else

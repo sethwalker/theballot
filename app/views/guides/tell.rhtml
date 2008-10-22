@@ -1,6 +1,6 @@
 <h1>Tell a Friend:</h1>
 
-<%= form_tag :action => 'send_message', :id => @guide %>
+<% form_tag :action => 'send_message', :id => @guide do -%>
 <% unless logged_in? -%>
   <p><label for="from_email">Your Email</label><br/>
   <%= text_field_tag 'from[email]' %></p>
@@ -17,4 +17,4 @@
 
 <%= submit_tag 'Send' %>
 
-<%= end_form_tag %>
+<% end -%>

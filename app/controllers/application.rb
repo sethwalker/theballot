@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
   def render_404
     respond_to do |type|
-      type.html { render 'shared/404', :status => "404 Not Found", :layout => 'application' }
+      type.html { render :file => 'shared/404', :status => "404 Not Found", :use_full_path => true }
       type.all  { render :nothing => true, :status => "404 Not Found" }
     end
   end

@@ -50,13 +50,12 @@
 You also have a guide on the partisan voter guide site.  To access it you must go to theballot.org.
 <% end %>
 
-<% Guide.with_scope(:find => { :conditions => [ "date > ?", Time.now ] }) do
-  @published =  @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :order => 'date DESC')
-  @draft = @user.guides.find_all_by_status("#{Guide::DRAFT}", :order => 'date DESC')
-  end
+<% 
+  @published =  @user.guides.future.published.find(:all, :order => 'date DESC')
+  @draft = @user.guides.future.draft.find(:all, :order => 'date DESC')
 %>
 
-<% @published_past = @user.guides.find_all_by_status("#{Guide::PUBLISHED}", :conditions => ["date < ?", Time.now], :order => 'date DESC')
+<% @published_past = @user.guides.published.find(:all, :conditions => ["date < ?", Time.now], :order => 'date DESC')
   @not_published_past = @user.guides.find(:all, :conditions => ["status != ? AND date < ?", Guide::PUBLISHED, Time.now], :order => 'date DESC')
 %>
 

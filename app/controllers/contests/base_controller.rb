@@ -20,7 +20,7 @@ class Contests::BaseController < ApplicationController
         @contest ||= Contest.create(params[:contest])
         unless @contest.valid?
           render :update do |page|
-            page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+            page.replace_html 'contest-edit-window', :template => "contests/candidate/edit_window"
           end
           return
         end
@@ -29,7 +29,7 @@ class Contests::BaseController < ApplicationController
           @choice.contest = @contest
           unless @choice.save
             render :update do |page|
-              page.replace_html 'contest-edit-window', :file => "contests/candidate/edit_window"
+              page.replace_html 'contest-edit-window', :template => "contests/candidate/edit_window"
             end
             return
           end
@@ -41,7 +41,7 @@ class Contests::BaseController < ApplicationController
         @contest.guide_id = params[:guide_id]
         @choice ||= Choice.new(:contest => @contest)
         render :update do |page|
-          page.replace_html 'contest-edit-window', :file => "contests/#{@contest.class.to_s.downcase}/edit_window"
+          page.replace_html 'contest-edit-window', :file => "contests/#{@contest.class.to_s.downcase}/edit_window.rhtml", :use_full_path => true
           page << "document.getElementById('contest-edit-window').style.visibility = 'visible'"
           page.show('contest-edit-window')
 #          page.update_page_new_form(@contest, @choice)
@@ -58,7 +58,7 @@ class Contests::BaseController < ApplicationController
       render :update do |page|
         if ( params[:contest] && !@contest.update_attributes(params[:contest]) ) ||
            ( @choice && !@choice.update_attributes(params[:choice]) )
-          page.replace_html 'contest-edit-window', :file => "contests/#{@contest.class.to_s.downcase}/edit_window"
+          page.replace_html 'contest-edit-window', :file => "contests/#{@contest.class.to_s.downcase}/edit_window", :use_full_path => true
         else
           page.replace "contest_#{@contest.id}", :partial => 'contests/show', :locals => { :contest => @contest }
           page.sortable 'contests', :complete => visual_effect(:highlight, 'contests'), :url => { :controller => 'guides', :action => 'order', :id => @contest.guide.id }
