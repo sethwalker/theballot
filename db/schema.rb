@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 39) do
+ActiveRecord::Schema.define(:version => 40) do
 
   create_table "assets", :force => true do |t|
     t.column "type", :string
@@ -15,6 +15,9 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "asset_id", :integer
     t.column "theme_id", :integer
   end
+
+  add_index "assets_themes", ["asset_id"], :name => "ey_asset_id_key"
+  add_index "assets_themes", ["theme_id"], :name => "ey_theme_id_key"
 
   create_table "attachments", :force => true do |t|
     t.column "content_type", :string
@@ -30,6 +33,11 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "theme_id", :integer
   end
 
+  add_index "attachments", ["parent_id"], :name => "ey_parent_id_key"
+  add_index "attachments", ["guide_id"], :name => "ey_guide_id_key"
+  add_index "attachments", ["user_id"], :name => "ey_user_id_key"
+  add_index "attachments", ["theme_id"], :name => "ey_theme_id_key"
+
   create_table "choices", :force => true do |t|
     t.column "name", :string
     t.column "description", :text
@@ -38,6 +46,16 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "position", :integer
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+  end
+
+  add_index "choices", ["contest_id"], :name => "ey_contest_id_key"
+
+  create_table "comments", :force => true do |t|
+    t.column "subject", :string
+    t.column "body", :text
+    t.column "user_id", :integer
+    t.column "guide_id", :integer
+    t.column "created_at", :datetime
   end
 
   create_table "contests", :force => true do |t|
@@ -50,6 +68,8 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "updated_at", :datetime
   end
 
+  add_index "contests", ["guide_id"], :name => "ey_guide_id_key"
+
   create_table "endorsements", :force => true do |t|
     t.column "guide_id", :integer
     t.column "contest", :string
@@ -58,6 +78,8 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "position", :integer
     t.column "selection", :string
   end
+
+  add_index "endorsements", ["guide_id"], :name => "ey_guide_id_key"
 
   create_table "guides", :force => true do |t|
     t.column "name", :string
@@ -78,16 +100,24 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "num_members", :integer
   end
 
+  add_index "guides", ["user_id"], :name => "ey_user_id_key"
+  add_index "guides", ["theme_id"], :name => "ey_theme_id_key"
+
   create_table "links", :force => true do |t|
     t.column "url", :string
     t.column "description", :text
     t.column "guide_id", :integer
   end
 
+  add_index "links", ["guide_id"], :name => "ey_guide_id_key"
+
   create_table "pledges", :force => true do |t|
     t.column "user_id", :integer
     t.column "guide_id", :integer
   end
+
+  add_index "pledges", ["user_id"], :name => "ey_user_id_key"
+  add_index "pledges", ["guide_id"], :name => "ey_guide_id_key"
 
   create_table "resources", :force => true do |t|
     t.column "content_type", :string
@@ -99,6 +129,8 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "height", :integer
   end
 
+  add_index "resources", ["parent_id"], :name => "ey_parent_id_key"
+
   create_table "roles", :force => true do |t|
     t.column "title", :string
   end
@@ -107,6 +139,9 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "role_id", :integer
     t.column "user_id", :integer
   end
+
+  add_index "roles_users", ["role_id"], :name => "ey_role_id_key"
+  add_index "roles_users", ["user_id"], :name => "ey_user_id_key"
 
   create_table "sessions", :force => true do |t|
     t.column "session_id", :string
@@ -122,6 +157,8 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "name", :string
   end
 
+  add_index "styles", ["author_id"], :name => "ey_author_id_key"
+
   create_table "themes", :force => true do |t|
     t.column "name", :string
     t.column "style_id", :integer
@@ -131,6 +168,10 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "print_style_url", :string
     t.column "template", :string
   end
+
+  add_index "themes", ["style_id"], :name => "ey_style_id_key"
+  add_index "themes", ["author_id"], :name => "ey_author_id_key"
+  add_index "themes", ["print_style_id"], :name => "ey_print_style_id_key"
 
   create_table "users", :force => true do |t|
     t.column "login", :string

@@ -1,7 +1,8 @@
 
 <div id="polling-place" class="sidebar-frame">
- <div class="resource-link"><a href="http://vote411.org/pollingplacebystate.php" target="_blank">Find Your Polling Place</a></div>
+ <div class="resource-link"><a href="http://govote.org" target="_blank">Find Your Polling Place</a></div>
  <div class="resource-link"><a href="http://votepoke.org" target="_blank">Find If You're Registered</a></div>
+ <div class="resource-link"><a href="http://ballotpedia.org" target="_blank">Local Ballot Info</a></div>
 </div>
 
 <div id="world-actions" class="sidebar-frame">
@@ -14,7 +15,7 @@
 <% if @guide.published? && @guide.approved? -%>
 	<div id="email-guide-link"><%= link_to "Tell A Friend", :controller => 'guides', :action => 'tell', :id => @guide %></div>
 <% end %>
-<div id="guidelink-code-link"><%= link_to_function 'Link From MySpace / etc', "$('embed-code').toggle(); var focuser =$('code_field'); focuser.focus(); focuser.select()" %>
+<div id="guidelink-code-link"><%= link_to_function 'Embed link on website', "$('embed-code').toggle(); var focuser =$('code_field'); focuser.focus(); focuser.select()" %>
 <div id="embed-code" style="display: none;">
 <h4>Place this code in your page to create a link to this voter guide</h4>
 <div class="code_input"><input id="code_field" name="codefield" type="text" size="25" readonly value='<%= render "guides/link_code" %>' onclick='this.focus(); this.select();'></div>
@@ -50,6 +51,18 @@
     </div>
   </div>
 <% end -%>
+
+<div id="guide-comments" class="sidebar-frame">
+  <h3>Comments on this guide</h3>
+  <% if !@guide.comments.empty? -%>
+    <a href="#comments">View all comments below</a>
+    <%= render :partial => 'comment_sidebar', :collection => @guide.comments.find(:all, :limit => 3) %>
+      <% if @guide.comments.count > 3 -%>
+		   <a href="#comments">View more comments</a><br /><br />
+      <% end -%>
+  <% end -%>
+    <a href="#comments">Add a comment</a>
+</div>
 
 <div id="guide-members" class="sidebar-frame">
   <h3>Voter Bloc for this guide</h3>

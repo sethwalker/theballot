@@ -59,6 +59,10 @@ class User < ActiveRecord::Base
     guides.find(:first, :conditions => "status IS NULL")
   end
 
+  def guides_in_progress
+    guides.find(:all, :conditions => "status IS NULL")
+  end
+
   def avatar_thumb
     has_avatar? ? avatar.public_filename('thumb') : 'avatar.gif'
   end

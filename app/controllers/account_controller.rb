@@ -104,7 +104,7 @@ class AccountController < ApplicationController
         flash[:error] = "Could not login.   You must first activate your account.  Check your email for the activation link."
       else
         UserNotifier.deliver_login_incorrect(params[:email])
-        flash[:error] = "Login incorrect - You can create an account below or try logging in again to the right"
+        flash[:error] = "Login incorrect - If you forgot your password click <a href='/account/forgot_password'>here</a> to retrieve it. If you don't have an account yet, sign up below."
         redirect_to :action => 'signup'
       end
     end

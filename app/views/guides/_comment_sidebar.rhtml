@@ -1,0 +1,21 @@
+
+<div class="comment-sidebar-listing">
+
+  <%# <div class="comment-sidebar-subject"> %>
+    <%#= comment_sidebar.subject %>
+  <%# </div> %>
+
+  <div class="comment-sidebar-body">
+    <%= truncate strip_tags(comment_sidebar.body), 70 %>
+  </div>
+
+  <span class="comment-sidebar-poster">
+    <label for="comment-sidebar-poster">- posted by</label> 
+      <%= link_to comment_sidebar.user.login, :controller => 'users', :action => 'show', :id => comment_sidebar.user.id %>
+  </span>
+  <span class="comment-sidebar-date">
+      <%= comment_sidebar.created_at.strftime("%m/%d/%y") %>
+  </span>
+  
+
+</div>

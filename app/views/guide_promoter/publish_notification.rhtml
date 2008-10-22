@@ -1,4 +1,4 @@
-<%= @guide.user.firstname %> <%= @guide.user.lastname %>  <%= @guide.user.email %> (http://<%= @guide.user.signup_domain %>/account/profile/<%= @guide.user.id %>) published guide:
+<%= @guide.user.login %> (<%= @guide.user.firstname %> <%= @guide.user.lastname %>) at email: <%= @guide.user.email %> (http://<%= @guide.user.signup_domain %>/account/profile/<%= @guide.user.id %>) published guide:
 
 <%= @guide.name %>
 http://<%= @guide.user.signup_domain %><%= @guide.permalink_url %>

@@ -6,28 +6,60 @@
 
   <div class="guide-list-image">
 <% if user.avatar %>
-    <%= image_tag user.avatar.public_filename("preview") %>
+    <%= image_tag user.avatar.public_filename("thumb") %>
 <% else %>
     <%= image_tag 'avatar.gif' %>
 <% end %>
   </div>
 
 <div class="guide-list-basics">
+  <h3 class="guide-list-login">
+    <%= link_to user.login, :controller => 'account', :action => 'profile', :id => user.id %>
+    &nbsp;(#<%= user.id %>)
+  </h3>
   <div class="guide-list-name">
-    <%= link_to user.login %>
+    <%= user.firstname %> <%= user.lastname %>
   </div>
+  <div class="guide-list-email">
+    <%= user.email %>
+  </div>
+  <div class="guide-list-created">
+    Account created: <%= user.created_at %>
+  </div>
+
 </div>
+
 
 <% if user.guides %>
 <% if user.guides.any? -%>
 <div id="user-guides-list">
-  <h3>Guides</h3>
-  <% user.guides.select {|g| g.published? && g.approved?}.each do |guide| %>
-  <div class="user-guides-list-item"><%= link_to guide.name, guide.permalink_url %></div>
+  <h4>Guides</h4>
+  <% user.guides.select do |guide| %>
+    <div class="user-guides-list-item">
+      <%= guide.date %>&nbsp;&nbsp;&nbsp;
+      <%= link_to guide.name, guide.permalink_url %>
+      <% if guide.published? && guide.approved? %>(published)<% else %>(not published)<% end %>
+    </div>
   <% end -%>
 </div>
 <% end -%>
 <% end %>
+
+
+<% if !user.blocs.empty? -%>
+  <div id="account-bloc-list">
+    <h4>Voter Blocs</h4>
+    <% user.blocs.each do |b| -%>
+      <div class="account-bloc-list-item">
+       <div class="account-guide-title">
+             <%= b.date %>&nbsp;&nbsp;&nbsp;
+             <%= link_to b.name, guide_permalink_url(:year => b.date.year, :permalink => b.permalink)%>
+       </div>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>
+
 
 </div>
 

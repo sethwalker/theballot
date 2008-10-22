@@ -1,0 +1,39 @@
+<a name="comments"></a>
+  <h2>Add a Comment</h2>
+
+      <div id="comments-add-box">
+
+<span>Remember: Keep it respectful or it'll get deleted!</span>
+
+<% if logged_in? -%>
+
+            <div id="comments-box-username">
+              <label for="login">Your Username:</label> <%= current_user.login %>
+            </div>
+
+		<% form_for :comment, Comment.new(:guide_id => @guide.id), :url => { :controller => 'comments', :action => 'create'} do |f| -%>
+            <%= f.hidden_field 'guide_id' %>
+            <%# <label for="subject">Subject:</label> %>
+            <%#= f.text_field 'subject', :size => 55, :id => 'comment-subject' %><%# <br /> %>
+            <%= f.text_area 'body', :rows => 4, :cols => 60, :id => 'comment-body' %><br />
+            <%= submit_tag 'Add comment' %>
+        <% end -%>
+<% else -%>
+      <%= link_to "Log In", :controller => 'comments', :action => 'login', :id => @guide %> or <%= link_to "Sign Up", :controller => 'account', :action => 'signup' %> to post a comment.  It's quick and easy.<br />
+      <textarea id="comment-need-to-login" rows="4" cols="60" DISABLED>Log in to post a comment...</textarea>
+<% end -%>
+
+      </div> <%# end div comments-add-box  %>
+
+
+  <%= render :partial => 'comment', :collection => @guide.comments %>
+
+<%# @guide.comments.each do |comment| %>
+<%#= comment.subject %><!-- by --> <%#= comment.user.login %>
+  <%# if logged_in? && current_user.is_admin? -%>
+       <!--[admin:--> <%#= link_to "delete", :controller => 'comments', :action => 'destroy', :id => comment %>
+  <%# end -%>
+
+<%#= comment.body %>
+
+<%# end %>

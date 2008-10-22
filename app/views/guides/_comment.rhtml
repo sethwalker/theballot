@@ -1,0 +1,32 @@
+
+
+<div class="comment-listing">
+
+<div class="comment-left">
+  <div class="comment-poster">
+    <label for="comment-poster">posted by</label> 
+      <%= link_to comment.user.login, :controller => 'users', :action => 'show', :id => comment.user.id %>
+  </div>
+  <div class="comment-date">
+      <%= comment.created_at.strftime("%b %d %Y<br />%I:%M %p") %>
+  </div>
+</div>
+
+<div class="comment-right">
+  <%# <div class="comment-subject"> %>
+    <%#= comment.subject %>
+  <%# </div> %>
+  <div class="comment-body">
+    <%= strip_tags(comment.body) %>
+  </div>
+  
+      <% if logged_in? && current_user.is_admin? -%>
+       <div style="float: right">
+          [admin: <%= link_to "edit", :controller => 'comments', :action => 'edit', :id => comment %> <%= link_to "delete", :controller => 'comments', :action => 'destroy', :id => comment %>]
+       </div>
+    <% end -%>
+
+</div>
+
+
+</div>

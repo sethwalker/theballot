@@ -1,0 +1,28 @@
+
+		<%# form_for :comment, Comment.new(:guide_id => @guide.id), :url => { :controller => 'comments', :action => 'create'} do |f| -%>
+
+
+  <% if logged_in? && current_user.is_admin? -%>
+		
+<% form_for :comment, @comment, :url => {:controller => 'comments', :action => 'update', :id => @comment.id } do |f| -%>
+
+
+<div  class="account-section">
+<h3>Edit Comment</h3>
+  <p><label for="user_login" class="required">Username:</label>
+  <%= @comment.user.login %></p>
+
+  <p><label for="user_login" class="required">Timestamp:</label>
+  <%= @comment.created_at %></p>
+
+
+  <p><label for="comment-edit">Comment:</label><br/>
+  <%= f.text_area 'body', :rows => 4 %></p>
+</div>
+
+
+  <%= submit_tag 'Update' %>
+
+  <% end -%>
+
+<% end -%>

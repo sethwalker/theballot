@@ -27,9 +27,10 @@ class GuidePromoter < ActionMailer::Base
   end
 
   def join_notification(guide, user)
-  	@recipients = 'voterguides@theleague.com'
+  	@bcc = 'voterguides@theleague.com'
+  	@recipients = guide.user.email
 	@from = 'voterguides@theleague.com'
-	@subject = "[voterguides] #{user.firstname} joined '#{guide.name}' bloc"
+	@subject = "[theballot.org] #{user.login} joined '#{guide.name}'"
 	@body[:guide] = guide
 	@body[:user] = user
   end
@@ -39,5 +40,14 @@ class GuidePromoter < ActionMailer::Base
 	@from = 'voterguides@theleague.com'
 	@subject = "[voterguides] #{guide.user.login} published #{guide.name}"
 	@body[:guide] = guide
+  end
+  
+  def comment_notification(guide, user)
+  	@bcc = 'voterguides@theleague.com'
+  	@recipients = guide.user.email
+	@from = 'voterguides@theleague.com'
+	@subject = "[theballot.org] #{user.login} commented on '#{guide.name}'"
+	@body[:guide] = guide
+	@body[:user] = user
   end
 end

@@ -7,7 +7,15 @@
 <div class="account-section" id="user-profile">
 <h3>Your Profile</h3> <span><%= link_to 'edit profile', :action => 'edit', :id => @user %></span>
 
-<%= image_tag @user.avatar.public_filename('preview') if @user.avatar %>
+<% if @user.avatar %>
+  <%= image_tag @user.avatar.public_filename('preview') %>
+<% else %>
+  <div id="no-profile">
+    <%= image_tag '/images/avatar.gif' %>
+    <div>no profile image uploaded. <%= link_to 'upload', :action => 'edit', :id => @user %></div>
+  </div>
+<% end %>
+<p>&nbsp;</p>
 <p><span class="profile_field_title">Username:</span> <%= @user.login %></p>
 <p><span class="profile_field_title">About me:</span> <%= @user.about_me %></p>
 <p><span class="profile_field_title">Email:</span> <%= @user.email %></p>
@@ -20,15 +28,20 @@
 </div>
 </div>
 
-<% if @user.guide_in_progress -%>
+<% unless @user.guides_in_progress.empty? -%>
 <div class="account-section" id="in-progress">
 <h3>Guide In Progress</h3>
   <div class="account-guide-list">
-    <div class="account-guide-list-item" id="guide_<%= @user.guide_in_progress.id %>">
-      <div class="account-guide-title"><%= link_to @user.guide_in_progress.name, :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %></div>
-      <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => @user.guide_in_progress %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => @user.guide_in_progress }, :confirm => 'Are you sure?' %>
-</div>
+    <% @user.guides_in_progress.each do |guide| %>
+    <div class="account-guide-list-item" id="guide_<%= guide.id %>">
+      <div class="account-guide-title">
+        <%= link_to guide.name, :controller => 'guides', :action => 'edit', :id => guide %>
+      </div>
+      <div class="account-guide-links">
+        <%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => guide %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => guide }, :confirm => 'Are you sure?' %>
+      </div>
     </div>
+    <% end %>
   </div>
 </div>
 <% end -%>

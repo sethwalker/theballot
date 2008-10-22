@@ -15,7 +15,17 @@
 <div  class="account-section" id="edit-profile-private">
 <h3>Private Info</h3>
 
-  <p><label for="user_email">Email: </label><%= @user.email %></p>
+  <p><label for="user_email">Email: </label><%= @user.email %><br />
+  <span id="description" class="account-secton">*to change your email address contact us at voterguides@theleague.com.</span></p>
+  
+  <% if logged_in? && current_user.is_admin? -%>
+     <div id="admin-actions" class="sidebar-frame">
+       admin only (users can't change own email yet):<br />
+       <%= f.text_field 'email' %></p>
+     </div>
+     <br />
+  <% end -%>
+
 
   <%= render :partial => 'form', :locals => { :f => f } %>
 </div>

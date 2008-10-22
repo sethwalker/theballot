@@ -73,7 +73,7 @@ class GuidesController < ApplicationController
   end
   
   def index
-    @showing_author = false
+    @showing_author = true
     list
     @conditions = {} #hack
     list_past
@@ -89,7 +89,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{(1.week.ago).to_s(:db)}'"
-    @guide_pages, @guides = paginate :guides, :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state, city'
+    @guide_pages, @guides = paginate :guides, :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
   end
 
   def list_past
@@ -220,7 +220,7 @@ class GuidesController < ApplicationController
 
   def new
     Guide.with_scope(:find => { :conditions => (c3? ? "legal = '#{Guide::NONPARTISAN}'" : "legal IS NULL OR legal <> '#{Guide::NONPARTISAN}'") }) do
-      @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2008,2,5), :state => current_user.state, :theme_id => 1)
+      @guide = current_user.guide_in_progress || Guide.new(:user => current_user, :date => Date.new(2008,11,4), :state => current_user.state, :theme_id => 1)
     end
     unless @guide.id
       @guide.legal = Guide::NONPARTISAN if c3?

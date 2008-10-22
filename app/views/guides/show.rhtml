@@ -23,12 +23,17 @@ end
 
 <div id="main">
   <% unless @guide.endorsed -%>
-    <div id="unendorsed">This guide was submitted by a website user and may not reflect the position of the League of Young Voters</div>
+    <div id="unendorsed">Voter guides like this one on theballot.org are submitted by website users.  They may not reflect the position of the League of Young Voters PAC.</div>
   <% end -%>
 
   <%= @liquid %>
 
+<div id="comments" class="sidebar-frame">
+  <%= render "guides/comments" %>
 </div>
+
+</div>
+
 <div id="sidebar">
   <%= render "guides/sidebar" %>
 </div>

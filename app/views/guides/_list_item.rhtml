@@ -13,11 +13,6 @@
   <div class="guide-list-name">
     <%= link_to guide.name, guide.permalink_url %>
   </div>
-  <% if showing_author? %>
-  <div class="guide-list-author-info">
-   posted by <span class="guide-list-author-username"><%= guide.user.login %></span>
-  </div>
-  <% end -%>
   <div class="guide-list-location">
     <% if guide.city && !guide.city.empty? && guide.state && !guide.state.empty?-%>
       <%= guide.city %>, <%= guide.state %>
@@ -27,6 +22,11 @@
       <%= guide.city %>
     <% end %>
   </div>
+  <% if showing_author? %>
+  <div class="guide-list-author-info">
+   posted by <span class="guide-list-author-username"><%= guide.user.login %></span>
+  </div>
+  <% end -%>
   <div class="guide-list-date">
     <%= guide.date.strftime('%B %e, %Y') %>
     <% if guide.members.count > 1 %> &bull; <%= guide.members.count %> &quot;friends&quot;<% end %>

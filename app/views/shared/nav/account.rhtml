@@ -4,4 +4,14 @@
   <% else %>
     <%= link_to "Log In", :controller => 'account', :action => 'login' %> | <%= link_to "Sign Up", :controller => 'account', :action => 'signup' %>
   <% end %>
+  
+
+<% if logged_in? -%>
+  <% if current_user.is_admin? %>
+    <br /> admin: <%= link_to "Users", :controller => 'users', :action => 'admin' %> / <%= link_to "Guides", :controller => 'guides', :action => 'admin' %> / <%= link_to "Themes", :controller => 'themes', :action => 'list' %>
+
+  <% end %>
+<% end %>
+
+
 </div>

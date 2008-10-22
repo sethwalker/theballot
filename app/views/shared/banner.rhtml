@@ -1,7 +1,7 @@
 <div id="header">
   <div id="<%= 'nonpartisan-' if @c3 %>logo"><a href="/"><span><%= 'nonpartisan.' if @c3 %>theballot.org</span></a>
   </div>
-  <div id="<%= 'nonpartisan-' if @c3 %>sponsored-logo"><a href="<%= @c3 ? 'http://youngvoter.org' : 'http://indyvoter.org/PAC' %>" target="_blank"><span>Brought to you by The League of Young Voters <%= @c3 ? 'Education Fund' : 'PAC' %></span></a>
+  <div id="<%= 'nonpartisan-' if @c3 %>sponsored-logo"><a href="<%= @c3 ? 'http://youngvoter.org' : 'http://theleague.com/pac' %>" target="_blank"><span>Brought to you by The League of Young Voters <%= @c3 ? 'Education Fund' : 'PAC' %></span></a>
   </div>
   <%= render "shared/nav/account" %>
 </div>

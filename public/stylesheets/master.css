@@ -2,7 +2,7 @@
 ---------------------------------
 theBallot.org Screen Styles
 Author: Jeff French
-Updated: Nov. 1, 2006
+Updated: Oct. 6, 2008
 --------------------------------- */
 
 /* ================================================================================ UNIVERSAL
@@ -108,7 +108,8 @@ input:focus, textarea:focus {
 */	
 	
 body {
-	background-color: #15324e;
+/*	background-color: #15324e; */
+	background-color: #2B4D5F;
 	background-image: url(/images/background.gif);
 	background-repeat: repeat-x;
 	background-position: center top;
@@ -332,7 +333,7 @@ body {
 	width: 280px;
 	height: 68px;
 	padding: 5px 10px;
-	margin: 10px 7px;
+	margin: 15px 7px;
 	vertical-align: top;
 	background-image: url(/images/search_bg.gif);
 	background-repeat: no-repeat;
@@ -811,8 +812,8 @@ body {
 	display: inline;
 	font-style: italic;
 	font-size: 10px;
-	color: #999999;
-	margin-left: 3px;
+/*	color: #999999; */
+    color: green;
 	}	
 .guide-list-name a,
 .guide-list-name a:visited {
@@ -861,7 +862,7 @@ body {
 	}
 #unendorsed {
 	color: red;
-	font-size: 12px;
+	font-size: 14px;
 	}	
 
 /* ========================================== SIDEBAR 
@@ -1004,7 +1005,11 @@ body {
 .account-section h3 {
 	color: #333333;
 	font-size: 14px;
-	}	
+	}		
+.account-section #description, .guide-list-created {
+	color: #999999;
+	font-style: italic;
+	}
 .account-guide-list-item, 
 .account-bloc-list-item,
 .user-guides-list-item {
@@ -1054,6 +1059,7 @@ body {
 	color: #666666;
 	}
 #user-profile p {
+	font-weight: bold;
 	}	
 #user-profile img, 
 #user-profile-basics img {
@@ -1064,6 +1070,17 @@ body {
 #user-profile img {	
 	margin-top: -3em;
 	}
+#no-profile div {
+	float: right;
+	font-style: italic;
+	clear: both;
+	width: 100px;
+	text-align: right;
+	}
+.profile_field_title {
+	font-style: italic;
+	font-weight: normal;
+	}	
 #account-user-basics {
 	line-height: 1.2em;
 	}
@@ -1177,6 +1194,7 @@ body {
 	background-image: url(/images/footer_bg.gif);
 	background-position: bottom;
 	background-repeat: no-repeat;
+	overflow: hidden; /* added Oct 2008 */
 	}
 #footer #contact-us {
 	margin-top: .7em;
@@ -1227,4 +1245,139 @@ body {
 
 #how-to ul {
 	margin-left: 20px;
+}
+
+/* ================================================================================ OCT 2008 CHANGES
+*/	
+
+#wrap {
+	display: block;
+	width: 850px;
+	margin: 0 auto;
+	position: relative;
+	}
+	
+#bg-left {
+	position: absolute;
+	width: 162px;
+	top: 12px;
+	margin-left: -162px;
+	height: 589px;
+	display: block;
+	background: url(/images/bg-left.gif) no-repeat;
+	}
+	
+#bg-right {
+	position: absolute;
+	width: 157px;
+	top: 24px;
+	right: 0;
+	margin-right: -157px;
+	height: 555px;
+	display: block;
+	background: url(/images/bg-right.gif) no-repeat;
+	}
+
+/* also added overflow: hidden; to #footer Oct 2008 */
+
+#intro h2 {
+	margin: -8px 0 6px;
+	}
+#admin-user-list h4 {
+	color: #97d859;
+	}
+#link-signup {
+	margin-top: 6px;
+	}
+
+/* ================================================================================ COMMENTS
+*/	
+
+#main #comments {
+	margin-top: 12px;
+	padding: 10px 15px;
+}
+
+#comments h2 {
+	color: #666;
+}
+
+#comments-add-box {
+	margin: 12px 0;
+}
+
+#comments-add-box textarea {
+	margin: 4px 0 10px;
+}
+
+#comments-add-box span {
+	font-style: italic;
+	display: block;
+}
+
+#comments-box-username {
+	margin: 8px 0;
+	font-weight: bold;
+}
+
+#comments-box-username label {
+	font-weight: normal;
+}
+
+#comment-need-to-login {
+	color: #666;
+	font-style: italic;
+}
+
+.comment-left {
+	display: block;
+	float: left;
+	clear: both;
+	width: 100px;
+}
+
+.comment-right {
+	margin-left: 150px;
+	width: 400px;
+	font-size: 12px;
+	color: #333;
+	font-family: georgia,"times new roman",times,serif;
+}
+
+.comment-listing {
+	padding: 10px 6px;
+	overflow: hidden;
+	border-top: 1px solid #ccc;
+}
+
+.comment-subject {
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.comment-poster {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.comment-poster label {
+	font-weight: normal;
+	font-style: italic;
+}
+
+.comment-sidebar-listing {
+	border-bottom: dotted;
+	border-width: 1px;
+	border-color: gray;
+	margin: 6px 0;
+	color: #666;
+}
+
+.comment-sidebar-subject {
+	font-weight: bold;
+}
+
+.comment-sidebar-poster, .comment-sidebar-date {
+	font-style: italic;
+	color: #999;
 }

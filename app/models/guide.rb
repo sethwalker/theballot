@@ -17,6 +17,8 @@ class Guide < ActiveRecord::Base
   has_many :pledges
   has_many :members, :through => :pledges, :source => :user
 
+  has_many :comments, :order => 'created_at DESC'
+
   before_validation :create_permalink
   validates_presence_of :name, :date, :city, :state
 
