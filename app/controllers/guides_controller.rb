@@ -20,9 +20,8 @@ class GuidesController < ApplicationController
 
   def admin
     @guides = Guide.find(:all)
-    @published = @guides.find_all {|g| g.published?}
-    @unpublished = @guides.find_all {|g| !g.published?}
-
+    @published = @guides.select {|g| g.published?}
+    @unpublished = @guides.select {|g| !g.published?}
   end
 
   def find_guide_by_permalink
