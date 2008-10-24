@@ -262,6 +262,8 @@ class GuidesController < ApplicationController
     @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf] && params[:uploaded_pdf].size != 0
     current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
     if (@image and !@image.valid?) or (@pdf and !@pdf.valid?)
+      @guide.attached_pdf(true) if @pdf
+      @guide.image(true) if @image
       render :action => 'edit'
     else
       redirect_to :action => 'edit', :id => @guide

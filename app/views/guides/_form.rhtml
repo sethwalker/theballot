@@ -64,4 +64,9 @@ GUIDE_SCREENSHOT_JS
   <% end -%>
 </div> <!-- end popup-inner div -->
 </div>
+<% if @pdf && !@pdf.errors.empty? %>
+<script type="text/javascript">
+  invi('guide-form-pdf', false)
+</script>
+<% end %>
 <!--[eoform:guide]-->
