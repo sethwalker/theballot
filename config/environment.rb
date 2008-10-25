@@ -61,7 +61,8 @@ require 'yaml'
 # then...
 #APPLICATION_SVN_REVISION = File.exist?('config/revision.yml') ? File.open('config/revision.yml').read : YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value
 
-ExceptionNotifier.exception_recipients = %w(seth@indyvoter.org sam@indyvoter.org)
+#TODO: Check that the exception email works when you deploy onto production
+ExceptionNotifier.exception_recipients = TheBallot::TECH_ADMIN_EMAIL
 ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
 
 require 'memcache'

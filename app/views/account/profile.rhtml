@@ -34,12 +34,13 @@
   <div class="account-guide-list">
     <% @user.guides_in_progress.each do |guide| %>
     <div class="account-guide-list-item" id="guide_<%= guide.id %>">
-      <div class="account-guide-title">
-        <%= link_to guide.name, :controller => 'guides', :action => 'edit', :id => guide %>
-      </div>
       <div class="account-guide-links">
         <%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => guide %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => guide }, :confirm => 'Are you sure?' %>
       </div>
+      <span id="account-guide-list-date"><%= guide.date.strftime('%b %d, %Y') %> &bull;&nbsp;</span>
+      <span class="account-guide-title">
+        <%= link_to guide.name, :controller => 'guides', :action => 'edit', :id => guide %>
+      </span>
     </div>
     <% end %>
   </div>
@@ -66,10 +67,11 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <div class="account-guide-list">
   <% @published.each do |g| %>
     <div class="account-guide-list-item" id="guide_<%= g.id %>">
-      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
       <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> <%= link_to_remote 'delete', :url => {:controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
+      <span id="account-guide-list-date"><%= g.date.strftime('%m/%d/%y') %> &bull;&nbsp;</span>
+      <span class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></span>
       <% unless g.approved? %>
-      <div class="pending-approval"> (pending approval)</div>
+      <span class="pending-approval"> (pending approval)</span>
       <% end %>
     </div>
   <% end %>
@@ -83,24 +85,9 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <div class="account-guide-list">
   <% @draft.each do |g| %>
     <div class="account-guide-list-item" id="guide_<%= g.id %>">
-      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></div>
-      <div class="account-guide-links"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>
-    </div>
-  <% end %>
-  </div>
-</div>
-<% end %>
-
-<% if !@published_past.empty? %>
-<div class="account-section" id="published">
-  <h3>Past Published Guides</h3>
-  <div class="account-guide-list">
-  <% @published_past.each do |g| %>
-    <div class="account-guide-list-item" id="guide_<%= g.id %>">
-      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
-      <% unless g.approved? %>
-      <div class="pending-approval"> (pending approval)</div>
-      <% end %>
+      <span class="account-guide-links"><%= link_to 'edit', url_for( :controller => 'guides', :action => 'edit', :id => g ) %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></span>
+      <span id="account-guide-list-date"><%= g.date.strftime('%m/%d/%y') %> &bull;&nbsp;</span>
+      <span class="account-guide-title"><%= link_to g.name, guide_permalink_url(:year => g.date.year, :permalink => g.permalink) %></span>
     </div>
   <% end %>
   </div>
@@ -111,6 +98,23 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <%= render :partial => 'account/blocs', :locals => { :user => @user } %>
 </div>
 
+<% if !@published_past.empty? %>
+<div class="account-section" id="published">
+  <h3>Past Published Guides</h3>
+  <div class="account-guide-list">
+  <% @published_past.each do |g| %>
+    <div class="account-guide-list-item" id="guide_<%= g.id %>">
+      <span id="account-guide-list-date"><%= g.date.strftime('%b %Y') %> &bull;&nbsp;</span>
+      <span class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></span>
+      <% unless g.approved? %>
+      <span class="pending-approval">&nbsp;(was pending approval)</span>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% end %>
+
 <% if current_user.is_admin? %>
 <% if !@not_published_past.empty? %>
 <div class="account-section" id="published">
@@ -118,8 +122,9 @@ You also have a guide on the partisan voter guide site.  To access it you must g
   <div class="account-guide-list">
   <% @not_published_past.each do |g| %>
     <div class="account-guide-list-item" id="guide_<%= g.id %>">
-      <div class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></div>
       <div class="account-guide-links"><%= link_to 'edit', :controller => 'guides', :action => 'edit', :id => g %> <%= link_to_remote 'delete', :url => { :controller => 'guides', :action => 'destroy', :id => g }, :confirm => 'Are you sure?' %></div>     
+      <span id="account-guide-list-date"><%= g.date.strftime('%m/%d/%y') %> &bull;&nbsp;</span>
+      <span class="account-guide-title"><%= link_to g.name, guide_permalink_url( :year => g.date.year, :permalink => g.permalink ) %></span>
       <% unless g.approved? %>
       <div class="pending-approval"> (pending approval)</div>
       <% end %>

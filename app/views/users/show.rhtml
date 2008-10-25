@@ -1,4 +1,4 @@
-<div id="user-profile-basics">
+<div id="user-profile-basics" class="user-section">
   <h1><%= @user.login %></h1>
 
   <%= image_tag @user.avatar.public_filename('preview') if @user.avatar %>
@@ -25,12 +25,39 @@
 </div>
 
 <% if @user.guides.any? {|g| g.published? && g.approved?} -%>
-<div id="user-guides-list">
+<div id="user-guides-list" class="user-section">
   <h3>Guides</h3>
   <% @user.guides.select {|g| g.published? && g.approved?}.each do |guide| %>
-  <div class="user-guides-list-item"><%= link_to guide.name, guide.permalink_url %></div>
+  <div class="user-guides-list-item">
+    <span id="user-guides-list-date"><%= guide.date.strftime('%b %Y') %> &bull;&nbsp;</span>
+    <%= link_to guide.name, guide.permalink_url %>
+  </div>
   <% end -%>
 </div>
 <% end -%>
 
+<% if @user.blocs.any? -%>
+<div id="user-blocs-list" class="user-section">
+  <%= render :partial => 'account/blocs', :locals => { :user => @user } %>
+</div>
+<% end -%>
 
+
+<% if @user.comments.any? -%>
+<div id="user-comments-list" class="user-section">
+  <h3>Comments</h3>
+  <% @user.comments.group_by {|c| c.guide}.each do |guide, comments| %>
+  <div class="user-guides-list-item">
+     <span id="user-guides-list-date"><%= guide.date.strftime('%b %Y') %> &bull;&nbsp;</span>
+     <span id="user-comments-list-guide-name">
+       <%= link_to guide.name, guide.permalink_url + '#comments' %>
+     </span>
+  </div>
+     <% comments.each do |c| %>
+    <div class="user-comments-list-body">
+      &bull; <%= link_to truncate(strip_tags(c.body), 150), guide.permalink_url + '#comments' %>
+    </div>
+     <% end -%>
+  <% end -%>
+</div>
+<% end -%>

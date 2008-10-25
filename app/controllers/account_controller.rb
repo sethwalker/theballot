@@ -96,6 +96,7 @@ class AccountController < ApplicationController
     if current_user
       session[:login_domain] = request.host
       redirect_back_or_default(:controller => '/account', :action => 'profile')
+      UserNotifier.deliver_login_successful(params[:email]) unless current_user.is_admin?
       flash[:notice] = "Logged in successfully"
     else
       user = User.find_by_email(params[:email])

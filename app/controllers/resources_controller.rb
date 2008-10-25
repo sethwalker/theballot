@@ -1,7 +1,6 @@
 class ResourcesController < ApplicationController
   def create
     breakpoint 'hey there'
-    @params = params
     @resource = Resource.create params[:resource]
     render :action => 'new'
   end

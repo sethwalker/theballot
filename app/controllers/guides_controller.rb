@@ -79,8 +79,8 @@ class GuidesController < ApplicationController
     @conditions ||= {} 
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
-    @conditions[:date] ||= "date >= '#{(1.week.ago).to_s(:db)}'"
-    @guides = Guide.paginate :all, :page => params[:page], :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
+    @conditions[:date] ||= "date >= '#{(TheBallot::GUIDES_STAY_CURRENT_FROM).to_s(:db)}'"
+    @guides = Guide.paginate :all, :page => params[:page], :per_page => TheBallot::GUIDES_PER_LIST_PAGE, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
   end
 
   def list_past
@@ -88,7 +88,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing Past Voter Guides"
     @conditions[:date] ||= "date < '#{(Time.now).to_s(:db)}'"
-    @guides_past = Guide.paginate :page => params[:page], :per_page => 25, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city'
+    @guides_past = Guide.paginate :page => params[:page], :per_page => TheBallot::GUIDES_PER_PAST_LIST_PAGE, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city' if TheBallot::GUIDES_PER_PAST_LIST_PAGE > 0
   end
 
   def by_date
@@ -210,7 +210,7 @@ class GuidesController < ApplicationController
     else
       @guide = current_user.guides.in_progress.partisan.find(:first)
     end
-    @guide ||= Guide.new(:user => current_user, :date => Date.new(2008,11,4), :state => current_user.state, :theme_id => 1)
+    @guide ||= Guide.new(:user => current_user, :date => TheBallot::DEFAULT_DATE, :state => current_user.state, :theme_id => 1)
     if @guide.new_record?
       @guide.legal = Guide::NONPARTISAN if c3?
       @guide.save_with_validation(false)
@@ -260,11 +260,15 @@ class GuidesController < ApplicationController
     current_user.images << @image if @image && @image.valid?
     @pdf = @guide.create_attached_pdf(:uploaded_data => params[:uploaded_pdf]) if params[:uploaded_pdf] && params[:uploaded_pdf].size != 0
     current_user.attached_pdfs << @pdf if @pdf && @pdf.valid?
-    if (@image and !@image.valid?) or (@pdf and !@pdf.valid?)
-      @guide.attached_pdf(true) if @pdf
+  if (@image and !@image.valid?) or (@pdf and !@pdf.valid?)
+      if @pdf
+        @guide.attached_pdf(true)
+        @pdf.errors.clear
+        @pdf.errors.add_to_base 'Sorry, the file was too big'
+      end
       @guide.image(true) if @image
       render :action => 'edit'
-    else
+    else  
       redirect_to :action => 'edit', :id => @guide
     end
   end
@@ -282,7 +286,7 @@ class GuidesController < ApplicationController
     @guide.save!
     flash[:notices] ||= []
     flash[:notices] << "Guide was successfully updated.  #{'To publish your guide, edit it and click Submit Guide.  ' unless @guide.is_published?}"
-    flash[:notices] << "As soon as we check your guide to make sure it's non-partisan, it will be publicly visible on the site.  That usually happens the same day.  If you have questions email us at voterguides@youngvoter.org." if @guide.c3? && @guide.instance_variable_get(:@recently_published)
+    flash[:notices] << "As soon as we check your guide to make sure it's non-partisan, it will be publicly visible on the site.  That usually happens the same day.  If you have questions email us at " + TheBallot::ADMIN_EMAIL + "." if @guide.c3? && @guide.instance_variable_get(:@recently_published)
     redirect_to = { :year => @guide.date.year, :permalink => @guide.permalink }
     redirect_to[:host] = session[:login_domain] if session[:login_domain] && session[:login_domain] != request.host
     redirect_to guide_permalink_url(redirect_to)

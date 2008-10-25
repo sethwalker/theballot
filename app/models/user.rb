@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :guides
   has_many :pledges
   has_many :blocs, :through => :pledges, :source => :guide
+  has_many :comments
   has_many :images
   has_many :attached_pdfs
   has_many :screenshots

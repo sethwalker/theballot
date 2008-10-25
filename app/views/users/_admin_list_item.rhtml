@@ -17,6 +17,10 @@
     <%= link_to user.login, :controller => 'account', :action => 'profile', :id => user.id %>
     &nbsp;(#<%= user.id %>)
   </h3>
+  <div style="float: right;">
+    <%= link_to 'personal account page', :controller => 'account', :action => 'profile', :id => user.id %><br />
+    <%= link_to 'public user page', :controller => 'users', :action => 'show', :id => user.id %>
+  </div>
   <div class="guide-list-name">
     <%= user.firstname %> <%= user.lastname %>
   </div>

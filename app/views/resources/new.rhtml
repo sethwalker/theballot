@@ -1,6 +1,6 @@
 <%= @resource.inspect %>
 <br/>
-<%= @params[:resource][:uploaded_data].size if @params[:resource] %>
+<%= params[:resource][:uploaded_data].size if params[:resource] %>
 <br/>
 <% form_for :resource, :url => { :action => 'create' }, :html => { :multipart => true } do |f| -%>
   <p><%= f.file_field :uploaded_data %></p>

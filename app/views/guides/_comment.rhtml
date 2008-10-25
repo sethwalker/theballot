@@ -22,7 +22,7 @@
   
       <% if logged_in? && current_user.is_admin? -%>
        <div style="float: right">
-          [admin: <%= link_to "edit", :controller => 'comments', :action => 'edit', :id => comment %> <%= link_to "delete", :controller => 'comments', :action => 'destroy', :id => comment %>]
+          [admin: <%= link_to "edit", :controller => 'comments', :action => 'edit', :id => comment %> <%= link_to "delete", :controller => 'comments', :action => 'destroy', :id => comment, :confirm => 'Are you sure?' %>]
        </div>
     <% end -%>
 

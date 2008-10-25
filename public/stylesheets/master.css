@@ -991,9 +991,8 @@ body {
 #admin_control {
 	margin-bottom: 5px;
 	}
-.account-section,
-#user-guides-list,
-#user-profile-basics {
+.account-section, .user-section
+    {
 	display: block;
 	padding: 10px;
 	margin-bottom: 5px;
@@ -1014,6 +1013,7 @@ body {
 .account-bloc-list-item,
 .user-guides-list-item {
 	display: block;
+	color: #666666;
 	background-color: #f0f0f0;
 	padding: 5px;
 	height: 1em;
@@ -1027,7 +1027,7 @@ body {
 	}
 	
 .account-guide-title  {
-	float: left;
+/*	float: left; */
 	}
 .account-guide-title a,
 .account-guide-title a:visited,
@@ -1084,9 +1084,7 @@ body {
 #account-user-basics {
 	line-height: 1.2em;
 	}
-
-#user-guides-list,
-#user-profile-basics {
+.user-section {
 	width: 450px;
 	color: #333333;
 	}
@@ -1114,6 +1112,16 @@ body {
 
 #profile-edit-link {
 	padding-top: 10px;
+	}
+.user-comments-list-body {
+    background-color:#F9F9F9;
+    margin: 5px 0 5px 20px;
+	}
+.user-comments-list-body a {
+	text-decoration: none;
+	}
+.user-comments-list-body a:hover {
+	background-color:#E3EDF7;
 	}
 
 /* ================================================================================ SIGN UP

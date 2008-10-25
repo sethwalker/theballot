@@ -53,7 +53,7 @@ GUIDE_SCREENSHOT_JS
 <div class="popup-inner">
   <div id="guide-assets-pdf-error-messages"><%= error_messages_for 'pdf' %></div>
   <% form_tag( { :action => 'update_assets', :id => guide.id }, :multipart => true ) do -%>
-    <p><label for="uploaded_pdf">You can attach a PDF version of your guide:</label><br/>
+    <p><label for="uploaded_pdf">You can attach a PDF version of your guide (maximum file size: <%= TheBallot::ATTACHMENT_SIZE_LIMIT.div(1000000) %>M):</label><br/>
     <%= file_field_tag 'uploaded_pdf'  %>
     <% if @guide.attached_pdf -%>
       <br/>

@@ -1,7 +1,15 @@
 <a name="comments"></a>
-  <h2>Add a Comment</h2>
+  <h2>Comments</h2>
+
+
+  <%= render :partial => 'comment', :collection => @guide.comments %>
+
+
+
 
       <div id="comments-add-box">
+
+  <h2>Add a Comment</h2>
 
 <span>Remember: Keep it respectful or it'll get deleted!</span>
 
@@ -26,14 +34,3 @@
       </div> <%# end div comments-add-box  %>
 
 
-  <%= render :partial => 'comment', :collection => @guide.comments %>
-
-<%# @guide.comments.each do |comment| %>
-<%#= comment.subject %><!-- by --> <%#= comment.user.login %>
-  <%# if logged_in? && current_user.is_admin? -%>
-       <!--[admin:--> <%#= link_to "delete", :controller => 'comments', :action => 'destroy', :id => comment %>
-  <%# end -%>
-
-<%#= comment.body %>
-
-<%# end %>

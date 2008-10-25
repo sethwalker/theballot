@@ -1,5 +1,5 @@
 <% if user.is_admin? %>
-  <%= link_to_remote "de-admin", :url => { :action => 'remove_admin', :id => user }, :update => 'admin_control' %>
+  <%= link_to_remote "de-admin", :url => { :action => 'remove_admin', :id => user }, :update => 'admin_control', :confirm => 'Are you sure?' %>
 <% else %>
-  <%= link_to_remote "make admin", :url => { :action => 'add_admin', :id => user }, :update => 'admin_control' %>
+  <%= link_to_remote "make admin", :url => { :action => 'add_admin', :id => user }, :update => 'admin_control', :confirm => 'Are you sure?' %>
 <% end %>
