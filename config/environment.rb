@@ -44,6 +44,7 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
   config.gem "rspec-rails", :lib => "spec" 
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'acts_as_ferret'
 end
 
 # Add new inflection rules using the following format 
@@ -60,10 +61,6 @@ require 'yaml'
 
 # then...
 #APPLICATION_SVN_REVISION = File.exist?('config/revision.yml') ? File.open('config/revision.yml').read : YAML.parse(`svn info #{RAILS_ROOT}`)['Revision'].value
-
-#TODO: Check that the exception email works when you deploy onto production
-ExceptionNotifier.exception_recipients = TheBallot::TECH_ADMIN_EMAIL
-ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
 
 require 'memcache'
 memcache_options = {

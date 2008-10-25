@@ -1,4 +1,3 @@
-	
 class TheBallot
   DEFAULT_DATE = Time.mktime(2008, 11, 4)
   ADMIN_EMAIL = 'voterguides@theleague.com'
@@ -12,3 +11,6 @@ class TheBallot
   GUIDES_PER_PAST_LIST_PAGE = 0
 end
 
+#TODO: Check that the exception email works when you deploy onto production
+ExceptionNotifier.exception_recipients = TheBallot::TECH_ADMIN_EMAIL
+ExceptionNotifier.email_prefix = "[VOTERGUIDE ERROR] "
