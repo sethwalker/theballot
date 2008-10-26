@@ -80,7 +80,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing All Voter Guides"
     @conditions[:date] ||= "date >= '#{(TheBallot::GUIDES_STAY_CURRENT_FROM).to_s(:db)}'"
-    @guides = Guide.paginate :all, :page => params[:page], :per_page => TheBallot::GUIDES_PER_LIST_PAGE, :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
+    @guides = Guide.paginate :all, :page => params[:page], :per_page => TheBallot::GUIDES_PER_LIST_PAGE, :include => [:user, :image, :members], :conditions => @conditions.values.join(' AND '), :order => 'date, endorsed DESC, num_members DESC, state DESC, city'
   end
 
   def list_past
@@ -89,6 +89,7 @@ class GuidesController < ApplicationController
     @listheader ||= "Listing Past Voter Guides"
     @conditions[:date] ||= "date < '#{(Time.now).to_s(:db)}'"
     @guides_past = Guide.paginate :page => params[:page], :per_page => TheBallot::GUIDES_PER_PAST_LIST_PAGE, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city' if TheBallot::GUIDES_PER_PAST_LIST_PAGE > 0
+    @guides_past ||= WillPaginate::Collection.new 1, 1, 0
   end
 
   def by_date

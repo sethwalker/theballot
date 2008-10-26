@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081005222724) do
+ActiveRecord::Schema.define(:version => 20081026000006) do
 
   create_table "assets", :force => true do |t|
     t.string "type"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20081005222724) do
 
   add_index "guides", ["user_id"], :name => "index_on_user_id"
   add_index "guides", ["theme_id"], :name => "index_on_theme_id"
+  add_index "guides", ["status", "approved_at", "legal"], :name => "index_on_stat_approv_legal"
 
   create_table "links", :force => true do |t|
     t.string  "url"
@@ -149,6 +150,10 @@ ActiveRecord::Schema.define(:version => 20081005222724) do
 
   add_index "roles_users", ["role_id"], :name => "index_on_role_id"
   add_index "roles_users", ["user_id"], :name => "index_on_user_id"
+
+  create_table "schema_info", :id => false, :force => true do |t|
+    t.integer "version"
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id"
