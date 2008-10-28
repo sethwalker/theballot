@@ -8,7 +8,8 @@ class TheBallot
   GUIDES_PER_LIST_PAGE = 35
 
   # past per-page can be 0 to keep past guides off homepage
-  GUIDES_PER_PAST_LIST_PAGE = 0
+  GUIDES_PER_PAST_LIST_PAGE = 20
+  SHOW_PAST_GUIDES_ON_HOMEPAGE = FALSE
 end
 
 #TODO: Check that the exception email works when you deploy onto production

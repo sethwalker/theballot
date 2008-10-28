@@ -1,7 +1,7 @@
 <div class="front-page-left">
   <div id="intro">
     <h2>Do-It-Yourself Progressive Voter Guides</h2>
-    Your vote is powerful. But sometimes voting can be confusing, right?  That's where a voter guide can help out.  Find a voter guide for your area, or create your own guide that other people can use.  It's easy.
+    Your vote is powerful. But these ballots can be confusing!  That's where a voter guide can help out.  Find a voter guide for your area, or create your own guide that other people can use.  It's easy.
   </div>
   <div id="map">
     <h2><span>Select your State</span></h2>
@@ -13,11 +13,22 @@
     <h4><span>Search All Guides</span></h4>
     <%= render "shared/search" %>
   </div>
+<% if false -%>
+<% if !@c3 -%>
 <a name="howto"></a> 
   <div id="how-to">
     <%= render :partial => "how_to" %>
   </div>
+<% end -%>
+<% end -%>
 
+<% if !@c3 -%>
+<div id="homepage-comments" >
+<h3>Recent Comments</h3>
+<% @homepage = true %>
+    <%= render :partial => 'comment_sidebar', :collection => Comment.recent.all(:limit => 5) %>
+</div>
+<% end -%>
 
 </div>
 <div class="front-page-right">
@@ -27,7 +38,6 @@
  <div class="resource-link"><a href="http://votepoke.org" target="_blank">Find Out If You're Registered</a></div>
  <div class="resource-link"><a href="http://ballotpedia.org" target="_blank">Local Ballot Info</a></div>
  
-  <!-- <div class="resource-link"><a href="http://theleague.com/how-to-create-a-voter-guide" target="_blank">How to Create a Voter Guide</a></div> -->
 </div>
 
 <% if (Guide.count_published > 19) -%>
@@ -45,17 +55,19 @@
     </div>
     <div id="guide-list">
       <%= render :partial => 'list_item', :collection => @guides %>
+    <div id="more-guides-link"><%= link_to '>> Browse more guides', { :action => 'list', :page => 2 }, :id => 'view-link' %></div>
     </div>
-    <div id="more-guides-link"><%= link_to 'view more guides', { :action => 'list', :page => 2 }, :id => 'view-link' %></div>
 
-    <% if TheBallot::GUIDES_PER_PAST_LIST_PAGE > 0 -%>
+    <% if TheBallot::SHOW_PAST_GUIDES_ON_HOMEPAGE -%>
       <div id="voter-guides-past-title">
         <h3><span>Past Voter Guides</span></h3>
       </div>
       <div id="guide-past-list">
         <%= render :partial => 'list_item', :collection => @guides_past %>
+        <div id="more-guides-link"><%= link_to '>> Browse more past guides', { :action => 'list_past', :page => 2 }, :id => 'view-past-link' %></div>
       </div>
-      <div id="more-guides-link"><%= link_to 'view more past guides', { :action => 'list_past', :page => 2 }, :id => 'view-past-link' %></div>
+    <% else -%>
+      <br /><div id="more-guides-link"><%= link_to 'View past guides', { :action => 'list_past', :page => 1 }, :id => 'view-past-link' %></div>    
     <% end -%>
 </div>
 

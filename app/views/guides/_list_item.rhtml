@@ -30,6 +30,7 @@
   <div class="guide-list-date">
     <%= guide.date.strftime('%B %e, %Y') %>
     <% if guide.members.length > 1 %> &bull; <%= guide.members.length %> &quot;friends&quot;<% end %>
+    <% if guide.comments.count > 0 %> &bull; <%= guide.comments.count %> comments<% end %>
   </div>
   <div class="guide-list-description">
     <%= truncate strip_tags(guide.description), 100 %>

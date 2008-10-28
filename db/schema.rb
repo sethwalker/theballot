@@ -151,10 +151,6 @@ ActiveRecord::Schema.define(:version => 20081026000006) do
   add_index "roles_users", ["role_id"], :name => "index_on_role_id"
   add_index "roles_users", ["user_id"], :name => "index_on_user_id"
 
-  create_table "schema_info", :id => false, :force => true do |t|
-    t.integer "version"
-  end
-
   create_table "sessions", :force => true do |t|
     t.string   "session_id"
     t.text     "data"

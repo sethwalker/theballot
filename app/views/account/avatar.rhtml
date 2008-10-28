@@ -1,4 +1,4 @@
-<p><label for="uploaded_avatar">If you want you can upload an icon to represent yourself</label><br />
+<p><label for="uploaded_avatar">Upload an icon to represent yourself on the site</label><br />
 <%= file_field_tag 'uploaded_avatar' %>
 <br />
 (file formats: .jpg, .gif, or .png)<br />
@@ -7,7 +7,7 @@
 currently:<br />
 <div class="vg-avatar"><%= image_tag @avatar.public_filename("thumb") %></div>
 <% else -%>
-otherwise, you'll look like this!
+<!-- otherwise, you'll look like this! -->
 <div class="vg-avatar"><%= image_tag "avatar.gif" %></div>
 <% end -%>
 </p>

@@ -88,7 +88,7 @@ class GuidesController < ApplicationController
     @messages ||= []
     @listheader ||= "Listing Past Voter Guides"
     @conditions[:date] ||= "date < '#{(Time.now).to_s(:db)}'"
-    @guides_past = Guide.paginate :page => params[:page], :per_page => TheBallot::GUIDES_PER_PAST_LIST_PAGE, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city' if TheBallot::GUIDES_PER_PAST_LIST_PAGE > 0
+    @guides_past = Guide.paginate :page => params[:page], :per_page => TheBallot::GUIDES_PER_PAST_LIST_PAGE, :conditions => @conditions.values.join(' AND '), :order => 'date DESC, endorsed DESC, num_members DESC, state, city'
     @guides_past ||= WillPaginate::Collection.new 1, 1, 0
   end
 

@@ -62,7 +62,7 @@ class AccountController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @avatar = @user.avatar
-    unless @user == current_user || current_user.admin?
+    unless @user == current_user || current_user.is_admin?
       @user = current_user
       render :action => 'profile'
       return false 

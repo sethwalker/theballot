@@ -408,14 +408,16 @@ body {
 	background-repeat: no-repeat;
         margin-top: 10px;
         }
-
 #voter-guide-links, #voter-guide-links a, #more-guides-link {
 	font-size: 12px;
 	font-weight: bold;
 	color: #0099FF;
 	text-decoration: none;
 	height: 10px;
-}
+	}
+#more-guides-link {
+	margin-bottom: 5px;
+	}
 #voter-guide-links a:hover {
 	color: #66CCFF;
 	}
@@ -1340,7 +1342,6 @@ body {
 .comment-left {
 	display: block;
 	float: left;
-	clear: both;
 	width: 100px;
 }
 
@@ -1371,6 +1372,7 @@ body {
 .comment-poster label {
 	font-weight: normal;
 	font-style: italic;
+	display: block;
 }
 
 .comment-sidebar-listing {
@@ -1379,6 +1381,8 @@ body {
 	border-color: gray;
 	margin: 6px 0;
 	color: #666;
+	display: block;
+	overflow: hidden;
 }
 
 .comment-sidebar-subject {
@@ -1388,4 +1392,31 @@ body {
 .comment-sidebar-poster, .comment-sidebar-date {
 	font-style: italic;
 	color: #999;
+}
+#homepage-comments {
+	width: 485px;
+	background-color: #F5F5F5;
+	display: block;
+	float: left;
+	padding: 10px;
+	margin-bottom: 8px;
+	position: relative;
+	left: 10px;
+}
+#homepage-comments .comment-sidebar-listing {
+	margin: 0;
+	padding: 6px 0;
+}
+#homepage-comments .comment-sidebar-poster a, .comment-homepage-guide, .comment-homepage-guide a {
+	color: #999999;
+}
+.comment-sidebar-avatar {
+	float: left;
+	padding: 0 8px 2px 0;
+	width: 35px;
+	clear: left;
+	overflow: auto;
+}
+.comment-sidebar-avatar img {
+	overflow: auto;
 }

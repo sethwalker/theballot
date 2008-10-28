@@ -1,3 +1,5 @@
+<% if TheBallot::GUIDES_PER_PAST_LIST_PAGE > 0 -%>
+
 <p id="guide-list-header"><%= @listheader %></p>
 <div id="guide-list-messages">
   <%= @messages.join('<br/>') if @messages %>
@@ -32,3 +34,5 @@
 <%= link_to 'Previous page', pagination_params.merge({ :page => @guides_past.previous_page }) if @guides_past.previous_page %>
 <%= link_to 'Next page', pagination_params.merge({ :page => @guides_past.next_page }) if @guides_past.next_page %> 
 </div>
+
+<% end -%>

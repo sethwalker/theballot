@@ -1,9 +1,9 @@
 
 <div class="comment-sidebar-listing">
 
-  <%# <div class="comment-sidebar-subject"> %>
-    <%#= comment_sidebar.subject %>
-  <%# </div> %>
+  <div class="comment-sidebar-avatar">
+    <%= image_tag comment_sidebar.user.avatar_thumb %>
+  </div>
 
   <div class="comment-sidebar-body">
     <%= truncate strip_tags(comment_sidebar.body), 70 %>
@@ -13,9 +13,14 @@
     <label for="comment-sidebar-poster">- posted by</label> 
       <%= link_to comment_sidebar.user.login, :controller => 'users', :action => 'show', :id => comment_sidebar.user.id %>
   </span>
+  
+<% if @homepage -%>
+   <span class="comment-homepage-guide">on guide: <%= link_to comment_sidebar.guide.name, comment_sidebar.guide.permalink_url + "#comments" %></span>
+<% else -%>  
   <span class="comment-sidebar-date">
       <%= comment_sidebar.created_at.strftime("%m/%d/%y") %>
   </span>
+<% end -%>  
   
 
 </div>
