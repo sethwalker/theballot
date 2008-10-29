@@ -52,7 +52,7 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_theballot_session',
-    :secret      => '43bc86fa2771b30e3964223b5394fb1c1b95a51e21d720cf4dbb2b8cd8697eb85647b44149c877dc2e3a639988a3e2a50761b1431619033a3f1e055fc427ab50'
+    :secret      => File.read(File.join(RAILS_ROOT,'config','session_secret.txt'))
   }
 
   # Use the database for sessions instead of the cookie-based default,
