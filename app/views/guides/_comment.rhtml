@@ -21,8 +21,15 @@
     <%#= comment.subject %>
   <%# </div> %>
   <div class="comment-body">
+  <% if comment.body.length > 1100 -%>
+    <%= strip_tags(comment.body.slice(0..1100)) %><span id="comment-link-<%= comment.id %>">...
+      <a href="#" onclick="$('comment-<%= comment.id %>').toggle(); $('comment-link-<%= comment.id %>').toggle(); $('comment-condense-link-<%= comment.id %>').toggle(); return false;">[read more]</a></span><span id="comment-<%= comment.id %>" style="display: none;"><%= strip_tags(comment.body.slice(1101..comment.body.length)) %></span>
+      <span id="comment-condense-link-<%= comment.id %>" style="display: none;">[<a href="#" onclick="$('comment-<%= comment.id %>').toggle(); $('comment-link-<%= comment.id %>').toggle(); $('comment-condense-link-<%= comment.id %>').toggle(); return false;">Condense comment</a>]</span>  
+  <% else -%>
     <%= strip_tags(comment.body) %>
+  <% end -%>
   </div>
+
   
       <% if logged_in? && current_user.is_admin? -%>
        <div style="float: right">
