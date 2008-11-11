@@ -26,7 +26,7 @@
 <div id="homepage-comments" >
 <h3>Recent Comments</h3>
 <% @homepage = true %>
-    <%= render :partial => 'comment_sidebar', :collection => Comment.recent.all(:limit => 5) %>
+    <%= render :partial => 'comment_sidebar', :collection => Comment.recent.published.approved.all(:limit => 5) %>
 </div>
 <% end -%>
 
