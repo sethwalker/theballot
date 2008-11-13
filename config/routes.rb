@@ -25,6 +25,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'contests/referendum/:action/:id', :controller => 'contests/referendum'
   map.connect 'contests/:action/:id', :controller => 'contests/base'
 
+  map.connect 'styles/show/:id.:format', :controller => 'styles', :action => 'show'
+
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

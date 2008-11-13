@@ -66,7 +66,7 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
-  config.active_record.observers = :user_observer, :guide_observer
+  config.active_record.observers = :user_observer, :guide_observer, :guide_sweeper
 end
 
 require 'memcache'

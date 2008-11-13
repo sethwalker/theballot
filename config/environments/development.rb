@@ -16,9 +16,17 @@ config.action_view.debug_rjs                         = true
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-APPLICATION_HOST_NAME = 'theballot.staging.radicaldesigns.org'
-APPLICATION_C3_DOMAIN = 'nonpartisan.theballot.staging.radicaldesigns.org'
-APPLICATION_STANDARD_DOMAIN = 'theballot.staging.radicaldesigns.org'
+if File.exist?(hosts_file = File.join('config','hosts.yml'))
+  hosts = YAML.load_file(hosts_file)
+  APPLICATION_HOST_NAME = hosts['host_name']
+  APPLICATION_C3_DOMAIN = hosts['c3_domain']
+  APPLICATION_STANDARD_DOMAIN = hosts['standard_domain']
+  ActionController::Base.session_options[:session_domain] = hosts['session_domain']
+else
+  APPLICATION_HOST_NAME = 'theballot.staging.radicaldesigns.org'
+  APPLICATION_C3_DOMAIN = 'nonpartisan.theballot.staging.radicaldesigns.org'
+  APPLICATION_STANDARD_DOMAIN = 'theballot.staging.radicaldesigns.org'
+  ActionController::Base.session_options[:session_domain] = '.theballot.staging.radicaldesigns.org'
+end
 
-ActionController::Base.session_options[:session_key] = 'voterguides_session_id'
-ActionController::Base.session_options[:session_domain] = '.theballot.staging.radicaldesigns.org'
+ActionController::Base.session_options[:session_key] = 'theballot_session_id'

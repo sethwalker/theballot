@@ -84,4 +84,10 @@ describe StylesController do
       Style.find(1)
     }
   end
+
+  describe "caching" do
+    it "caches show" do
+      lambda { get :show, :id => 1, :format => 'css' }.should cache_page('/styles/show/1.css')
+    end
+  end
 end

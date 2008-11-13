@@ -6,7 +6,7 @@ if !@guide.theme.nil?
 <%  end
   elsif @guide.theme.style
     content_for :stylesheets do %>
-      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'all', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id ) }) %>
+      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'all', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.style.id, :format => 'css' ) }) %>
 <%  end
   end
   if !@guide.theme.print_style_url.nil? && !@guide.theme.print_style_url.empty?
@@ -15,7 +15,7 @@ if !@guide.theme.nil?
 <%  end
   elsif @guide.theme.print_style
     content_for :print_stylesheets do %>
-      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.print_style.id ) }) %>
+      <%= tag('link', { 'rel' => 'Stylesheet', 'type' => 'text/css', 'media' => 'print', 'href' => url_for( :controller => 'styles', :action => 'show', :id => @guide.theme.print_style.id, :format => 'css' ) }) %>
 <%  end
   end
 end 

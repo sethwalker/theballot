@@ -1,24 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe GuidesController do
-  fixtures :guides, :contests, :users
+  fixtures :users
 
-  def setup
-    @controller = GuidesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
-    @emails = ActionMailer::Base.deliveries 
-    @emails.clear
-  end
-
-  def test_index
+  it "test_index" do
     get :index
     assert_response :success
     assert_template 'index'
   end
 
-  def test_list
+  it "test_list" do
     get :list
 
     assert_response :success
@@ -27,7 +18,7 @@ describe GuidesController do
     assert_not_nil assigns(:guides)
   end
 
-  def test_show
+  it "test_show" do
     get :show, :id => 3
 
     assert_response :success
@@ -37,24 +28,60 @@ describe GuidesController do
     assert assigns(:guide).valid?
   end
 
-  def test_preview
-    get :show, :id => 2
-    assert_response :redirect
-    assert_redirected_to :action => :list
-    assert flash[:error]
-
-    login_as :arthur
-
-    @guide = Guide.find(2)
-    assert !@guide.is_published?
-    assert @guide.owner?(users(:arthur))
-    get :show, :id => 2
-    #XXX: this sucks
-#    assert_response :success
-#    assert flash[:notice]
+  describe "caching" do
+    it "caches index" do
+      lambda { get :index }.should cache_page('/')
+    end
+    it "does not cache when logged in" do
+      login_as(new_user)
+      lambda { get :index }.should_not cache_page('/')
+    end
   end
 
-  def test_new
+  describe "preview" do
+    def act!
+      get :show, :id => 2
+    end
+    it "should be redirect" do
+      act!
+      response.should be_redirect
+    end
+    it "should redirect to list" do
+      act!
+      assert_redirected_to :action => :list
+    end
+    it "should show error in flash" do
+      act!
+      flash[:error].should_not be_empty
+    end
+
+    describe "when logged in" do
+      before do
+        login_as(@user = new_user)
+        @guide = new_guide(:status => Guide::DRAFT, :user => @user)
+        Guide.stub!(:find).with('123').and_return(@guide)
+      end
+
+      it "is not published" do
+        @guide.should_not be_published
+      end
+
+      it "should be owned by user" do
+        @guide.owner?(@user).should be_true
+      end
+
+      it "should be success" do
+        get :show, :id => '123'
+        assert_response :success
+      end
+      it "should have flash notice" do
+        get :show, :id => '123'
+        assert flash[:notice]
+      end
+    end
+  end
+
+  it "test_new" do
     assert !users(:seth).guide_in_progress
     num_guides = Guide.count
     get :new
@@ -72,12 +99,12 @@ describe GuidesController do
 
     assert_not_nil assigns(:guide)
     assert_equal num_guides + 1, Guide.count
-    current_guide = @controller.send(:current_user).guide_in_progress
+    current_guide = controller.send(:current_user).guide_in_progress
     assert_not_nil current_guide
     assert current_guide.is_a?(Guide)
   end
 
-  def test_create
+  it "test_create" do
     controller.stub!(:login_required).and_return(true)
     num_guides = Guide.count
 
@@ -90,10 +117,10 @@ describe GuidesController do
 
     @guide = Guide.find(:first, :conditions => "name = 'test create name'")
     assert @guide.permalink
-    assert_equal @guide.permalink, 'test_create_name'
+    assert_equal @guide.permalink, 'test-create-name'
   end
 
-  def test_edit
+  it "test_edit" do
     get :edit, :id => 3
     assert_redirected_to :controller => 'account', :action => 'signup'
     login_as :quentin
@@ -107,14 +134,14 @@ describe GuidesController do
     assert assigns(:guide).valid?
   end
 
-  def test_edit_past
+  it "test_edit_past" do
     login_as :quentin
     get :edit, :id => 4
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 4
   end
 
-  def test_update
+  it "test_update" do
     post :update, :id => 3
     assert_redirected_to :controller => 'account', :action => 'signup'
 
@@ -124,14 +151,14 @@ describe GuidesController do
     assert_redirected_to :controller => 'guides', :action => 'show', :permalink => assigns[:guide].permalink, :year => assigns[:guide].date.year
   end
 
-  def test_update_past
+  it "test_update_past" do
     login_as :quentin
     get :edit, :id => 4
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 4
   end
 
-  def test_destroy
+  it "test_destroy" do
     assert_not_nil Guide.find(1)
     post :destroy, :id => 1
     assert_response :redirect
@@ -147,7 +174,7 @@ describe GuidesController do
     }
   end
 
-  def test_reorder
+  it "test_reorder" do
     @guide = Guide.new(:name => 'reorder test', :date => Time.now, :city => 'san francisco', :state => 'CA', :user_id => users(:quentin).id)
     @guide.contests << Contest.find(7,8,9)
     assert @guide.save
@@ -162,7 +189,7 @@ describe GuidesController do
     assert_equal Contest.find(7).position, 3
   end
 
-  def test_save_as_draft
+  it "test_save_as_draft" do
     g = Guide.new(:name => 'draftable', :date => Time.now, :city => 'san francisco', :state => 'CA', :status => Guide::PUBLISHED, :user_id => users(:quentin).id)
     assert g.save
     assert g.is_published?
@@ -179,18 +206,18 @@ describe GuidesController do
     assert !updated_again.is_published?
   end
 
-  def test_send_tell_a_friend
+  it "test_send_tell_a_friend" do
     GuidePromoter.should_receive(:deliver_tell_a_friend).and_return(true)
-    post :send_message, :id => guides(:sanfrancisco).id, :from => { :name => 'me', :email => 'valid@valid.com' }, :recipients => { :email => 'to@valid.com', :message => 'message' }
+    Guide.should_receive(:find).with('123').and_return(new_guide(:date => Date.new(2008, 11, 4), :permalink => 'sf'))
+    post :send_message, :id => '123', :from => { :name => 'me', :email => 'valid@valid.com' }, :recipients => { :email => 'to@valid.com', :message => 'message' }
     assert_response :redirect
-    assert_redirected_to guides(:sanfrancisco).permalink_url
-#    assert_equal 1, @emails.length
+    assert_redirected_to '/2008/sf'
     flash[:notices].first.should match(/An email has been sent/)
   end
 
 
-  def test_domain_awareness
-    @request.host = APPLICATION_C3_DOMAIN
+  it "test_domain_awareness" do
+    request.host = APPLICATION_C3_DOMAIN
     login_as :quentin
     post :new
     assert assigns(:guide)

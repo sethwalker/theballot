@@ -1,4 +1,5 @@
 class GuidesController < ApplicationController
+  caches_page :index, :if => Proc.new {|c| !c.send(:logged_in?)}
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :list_past, :index, :xml, :archive, :by_date, :by_state, :search, :help, :instructions, :tell, :send_message, :credits ]
 
