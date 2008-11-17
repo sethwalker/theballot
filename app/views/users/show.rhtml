@@ -43,10 +43,10 @@
 <% end -%>
 
 
-<% if @user.comments.any? -%>
+<% if @user.comments.legal(@c3).any? -%>
 <div id="user-comments-list" class="user-section">
   <h3>Comments</h3>
-  <% @user.comments.group_by {|c| c.guide}.each do |guide, comments| %>
+  <% @user.comments.legal(@c3).group_by {|c| c.guide}.each do |guide, comments| %>
   <div class="user-guides-list-item">
      <span id="user-guides-list-date"><%= guide.date.strftime('%b %Y') %> &bull;&nbsp;</span>
      <span id="user-comments-list-guide-name">

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081113064132) do
+ActiveRecord::Schema.define(:version => 20081117043902) do
 
   create_table "assets", :force => true do |t|
     t.string "type"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20081113064132) do
 
   add_index "comments", ["guide_id"], :name => "index_comments_on_guide_id"
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "contests", :force => true do |t|
     t.string   "name"
