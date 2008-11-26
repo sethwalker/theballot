@@ -5,9 +5,14 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
 
   before_filter :set_legal
+  before_filter :set_cache_root
   filter_parameter_logging "password"
 
   around_filter :scope_guides_by_site
+
+  def set_cache_root
+    self.class.page_cache_directory = File.join([RAILS_ROOT, 'public', 'cache', request.host])
+  end
 
   def scope_guides_by_site
     if c3?
