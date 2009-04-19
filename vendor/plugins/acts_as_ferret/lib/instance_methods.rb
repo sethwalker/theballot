@@ -25,10 +25,10 @@ module ActsAsFerret #:nodoc:
     # ellipsis::         Default: "...". This is the string that is appended
     #                    at the beginning and end of excerpts (unless the
     #                    excerpt hits the start or end of the field. You'll
-    #                    probably want to change this so a Unicode elipsis
+    #                    probably want to change this to a Unicode elipsis
     #                    character.
     def highlight(query, options = {})
-      self.class.aaf_index.highlight(id, self.class.name, query, options)
+      self.class.aaf_index.highlight(self.ferret_key, query, options)
     end
     
     # re-eneable ferret indexing for this instance after a call to #disable_ferret
@@ -47,7 +47,17 @@ module ActsAsFerret #:nodoc:
     # take place, so if you override this method to forbid indexing of certain 
     # records you're still safe).
     def ferret_enabled?(is_bulk_index = false)
-      @ferret_disabled.nil? && (is_bulk_index || self.class.ferret_enabled?)
+      @ferret_disabled.nil? && (is_bulk_index || self.class.ferret_enabled?) && (aaf_configuration[:if].nil? || aaf_configuration[:if].call(self))
+    end
+
+    # Returns the analyzer to use when adding this record to the index.
+    #
+    # Override to return a specific analyzer for any record that is to be
+    # indexed, i.e. specify a different analyzer based on language. Returns nil
+    # by default so the global analyzer (specified with the acts_as_ferret
+    # call) is used.
+    def ferret_analyzer
+      nil
     end
 
     # Disable Ferret for this record for a specified amount of time. ::once will 
@@ -86,7 +96,7 @@ module ActsAsFerret #:nodoc:
     # add to index
     def ferret_create
       if ferret_enabled?
-        logger.debug "ferret_create/update: #{self.class.name} : #{self.id}"
+        logger.debug "ferret_create/update: #{self.ferret_key}"
         self.class.aaf_index << self
       else
         ferret_enable if @ferret_disabled == :once
@@ -98,28 +108,32 @@ module ActsAsFerret #:nodoc:
 
     # remove from index
     def ferret_destroy
-      logger.debug "ferret_destroy: #{self.class.name} : #{self.id}"
+      logger.debug "ferret_destroy: #{self.ferret_key}"
       begin
-        self.class.aaf_index.remove self.id, self.class.name
+        self.class.aaf_index.remove self.ferret_key
       rescue
         logger.warn("Could not find indexed value for this object: #{$!}\n#{$!.backtrace}")
       end
       true # signal success to AR
     end
     
+    def ferret_key
+      "#{self.class.name}-#{self.send self.class.primary_key}" unless new_record?
+    end
+    
     # turn this instance into a ferret document (which basically is a hash of
     # fieldname => value pairs)
     def to_doc
-      logger.debug "creating doc for class: #{self.class.name}, id: #{self.id}"
+      logger.debug "creating doc for class: #{self.ferret_key}"
       returning Ferret::Document.new do |doc|
-        # store the id of each item
-        doc[:id] = self.id
-
-        # store the class name if configured to do so
-        doc[:class_name] = self.class.name if aaf_configuration[:store_class_name]
+        # store the id and class name of each item, and the unique key used for identifying the record
+        # even in multi-class indexes.
+        doc[:key] = self.ferret_key
+        doc[:id] = self.id.to_s
+        doc[:class_name] = self.class.name
       
         # iterate through the fields and add them to the document
-        aaf_configuration[:ferret_fields].each_pair do |field, config|
+        aaf_configuration[:defined_fields].each_pair do |field, config|
           doc[field] = self.send("#{field}_to_ferret") unless config[:ignore]
         end
         if aaf_configuration[:boost]
@@ -134,15 +148,16 @@ module ActsAsFerret #:nodoc:
     end
 
     def document_number
-      self.class.aaf_index.document_number(id, self.class.name)
+      self.class.aaf_index.document_number(self.ferret_key)
     end
 
     def query_for_record
-      self.class.aaf_index.query_for_record(id, self.class.name)
+      self.class.aaf_index.query_for_record(self.ferret_key)
     end
 
-    def content_for_field_name(field, dynamic_boost = nil)
-      field_data = self[field] || self.instance_variable_get("@#{field.to_s}".to_sym) || self.send(field.to_sym)
+    def content_for_field_name(field, via = field, dynamic_boost = nil)
+      field_data = (respond_to?(via) ? send(via) : instance_variable_get("@#{via}")).to_s
+      # field_data = self.send(via) || self.instance_variable_get("@#{via}")
       if (dynamic_boost && boost_value = self.send(dynamic_boost))
         field_data = Ferret::Field.new(field_data)
         field_data.boost = boost_value.to_i

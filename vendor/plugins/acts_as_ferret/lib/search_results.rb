@@ -2,8 +2,11 @@ module ActsAsFerret
 
   # decorator that adds a total_hits accessor and will_paginate compatible 
   # paging support to search result arrays
-  class SearchResults
-    attr_reader :current_page, :per_page, :total_hits
+  class SearchResults < ActsAsFerret::BlankSlate
+    reveal :methods
+    attr_reader :current_page, :per_page, :total_hits, :total_pages
+    alias total_entries total_hits  # will_paginate compatibility
+    alias page_count total_pages    # will_paginate backwards compatibility
 
     def initialize(results, total_hits, current_page = 1, per_page = nil)
       @results = results
@@ -18,17 +21,11 @@ module ActsAsFerret
     end
 
     def respond_to?(name)
-      self.methods.include?(name) || @results.respond_to?(name)
+      methods.include?(name.to_s) || @results.respond_to?(name)
     end
 
 
     # code from here on was directly taken from will_paginate's collection.rb
-
-    #
-    # The total number of pages.
-    def page_count
-      @total_pages
-    end
 
     # Current offset of the paginated collection. If we're on the first page,
     # it is always 0. If we're on the 2nd page and there are 30 entries per page,
@@ -46,7 +43,7 @@ module ActsAsFerret
 
     # current_page + 1 or nil if there is no next page
     def next_page
-      current_page < page_count ? (current_page + 1) : nil
+      current_page < total_pages ? (current_page + 1) : nil
     end
   end
 

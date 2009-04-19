@@ -4,46 +4,50 @@ module ActsAsFerret
   # This index implementation connects to a remote ferret server instance. It
   # basically forwards all calls to the remote server.
   class RemoteIndex < AbstractIndex
+    include RemoteFunctions
 
     def initialize(config)
-      @config = config
-      @ferret_config = config[:ferret]
-      @server = DRbObject.new(nil, config[:remote])
+      super
+      @server = DRbObject.new(nil, ActsAsFerret::remote)
+    end
+
+    # Cause model classes to be loaded (and indexes get declared) on the DRb
+    # side of things.
+    def register_class(clazz, options)
+      handle_drb_error { @server.register_class clazz.name }
     end
 
     def method_missing(method_name, *args)
-      args.unshift model_class_name
-      @server.send(method_name, *args)
+      args.unshift index_name
+      handle_drb_error { @server.send(method_name, *args) }
     end
 
-    def find_id_by_contents(q, options = {}, &proc)
-      total_hits, results = @server.find_id_by_contents(model_class_name, q, options)
-      block_given? ? yield_results(total_hits, results, &proc) : [ total_hits, results ]
+    # Proxy any methods that require special return values in case of errors
+    { 
+      :highlight => [] 
+    }.each do |method_name, default_result|
+      define_method method_name do |*args|
+        args.unshift index_name
+        handle_drb_error(default_result) { @server.send method_name, *args }
+      end
     end
 
-    def id_multi_search(query, models, options, &proc)
-      total_hits, results = @server.id_multi_search(model_class_name, query, models, options)
+    def find_ids(q, options = {}, &proc)
+      total_hits, results = handle_drb_error([0, []]) { @server.find_ids(index_name, q, options) }
       block_given? ? yield_results(total_hits, results, &proc) : [ total_hits, results ]
     end
 
     # add record to index
     def add(record)
-      @server.add record.class.name, record.to_doc
+      handle_drb_error { @server.add index_name, record.to_doc }
     end
     alias << add
 
     private
 
-    def yield_results(total_hits, results)
-      results.each do |result|
-        yield result[:model], result[:id], result[:score], result[:data]
-      end
-      total_hits
-    end
-
-    def model_class_name
-      @config[:class_name]
-    end
+    #def model_class_name
+    #  index_definition[:class_name]
+    #end
 
   end
 
