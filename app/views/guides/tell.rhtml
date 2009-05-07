@@ -15,6 +15,13 @@
 <p><label for="recipients_message">Message (optional)</label><br/>
 <%= text_area 'recipients', 'message'  %></p>
 
+<% unless logged_in? -%>
+  <%= recaptcha_tags %>
+  <div style="padding: 10px; width: 318px; text-align: center; font-size: 24px;">
+    Or <%= link_to 'Log In', :controller => 'account', :action => 'login' %>
+  </div>
+<% end -%>
+
 <%= submit_tag 'Send' %>
 
 <% end -%>

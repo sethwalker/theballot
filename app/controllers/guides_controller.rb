@@ -380,6 +380,8 @@ class GuidesController < ApplicationController
   end
 
   def send_message
+    render :action => :tell and return unless verify_recaptcha
+
     @guide = Guide.find(params[:id])
     @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :from_name => logged_in? ? "#{current_user.firstname} #{current_user.lastname}" : params[:from][:name], :from_email => logged_in? ? current_user.email : params[:from][:email], :host => request.host }
     unless @tell[:from_email] =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
