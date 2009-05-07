@@ -84,7 +84,9 @@ namespace :deploy do
       ln -nfs #{shared_path}/config/session_secret.txt #{release_path}/config/session_secret.txt &&
       ln -nfs #{shared_path}/config/email.yml #{release_path}/config/email.yml &&
       ln -nfs #{shared_path}/config/ferret_server.yml #{release_path}/config/ferret_server.yml &&
-      ln -nfs #{shared_path}/config/newrelic.yml #{release_path}/config/newrelic.yml
+      ln -nfs #{shared_path}/config/newrelic.yml #{release_path}/config/newrelic.yml &&
+      mkdir -p #{release_path}/config/initializers &&
+      ln -nfs #{shared_path}/config/initializers/rakismet.rb #{release_path}/config/initializers/rakismet.rb
     CMD
   end
 

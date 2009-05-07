@@ -1,4 +1,6 @@
 class GuidesController < ApplicationController
+  has_rakismet :only => :send_message
+
   caches_page :index, :if => Proc.new {|c| !c.send(:logged_in?)}
   prepend_before_filter :find_guide_by_permalink
   before_filter :login_required, :except => [ :show, :list, :list_past, :index, :xml, :archive, :by_date, :by_state, :search, :help, :instructions, :tell, :send_message, :credits ]
@@ -381,12 +383,17 @@ class GuidesController < ApplicationController
 
   def send_message
     @guide = Guide.find(params[:id])
-    @tell = { :recipients => params[:recipients][:email], :guide => @guide, :message => params[:recipients][:message], :from_name => logged_in? ? "#{current_user.firstname} #{current_user.lastname}" : params[:from][:name], :from_email => logged_in? ? current_user.email : params[:from][:email], :host => request.host }
-    unless @tell[:from_email] =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+    @tell = TellAFriend.new(params, 
+                            @guide, 
+                            (logged_in? ? current_user : nil), 
+                            request.host, 
+                            guide_permalink_url(:year => @guide.date.year, 
+                                                :permalink => @guide.permalink))
+    unless @tell.from_email =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
       flash.now[:error] = "Invalid email address"
       render :action => :tell and return
     end
-    if GuidePromoter.deliver_tell_a_friend(@tell)
+    if !@tell.spam? && GuidePromoter.deliver_tell_a_friend(@tell)
       flash[:notices] = ["An email has been sent to your friend about this guide."]
       redirect_to guide_permalink_url(:year => @guide.date.year, :permalink => @guide.permalink) 
     else
